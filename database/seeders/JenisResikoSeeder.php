@@ -15,9 +15,8 @@ class JenisResikoSeeder extends Seeder
     {
         // Define the risk types
         $riskTypes = [
-            ['kode' => 'R001', 'jenis_resiko' => 'Resiko Tinggi'],
-            ['kode' => 'R002', 'jenis_resiko' => 'Resiko Sedang'],
-            ['kode' => 'R003', 'jenis_resiko' => 'Resiko Rendah'],
+            ['kode' => '01', 'jenis_resiko' => 'Negatif'],
+            ['kode' => '02', 'jenis_resiko' => 'Positif'],
         ];
 
         // Insert or update the risk types
