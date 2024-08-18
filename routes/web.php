@@ -143,4 +143,6 @@
         Route::get('/admin/employee/{user_id}/edit', [EmployeeController::class, 'edit'])->name('admin.employee.edit');
         Route::put('/admin/employee/{user_id}', [EmployeeController::class, 'update'])->name('admin.employee.update');
         Route::get('/admin/employee/{user_id}', [EmployeeController::class, 'destroy'])->name('admin.employee.destroy');
+        Route::post('admin/employee/upload', [EmployeeController::class, 'upload'])->name('admin.employee.upload');
+
     });

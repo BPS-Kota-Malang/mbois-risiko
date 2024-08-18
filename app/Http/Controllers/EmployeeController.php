@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\User; // Pastikan model ini ada
 use App\Models\Pegawai; // Pastikan model ini ada
+use App\Imports\PegawaiImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -130,5 +132,16 @@ class EmployeeController extends Controller
 
             return redirect()->route('admin.employee')
                 ->with('success', 'Employee updated successfully.');
+    }
+
+    public function upload(Request $request)
+    {
+        $request->validate([
+            'excel_file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        Excel::import(new PegawaiImport, $request->file('excel_file'));
+
+        return redirect()->route('admin.employee')->with('success', 'Employees imported successfully.');
     }
 }

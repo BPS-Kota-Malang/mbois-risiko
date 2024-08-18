@@ -8,7 +8,7 @@
                 <a href="{{ route('admin.employee.create') }}" class="px-6 py-3 bg-green-500 rounded-md text-white font-medium tracking-wide hover:bg-green-600">Tambah Data Pegawai</a>
             </div>
             <div class="ml-4">
-                <form action="" method="POST" enctype="multipart/form-data" class="border border-gray-300 rounded-md p-2 flex items-center">
+                <form action="{{ route('admin.employee.upload') }}" method="POST" enctype="multipart/form-data" class="border border-gray-300 rounded-md p-2 flex items-center">
                     @csrf
                     <input type="file" name="excel_file" accept=".xlsx, .xls" required class="mr-4">
                     <button type="submit" class="px-6 py-3 bg-blue-500 rounded-md text-white font-medium tracking-wide hover:bg-blue-600">Upload Excel</button>

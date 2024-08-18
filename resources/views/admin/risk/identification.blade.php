@@ -1,6 +1,6 @@
 <x-admin-layout>
     <div class="flex justify-center mt-10">
-        <div class="bg-white shadow-md rounded-lg p-6 w-full max-w-screen-lg">
+        <div class="bg-white shadow-md rounded-lg p-6 w-full ">
             <h1 class="text-2xl font-bold mb-6">Identifikasi Risiko</h1>
             <form>
                 <div class="mb-4">
