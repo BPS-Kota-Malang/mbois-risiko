@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\User;
+
 
 class Pegawai extends Model
 {
@@ -12,6 +15,7 @@ class Pegawai extends Model
 
         // Tentukan atribut yang dapat diisi (mass assignable)
         protected $fillable = [
+            'nama_pegawai',
             'user_id',
             'jabatan',
             'pangkat',
@@ -28,4 +32,8 @@ class Pegawai extends Model
         ];
 
         // Definisikan relasi ke model User
+        public function user() : BelongsTo
+        {
+            return $this->belongsTo(User::class);
+        }
 }

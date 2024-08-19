@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('data_pegawai', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_pegawai');
             $table->string('nip');
             $table->string('jabatan');
             $table->string('pangkat');
             $table->string('golongan');
             $table->string('tim');
             $table->string('no_hp');
-            $table->bigInteger('user_id'); // Menambahkan onDelete cascade
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

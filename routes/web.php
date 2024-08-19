@@ -20,6 +20,10 @@
     use App\Http\Controllers\Context\LevelResikoController;
     use App\Http\Controllers\Context\MatriksAnalisisResikoController;
     use App\Http\Controllers\EmployeeController;
+    use App\Http\Controllers\IdentificationController;
+use App\Http\Controllers\InternController;
+
+
 
 
     Route::get('/', function () {
@@ -144,5 +148,13 @@
         Route::put('/admin/employee/{user_id}', [EmployeeController::class, 'update'])->name('admin.employee.update');
         Route::get('/admin/employee/{user_id}', [EmployeeController::class, 'destroy'])->name('admin.employee.destroy');
         Route::post('admin/employee/upload', [EmployeeController::class, 'upload'])->name('admin.employee.upload');
+    });
+
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/identification', [IdentificationController::class, 'showIdentification'])->name('identification.index');
+        Route::post('/save-penyebab', [IdentificationController::class, 'savePenyebab'])->name('savePenyebab');
+
 
     });
+
+    Route::resource('interns', InternController::class);

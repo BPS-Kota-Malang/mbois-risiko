@@ -16,8 +16,8 @@ class PegawaiImport implements ToModel, WithHeadingRow
         $user = User::updateOrCreate(
             ['email' => $row['email']],
             [
-                'name' => $row['name'],
-                'password' => Hash::make('bpskotamalang123'), // Set a default password
+                'name' => $row['nama_pegawai'],
+                'password' => Hash::make('bpsmalang123'), // Set a default password
             ]
         );
 
@@ -25,6 +25,7 @@ class PegawaiImport implements ToModel, WithHeadingRow
         return Pegawai::updateOrCreate(
             ['user_id' => $user->id],
             [
+                'nama_pegawai' => $row['nama_pegawai'],
                 'jabatan' => $row['jabatan'],
                 'pangkat' => $row['pangkat'],
                 'golongan' => $row['golongan'],

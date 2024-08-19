@@ -34,9 +34,9 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         //buatkan source code untuk random angka dalam 5 angka dan tanggal saat ini
-        $random = rand(10000, 99999);
-        $date = date('Ymd');
-        $randomAngka = $date . $random;
+        // $random = rand(10000, 99999);
+        // $date = date('Ymd');
+        // $randomAngka = $date . $random;
         // dd($randomAngka);
         $request->validate([
             'jabatan' => 'required',
@@ -45,38 +45,37 @@ class EmployeeController extends Controller
             'tim' => 'required',
             'no_hp' => 'required',
             'nip' => 'required',
+            'name' => 'required', // Add 'name' field validation
         ]);
 
         if (User::where('email', $request->email)->exists()) {
             return redirect()->route('admin.employee.create')
                 ->with('error', 'Email already exists.');
-        }elseif(Pegawai::where('nip', $request->nip)->exists()){
+        } elseif (Pegawai::where('nip', $request->nip)->exists()) {
             return redirect()->route('admin.employee.create')
                 ->with('error', 'NIP already exists.');
-        }else{
-            User::create(
-                [
-                    'id' => $randomAngka,
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'password' => bcrypt($randomAngka),
-                ]
-            );
-            Pegawai::create(
-                [
-                    'user_id' => $randomAngka,
-                    'jabatan' => $request->jabatan,
-                    'pangkat' => $request->pangkat,
-                    'golongan' => $request->golongan,
-                    'tim' => $request->tim,
-                    'no_hp' => $request->no_hp,
-                    'nip' => $request->nip,
-                ]
-            );
+        } else {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->name),
+            ]);
+
+            Pegawai::create([
+                'user_id' => $user->id,
+                'nama_pegawai' => $request->name,
+                'jabatan' => $request->jabatan,
+                'pangkat' => $request->pangkat,
+                'golongan' => $request->golongan,
+                'tim' => $request->tim,
+                'no_hp' => $request->no_hp,
+                'nip' => $request->nip,
+            ]);
             return redirect()->route('admin.employee')
                 ->with('success', 'Employee created successfully.');
         }
     }
+
     public function destroy($user_id)
     {
         $user = User::find($user_id);
@@ -109,29 +108,31 @@ class EmployeeController extends Controller
             'tim' => 'required',
             'no_hp' => 'required',
             'nip' => 'required',
+            'name' => 'required', // Add 'name' field validation
         ]);
 
-            $user = User::find($user_id);
-            $employee = Pegawai::where('user_id', $user_id)->first();
-            $user->update(
-                [
-                    'name' => $request->name,
-                ]
-            );
+        $user = User::find($user_id);
+        $employee = Pegawai::where('user_id', $user_id)->first();
+        $user->update(
+            [
+                'name' => $request->name,
+            ]
+        );
 
-            $employee->update(
-                [
-                    'jabatan' => $request->jabatan,
-                    'pangkat' => $request->pangkat,
-                    'golongan' => $request->golongan,
-                    'tim' => $request->tim,
-                    'no_hp' => $request->no_hp,
-                    'nip' => $request->nip,
-                ]
-            );
+        $employee->update(
+            [
+                'nama_pegawai' => $request->name, // Update 'nama_pegawai' field
+                'jabatan' => $request->jabatan,
+                'pangkat' => $request->pangkat,
+                'golongan' => $request->golongan,
+                'tim' => $request->tim,
+                'no_hp' => $request->no_hp,
+                'nip' => $request->nip,
+            ]
+        );
 
-            return redirect()->route('admin.employee')
-                ->with('success', 'Employee updated successfully.');
+        return redirect()->route('admin.employee')
+            ->with('success', 'Employee updated successfully.');
     }
 
     public function upload(Request $request)
@@ -140,8 +141,15 @@ class EmployeeController extends Controller
             'excel_file' => 'required|mimes:xlsx,xls,csv',
         ]);
 
-        Excel::import(new PegawaiImport, $request->file('excel_file'));
+        try{
+            Excel::import(new PegawaiImport, $request->file('excel_file'));
+            return redirect()->route('admin.employee')->with('success', 'Employees imported successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.employee')->with('error', 'Error importing employees.');
+        }
 
-        return redirect()->route('admin.employee')->with('success', 'Employees imported successfully.');
+        // Excel::import(new PegawaiImport, $request->file('excel_file'));
+
+        // return redirect()->route('admin.employee')->with('success', 'Employees imported successfully.');
     }
 }

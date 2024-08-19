@@ -44,30 +44,10 @@
                 @foreach ($employees as $employee)
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            @php
-                                for(
-                                    $i = 0;
-                                    $i < count($users);
-                                    $i++
-                                ) {
-                                    if($users[$i]->id == $employee->user_id) {
-                                        echo $users[$i]->name;
-                                    }
-                                };
-                            @endphp
+                            {{ $employee->user->name }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            @php
-                                for(
-                                    $i = 0;
-                                    $i < count($users);
-                                    $i++
-                                ) {
-                                    if($users[$i]->id == $employee->user_id) {
-                                        echo $users[$i]->email;
-                                    }
-                                };
-                            @endphp
+                           {{ $employee->user->email }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $employee->nip }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $employee->jabatan }}</td>
