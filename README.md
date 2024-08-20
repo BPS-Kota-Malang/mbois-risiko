@@ -62,13 +62,6 @@ Sample Admin Template using Laravel, Breeze, Spatie, Tailwind Css (Dashboard Tem
    ```
    (optional) you can use /admin to explore the integrated prebuilt Tailwind Dashboard and its components
 
-
-## Watch the Setup Video
-
-Check out the setup video for the **"sadmin"** template here:
-
-[![Watch the video](https://img.youtube.com/vi/tged_ZWdS44/hqdefault.jpg)](https://youtu.be/tged_ZWdS44?si=vkpU-XDNEz_rH4b-)
-
 ## Useful Links
 
 - **Laravel and Breeze**: [Laravel Starter Kits - Breeze and Blade](https://laravel.com/docs/11.x/starter-kits#breeze-and-blade)
