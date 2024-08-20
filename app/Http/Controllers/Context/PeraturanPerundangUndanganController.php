@@ -1,14 +1,32 @@
 <?php
 
 namespace App\Http\Controllers\Context;
-
-use App\Http\Controllers\Controller;
 use App\Models\PeraturanPerundangUndangan;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class PeraturanPerundangUndanganController extends Controller
 {
-    public function storePeraturan(Request $request)
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
         $request->validate([
             'peraturan_perundang_undangan' => 'required|string|max:255',
@@ -23,7 +41,26 @@ class PeraturanPerundangUndanganController extends Controller
         return redirect()->route('admin.risk.context');
     }
 
-    public function updatePeraturan(Request $request, $id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
     {
         $request->validate([
             'peraturan_perundang_undangan' => 'required|string|max:255',
@@ -35,11 +72,13 @@ class PeraturanPerundangUndanganController extends Controller
             'peraturan_perundang_undangan' => $request->peraturan_perundang_undangan,
             'amanat' => $request->amanat,
         ]);
-
-        return redirect()->route('admin.risk.context')->with('success', 'Peraturan Perundang Undangan updated successfully.');
+        return redirect()->route('admin.risk.context');
     }
 
-    public function destroyPeraturan($id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
     {
         $peraturanPerundangUndangan = PeraturanPerundangUndangan::findOrFail($id);
         $peraturanPerundangUndangan->delete();

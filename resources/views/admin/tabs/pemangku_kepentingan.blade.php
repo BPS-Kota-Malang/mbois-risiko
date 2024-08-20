@@ -35,9 +35,9 @@
                                     {{ $pemangku->hubungan ?? '-' }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <a href="javascript:void(0)"
-                                        onclick="openEditPemangkuKepentinganModal('{{ route('admin.pemangku-kepentingan.update', $pemangku->id) }}', '{{ $pemangku->pemangku_kepentingan }}', '{{ $pemangku->kelompok_pemangku_kepentingan }}', '{{ $pemangku->hubungan ?? '' }}')"
+                                        onclick="openEditPemangkuKepentinganModal('{{ route('admin.pemangkukepentingan.update', $pemangku->id) }}', '{{ $pemangku->pemangku_kepentingan }}', '{{ $pemangku->kelompok_pemangku_kepentingan }}', '{{ $pemangku->hubungan ?? '' }}')"
                                         class="text-indigo-600 hover:text-indigo-900 ml-4">Edit</a>
-                                    <form action="{{ route('admin.pemangku-kepentingan.delete', $pemangku->id) }}"
+                                    <form action="{{ route('admin.pemangkukepentingan.destroy', $pemangku->id) }}"
                                         method="POST" class="inline ml-4"
                                         onsubmit="return confirm('Are you sure you want to delete this pemangku kepentingan?');">
                                         @csrf
@@ -70,7 +70,7 @@
                             <h2 class="text-xl font-bold">Tambah Pemangku Kepentingan</h2>
                             <button onclick="toggleModal('tambahpemangkuKepentinganModal')" class="text-gray-500 text-2xl ml-4">&times;</button>
                         </div>
-                        <form action="{{ route('admin.pemangku-kepentingan.store') }}" method="POST">
+                        <form action="{{ route('admin.pemangkukepentingan.store') }}" method="POST">
                             @csrf
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2" for="pemangku-kepentingan">Pemangku

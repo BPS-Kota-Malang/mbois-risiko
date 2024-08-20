@@ -31,9 +31,9 @@
                                     {{ $timProject->deskripsi ?? '-' }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <a href="javascript:void(0)"
-                                        onclick="openEditTeamProjectModal('{{ route('admin.tim-project.update', $timProject->id) }}', '{{ $timProject->nama_team }}', '{{ $timProject->deskripsi ?? '' }}')"
+                                        onclick="openEditTeamProjectModal('{{ route('admin.timproject.update', $timProject->id) }}', '{{ $timProject->nama_team }}', '{{ $timProject->deskripsi ?? '' }}')"
                                         class="text-indigo-600 hover:text-indigo-900 ml-4">Edit</a>
-                                    <form action="{{ route('admin.tim-project.delete', $timProject->id) }}"
+                                    <form action="{{ route('admin.timproject.destroy', $timProject->id) }}"
                                         method="POST" class="inline ml-4"
                                         onsubmit="return confirm('Are you sure you want to delete this tim project?');">
                                         @csrf
@@ -69,7 +69,7 @@
                             <button onclick="toggleTimProjectModal('tambah')"
                                 class="text-gray-500 text-2xl ml-4">&times;</button>
                         </div>
-                        <form action="{{ route('admin.tim-project.store') }}" method="POST">
+                        <form action="{{ route('admin.timproject.store') }}" method="POST">
                             @csrf
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2" for="nama_team">Nama Tim</label>

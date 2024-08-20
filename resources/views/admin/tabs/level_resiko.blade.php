@@ -52,10 +52,10 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <button class="text-blue-500 hover:text-blue-700"
-                                        onclick="openEditLevelResikoModal('{{ route('admin.level-resiko.update', $levelResikoItem->id) }}', '{{ $levelResikoItem->level_resiko }}', '{{ $levelResikoItem->besaran_min }}','{{ $levelResikoItem->besaran_max }}', '{{ $levelResikoItem->tindakan }}', '{{ $levelResikoItem->ket_warna }}')">
+                                        onclick="openEditLevelResikoModal('{{ route('admin.levelresiko.update', $levelResikoItem->id) }}', '{{ $levelResikoItem->level_resiko }}', '{{ $levelResikoItem->besaran_min }}','{{ $levelResikoItem->besaran_max }}', '{{ $levelResikoItem->tindakan }}', '{{ $levelResikoItem->ket_warna }}')">
                                         Edit
                                     </button>
-                                    <form action="{{ route('admin.level-resiko.delete', $levelResikoItem->id) }}"
+                                    <form action="{{ route('admin.level-resiko.destroy', $levelResikoItem->id) }}"
                                         method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
@@ -114,9 +114,9 @@
                                     {{ $matriksAnalisisResiko->id_level_resiko }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <button class="text-blue-500 hover:text-blue-700"
-                                        onclick="openEditMatriksAnalisisResikoModal('{{ route('admin.matriks-analisis-resiko.update', $matriksAnalisisResiko->id) }}', '{{ $matriksAnalisisResiko->id_level_kemungkinan }}', '{{ $matriksAnalisisResiko->id_level_dampak }}', '{{ $matriksAnalisisResiko->besaran_resiko }}', '{{ $matriksAnalisisResiko->id_level_resiko }}')">Edit</button>
+                                        onclick="openEditMatriksAnalisisResikoModal('{{ route('admin.matriksanalisisresiko.update', $matriksAnalisisResiko->id) }}', '{{ $matriksAnalisisResiko->id_level_kemungkinan }}', '{{ $matriksAnalisisResiko->id_level_dampak }}', '{{ $matriksAnalisisResiko->besaran_resiko }}', '{{ $matriksAnalisisResiko->id_level_resiko }}')">Edit</button>
                                     <form
-                                        action="{{ route('admin.matriks-analisis-resiko.delete', $matriksAnalisisResiko->id) }}"
+                                        action="{{ route('admin.matriksanalisisresiko.destroy', $matriksAnalisisResiko->id) }}"
                                         method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
@@ -134,7 +134,7 @@
         class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-lg shadow-lg max-w-sm w-full p-4">
             <h2 class="text-xl font-semibold">Tambah Level Resiko</h2>
-            <form action="{{ route('admin.level-resiko.store') }}" method="POST">
+            <form action="{{ route('admin.levelresiko.store') }}" method="POST">
                 @csrf
                 <div class="mt-4">
                     <label class="block text-sm font-medium text-gray-700">Level Resiko</label>
@@ -214,7 +214,7 @@
         class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-lg shadow-lg max-w-sm w-full p-4">
             <h2 class="text-xl font-semibold">Tambah Matriks Analisis Resiko</h2>
-            <form action="{{ route('admin.matriks-analisis-resiko.store') }}" method="POST">
+            <form action="{{ route('admin.matriksanalisisresiko.store') }}" method="POST">
                 @csrf
                 <div class="mt-4">
                     <label class="block text-sm font-medium text-gray-700">Level Kemungkinan</label>

@@ -42,9 +42,9 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <a href="javascript:void(0)"
-                                        onclick="openEditKategoriResikoModal('{{ route('admin.kategori-resiko.update', $kategori->id) }}', '{{ $kategori->deskripsi }}', '{{ $kategori->definisi }}')"
+                                        onclick="openEditKategoriResikoModal('{{ route('admin.kategoriresiko.update', $kategori->id) }}', '{{ $kategori->deskripsi }}', '{{ $kategori->definisi }}')"
                                         class="text-indigo-600 hover:text-indigo-900 ml-4">Edit</a>
-                                    <form action="{{ route('admin.kategori-resiko.delete', $kategori->id) }}"
+                                    <form action="{{ route('admin.kategoriresiko.destroy', $kategori->id) }}"
                                         method="POST" class="inline ml-4"
                                         onsubmit="return confirm('Are you sure you want to delete this kategori resiko?');">
                                         @csrf
@@ -66,7 +66,7 @@
                             <button onclick="toggleModal('tambahKategoriResikoModal')"
                                 class="text-gray-500 text-2xl ml-4">&times;</button>
                         </div>
-                        <form action="{{ route('admin.kategori-resiko.store') }}" method="POST">
+                        <form action="{{ route('admin.kategoriresiko.store') }}" method="POST">
                             @csrf
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2" for="deskripsi">Deskripsi</label>

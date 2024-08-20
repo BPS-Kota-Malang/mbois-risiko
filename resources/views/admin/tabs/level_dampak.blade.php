@@ -42,9 +42,9 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <a href="javascript:void(0)"
-                                        onclick="openEditLevelDampakModal('{{ route('admin.level-dampak.update', $leveldampak->id) }}', '{{ $leveldampak->level_dampak }}', '{{ $leveldampak->deskripsi }}')"
+                                        onclick="openEditLevelDampakModal('{{ route('admin.leveldampak.update', $leveldampak->id) }}', '{{ $leveldampak->level_dampak }}', '{{ $leveldampak->deskripsi }}')"
                                         class="text-indigo-600 hover:text-indigo-900 ml-4">Edit</a>
-                                    <form action="{{ route('admin.level-dampak.delete', $leveldampak->id) }}"
+                                    <form action="{{ route('admin.leveldampak.destroy', $leveldampak->id) }}"
                                         method="POST" class="inline ml-4"
                                         onsubmit="return confirm('Are you sure you want to delete this level dampak?');">
                                         @csrf
@@ -66,7 +66,7 @@
                             <button onclick="toggleModal('tambahLevelDampakModal')"
                                 class="text-gray-500 text-2xl ml-4">&times;</button>
                         </div>
-                        <form action="{{ route('admin.level-dampak.store') }}" method="POST">
+                        <form action="{{ route('admin.leveldampak.store') }}" method="POST">
                             @csrf
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2" for="level_dampak">Level Dampak</label>

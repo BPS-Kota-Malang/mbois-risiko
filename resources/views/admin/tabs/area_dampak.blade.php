@@ -36,9 +36,9 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <a href="javascript:void(0)"
-                                        onclick="openEditAreaDampakModal('{{ route('admin.area-dampak.update', $area->id) }}', '{{ $area->area_dampak }}')"
+                                        onclick="openEditAreaDampakModal('{{ route('admin.areadampak.update', $area->id) }}', '{{ $area->area_dampak }}')"
                                         class="text-indigo-600 hover:text-indigo-900 ml-4">Edit</a>
-                                    <form action="{{ route('admin.area-dampak.delete', $area->id) }}" method="POST"
+                                    <form action="{{ route('admin.areadampak.destroy', $area->id) }}" method="POST"
                                         class="inline ml-4"
                                         onsubmit="return confirm('Are you sure you want to delete this area dampak?');">
                                         @csrf
@@ -60,7 +60,7 @@
                             <button onclick="toggleModal('tambahAreaDampakModal')"
                                 class="text-gray-500 text-2xl ml-4">&times;</button>
                         </div>
-                        <form action="{{ route('admin.area-dampak.store') }}" method="POST">
+                        <form action="{{ route('admin.areadampak.store') }}" method="POST">
                             @csrf
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2" for="area_dampak">Area Dampak</label>

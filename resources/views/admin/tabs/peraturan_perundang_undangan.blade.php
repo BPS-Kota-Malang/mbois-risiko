@@ -38,9 +38,9 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <a href="javascript:void(0)"
-                                        onclick="openEditPPUModal('{{ route('admin.peraturan-perundang-undangan.update', $item->id) }}', '{{ $item->peraturan_perundang_undangan }}', '{{ $item->amanat }}')"
+                                        onclick="openEditPPUModal('{{ route('admin.peraturan.update', $item->id) }}', '{{ $item->peraturan_perundang_undangan }}', '{{ $item->amanat }}')"
                                         class="text-indigo-600 hover:text-indigo-900 ml-4">Edit</a>
-                                    <form action="{{ route('admin.peraturan-perundang-undangan.delete', $item->id) }}"
+                                    <form action="{{ route('admin.peraturan.destroy', $item->id) }}"
                                         method="POST" class="inline ml-4"
                                         onsubmit="return confirm('Are you sure you want to delete this item?');">
                                         @csrf
@@ -64,7 +64,7 @@
                 <h2 class="text-xl font-bold">Tambah Peraturan Perundang-undangan</h2>
                 <button onclick="toggleModal('tambahperaturanModal')" class="text-gray-500 text-2xl ml-4">&times;</button>
             </div>
-            <form action="{{ route('admin.peraturan-perundang-undangan.store') }}" method="POST">
+            <form action="{{ route('admin.peraturan.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
                     <label class="block text-gray-700 mb-2" for="peraturan-perundang-undangan">Peraturan

@@ -54,6 +54,7 @@ class ContextController extends Controller
             $kriteriaDampakQuery->where('id_area_dampak', $request->input('area_dampak'));
         }
 
+
         if ($request->filled('level_dampak')) {
             $kriteriaDampakQuery->where('id_level_dampak', $request->input('level_dampak'));
         }

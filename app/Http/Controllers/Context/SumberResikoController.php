@@ -1,17 +1,33 @@
 <?php
 
 namespace App\Http\Controllers\Context;
-
-use App\Http\Controllers\Controller;
 use App\Models\SumberResiko;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class SumberResikoController extends Controller
 {
-    // Menyimpan data Sumber Resiko baru
-    public function storeSumberResiko(Request $request)
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        // Validasi data yang diterima dari request
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
         $request->validate([
             'kode' => 'required|string|max:255',
             'sumber_resiko' => 'required|string|max:255',
@@ -27,8 +43,26 @@ class SumberResikoController extends Controller
         return redirect()->route('admin.risk.context')->with('success', 'Sumber Resiko created successfully.');
     }
 
-    // Memperbarui data Sumber Resiko yang sudah ada
-    public function updateSumberResiko(Request $request, $id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
     {
         // Validasi data yang diterima dari request
         $request->validate([
@@ -47,8 +81,10 @@ class SumberResikoController extends Controller
         return redirect()->route('admin.risk.context')->with('success', 'Sumber Resiko updated successfully.');
     }
 
-    // Menghapus data Sumber Resiko
-    public function destroySumberResiko($id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
     {
         // Mencari data berdasarkan ID dan menghapusnya
         $sumberResiko = SumberResiko::findOrFail($id);
@@ -56,5 +92,6 @@ class SumberResikoController extends Controller
 
         // Redirect ke rute context dengan pesan sukses
         return redirect()->route('admin.risk.context')->with('success', 'Sumber Resiko deleted successfully.');
+
     }
 }

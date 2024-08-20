@@ -50,134 +50,55 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    @for ($i = 0; $i < 5; $i++)
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $i + 1 }}</td>
+                    <tr>
+                            <td class="px-6 py-4 whitespace-nowrap"></td>
                             <td class="px-6 py-4 whitespace-nowrap">4</td>
                             <td class="px-6 py-4 whitespace-nowrap">18</td>
                             <td class="px-6 py-4 whitespace-nowrap">Inda tidak fokus saat pelatihan</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <select class="form-select pr-8 py-2 border">
-                                    <option>Negatif</option>
-                                    <option>Positif</option>
+                                    {{-- @foreach ($jenisResiko as $jenis)
+                                        <option>{{ $jenis->jenis_resiko }}</option>
+                                    @endforeach --}}
+                                </select>
                                 </select>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <select class="form-select pr-8 py-2 border">
-                                    <option>Internal</option>
-                                    <option>External</option>
+                                    {{-- @foreach ($SumberResiko as $sumber)
+                                        <option>{{ $sumber->sumber_resiko }}</option>
+                                    @endforeach --}}
                                 </select>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <select class="form-select pr-8 py-2 border">
-                                    <option>Risiko Kepatuhan</option>
-                                    <option>Risiko Operasional</option>
+                                    {{-- @foreach ($kategoriResiko as $kategori)
+                                        <option>{{ $kategori->deskripsi }}</option>
+                                    @endforeach --}}
+                                </select>
                                 </select>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">Area Dampak</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <select class="form-select pr-8 py-2 border">
+                                    {{-- @foreach ($areaDampak as $area)
+                                        <option>{{ $area->area_dampak }}</option>
+                                    @endforeach --}}
+                                </select>
+                                </select>
+                                </select>
+                            </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <button class="bg-blue-500 text-white px-4 py-2 rounded" id="openModal">Pilih Penyebab</button>
                             </td>
-                            <!-- Modal -->
-                            <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center" id="penyebabModal">
-                                <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
-
-                                <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
-
-                                    <div class="modal-content py-4 text-left px-6">
-                                        <!-- Title -->
-                                        <div class="flex justify-between items-center pb-3">
-                                            <p class="text-2xl font-bold">Pilih Penyebab</p>
-                                            <div class="modal-close cursor-pointer z-50" id="closeModal">
-                                                <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-                                                    <path d="M14.53 3.47a.75.75 0 00-1.06 0L9 7.94 4.53 3.47a.75.75 0 00-1.06 1.06L7.94 9l-4.47 4.47a.75.75 0 001.06 1.06L9 10.06l4.47 4.47a.75.75 0 001.06-1.06L10.06 9l4.47-4.47a.75.75 0 000-1.06z"></path>
-                                                </svg>
-                                            </div>
-                                        </div>
-
-                                        <!-- Body -->
-                                        <div>
-                                            <button class="bg-blue-500 text-white px-4 py-2 rounded-full border border-blue-500">Tambah Penyebab</button>
-                                        </div>
-                                        <div class="mt-4">
-                                            <label class="block text-gray-700 mb-2" for="penyebab">Data Penyebab</label>
-                                            <div class="flex items-center mb-2">
-                                                <input type="checkbox" id="penyebab1" class="mr-2">
-                                                <label for="penyebab1">Penyebab 1</label>
-                                            </div>
-                                            <div class="flex items-center mb-2">
-                                                <input type="checkbox" id="penyebab2" class="mr-2">
-                                                <label for="penyebab2">Penyebab 2</label>
-                                            </div>
-                                            <div class="flex items-center mb-2">
-                                                <input type="checkbox" id="penyebab3" class="mr-2">
-                                                <label for="penyebab3">Penyebab 3</label>
-                                            </div>
-                                            <!-- Add more data penyebab here -->
-                                        </div>
-
-                                        <!-- Footer -->
-                                        <div class="flex justify-end pt-2">
-                                            <button class="focus:outline-none modal-close px-4 bg-gray-400 p-3 rounded-lg text-black hover:bg-gray-300" id="closeModal2">Tutup</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <button class="bg-blue-500 text-white px-4 py-2 rounded" id="openModal2">Pilih Dampak</button>
                             </td>
-                            <!-- Modal -->
-                            <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center" id="dampakModal">
-                                <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
-
-                                <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
-
-                                    <div class="modal-content py-4 text-left px-6">
-                                        <!-- Title -->
-                                        <div class="flex justify-between items-center pb-3">
-                                            <p class="text-2xl font-bold">Pilih Dampak</p>
-                                            <div class="modal-close cursor-pointer z-50" id="closeModal2">
-                                                <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-                                                    <path d="M14.53 3.47a.75.75 0 00-1.06 0L9 7.94 4.53 3.47a.75.75 0 00-1.06 1.06L7.94 9l-4.47 4.47a.75.75 0 001.06 1.06L9 10.06l4.47 4.47a.75.75 0 001.06-1.06L10.06 9l4.47-4.47a.75.75 0 000-1.06z"></path>
-                                                </svg>
-                                            </div>
-                                        </div>
-
-                                        <!-- Body -->
-                                        <div>
-                                            <button class="bg-blue-500 text-white px-4 py-2 rounded-full border border-blue-500">Tambah Dampak</button>
-                                        </div>
-                                        <div class="mt-4">
-                                            <label class="block text-gray-700 mb-2" for="penyebab">Data Dampak</label>
-                                            <div class="flex items-center mb-2">
-                                                <input type="checkbox" id="penyebab1" class="mr-2">
-                                                <label for="penyebab1">Dampak 1</label>
-                                            </div>
-                                            <div class="flex items-center mb-2">
-                                                <input type="checkbox" id="penyebab2" class="mr-2">
-                                                <label for="penyebab2">Dampak 2</label>
-                                            </div>
-                                            <div class="flex items-center mb-2">
-                                                <input type="checkbox" id="penyebab3" class="mr-2">
-                                                <label for="penyebab3">Dampak 3</label>
-                                            </div>
-                                            <!-- Add more data penyebab here -->
-                                        </div>
-
-                                        <!-- Footer -->
-                                        <div class="flex justify-end pt-2">
-                                            <button class="focus:outline-none modal-close px-4 bg-gray-400 p-3 rounded-lg text-black hover:bg-gray-300" id="closeModal2">Tutup</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <button class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
                                 <button class="bg-blue-500 text-white px-2 py-1 rounded">Edit</button>
                                 <button class="bg-green-500 text-white px-2 py-1 rounded">Save</button>
                             </td>
                         </tr>
-                    @endfor
                 </tbody>
             </table>
         </div>
@@ -192,28 +113,266 @@
         </div>
     </div>
 
-    <!-- JavaScript to handle refresh button and search functionality -->
+   <!-- Modal Penyebab -->
+   <div class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center hidden"  id="penyebabModal">
+    <div class="modal-overlay absolute w-full h-full bg-blue-900 opacity-50"></div>
+    <div class="modal-container bg-gray-100 w-11/12 md:max-w-md mx-auto rounded-lg shadow-lg z-50 overflow-y-auto">
+    <div class="modal-content py-4 text-left px-6">
+            <!-- Title -->
+            <div class="flex justify-between items-center pb-2">
+                <p class="text-xl font-bold">Pilih Penyebab</p>
+                <div class="modal-close cursor-pointer z-50" id="closeModal">
+                    <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 18 18">
+                        <path d="M14.53 3.47a.75.75 0 00-1.06 0L9 7.94 4.53 3.47a.75.75 0 00-1.06 1.06L7.94 9l-4.47 4.47a.75.75 0 001.06 1.06L9 10.06l4.47 4.47a.75.75 0 001.06-1.06L10.06 9l4.47-4.47a.75.75 0 000-1.06z"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="flex justify-between items-center mb-4">
+                <button id="addCauseBtn" class="bg-blue-500 text-white px-4 py-2 rounded-full">Tambah Penyebab</button>
+                <div class="relative text-gray-600">
+                    <input type="search" id="searchInput" name="search" placeholder="Cari" class="bg-white h-8 px-3 pr-8 rounded-full text-sm focus:outline-none">
+                    <button type="submit" class="absolute right-0 top-0 mt-2 mr-3">
+                        <svg class="text-gray-600 h-3 w-3 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;">
+                            <path d="M55.146,51.887L41.588,38.329c3.486-4.146,5.594-9.43,5.594-15.17C47.182,10.366,36.815,0,24.09,0 C11.366,0,1,10.366,1,23.159c0,12.794,10.366,23.159,23.159,23.159c5.74,0,11.023-2.108,15.17-5.594l13.558,13.558 c0.391,0.391,0.902,0.586,1.414,0.586s1.023-0.195,1.414-0.586C55.928,53.933,55.928,52.669,55.146,51.887z M24.159,40.318 c-9.449,0-17.159-7.71-17.159-17.159S14.71,6,24.159,6s17.159,7.71,17.159,17.159S33.608,40.318,24.159,40.318z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <table id="causes-table" class="min-w-full bg-white text-sm">
+                    <thead>
+                        <tr>
+                            <th class="px-3 py-2">CEK</th>
+                            <th class="px-3 py-2">PENYEBAB</th>
+                            <th class="px-3 py-2">STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-gray-100">
+                            <td class="border px-3 py-1">
+                                <input type="checkbox">
+                            </td>
+                            <td class="border px-3 py-1">Lorem ipsum dolor sit amet consectetur.</td>
+                            <td class="border px-3 py-1">Lorem</td>
+                        </tr>
+                        <tr>
+                            <td class="border px-3 py-1">
+                                <input type="checkbox">
+                            </td>
+                            <td class="border px-3 py-1">Lorem ipsum dolor sit amet consectetur.</td>
+                            <td class="border px-3 py-1">Lorem</td>
+                        </tr>
+                        <tr class="bg-gray-100">
+                            <td class="border px-3 py-1">
+                                <input type="checkbox">
+                            </td>
+                            <td class="border px-3 py-1">Lorem ipsum dolor sit amet consectetur.</td>
+                            <td class="border px-3 py-1">Lorem</td>
+                        </tr>
+                        <tr>
+                            <td class="border px-3 py-1">
+                                <input type="checkbox">
+                            </td>
+                            <td class="border px-3 py-1">Lorem ipsum dolor sit amet consectetur.</td>
+                            <td class="border px-3 py-1">Lorem</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+                        <!-- Modal "Tambah Penyebab" -->
+                        <div id="causeModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                            <div class="flex items-center justify-center min-h-screen px-4">
+                                <div class="bg-white rounded-lg shadow-xl overflow-hidden max-w-sm w-full">
+                                    <div class="px-4 py-3 border-b border-gray-200">
+                                        <h3 class="text-lg leading-6 font-medium text-gray-900">Tambah Penyebab</h3>
+                                    </div>
+                                    <div class="px-4 py-5">
+                                        <label for="causeName" class="block text-sm font-medium text-gray-700">Nama Penyebab</label>
+                                        <input type="text" id="causeName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                        <label for="causeStatus" class="block text-sm font-medium text-gray-700 mt-4">Status</label>
+                                        <input type="text" id="causeStatus" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                    </div>
+                                    <div class="px-4 py-3 bg-gray-50 text-right">
+                                        <button id="cancelCauseBtn" class="bg-red-500 text-white px-4 py-2 rounded-md">Batal</button>
+                                        <button id="saveCauseBtn" class="bg-blue-500 text-white px-4 py-2 rounded-md">Simpan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+           <!-- Footer -->
+           <div class="flex justify-end pt-2">
+            <button class="focus:outline-none modal-close px-4 bg-red-500 p-3 rounded-lg text-white hover:bg-gray-300" id="closeModal2">Tutup</button>
+        </div>
+    </div>
+</div>
+</div>
+
+                <!-- Modal "Tambah Dampak" -->
+                <div id="addImpactModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                    <div class="flex items-center justify-center min-h-screen px-4">
+                        <div class="bg-white rounded-lg shadow-xl overflow-hidden max-w-sm w-full">
+                            <div class="px-4 py-3 border-b border-gray-200">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900">Tambah Dampak</h3>
+                            </div>
+                            <div class="px-4 py-5">
+                                <label for="impactName" class="block text-sm font-medium text-gray-700">Nama Dampak</label>
+                                <input type="text" id="impactName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                            </div>
+                            <div class="px-4 py-3 bg-gray-50 text-right">
+                                <button id="cancelImpactBtn" class="bg-red-500 text-white px-4 py-2 rounded-md">Batal</button>
+                                <button id="saveImpactBtn" class="bg-blue-500 text-white px-4 py-2 rounded-md">Simpan</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Modal Dampak -->
+                <div class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center hidden" id="dampakModal">
+                    <div class="modal-overlay absolute w-full h-full bg-blue-900 opacity-50"></div>
+                    <div class="modal-container bg-gray-100 w-11/12 md:max-w-md mx-auto rounded-lg shadow-lg z-50 overflow-y-auto">
+                        <div class="modal-content py-4 text-left px-6">
+                            <!-- Title -->
+                            <div class="flex justify-between items-center pb-3">
+                                <p class="text-2xl font-bold text-black">Pilih Dampak</p>
+                                <div class="modal-close cursor-pointer z-50" id="closeModalDampak">
+                                    <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                                        <path d="M14.53 3.47a.75.75 0 00-1.06 0L9 7.94 4.53 3.47a.75.75 0 00-1.06 1.06L7.94 9l-4.47 4.47a.75.75 0 001.06 1.06L9 10.06l4.47 4.47a.75.75 0 001.06-1.06L10.06 9l4.47-4.47a.75.75 0 000-1.06z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <!-- Body -->
+                            <div class="flex justify-between items-center mb-4">
+                                <button id="openAddImpactModal" class="bg-blue-500 text-white px-4 py-2 rounded-full">Tambah Dampak</button>
+
+                                <div class="relative text-gray-300">
+                                    <input type="search" name="search" placeholder="Cari" class="bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none">
+                                    <button type="submit" class="absolute right-0 top-0 mt-3 mr-4">
+                                        <svg class="text-gray-500 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" version="1.1" id="Capa_1" x="0px" y="0px"
+                                            viewBox="0 0 56.966 56.966"
+                                            style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve"
+                                            width="512px" height="512px">
+                                            <path d="M55.146,51.887L41.588,38.329c3.486-4.146,5.594-9.43,5.594-15.17C47.182,10.366,36.815,0,24.09,0
+                                            C11.366,0,1,10.366,1,23.159c0,12.794,10.366,23.159,23.159,23.159c5.74,0,11.023-2.108,15.17-5.594l13.558,13.558
+                                            c0.391,0.391,0.902,0.586,1.414,0.586s1.023-0.195,1.414-0.586C55.928,53.933,55.928,52.669,55.146,51.887z M24.159,40.318
+                                            c-9.449,0-17.159-7.71-17.159-17.159S14.71,6,24.159,6s17.159,7.71,17.159,17.159S33.608,40.318,24.159,40.318z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+
+                            <div class="mt-4">
+                                <table class="min-w-full bg-white">
+                                    <thead>
+                                        <tr>
+                                            <th class="px-4 py-2">CEK</th>
+                                            <th class="px-4 py-2">DAMPAK</th>
+                                            <th class="px-4 py-2">STATUS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-gray-100">
+                                            <td class="border px-4 py-2">
+                                                <input type="checkbox">
+                                            </td>
+                                            <td class="border px-4 py-2">Lorem ipsum dolor sit amet consectetur.</td>
+                                            <td class="border px-4 py-2">Lorem</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border px-4 py-2">
+                                                <input type="checkbox">
+                                            </td>
+                                            <td class="border px-4 py-2">Lorem ipsum dolor sit amet consectetur.</td>
+                                            <td class="border px-4 py-2">Lorem</td>
+                                        </tr>
+                                        <tr class="bg-gray-100">
+                                            <td class="border px-4 py-2">
+                                                <input type="checkbox">
+                                            </td>
+                                            <td class="border px-4 py-2">Lorem ipsum dolor sit amet consectetur.</td>
+                                            <td class="border px-4 py-2">Lorem</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border px-4 py-2">
+                                                <input type="checkbox">
+                                            </td>
+                                            <td class="border px-4 py-2">Lorem ipsum dolor sit amet consectetur.</td>
+                                            <td class="border px-4 py-2">Lorem</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        document.getElementById('refreshBtn').addEventListener('click', function() {
-            location.reload();
-        });
+        // Tampilkan modal "Pilih Penyebab"
+    document.getElementById('openModal').addEventListener('click', function() {
+        document.getElementById('penyebabModal').classList.remove('hidden');
+    });
 
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const searchValue = this.value.toLowerCase();
-            const rows = document.querySelectorAll('#riskTable tbody tr');
+    // Tutup modal "Pilih Penyebab"
+    document.getElementById('closeModal').addEventListener('click', function() {
+        document.getElementById('penyebabModal').classList.add('hidden');
+    });
 
-            rows.forEach(row => {
-                const cells = row.querySelectorAll('td');
-                let isVisible = false;
+    // Tampilkan modal "Tambah Penyebab"
+    document.getElementById('addCauseBtn').addEventListener('click', function() {
+        document.getElementById('causeModal').classList.remove('hidden');
+    });
 
-                cells.forEach(cell => {
-                    if (cell.textContent.toLowerCase().includes(searchValue)) {
-                        isVisible = true;
-                    }
-                });
+    // Tutup modal "Tambah Penyebab"
+    document.getElementById('cancelCauseBtn').addEventListener('click', function() {
+        document.getElementById('causeModal').classList.add('hidden');
+    });
 
-                row.style.display = isVisible ? '' : 'none';
+    // Simpan penyebab
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('saveCauseBtn').addEventListener('click', function() {
+            // Ambil data yang akan disimpan
+            var penyebab = document.getElementById('causeName').value;
+            var status = document.getElementById('causeStatus').value;
+
+            // Kirim permintaan AJAX
+            fetch('{{ route('savePenyebab') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ penyebab: penyebab, status: status })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                // Sembunyikan modal setelah berhasil disimpan
+                document.getElementById('causeModal').classList.add('hidden');
+                // Kosongkan input
+                document.getElementById('causeName').value = '';
+                document.getElementById('causeStatus').value = '';
+            })
+            .catch(error => {
+                console.error('Error:', error);
             });
         });
+
+        document.getElementById('cancelCauseBtn').addEventListener('click', function() {
+            // Sembunyikan modal saat tombol Batal diklik
+            document.getElementById('causeModal').classList.add('hidden');
+        });
+    });
     </script>
+
 </x-admin-layout>

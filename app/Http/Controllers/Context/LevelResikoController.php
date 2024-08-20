@@ -1,14 +1,32 @@
 <?php
 
 namespace App\Http\Controllers\Context;
-
-use App\Http\Controllers\Controller;
 use App\Models\LevelResiko;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class LevelResikoController extends Controller
 {
-    public function storeLevelResiko(Request $request)
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
         $request->validate([
             'level_resiko' => 'required|string|max:255',
@@ -29,7 +47,26 @@ class LevelResikoController extends Controller
         return redirect()->route('admin.risk.context')->with('success', 'Level Resiko created successfully.');
     }
 
-    public function updateLevelResiko(Request $request, $id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
     {
         $request->validate([
             'level_resiko' => 'required|string|max:255',
@@ -54,9 +91,13 @@ class LevelResikoController extends Controller
         ]);
 
         return redirect()->route('admin.risk.context')->with('success', 'Level Resiko updated successfully.');
+
     }
 
-    public function destroyLevelResiko($id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
     {
         $levelResiko = LevelResiko::find($id);
 

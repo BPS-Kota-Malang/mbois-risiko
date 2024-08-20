@@ -36,9 +36,9 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <a href="javascript:void(0)"
-                                        onclick="openEditLevelKemungkinanModal('{{ route('admin.level-kemungkinan.update', $level->id) }}', '{{ $level->level_kemungkinan }}')"
+                                        onclick="openEditLevelKemungkinanModal('{{ route('admin.levelkemungkinan.update', $level->id) }}', '{{ $level->level_kemungkinan }}')"
                                         class="text-indigo-600 hover:text-indigo-900 ml-4">Edit</a>
-                                    <form action="{{ route('admin.level-kemungkinan.delete', $level->id) }}"
+                                    <form action="{{ route('admin.levelkemungkinan.destroy', $level->id) }}"
                                         method="POST" class="inline ml-4"
                                         onsubmit="return confirm('Are you sure you want to delete this level kemungkinan?');">
                                         @csrf
@@ -60,7 +60,7 @@
                             <button onclick="toggleModal('tambahLevelKemungkinanModal')"
                                 class="text-gray-500 text-2xl ml-4">&times;</button>
                         </div>
-                        <form action="{{ route('admin.level-kemungkinan.store') }}" method="POST">
+                        <form action="{{ route('admin.levelkemungkinan.store') }}" method="POST">
                             @csrf
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2" for="level_kemungkinan">Level

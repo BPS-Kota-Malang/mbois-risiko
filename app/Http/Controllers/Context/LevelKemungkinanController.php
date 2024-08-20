@@ -1,14 +1,32 @@
 <?php
 
 namespace App\Http\Controllers\Context;
-
-use App\Http\Controllers\Controller;
 use App\Models\LevelKemungkinan;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class LevelKemungkinanController extends Controller
 {
-    public function storeLevelKemungkinan(Request $request)
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
         $request->validate([
             'level_kemungkinan' => 'required|string|max:255',
@@ -21,7 +39,26 @@ class LevelKemungkinanController extends Controller
         return redirect()->route('admin.risk.context')->with('success', 'Level Kemungkinan created successfully.');
     }
 
-    public function updateLevelKemungkinan(Request $request, $id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
     {
         $request->validate([
             'level_kemungkinan' => 'required|string|max:255',
@@ -35,7 +72,10 @@ class LevelKemungkinanController extends Controller
         return redirect()->route('admin.risk.context')->with('success', 'Level Kemungkinan updated successfully.');
     }
 
-    public function destroyLevelKemungkinan($id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
     {
         $levelKemungkinan = LevelKemungkinan::findOrFail($id);
         $levelKemungkinan->delete();

@@ -1,11 +1,9 @@
     <?php
-
     use App\Http\Controllers\ProfileController;
     use App\Http\Controllers\Admin\UserController;
     use App\Http\Controllers\ContextController;
-    use App\Http\Controllers\Context\PeraturanPerundangUndanganController;
     use App\Http\Controllers\Admin\RoleController;
-    use App\Http\Controllers\Admin\PermissionController;
+    use App\Http\Controllers\Context\PemangkuKepentinganController;
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\RiskController;
     use App\Http\Controllers\Context\TimProjectController;
@@ -19,9 +17,9 @@
     use App\Http\Controllers\Context\KriteriaDampakController;
     use App\Http\Controllers\Context\LevelResikoController;
     use App\Http\Controllers\Context\MatriksAnalisisResikoController;
-    use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\Context\PeraturanPerundangUndanganController;
+use App\Http\Controllers\EmployeeController;
     use App\Http\Controllers\IdentificationController;
-use App\Http\Controllers\InternController;
 
 
 
@@ -29,11 +27,6 @@ use App\Http\Controllers\InternController;
     Route::get('/', function () {
         return view('auth.login');
     });
-
-    Route::middleware(['auth', 'verified'])->group(function () {
-        Route::get('/admin/risk/context', [ContextController::class, 'index'])->name('admin.risk.context');
-    });
-
 
     Route::middleware('auth')->group(function () {
         // Sidebar
@@ -48,79 +41,22 @@ use App\Http\Controllers\InternController;
         Route::get('/admin/risk/evaluation', [RiskController::class, 'evaluation'])->name('admin.risk.evaluation');
         Route::get('/admin/risk/action_plan', [RiskController::class, 'actionPlan'])->name('admin.risk.action_plan');
 
-        // Context - Pemangku Kepentingan
-        Route::post('/admin/pemangku-kepentingan', [ContextController::class, 'storePemangkuKepentingan'])->name('admin.pemangku-kepentingan.store');
-        Route::put('/admin/pemangku-kepentingan/{id}', [ContextController::class, 'updatePemangkuKepentingan'])->name('admin.pemangku-kepentingan.update');
-        Route::delete('/admin/pemangku-kepentingan/{id}', [ContextController::class, 'destroyPemangkuKepentingan'])->name('admin.pemangku-kepentingan.delete');
+        // Context
+        Route::resource('/pemangkukepentingan', PemangkuKepentinganController::class, ['as' => 'admin']);
+        Route::resource('/peraturan', PeraturanPerundangUndanganController::class, ['as' => 'admin']);
+        Route::resource('/timproject', TimProjectController::class, ['as' => 'admin']);
+        Route::resource('/jenisresiko', JenisResikoController::class, ['as' => 'admin']);
+        Route::resource('/sumberresiko', SumberResikoController::class, ['as' => 'admin']);
+        Route::resource('/kategoriresiko', KategoriResikoController::class, ['as' => 'admin']);
+        Route::resource('/areadampak', AreaDampakController::class, ['as' => 'admin']);
+        Route::resource('/levelkemungkinan', LevelKemungkinanController::class, ['as' => 'admin']);
+        Route::resource('/leveldampak', LevelDampakController::class, ['as' => 'admin']);
+        Route::resource('/kriteriakemungkinan', KriteriaKemungkinanController::class, ['as' => 'admin']);
+        Route::resource('/kriteriadampak', KriteriaDampakController::class, ['as' => 'admin']);
+        Route::resource('/levelresiko', LevelResikoController::class, ['as' => 'admin']);
+        Route::resource('/matriksanalisisresiko', MatriksAnalisisResikoController::class, ['as' => 'admin']);
 
-        // Context - Peraturan Perundang-undangan
-        Route::post('/admin/peraturan-perundang-undangan', [PeraturanPerundangUndanganController::class, 'storePeraturan'])->name('admin.peraturan-perundang-undangan.store');
-        Route::put('/admin/peraturan-perundang-undangan/{id}', [PeraturanPerundangUndanganController::class, 'updatePeraturan'])->name('admin.peraturan-perundang-undangan.update');
-        Route::delete('/admin/peraturan-perundang-undangan/{id}', [PeraturanPerundangUndanganController::class, 'destroyPeraturan'])->name('admin.peraturan-perundang-undangan.delete');
 
-        // Context - Tim Project
-        Route::post('/admin/tim-project', [TimProjectController::class, 'store'])->name('admin.tim-project.store');
-        Route::put('/admin/tim-project/{id}', [TimProjectController::class, 'update'])->name('admin.tim-project.update');
-        Route::delete('/admin/tim-project/{id}', [TimProjectController::class, 'destroy'])->name('admin.tim-project.delete');
-
-        // // Context - Jenis Resiko
-        Route::post('/admin/jenis-resiko', [JenisResikoController::class, 'storeJenisResiko'])->name('admin.jenis-resiko.store');
-        Route::put('/admin/jenis-resiko/{id}', [JenisResikoController::class, 'updateJenisResiko'])->name('admin.jenis-resiko.update');
-        Route::delete('/admin/jenis-resiko/{id}', [JenisResikoController::class, 'destroyJenisResiko'])->name('admin.jenis-resiko.delete');
-
-        // // Context - Sumber Resiko
-        Route::post('/admin/sumber-resiko', [SumberResikoController::class, 'storeSumberResiko'])->name('admin.sumber-resiko.store');
-        Route::put('/admin/sumber-resiko/{id}', [SumberResikoController::class, 'updateSumberResiko'])->name('admin.sumber-resiko.update');
-        Route::delete('/admin/sumber-resiko/{id}', [SumberResikoController::class, 'destroySumberResiko'])->name('admin.sumber-resiko.delete');
-
-        // // Context - Kategori Resiko
-        Route::post('/admin/kategori-resiko', [KategoriResikoController::class, 'storeKategoriResiko'])->name('admin.kategori-resiko.store');
-        Route::put('/admin/kategori-resiko/{id}', [KategoriResikoController::class, 'updateKategoriResiko'])->name('admin.kategori-resiko.update');
-        Route::delete('/admin/kategori-resiko/{id}', [KategoriResikoController::class, 'destroyKategoriResiko'])->name('admin.kategori-resiko.delete');
-
-        // // Context - Area Dampak
-        Route::post('/admin/area-dampak', [AreaDampakController::class, 'storeAreaDampak'])->name('admin.area-dampak.store');
-        Route::put('/admin/area-dampak/{id}', [AreaDampakController::class, 'updateAreaDampak'])->name('admin.area-dampak.update');
-        Route::delete('/admin/area-dampak/{id}', [AreaDampakController::class, 'destroyAreaDampak'])->name('admin.area-dampak.delete');
-
-        // // Context - Level Kemungkinan
-        Route::post('/admin/level-kemungkinan', [LevelKemungkinanController::class, 'storeLevelKemungkinan'])->name('admin.level-kemungkinan.store');
-        Route::put('/admin/level-kemungkinan/{id}', [LevelKemungkinanController::class, 'updateLevelKemungkinan'])->name('admin.level-kemungkinan.update');
-        Route::delete('/admin/level-kemungkinan/{id}', [LevelKemungkinanController::class, 'destroyLevelKemungkinan'])->name('admin.level-kemungkinan.delete');
-
-        // // Context - Level Dampak
-        Route::post('/admin/level-dampak', [LevelDampakController::class, 'storeLevelDampak'])->name('admin.level-dampak.store');
-        Route::put('/admin/level-dampak/{id}', [LevelDampakController::class, 'updateLevelDampak'])->name('admin.level-dampak.update');
-        Route::delete('/admin/level-dampak/{id}', [LevelDampakController::class, 'destroyLevelDampak'])->name('admin.level-dampak.delete');
-
-        // // Context - Kriteria Kemungkinan
-        Route::post('/admin/kriteria-kemungkinan', [KriteriaKemungkinanController::class, 'storeKriteriaKemungkinan'])->name('admin.kriteria-kemungkinan.store');
-        Route::put('/admin/kriteria-kemungkinan/{id}', [KriteriaKemungkinanController::class, 'updateKriteriaKemungkinan'])->name('admin.kriteria-kemungkinan.update');
-        Route::delete('/admin/kriteria-kemungkinan/{id}', [KriteriaKemungkinanController::class, 'destroyKriteriaKemungkinan'])->name('admin.kriteria-kemungkinan.delete');
-
-        // // Context - Kriteria Dampak
-        Route::post('/admin/kriteria-dampak', [KriteriaDampakController::class, 'storeKriteriaDampak'])->name('admin.kriteria-dampak.store');
-        Route::put('/admin/kriteria-dampak/{id}', [KriteriaDampakController::class, 'updateKriteriaDampak'])->name('admin.kriteria-dampak.update');
-        Route::delete('/admin/kriteria-dampak/{id}', [KriteriaDampakController::class, 'destroyKriteriaDampak'])->name('admin.kriteria-dampak.delete');
-
-        // Context - Level Resiko
-        Route::post('/admin/level-resiko', [LevelResikoController::class, 'storeLevelResiko'])->name('admin.level-resiko.store');
-        Route::put('/admin/level-resiko/{id}', [LevelResikoController::class, 'updateLevelResiko'])->name('admin.level-resiko.update');
-        Route::delete('/admin/level-resiko/{id}', [LevelResikoController::class, 'destroyLevelResiko'])->name('admin.level-resiko.delete');
-
-        Route::post('/admin/matriks-analisis-resiko', [MatriksAnalisisResikoController::class, 'storeMatriksAnalisisResiko'])->name('admin.matriks-analisis-resiko.store');
-        Route::put('/admin/matriks-analisis-resiko/{id}', [MatriksAnalisisResikoController::class, 'updateMatriksAnalisisResiko'])->name('admin.matriks-analisis-resiko.update');
-        Route::delete('/admin/matriks-analisis-resiko/{id}', [MatriksAnalisisResikoController::class, 'destroyMatriksAnalisisResiko'])->name('admin.matriks-analisis-resiko.delete');
-
-        // // Context - Selera Resiko
-        // Route::post('/admin/selera-resiko', [SeleraResikoController::class, 'store'])->name('admin.selera-resiko.store');
-        // Route::put('/admin/selera-resiko/{id}', [SeleraResikoController::class, 'update'])->name('admin.selera-resiko.update');
-        // Route::delete('/admin/selera-resiko/{id}', [SeleraResikoController::class, 'destroy'])->name('admin.selera-resiko.delete');
-
-        // // Context - Opsi Penanganan
-        // Route::post('/admin/opsi-penanganan', [OpsiPenangananController::class, 'store'])->name('admin.opsi-penanganan.store');
-        // Route::put('/admin/opsi-penanganan/{id}', [OpsiPenangananController::class, 'update'])->name('admin.opsi-penanganan.update');
-        // Route::delete('/admin/opsi-penanganan/{id}', [OpsiPenangananController::class, 'destroy'])->name('admin.opsi-penanganan.delete');
     });
 
 
@@ -139,7 +75,6 @@ use App\Http\Controllers\InternController;
     require __DIR__ . '/auth.php';
 
     Route::middleware(['auth', 'verified'])->group(function () {
-        Route::get('/admin/dashboard', [ContextController::class, 'index'])->name('admin.dashboard');
         Route::get('/admin/employee', [EmployeeController::class, 'index'])->name('admin.employee');
         Route::get('/admin/employee', [EmployeeController::class, 'showEmployees'])->name('admin.employee');
         Route::get('/admin/employee/create', [EmployeeController::class, 'create'])->name('admin.employee.create');
@@ -157,4 +92,6 @@ use App\Http\Controllers\InternController;
 
     });
 
-    Route::resource('interns', InternController::class);
+
+
+

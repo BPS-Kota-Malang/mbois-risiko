@@ -92,9 +92,9 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <a href="javascript:void(0)"
-                                        onclick="openEditKriteriaDampakModal('{{ route('admin.kriteria-dampak.update', $kriteria->id) }}', '{{ $kriteria->id_area_dampak }}', '{{ $kriteria->id_level_dampak }}', '{{ $kriteria->deskripsi_negatif }}', '{{ $kriteria->deskripsi_positif }}')"
+                                        onclick="openEditKriteriaDampakModal('{{ route('admin.kriteriadampak.update', $kriteria->id) }}', '{{ $kriteria->id_area_dampak }}', '{{ $kriteria->id_level_dampak }}', '{{ $kriteria->deskripsi_negatif }}', '{{ $kriteria->deskripsi_positif }}')"
                                         class="text-indigo-600 hover:text-indigo-900 ml-4">Edit</a>
-                                    <form action="{{ route('admin.kriteria-dampak.delete', $kriteria->id) }}"
+                                    <form action="{{ route('admin.kriteriadampak.destroy', $kriteria->id) }}"
                                         method="POST" class="inline ml-4"
                                         onsubmit="return confirm('Are you sure you want to delete this kriteria dampak?');">
                                         @csrf
@@ -117,7 +117,7 @@
                             <button onclick="toggleModal('tambahKriteriaDampakModal')"
                                 class="text-gray-500 text-2xl ml-4">&times;</button>
                         </div>
-                        <form action="{{ route('admin.kriteria-dampak.store') }}" method="POST">
+                        <form action="{{ route('admin.kriteriadampak.store') }}" method="POST">
                             @csrf
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2" for="id_area_dampak">Area Dampak</label>

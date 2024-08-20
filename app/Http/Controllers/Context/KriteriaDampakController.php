@@ -1,14 +1,32 @@
 <?php
 
 namespace App\Http\Controllers\Context;
-
-use App\Http\Controllers\Controller;
 use App\Models\KriteriaDampak;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class KriteriaDampakController extends Controller
 {
-    public function storeKriteriaDampak(Request $request)
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
         // Validasi input
         $request->validate([
@@ -30,7 +48,26 @@ class KriteriaDampakController extends Controller
         return redirect()->route('admin.risk.context')->with('success', 'Kriteria Dampak created successfully.');
     }
 
-    public function updateKriteriaDampak(Request $request, $id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
     {
         // Validasi input
         $request->validate([
@@ -55,7 +92,10 @@ class KriteriaDampakController extends Controller
         return redirect()->route('admin.risk.context')->with('success', 'Kriteria Dampak updated successfully.');
     }
 
-    public function destroyKriteriaDampak($id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
     {
         // Temukan data berdasarkan ID
         $kriteriaDampak = KriteriaDampak::findOrFail($id);

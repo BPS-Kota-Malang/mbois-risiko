@@ -1,14 +1,32 @@
 <?php
 
 namespace App\Http\Controllers\Context;
-
-use App\Http\Controllers\Controller;
 use App\Models\AreaDampak;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class AreaDampakController extends Controller
 {
-    public function storeAreaDampak(Request $request)
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
         $request->validate([
             'area_dampak' => 'required|string|max:255',
@@ -19,9 +37,29 @@ class AreaDampakController extends Controller
         ]);
 
         return redirect()->route('admin.risk.context')->with('success', 'Area Dampak created successfully.');
+
     }
 
-    public function updateAreaDampak(Request $request, $id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
     {
         $request->validate([
             'area_dampak' => 'required|string|max:255',
@@ -33,9 +71,13 @@ class AreaDampakController extends Controller
         ]);
 
         return redirect()->route('admin.risk.context')->with('success', 'Area Dampak updated successfully.');
+
     }
 
-    public function destroyAreaDampak($id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
     {
         $areaDampak = AreaDampak::findOrFail($id);
         $areaDampak->delete();
