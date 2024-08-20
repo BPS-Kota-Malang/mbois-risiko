@@ -12,7 +12,7 @@ Sample Admin Template using Laravel, Breeze, Spatie, Tailwind Css (Dashboard Tem
    DB_CONNECTION=mysql
    DB_HOST=127.0.0.1
    DB_PORT=3306
-   DB_DATABASE=sadmin
+   DB_DATABASE=manajemen_risiko
    DB_USERNAME=root
    DB_PASSWORD=
    ```
