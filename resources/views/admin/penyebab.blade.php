@@ -31,8 +31,16 @@
                         <td class="px-6 py-4 whitespace-nowrap">{{ $penyebab->penyebab }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $penyebab->status }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <a href="#" class="text-blue-600 hover:text-blue-900 border border-blue-600 hover:border-blue-900 rounded px-2 py-1" title="Edit">Edit</a>
-                            <a href="#" class="text-red-600 hover:text-red-900 border border-red-600 hover:border-red-900 rounded px-2 py-1" title="Delete">Delete</a>
+                            <a href="" class="text-blue-600 hover:text-blue-900 border border-blue-600 hover:border-blue-900 rounded px-2 py-1" title="Edit">Edit</a>
+                            <form action="{{ route('admin.penyebab.destroy', $penyebab->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600 hover:text-red-900 border border-red-600 hover:border-red-900 rounded px-2 py-1" title="Delete">Delete</button>
+                            </form>
+                            @if (session('penyebab_deleted'))
+                                <div class="text-red-600 mt-2">{{ session('penyebab_deleted') }}</div>
+                            @endif
+                        </td>
                         </td>
                     </tr>
                 @endforeach

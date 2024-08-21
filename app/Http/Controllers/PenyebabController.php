@@ -89,6 +89,9 @@ class PenyebabController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $penyebab = Penyebab::findOrFail($id);
+        $penyebab->delete();
+
+        return redirect()->route('admin.penyebab.index')->with('success', 'Penyebab berhasil dihapus.');
     }
 }
