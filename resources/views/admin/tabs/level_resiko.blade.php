@@ -243,7 +243,7 @@
                 </div>
                 <div class="mt-4">
                     <label class="block text-sm font-medium text-gray-700">Level Resiko</label>
-                    <input id="level_resiko_input" type="text" name="level_resiko" readonly
+                    <input id="level_resiko_input" type="text" name="level_resiko"
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                 </div>
                 <div class="mt-4 flex justify-end">

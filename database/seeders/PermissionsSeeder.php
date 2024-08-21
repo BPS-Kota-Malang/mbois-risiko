@@ -25,10 +25,16 @@ class PermissionsSeeder extends Seeder
 
         // Retrieve the admin role
         $role = Role::where('name', 'admin')->first();
-        $role = Role::firstOrCreate(['name' => 'ketua_tim']);
-        $role = Role::firstOrCreate(['name' => 'anggota_tim']);
+        if ($role) {
+            $role->givePermissionTo($permission);
+        }
 
-        // Check if the role and permission exist before attaching
+        $role = Role::firstOrCreate(['name' => 'ketua_tim']);
+        if ($role) {
+            $role->givePermissionTo($permission);
+        }
+
+        $role = Role::firstOrCreate(['name' => 'anggota_tim']);
         if ($role) {
             $role->givePermissionTo($permission);
         }

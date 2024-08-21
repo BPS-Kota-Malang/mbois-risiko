@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\TimProject;// Pastikan model ini ada
 use App\Models\JenisResiko; // Pastikan model ini ada
 use App\Models\SumberResiko; // Pastikan model ini ada
 use App\Models\KategoriResiko; // Pastikan model ini ada
@@ -10,30 +11,65 @@ use Illuminate\Http\Request;
 
 class IdentificationController extends Controller
 {
-    public function showIdentification()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        $jenisResiko = JenisResiko::all();
-        $SumberResiko = SumberResiko::all(); // Ensure this variable is defined
-        $kategoriResiko = KategoriResiko::all();
-        $areaDampak = AreaDampak::all(); // Ensure this model is imported
-        dd($jenisResiko, $SumberResiko, $kategoriResiko, $areaDampak);
-        return view('admin.risk.identification', compact('jenisResiko', 'SumberResiko', 'kategoriResiko', 'areaDampak'));
+        //
     }
 
-    public function savePenyebab(Request $request)
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-        // Validasi data
-        $validatedData = $request->validate([
-            'penyebab' => 'required|string|max:255',
-            'status' => 'nullable|string|max:255', // Validasi kolom status bisa kosong
-        ]);
-
-
-        // Simpan data ke database
-        Penyebab::create($validatedData);
-
-        // Kembalikan respons
-        return response()->json(['message' => 'Data berhasil disimpan']);
+        //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show()
+    {
+
+
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+
+    public function getIdentificationData(string $id)
+    {
+        //
+    }
 }

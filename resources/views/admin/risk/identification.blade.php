@@ -11,7 +11,12 @@
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 mb-2" for="tim-bidang">Tim/Bidang</label>
-                    <input type="text" id="tim-bidang" class="w-full p-2 border rounded" placeholder="Masukkan Tim/Bidang">
+                    <select id="proses-bisnis" class="w-full p-2 border rounded-lg">
+                        @foreach ($timProjects as $tim)
+                            <option value="{{ $tim->nama_team }}">{{ $tim->nama_team }}</option>
+                        @endforeach
+                    </select>
+                    </select>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 mb-2" for="proses-bisnis">Proses Bisnis</label>
@@ -53,38 +58,40 @@
                     <tr>
                             <td class="px-6 py-4 whitespace-nowrap"></td>
                             <td class="px-6 py-4 whitespace-nowrap">4</td>
-                            <td class="px-6 py-4 whitespace-nowrap">18</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @foreach ($timProjects as $tim)
+                                    @if ($tim->nama_team == $selectedTeam)
+                                        {{ $tim->nama_team }}
+                                    @endif
+                                @endforeach
+                            </td>
                             <td class="px-6 py-4 whitespace-nowrap">Inda tidak fokus saat pelatihan</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <select class="form-select pr-8 py-2 border">
-                                    {{-- @foreach ($jenisResiko as $jenis)
-                                        <option>{{ $jenis->jenis_resiko }}</option>
-                                    @endforeach --}}
-                                </select>
+                                    @foreach ($jenisResiko as $jenis)
+                                        <option> {{ $jenis->jenis_resiko }}</option>
+                                    @endforeach
                                 </select>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <select class="form-select pr-8 py-2 border">
-                                    {{-- @foreach ($SumberResiko as $sumber)
+                                    @foreach ($sumberResiko as $sumber)
                                         <option>{{ $sumber->sumber_resiko }}</option>
-                                    @endforeach --}}
+                                    @endforeach
                                 </select>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <select class="form-select pr-8 py-2 border">
-                                    {{-- @foreach ($kategoriResiko as $kategori)
+                                    @foreach ($kategoriResiko as $kategori)
                                         <option>{{ $kategori->deskripsi }}</option>
-                                    @endforeach --}}
-                                </select>
+                                    @endforeach
                                 </select>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <select class="form-select pr-8 py-2 border">
-                                    {{-- @foreach ($areaDampak as $area)
+                                    @foreach ($areaDampak as $area)
                                         <option>{{ $area->area_dampak }}</option>
-                                    @endforeach --}}
-                                </select>
-                                </select>
+                                    @endforeach
                                 </select>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
@@ -151,58 +158,42 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ( $penyebab as $penyebab )
                         <tr class="bg-gray-100">
                             <td class="border px-3 py-1">
                                 <input type="checkbox">
                             </td>
-                            <td class="border px-3 py-1">Lorem ipsum dolor sit amet consectetur.</td>
-                            <td class="border px-3 py-1">Lorem</td>
+                            <td class="border px-3 py-1">{{ $penyebab->penyebab }}</td>
+                            <td class="border px-3 py-1">{{ $penyebab->status }}</td>
                         </tr>
-                        <tr>
-                            <td class="border px-3 py-1">
-                                <input type="checkbox">
-                            </td>
-                            <td class="border px-3 py-1">Lorem ipsum dolor sit amet consectetur.</td>
-                            <td class="border px-3 py-1">Lorem</td>
-                        </tr>
-                        <tr class="bg-gray-100">
-                            <td class="border px-3 py-1">
-                                <input type="checkbox">
-                            </td>
-                            <td class="border px-3 py-1">Lorem ipsum dolor sit amet consectetur.</td>
-                            <td class="border px-3 py-1">Lorem</td>
-                        </tr>
-                        <tr>
-                            <td class="border px-3 py-1">
-                                <input type="checkbox">
-                            </td>
-                            <td class="border px-3 py-1">Lorem ipsum dolor sit amet consectetur.</td>
-                            <td class="border px-3 py-1">Lorem</td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
 
-                        <!-- Modal "Tambah Penyebab" -->
-                        <div id="causeModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
-                            <div class="flex items-center justify-center min-h-screen px-4">
+                    <!-- Modal "Tambah Penyebab" -->
+                    <div id="causeModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                        <div class="flex items-center justify-center min-h-screen px-4">
+                            <form action="{{ route('admin.penyebab.store') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
                                 <div class="bg-white rounded-lg shadow-xl overflow-hidden max-w-sm w-full">
                                     <div class="px-4 py-3 border-b border-gray-200">
                                         <h3 class="text-lg leading-6 font-medium text-gray-900">Tambah Penyebab</h3>
                                     </div>
                                     <div class="px-4 py-5">
                                         <label for="causeName" class="block text-sm font-medium text-gray-700">Nama Penyebab</label>
-                                        <input type="text" id="causeName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
-                                        <label for="causeStatus" class="block text-sm font-medium text-gray-700 mt-4">Status</label>
-                                        <input type="text" id="causeStatus" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                        <input type="text" id="causeName" name="causeName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                                     </div>
                                     <div class="px-4 py-3 bg-gray-50 text-right">
+                                        <button id="saveBtn" type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Simpan</button>
                                         <button id="cancelCauseBtn" class="bg-red-500 text-white px-4 py-2 rounded-md">Batal</button>
-                                        <button id="saveCauseBtn" class="bg-blue-500 text-white px-4 py-2 rounded-md">Simpan</button>
+                                    </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
+
                         </div>
+                    </div>
 
 
            <!-- Footer -->
@@ -338,41 +329,54 @@
         document.getElementById('causeModal').classList.add('hidden');
     });
 
-    // Simpan penyebab
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('saveCauseBtn').addEventListener('click', function() {
-            // Ambil data yang akan disimpan
-            var penyebab = document.getElementById('causeName').value;
-            var status = document.getElementById('causeStatus').value;
+    // // Simpan penyebab
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     var saveCauseBtn = document.getElementById('saveCauseBtn');
+    //     if (saveCauseBtn) {
+    //         saveCauseBtn.addEventListener('click', function() {
+    //             // Ambil data yang akan disimpan
+    //             var penyebab = document.getElementById('causeName').value;
+    //             var status = document.getElementById('causeStatus').value;
 
-            // Kirim permintaan AJAX
-            fetch('{{ route('savePenyebab') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ penyebab: penyebab, status: status })
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-                // Sembunyikan modal setelah berhasil disimpan
-                document.getElementById('causeModal').classList.add('hidden');
-                // Kosongkan input
-                document.getElementById('causeName').value = '';
-                document.getElementById('causeStatus').value = '';
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
+    //             // Kirim permintaan AJAX
+    //             fetch('{{ route('admin.penyebab.store') }}', {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
+    //                 },
+    //                 body: JSON.stringify({ penyebab: penyebab, status: status })
+    //             })
+    //             .then(response => response.json())
+    //             .then(data => {
+    //                 alert(data.message);
+    //                 // Sembunyikan modal setelah berhasil disimpan
+    //                 var causeModal = document.getElementById('causeModal');
+    //                 if (causeModal) {
+    //                     causeModal.classList.add('hidden');
+    //                 }
+    //                 // Kosongkan input
+    //                 document.getElementById('causeName').value = '';
+    //                 document.getElementById('causeStatus').value = '';
+    //             })
+    //             .catch(error => {
+    //                 console.error('Error:', error);
+    //             });
+    //         });
+    //     }
 
-        document.getElementById('cancelCauseBtn').addEventListener('click', function() {
-            // Sembunyikan modal saat tombol Batal diklik
-            document.getElementById('causeModal').classList.add('hidden');
-        });
-    });
+    //     var cancelCauseBtn = document.getElementById('cancelCauseBtn');
+    //     if (cancelCauseBtn) {
+    //         cancelCauseBtn.addEventListener('click', function() {
+    //             // Sembunyikan modal saat tombol Batal diklik
+    //             var causeModal = document.getElementById('causeModal');
+    //             if (causeModal) {
+    //                 causeModal.classList.add('hidden');
+    //             }
+    //         });
+    //     }
+    // });
+
     </script>
 
 </x-admin-layout>

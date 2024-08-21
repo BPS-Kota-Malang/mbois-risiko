@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('penyebab', function (Blueprint $table) {
-            $table->id();
-            $table->string('penyebab');
-            $table->string('status')->nullable(); // Kolom status bisa kosong
-            $table->timestamps();
+                $table->id();
+                $table->string('penyebab'); // Menggunakan string bukan varchar
+                $table->string('status')->nullable(); // Kolom status bisa kosong
+                $table->timestamps();
         });
     }
 

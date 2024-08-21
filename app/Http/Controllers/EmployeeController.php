@@ -13,6 +13,7 @@ class EmployeeController extends Controller
     public function index()
     {
         // Logika untuk mengambil data atau memproses sesuatu
+
         return view('admin.employee'); // Pastikan view ini ada
     }
 
