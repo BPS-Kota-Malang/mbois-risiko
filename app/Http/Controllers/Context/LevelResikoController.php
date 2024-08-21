@@ -30,8 +30,8 @@ class LevelResikoController extends Controller
     {
         $request->validate([
             'level_resiko' => 'required|string|max:255',
-            'besaran_min' => 'required|integer|max:20',
-            'besaran_max' => 'required|integer|max:20',
+            'besaran_min' => 'required|integer|max:255',
+            'besaran_max' => 'required|integer|max:255',
             'tindakan' => 'required|string|max:255',
             'ket_warna' => 'required|string|max:255',
         ]);
@@ -70,8 +70,8 @@ class LevelResikoController extends Controller
     {
         $request->validate([
             'level_resiko' => 'required|string|max:255',
-            'besaran_min' => 'required|integer|max:20',
-            'besaran_max' => 'required|integer|max:20',
+            'besaran_min' => 'required|integer|max:255',
+            'besaran_max' => 'required|integer|max:255',
             'tindakan' => 'required|string|max:255',
             'ket_warna' => 'required|string|max:255',
         ]);
