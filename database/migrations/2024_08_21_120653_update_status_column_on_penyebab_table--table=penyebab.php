@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::table('penyebab', function (Blueprint $table) {
+        Schema::table('penyebap', function (Blueprint $table) {
             $table->enum('status', ['Accepted', 'On Progress', 'Rejected'])->nullable()->change();
         });
     }
