@@ -3,6 +3,7 @@
     use App\Http\Controllers\Admin\UserController;
     use App\Http\Controllers\ContextController;
     use App\Http\Controllers\Admin\RoleController;
+    use App\Http\Controllers\Admin\PermissionController;
     use App\Http\Controllers\Context\PemangkuKepentinganController;
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\RiskController;
@@ -16,9 +17,10 @@
     use App\Http\Controllers\Context\KriteriaKemungkinanController;
     use App\Http\Controllers\Context\KriteriaDampakController;
     use App\Http\Controllers\Context\LevelResikoController;
+    // use App\Http\Controllers\Context\MatriksAnalisisController;
     use App\Http\Controllers\Context\MatriksAnalisisResikoController;
-use App\Http\Controllers\Context\PeraturanPerundangUndanganController;
-use App\Http\Controllers\EmployeeController;
+    use App\Http\Controllers\Context\PeraturanPerundangUndanganController;
+    use App\Http\Controllers\EmployeeController;
     use App\Http\Controllers\IdentificationController;
 
 
@@ -70,7 +72,7 @@ use App\Http\Controllers\EmployeeController;
         Route::resource('users', UserController::class);
         Route::resource('roles', RoleController::class);
         Route::resource('permissions', PermissionController::class);
-    });
+    });;
 
     require __DIR__ . '/auth.php';
 

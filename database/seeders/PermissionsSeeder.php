@@ -22,13 +22,16 @@ class PermissionsSeeder extends Seeder
     {
         // Create permissions if they do not exist
         $permission = Permission::firstOrCreate(['name' => 'dashboard_access']);
-        
+
         // Retrieve the admin role
         $role = Role::where('name', 'admin')->first();
-        
+        $role = Role::firstOrCreate(['name' => 'ketua_tim']);
+        $role = Role::firstOrCreate(['name' => 'anggota_tim']);
+
         // Check if the role and permission exist before attaching
         if ($role) {
             $role->givePermissionTo($permission);
         }
+
     }
 }
