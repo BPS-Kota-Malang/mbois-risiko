@@ -4,12 +4,6 @@
             <h1 class="text-2xl font-bold mb-6">Identifikasi Risiko</h1>
             <form>
                 <div class="mb-4">
-                    <label class="block text-gray-700 mb-2" for="satuan-kerja">Satuan Kerja</label>
-                    <select id="satuan-kerja" class="w-full p-2 border rounded-lg">
-                        <option value="">Pilih Satuan Kerja</option>
-                    </select>
-                </div>
-                <div class="mb-4">
                     <label class="block text-gray-700 mb-2" for="tim-bidang">Tim/Bidang</label>
                     <select id="proses-bisnis" class="w-full p-2 border rounded-lg">
                         @foreach ($timProjects as $tim)
@@ -171,7 +165,7 @@
                 </table>
             </div>
 
-                    <!-- Modal "Tambah Penyebab" -->
+                   <!-- Modal "Tambah Penyebab" -->
                     <div id="causeModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
                         <div class="flex items-center justify-center min-h-screen px-4">
                             <form action="{{ route('admin.penyebab.store') }}" method="POST" enctype="multipart/form-data">
@@ -181,24 +175,30 @@
                                         <h3 class="text-lg leading-6 font-medium text-gray-900">Tambah Penyebab</h3>
                                     </div>
                                     <div class="px-4 py-5">
-                                        <label for="causeName" class="block text-sm font-medium text-gray-700">Nama Penyebab</label>
-                                        <input type="text" id="causeName" name="causeName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                        <label for="penyebab" class="block text-sm font-medium text-gray-700">Nama Penyebab</label>
+                                        <input type="text" id="penyebab" name="penyebab" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
                                     </div>
                                     <div class="px-4 py-3 bg-gray-50 text-right">
                                         <button id="saveBtn" type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Simpan</button>
                                         <button id="cancelCauseBtn" class="bg-red-500 text-white px-4 py-2 rounded-md">Batal</button>
                                     </div>
-                                    </div>
                                 </div>
                             </form>
-
                         </div>
                     </div>
+                    <script>
+                        document.getElementById('saveBtn').addEventListener('click', function() {
+                            var penyebab = document.getElementById('penyebab').value;
+                            if (penyebab === '') {
+                                alert('Nama Penyebab belum terisi. Tidak bisa disimpan.');
+                                return false;
+                            }
+                        });
+                    </script>
 
 
            <!-- Footer -->
            <div class="flex justify-end pt-2">
-            <button class="focus:outline-none modal-close px-4 bg-red-500 p-3 rounded-lg text-white hover:bg-gray-300" id="closeModal2">Tutup</button>
         </div>
     </div>
 </div>
@@ -207,21 +207,33 @@
                 <!-- Modal "Tambah Dampak" -->
                 <div id="addImpactModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
                     <div class="flex items-center justify-center min-h-screen px-4">
-                        <div class="bg-white rounded-lg shadow-xl overflow-hidden max-w-sm w-full">
-                            <div class="px-4 py-3 border-b border-gray-200">
-                                <h3 class="text-lg leading-6 font-medium text-gray-900">Tambah Dampak</h3>
+                        <form action="{{ route('admin.dampak.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="bg-white rounded-lg shadow-xl overflow-hidden max-w-sm w-full">
+                                <div class="px-4 py-3 border-b border-gray-200">
+                                    <h3 class="text-lg leading-6 font-medium text-gray-900">Tambah Dampak</h3>
+                                </div>
+                                <div class="px-4 py-5">
+                                    <label for="dampak" class="block text-sm font-medium text-gray-700">Nama Dampak</label>
+                                    <input type="text" id="dampak" name="dampak" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
+                                </div>
+                                <div class="px-4 py-3 bg-gray-50 text-right">
+                                    <button id="saveBtndampak" type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Simpan</button>
+                                    <button id="cancelImpactBtn" class="bg-red-500 text-white px-4 py-2 rounded-md">Batal</button>
+                                </div>
                             </div>
-                            <div class="px-4 py-5">
-                                <label for="impactName" class="block text-sm font-medium text-gray-700">Nama Dampak</label>
-                                <input type="text" id="impactName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
-                            </div>
-                            <div class="px-4 py-3 bg-gray-50 text-right">
-                                <button id="cancelImpactBtn" class="bg-red-500 text-white px-4 py-2 rounded-md">Batal</button>
-                                <button id="saveImpactBtn" class="bg-blue-500 text-white px-4 py-2 rounded-md">Simpan</button>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
+                <script>
+                    document.getElementById('saveBtndampak').addEventListener('click', function() {
+                        var dampak = document.getElementById('dampak').value;
+                        if (dampak === '') {
+                            alert('Nama Dampak belum terisi. Tidak bisa disimpan.');
+                            return false;
+                        }
+                    });
+                </script>
 
 
 
@@ -233,7 +245,7 @@
                             <!-- Title -->
                             <div class="flex justify-between items-center pb-3">
                                 <p class="text-2xl font-bold text-black">Pilih Dampak</p>
-                                <div class="modal-close cursor-pointer z-50" id="closeModalDampak">
+                                <div class="modal-close cursor-pointer z-50" id="closeModal2">
                                     <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
                                         <path d="M14.53 3.47a.75.75 0 00-1.06 0L9 7.94 4.53 3.47a.75.75 0 00-1.06 1.06L7.94 9l-4.47 4.47a.75.75 0 001.06 1.06L9 10.06l4.47 4.47a.75.75 0 001.06-1.06L10.06 9l4.47-4.47a.75.75 0 000-1.06z"></path>
                                     </svg>
@@ -270,34 +282,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($dampak as $dampak)
                                         <tr class="bg-gray-100">
-                                            <td class="border px-4 py-2">
+                                            <td class="border px-3 py-1">
                                                 <input type="checkbox">
                                             </td>
-                                            <td class="border px-4 py-2">Lorem ipsum dolor sit amet consectetur.</td>
-                                            <td class="border px-4 py-2">Lorem</td>
+                                            <td class="border px-3 py-1">{{ $dampak->dampak }}</td>
+                                            <td class="border px-3 py-1">{{ $dampak->status }}</td>
                                         </tr>
-                                        <tr>
-                                            <td class="border px-4 py-2">
-                                                <input type="checkbox">
-                                            </td>
-                                            <td class="border px-4 py-2">Lorem ipsum dolor sit amet consectetur.</td>
-                                            <td class="border px-4 py-2">Lorem</td>
-                                        </tr>
-                                        <tr class="bg-gray-100">
-                                            <td class="border px-4 py-2">
-                                                <input type="checkbox">
-                                            </td>
-                                            <td class="border px-4 py-2">Lorem ipsum dolor sit amet consectetur.</td>
-                                            <td class="border px-4 py-2">Lorem</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="border px-4 py-2">
-                                                <input type="checkbox">
-                                            </td>
-                                            <td class="border px-4 py-2">Lorem ipsum dolor sit amet consectetur.</td>
-                                            <td class="border px-4 py-2">Lorem</td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -327,6 +320,26 @@
     // Tutup modal "Tambah Penyebab"
     document.getElementById('cancelCauseBtn').addEventListener('click', function() {
         document.getElementById('causeModal').classList.add('hidden');
+    });
+
+    // Tampilkan modal "Pilih Dampak"
+    document.getElementById('openModal2').addEventListener('click', function() {
+        document.getElementById('dampakModal').classList.remove('hidden');
+    });
+
+    // Tutup modal "Pilih Dampak"
+    document.getElementById('closeModal2').addEventListener('click', function() {
+        document.getElementById('dampakModal').classList.add('hidden');
+    });
+
+    // Tampilkan modal "Tambah Dampak"
+    document.getElementById('openAddImpactModal').addEventListener('click', function() {
+        document.getElementById('addImpactModal').classList.remove('hidden');
+    });
+
+    // Tutup modal "Tambah Dampak"
+    document.getElementById('cancelImpactBtn').addEventListener('click', function() {
+        document.getElementById('addImpactModal').classList.add('hidden');
     });
 
     // // Simpan penyebab

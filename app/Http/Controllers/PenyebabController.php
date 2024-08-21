@@ -47,12 +47,16 @@ class PenyebabController extends Controller
 
 
 
-        Penyebab::create([
-            'penyebab' => $request->causeName,
-            'status' => "On Progress",
+        $request->validate([
+            'penyebab' => 'required|string|max:255',
+            'status' => 'nullable|in:Accepted,On Progress,Rejected',
         ]);
 
-        // return redirect()->back()->with('success', 'Penyebab berhasil ditambahkan.');
+        Penyebab::create([
+            'penyebab' => $request->penyebab,
+            'status' => $request->status ?? 'On Progress',
+        ]);
+
         return redirect()->back()->with('success', 'Penyebab berhasil ditambahkan.');
     }
 

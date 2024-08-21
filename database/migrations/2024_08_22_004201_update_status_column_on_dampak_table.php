@@ -6,16 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up()
     {
-        Schema::table('penyebab', function (Blueprint $table) {
+        Schema::table('dampak', function (Blueprint $table) {
             $table->enum('status', ['Accepted', 'On Progress', 'Rejected'])->nullable()->change();
         });
     }
 
     public function down()
     {
-        Schema::table('penyebab', function (Blueprint $table) {
+        Schema::table('dampak', function (Blueprint $table) {
             $table->string('status')->nullable()->change();
         });
     }

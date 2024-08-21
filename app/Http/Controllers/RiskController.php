@@ -8,6 +8,7 @@ use App\Models\KategoriResiko;
 use App\Models\Penyebab;
 use App\Models\SumberResiko;
 use App\Models\TimProject;
+use App\Models\Dampak;
 use Illuminate\Http\Request;
 
 class RiskController extends Controller
@@ -24,9 +25,11 @@ class RiskController extends Controller
         $areaDampak = AreaDampak::all();
         $timProjects = TimProject::all();
         $penyebab = Penyebab::all();
+        $dampak = Dampak::all();
         $selectedTeam = TimProject::first();
 
-        return view('admin.risk.identification', compact('jenisResiko', 'penyebab', 'sumberResiko', 'kategoriResiko', 'areaDampak', 'timProjects', 'selectedTeam'));
+        return view('admin.risk.identification', compact('jenisResiko', 'penyebab', 'sumberResiko', 'kategoriResiko',
+         'areaDampak', 'timProjects', 'selectedTeam', 'dampak'));
 }
 
     public function analysis()
