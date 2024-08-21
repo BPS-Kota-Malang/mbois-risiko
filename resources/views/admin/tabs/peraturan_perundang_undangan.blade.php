@@ -17,13 +17,13 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-black-500 uppercase tracking-wider">
                                 No</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Peraturan Perundang-undangan</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Amanat</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-center text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Actions</th>
                         </tr>
                     </thead>
@@ -36,18 +36,25 @@
                                     {{ $item->peraturan_perundang_undangan }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ $item->amanat }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    <a href="javascript:void(0)"
-                                        onclick="openEditPPUModal('{{ route('admin.peraturan.update', $item->id) }}', '{{ $item->peraturan_perundang_undangan }}', '{{ $item->amanat }}')"
-                                        class="text-indigo-600 hover:text-indigo-900 ml-4">Edit</a>
-                                    <form action="{{ route('admin.peraturan.destroy', $item->id) }}"
-                                        method="POST" class="inline ml-4"
-                                        onsubmit="return confirm('Are you sure you want to delete this item?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
-                                    </form>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
+                                    <div class="inline-flex space-x-4">
+                                        <button
+                                            onclick="openEditPPUModal('{{ route('admin.peraturan.update', $item->id) }}', '{{ $item->peraturan_perundang_undangan }}', '{{ $item->amanat }}')"
+                                            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                            Edit
+                                        </button>
+                                        <form action="{{ route('admin.peraturan.destroy', $item->id) }}" method="POST" class="inline"
+                                            onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
+                                
+                                
                             </tr>
                         @endforeach
                     </tbody>

@@ -4,22 +4,22 @@
             <div
                 class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
                 <button onclick="toggleModal('tambahJenisResikoModal')"
-                    class="px-4 py-2 mb-2 bg-blue-500 rounded-full text-white font-medium tracking-wide hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300">
+                class="px-4 py-2 mb-2 bg-blue-500 rounded-md text-white font-medium tracking-wide hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300">
                     Tambah Jenis Resiko
                 </button>
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-center text-xs font-medium text-black-500 uppercase tracking-wider">
                                 No
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-center text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Kode
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-center text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Jenis Resiko
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-center text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Actions
                             </th>
                         </tr>
@@ -27,27 +27,34 @@
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach ($jenisResiko as $jenis)
                             <tr>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                                     {{ $loop->iteration }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                                     {{ $jenis->kode }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                                     {{ $jenis->jenis_resiko }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    <a href="javascript:void(0)"
-                                        onclick="openEditJenisResikoModal('{{ route('admin.jenisresiko.update', $jenis->id) }}', '{{ $jenis->kode }}', '{{ $jenis->jenis_resiko }}')"
-                                        class="text-indigo-600 hover:text-indigo-900 ml-4">Edit</a>
-                                    <form action="{{ route('admin.jenisresiko.destroy', $jenis->id) }}" method="POST"
-                                        class="inline ml-4"
-                                        onsubmit="return confirm('Are you sure you want to delete this jenis resiko?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
-                                    </form>
+                                
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
+                                    <div class="inline-flex space-x-4 justify-center">
+                                        <button
+                                            onclick="openEditJenisResikoModal('{{ route('admin.jenisresiko.update', $jenis->id) }}', '{{ $jenis->kode }}', '{{ $jenis->jenis_resiko }}')"
+                                            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                            Edit
+                                        </button>
+                                        <form action="{{ route('admin.jenisresiko.destroy', $jenis->id) }}" method="POST" class="inline"
+                                            onsubmit="return confirm('Are you sure you want to delete this jenis resiko?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
+                                
                             </tr>
                         @endforeach
                     </tbody>

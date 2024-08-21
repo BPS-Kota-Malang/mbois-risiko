@@ -5,11 +5,11 @@
     class="fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto transition duration-300 transform bg-blue-500 lg:translate-x-0 lg:static lg:inset-0">
     <div class="flex items-center justify-center mt-8">
         <div class="flex items-center">
-            <image src="{{ asset('images/BPS.png') }}" x="0" y="0" width="100" height="100" />
+            <image src="{{ asset('images/MBOIS1.png') }}" x="0" y="0" width="250" height="250" />
 
 
 
-            <span class="mx-2 text-2xl font-semibold text-white">BPS</span>
+        {{-- <span class="mx-2 text-2xl font-semibold text-white">BPS</span> --}}
         </div>
     </div>
 

@@ -7,20 +7,17 @@
                     class="px-4 py-2 mb-2 bg-blue-500 rounded-md text-white font-medium tracking-wide hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300">
                     Tambah Area Dampak
                 </button>
-                <button
-                    class="px-4 py-2 mb-2 bg-gray-300 rounded-md text-gray-800 font-medium tracking-wide hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition duration-300">
-                    Refresh
-                </button>
+                
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-center text-xs font-medium text-black-500 uppercase tracking-wider">
                                 No
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-center text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Area Dampak
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-center text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Actions
                             </th>
                         </tr>
@@ -28,24 +25,26 @@
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach ($areaDampak as $area)
                             <tr>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                                     {{ $loop->iteration }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                                     {{ $area->area_dampak }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center flex items-center justify-center space-x-4">
                                     <a href="javascript:void(0)"
                                         onclick="openEditAreaDampakModal('{{ route('admin.areadampak.update', $area->id) }}', '{{ $area->area_dampak }}')"
-                                        class="text-indigo-600 hover:text-indigo-900 ml-4">Edit</a>
+                                        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Edit</a>
                                     <form action="{{ route('admin.areadampak.destroy', $area->id) }}" method="POST"
-                                        class="inline ml-4"
+                                        class="inline"
                                         onsubmit="return confirm('Are you sure you want to delete this area dampak?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+                                        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Delete</button>
                                     </form>
                                 </td>
+                                
                             </tr>
                         @endforeach
                     </tbody>

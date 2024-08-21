@@ -4,48 +4,62 @@
             <div
                 class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
                 <button onclick="toggleModal('tambahpemangkuKepentinganModal')"
-                    class="px-4 py-2 mb-2 bg-blue-500 rounded-full text-white font-medium tracking-wide hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300">
+                class="px-4 py-2 mb-2 bg-blue-500 rounded-md text-white font-medium tracking-wide hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300">
                     Tambah
                 </button>
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No
+                            <th class="px-6 py-3 text-left text-xs font-medium text-black-500 uppercase tracking-wider">No
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Pemangku Kepentingan</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Kelompok Pemangku Kepentingan</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Hubungan</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Actions</th>
+                                <th class="px-6 py-3 text-center pl-6 pr-1 text-xs font-medium text-black-500 uppercase tracking-wider">
+                                    Actions
+                                </th>
+                                
+                                
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach ($pemangkuKepentingan as $pemangku)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ $loop->iteration }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    {{ $pemangku->pemangku_kepentingan }}</td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    {{ $pemangku->kelompok_pemangku_kepentingan }}</td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    {{ $pemangku->hubungan ?? '-' }}</td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    <a href="javascript:void(0)"
+                        <tr>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                {{ $loop->iteration }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                {{ $pemangku->pemangku_kepentingan }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                {{ $pemangku->kelompok_pemangku_kepentingan }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                {{ $pemangku->hubungan ?? '-' }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
+                                <div class="inline-flex space-x-4">
+                                    <button
                                         onclick="openEditPemangkuKepentinganModal('{{ route('admin.pemangkukepentingan.update', $pemangku->id) }}', '{{ $pemangku->pemangku_kepentingan }}', '{{ $pemangku->kelompok_pemangku_kepentingan }}', '{{ $pemangku->hubungan ?? '' }}')"
-                                        class="text-indigo-600 hover:text-indigo-900 ml-4">Edit</a>
-                                    <form action="{{ route('admin.pemangkukepentingan.destroy', $pemangku->id) }}"
-                                        method="POST" class="inline ml-4"
+                                        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                        Edit
+                                    </button>
+                                    <form action="{{ route('admin.pemangkukepentingan.destroy', $pemangku->id) }}" method="POST" class="inline"
                                         onsubmit="return confirm('Are you sure you want to delete this pemangku kepentingan?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+                                        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                            Delete
+                                        </button>
                                     </form>
-                                </td>
-                            </tr>
+                                </div>
+                            </td>
+                            
+                        </tr>
+                        
                         @endforeach
                     </tbody>
                 </table>
