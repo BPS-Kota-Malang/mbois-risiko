@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Context;
-
+use App\Models\SeleraResiko;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -28,7 +28,17 @@ class SeleraResikoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'id_kategori_resiko' => 'required|integer',
+            'resiko_minimum_negatif' => 'required|integer',
+            'resiko_minimum_positif' => 'required|integer',
+        ]);
+
+        // Simpan data baru ke dalam database
+        SeleraResiko::create($validatedData);
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('admin.risk.context')->with('success', 'Selera Resiko berhasil ditambahkan.');
     }
 
     /**
@@ -52,7 +62,20 @@ class SeleraResikoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'id_kategori_resiko' => 'required|integer',
+            'resiko_minimum_negatif' => 'required|integer',
+            'resiko_minimum_positif' => 'required|integer',
+        ]);
+
+        // Cari data yang ingin diupdate
+        $seleraResiko = SeleraResiko::findOrFail($id);
+
+        // Update data dengan input baru
+        $seleraResiko->update($validatedData);
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('admin.risk.context')->with('success', 'Selera Resiko berhasil diperbarui.');
     }
 
     /**
@@ -60,6 +83,12 @@ class SeleraResikoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $seleraResiko = SeleraResiko::findOrFail($id);
+
+        // Hapus data
+        $seleraResiko->delete();
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('admin.risk.context')->with('success', 'Selera Resiko berhasil dihapus.');
     }
 }

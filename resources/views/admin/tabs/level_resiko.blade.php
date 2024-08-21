@@ -55,7 +55,7 @@
                                         onclick="openEditLevelResikoModal('{{ route('admin.levelresiko.update', $levelResikoItem->id) }}', '{{ $levelResikoItem->level_resiko }}', '{{ $levelResikoItem->besaran_min }}','{{ $levelResikoItem->besaran_max }}', '{{ $levelResikoItem->tindakan }}', '{{ $levelResikoItem->ket_warna }}')">
                                         Edit
                                     </button>
-                                    <form action="{{ route('admin.level-resiko.destroy', $levelResikoItem->id) }}"
+                                    <form action="{{ route('admin.levelresiko.destroy', $levelResikoItem->id) }}"
                                         method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
@@ -111,10 +111,10 @@
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     {{ $matriksAnalisisResiko->besaran_resiko }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    {{ $matriksAnalisisResiko->id_level_resiko }}</td>
+                                    {{ $matriksAnalisisResiko->hasil_level_resiko }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <button class="text-blue-500 hover:text-blue-700"
-                                        onclick="openEditMatriksAnalisisResikoModal('{{ route('admin.matriksanalisisresiko.update', $matriksAnalisisResiko->id) }}', '{{ $matriksAnalisisResiko->id_level_kemungkinan }}', '{{ $matriksAnalisisResiko->id_level_dampak }}', '{{ $matriksAnalisisResiko->besaran_resiko }}', '{{ $matriksAnalisisResiko->id_level_resiko }}')">Edit</button>
+                                        onclick="openEditMatriksAnalisisResikoModal('{{ route('admin.matriksanalisisresiko.update', $matriksAnalisisResiko->id) }}', '{{ $matriksAnalisisResiko->id_level_kemungkinan }}', '{{ $matriksAnalisisResiko->id_level_dampak }}', '{{ $matriksAnalisisResiko->besaran_resiko }}', '{{ $matriksAnalisisResiko->hasil_level_resiko }}')">Edit</button>
                                     <form
                                         action="{{ route('admin.matriksanalisisresiko.destroy', $matriksAnalisisResiko->id) }}"
                                         method="POST" class="inline">
@@ -130,6 +130,7 @@
             </div>
         </div>
     </section>
+</div>
     <div id="addLevelResikoModal"
         class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-lg shadow-lg max-w-sm w-full p-4">
@@ -243,8 +244,9 @@
                 </div>
                 <div class="mt-4">
                     <label class="block text-sm font-medium text-gray-700">Level Resiko</label>
-                    <input id="level_resiko_input" type="text" name="level_resiko"
-                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                    <input type="text" name="hasil_level_resiko" id="hasil_level_resiko"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        required>
                 </div>
                 <div class="mt-4 flex justify-end">
                     <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md">Simpan</button>
@@ -254,7 +256,58 @@
             </form>
         </div>
     </div>
+    <div id="editMatriksAnalisisResikoModal"
+        class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-lg max-w-sm w-full p-4">
+            <h2 class="text-xl font-semibold">Edit Matriks Analisis Resiko</h2>
+            <form id="editMatriksAnalisisResikoForm" method="POST">
+                @csrf
+                @method('PUT')
+                <input type="hidden" id="editMatriksAnalisisResikoId" name="id">
 
+                <div class="mt-4">
+                    <label class="block text-sm font-medium text-gray-700">Level Kemungkinan</label>
+                    <select id="editIdLevelKemungkinan" name="id_level_kemungkinan"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                        <option value="" disabled>Pilih Level Kemungkinan</option>
+                        @foreach ($levelKemungkinan as $kemungkinan)
+                            <option value="{{ $kemungkinan->id }}">{{ $kemungkinan->level_kemungkinan }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mt-4">
+                    <label class="block text-sm font-medium text-gray-700">Level Dampak</label>
+                    <select id="editIdLevelDampak" name="id_level_dampak"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                        <option value="" disabled>Pilih Level Dampak</option>
+                        @foreach ($levelDampak as $dampak)
+                            <option value="{{ $dampak->id }}">{{ $dampak->level_dampak }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mt-4">
+                    <label class="block text-sm font-medium text-gray-700">Besaran Resiko</label>
+                    <input id="editBesaranResiko" type="text" name="besaran_resiko"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                </div>
+
+                <div class="mt-4">
+                    <label class="block text-sm font-medium text-gray-700">Level Resiko</label>
+                    <input type="text" name="hasil_level_resiko" id="editHasilLevelResiko" 
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        required>
+                </div>
+
+                <div class="mt-4 flex justify-end">
+                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md">Simpan</button>
+                    <button type="button" class="px-4 py-2 ml-2 bg-gray-500 text-white rounded-md"
+                        onclick="toggleModal('editMatriksAnalisisResikoModal')">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <script>
         const levelResikoRanges = @json($levelResiko);
 
@@ -269,10 +322,25 @@
                 }
             }
 
-            document.getElementById('level_resiko_input').value = levelResiko;
+            document.getElementById('hasil_level_resiko').value = levelResiko;
+        }
+
+        function updateEditMatriksAnalisisResikoLevelResiko() {
+            const besaranResiko = parseFloat(document.getElementById('editBesaranResiko').value);
+            let levelResiko = '';
+
+            for (let range of levelResikoRanges) {
+                if (besaranResiko >= range.besaran_min && besaranResiko <= range.besaran_max) {
+                    levelResiko = range.level_resiko;
+                    break;
+                }
+            }
+
+            document.getElementById('editHasilLevelResiko').value = levelResiko;
         }
 
         document.getElementById('besaran_resiko_input').addEventListener('input', updateLevelResiko);
+        document.getElementById('editBesaranResiko').addEventListener('input', updateEditMatriksAnalisisResikoLevelResiko);
 
         function toggleModal(modalId) {
             const modal = document.getElementById(modalId);
@@ -293,13 +361,18 @@
             document.getElementById('editLevelResikoModal').classList.add('hidden');
         }
 
-        function openEditMatriksAnalisisResikoModal(id, idLevelKemungkinan, idLevelDampak, besaranResiko, idLevelResiko) {
+        function openEditMatriksAnalisisResikoModal(id, idLevelKemungkinan, idLevelDampak, besaranResiko,
+            hasilLevelResiko) {
             document.getElementById('editMatriksAnalisisResikoId').value = id;
             document.getElementById('editIdLevelKemungkinan').value = idLevelKemungkinan;
             document.getElementById('editIdLevelDampak').value = idLevelDampak;
             document.getElementById('editBesaranResiko').value = besaranResiko;
-            document.getElementById('editIdLevelResiko').value = idLevelResiko;
-            toggleModal('editMatriksAnalisisResikoModal');
+            document.getElementById('editHasilLevelResiko').value = hasilLevelResiko;
+            document.getElementById('editMatriksAnalisisResikoModal').classList.remove('hidden');
+        }
+
+        function closeEditMatriksAnalisisResikoModal() {
+            document.getElementById('editMatriksAnalisisResikoModal').classList.add('hidden');
         }
 
         function refreshTable(tableId) {}

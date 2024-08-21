@@ -17,8 +17,8 @@
     use App\Http\Controllers\Context\KriteriaKemungkinanController;
     use App\Http\Controllers\Context\KriteriaDampakController;
     use App\Http\Controllers\Context\LevelResikoController;
-    // use App\Http\Controllers\Context\MatriksAnalisisController;
     use App\Http\Controllers\Context\MatriksAnalisisResikoController;
+    use App\Http\Controllers\Context\SeleraResikoController;
     use App\Http\Controllers\Context\PeraturanPerundangUndanganController;
     use App\Http\Controllers\EmployeeController;
     use App\Http\Controllers\IdentificationController;
@@ -58,6 +58,7 @@
         Route::resource('/kriteriadampak', KriteriaDampakController::class, ['as' => 'admin']);
         Route::resource('/levelresiko', LevelResikoController::class, ['as' => 'admin']);
         Route::resource('/matriksanalisisresiko', MatriksAnalisisResikoController::class, ['as' => 'admin']);
+        Route::resource('/seleraresiko', SeleraResikoController::class, ['as' => 'admin']);
         Route::resource('/identification', IdentificationController::class, ['as' => 'admin']);
         Route::resource('/penyebab', PenyebabController::class, ['as' => 'admin']);
 
