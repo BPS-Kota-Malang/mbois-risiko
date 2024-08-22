@@ -14,13 +14,13 @@
                                 No
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Selera Resiko
+                                Kategori Resiko
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Besaran Resiko Minimum (Negatif)
+                                Resiko Minimum (Negatif)
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Besaran Resiko Minimum (Positif)
+                                Resiko Minimum (Positif)
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Actions
@@ -34,17 +34,17 @@
                                     {{ $loop->iteration }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    {{ $selera->selera_resiko }}
+                                    {{ $selera->kategoriResiko->deskripsi }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    {{ $selera->besaran_resiko_negatif }}
+                                    {{ $selera->resiko_minimum_negatif }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    {{ $selera->besaran_resiko_positif }}
+                                    {{ $selera->resiko_minimum_positif }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <a href="javascript:void(0)"
-                                        onclick="openEditseleraResikoModal('{{ route('admin.seleraresiko.update', $selera->id) }}', '{{ $selera->selera_resiko }}', '{{ $selera->besaran_resiko_negatif }}', '{{ $selera->besaran_resiko_positif }}')"
+                                        onclick="openEditseleraResikoModal('{{ route('admin.seleraresiko.update', $selera->id) }}', '{{ $selera->id_kategori_resiko }}', '{{ $selera->resiko_minimum_negatif }}', '{{ $selera->resiko_minimum_positif }}')"
                                         class="text-indigo-600 hover:text-indigo-900 ml-4">Edit</a>
                                     <form action="{{ route('admin.seleraresiko.destroy', $selera->id) }}" method="POST"
                                         class="inline ml-4"
@@ -72,7 +72,7 @@
                     </div>
                 </div>
 
-                <div id="tambahseleraResikoModal" class="fixed inset-0 flex items-center justify-center hidden">
+                <div id="tambahSeleraResikoModal" class="fixed inset-0 flex items-center justify-center hidden">
                     <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
                     <div
                         class="bg-white border border-black shadow-md rounded-lg p-6 modal modal-content relative z-10">
@@ -84,30 +84,34 @@
                         <form action="{{ route('admin.seleraresiko.store') }}" method="POST">
                             @csrf
                             <div class="mb-4">
-                                <label class="block text-gray-700 mb-2" for="selera_resiko">Selera Resiko</label>
-                                <input type="text" name="selera_resiko" id="selera_resiko" value="{{ old('selera_resiko') }}"
+                                <label class="block text-gray-700 mb-2" for="id_kategori_resiko">Kategori Resiko</label>
+                                <select name="id_kategori_resiko" id="id_kategori_resiko"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('selera_resiko')
+                                    @foreach ($kategoriResiko as $kategori)
+                                        <option value="{{ $kategori->id }}">{{ $kategori->deskripsi }}</option>
+                                    @endforeach
+                                </select>
+                                @error('id_kategori_resiko')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="mb-4">
-                                <label class="block text-gray-700 mb-2" for="besaran_resiko_negatif">Besaran Resiko Minimum (Negatif)</label>
-                                <input type="text" name="besaran_resiko_negatif" id="besaran_resiko_negatif"
-                                    value="{{ old('besaran_resiko_negatif') }}"
+                                <label class="block text-gray-700 mb-2" for="resiko_minimum_negatif">Resiko Minimum (Negatif)</label>
+                                <input type="text" name="resiko_minimum_negatif" id="resiko_minimum_negatif"
+                                    value="{{ old('resiko_minimum_negatif') }}"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('besaran_resiko_negatif')
+                                @error('resiko_minimum_negatif')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="mb-4">
-                                <label class="block text-gray-700 mb-2" for="besaran_resiko_positif">Besaran Resiko Minimum (Positif)</label>
-                                <input type="text" name="besaran_resiko_positif" id="besaran_eisiko_positif"
-                                    value="{{ old('besaran_resiko_positif') }}"
+                                <label class="block text-gray-700 mb-2" for="resiko_minimum_positif">Resiko Minimum (Positif)</label>
+                                <input type="text" name="resiko_minimum_positif" id="resiko_minimum_positif"
+                                    value="{{ old('resiko_minimum_positif') }}"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                @error('besaran_resiko_positif')
+                                @error('resiko_minimum_positif')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -132,28 +136,32 @@
                             @csrf
                             @method('PUT')
                             <div class="mb-4">
-                                <label class="block text-gray-700 mb-2" for="selera_resiko_edit">Selera Resiko</label>
-                                <input type="text" name="selera_resiko" id="selera_resiko_edit"
+                                <label class="block text-gray-700 mb-2" for="edit_id_kategori_resiko">Kategori Resiko</label>
+                                <select name="id_kategori_resiko" id="edit_id_kategori_resiko"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('selera_resiko')
+                                    @foreach ($kategoriResiko as $kategori)
+                                        <option value="{{ $kategori->id }}">{{ $kategori->deskripsi }}</option>
+                                    @endforeach
+                                </select>
+                                @error('id_kategori_resiko')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="mb-4">
-                                <label class="block text-gray-700 mb-2" for="besaran_resiko_negatif_edit">Besaran Resiko Minimum (Negatif)</label>
-                                <input type="text" name="besaran_resiko_negatif" id="besaran_resiko_negatif_edit"
+                                <label class="block text-gray-700 mb-2" for="resiko_minimum_negatif_edit">Resiko Minimum (Negatif)</label>
+                                <input type="text" name="resiko_minimum_negatif" id="resiko_minimum_negatif_edit"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('besaran_resiko_negatif')
+                                @error('resiko_minimum_negatif')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="mb-4">
-                                <label class="block text-gray-700 mb-2" for="besaran_resiko_positif_edit">Besaran Resiko Minimum (Positif)</label>
-                                <input type="text" name="besaran_resiko_positif" id="besaran_resiko_positif_edit"
+                                <label class="block text-gray-700 mb-2" for="resiko_minimum_positif_edit">Resiko Minimum (Positif)</label>
+                                <input type="text" name="resiko_minimum_positif" id="resiko_minimum_positif_edit"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                @error('besaran_resiko_positif')
+                                @error('resiko_minimum_positif')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -170,19 +178,36 @@
 </div>
 
 <script>
+
     function toggleModal(modalId) {
-        const modal = document.getElementById(modalId);
-        modal.classList.toggle('hidden');
+        document.getElementById(modalId).classList.toggle('hidden');
     }
 
-    function openEditseleraResikoModal(url, seleraResiko, besaranResikoNegatif, besaranResikoPositif) {
-        const form = document.getElementById('editSeleraRisekoForm');
-        form.action = url;
+    function openEditseleraResikoModal(url, idKategoriResiko, resikominimumnegatif, resikominimumpositif) {
+        const editseleraResikoForm = document.getElementById('editseleraResikoForm');
+        editseleraResikoForm.action = url;
 
-        document.getElementById('selera_resiko_edit').value = seleraResiko;
-        document.getElementById('besaran_resiko_negatif_edit').value = besaranResikoNegatif;
-        document.getElementById('besaran_resiko_positif_edit').value = besaranResikoPositif;
-
+        document.getElementById('edit_id_kategori_resiko').value = idKategoriResiko;
+        document.getElementById('resiko_minimum_negatif_edit').value = resikominimumnegatif;
+        document.getElementById('resiko_minimum_positif_edit').value = resikominimumpositif;
         toggleModal('editseleraResikoModal');
     }
+
+    // function openEditseleraResikoModal(url, idkategoriresiko, resikominimumNegatif, resikominimumPositif) {
+    //     const editSumberResikoForm = document.getElementById('editSumberResikoForm');
+    //     editSumberResikoForm.action = url;
+    //     document.getElementById('kode_edit_sumber_resiko').value = kode;
+    //     document.getElementById('sumber_resiko_edit').value = sumberResiko;
+    //     toggleModal('editSumberResikoModal');
+    // }
+
+    document.addEventListener('click', function(event) {
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            if (!modal.contains(event.target) && !event.target.closest('[onclick]')) {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }
+        });
+    });
 </script>

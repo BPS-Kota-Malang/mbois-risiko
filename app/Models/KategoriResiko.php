@@ -27,4 +27,10 @@ class KategoriResiko extends Model
     {
         return $this->hasMany(KriteriaKemungkinan::class, 'id_kategori_resiko');
     }
+
+    public function seleraResiko()
+    {
+        return $this->hasMany(SeleraResiko::class, 'id_kategori_resiko');
+    }
 }
+

@@ -28,16 +28,19 @@ class SeleraResikoController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'id_kategori_resiko' => 'required|integer',
-            'resiko_minimum_negatif' => 'required|integer',
-            'resiko_minimum_positif' => 'required|integer',
+        // dd($request->all());
+        $request->validate([
+            'id_kategori_resiko' => 'required|exists:kategori_resiko,id',
+            'resiko_minimum_negatif' => 'required|integer|max:255',
+            'resiko_minimum_positif' => 'required|integer|max:255',
         ]);
 
         // Simpan data baru ke dalam database
-        SeleraResiko::create($validatedData);
-
-        // Redirect dengan pesan sukses
+        SeleraResiko::create([
+            'id_kategori_resiko' => $request->id_kategori_resiko,
+            'resiko_minimum_negatif' => $request->resiko_minimum_negatif,
+            'resiko_minimum_positif' => $request->resiko_minimum_positif,
+        ]);
         return redirect()->route('admin.risk.context')->with('success', 'Selera Resiko berhasil ditambahkan.');
     }
 
@@ -62,18 +65,19 @@ class SeleraResikoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validatedData = $request->validate([
-            'id_kategori_resiko' => 'required|integer',
-            'resiko_minimum_negatif' => 'required|integer',
-            'resiko_minimum_positif' => 'required|integer',
+        $request->validate([
+            'id_kategori_resiko' => 'required|exists:kategori_resiko,id',
+            'resiko_minimum_negatif' => 'required|integer|max:255',
+            'resiko_minimum_positif' => 'required|integer|max:255',
         ]);
 
         // Cari data yang ingin diupdate
         $seleraResiko = SeleraResiko::findOrFail($id);
-
-        // Update data dengan input baru
-        $seleraResiko->update($validatedData);
-
+        $seleraResiko->update([
+        'id_kategori_resiko' => $request->id_kategori_resiko,
+        'resiko_minimum_negatif' => $request->resiko_minimum_negatif,
+        'resiko_minimum_positif' => $request->resiko_minimum_positif,
+        ]);
         // Redirect dengan pesan sukses
         return redirect()->route('admin.risk.context')->with('success', 'Selera Resiko berhasil diperbarui.');
     }
