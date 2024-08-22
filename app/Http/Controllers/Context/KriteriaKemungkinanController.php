@@ -95,5 +95,5 @@ class KriteriaKemungkinanController extends Controller
 
         return redirect()->route('admin.risk.context')->with('success', 'Kriteria Kemungkinan deleted successfully.');
 
-    }
+    }
 }

@@ -1,4 +1,4 @@
-    <?php
+<?php
     use App\Http\Controllers\ProfileController;
     use App\Http\Controllers\Admin\UserController;
     use App\Http\Controllers\ContextController;
@@ -78,7 +78,7 @@
         Route::resource('permissions', PermissionController::class);
     });;
 
-    require __DIR__ . '/auth.php';
+    require _DIR_ . '/auth.php';
 
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/admin/employee', [EmployeeController::class, 'index'])->name('admin.employee');
@@ -89,9 +89,5 @@
         Route::put('/admin/employee/{user_id}', [EmployeeController::class, 'update'])->name('admin.employee.update');
         Route::get('/admin/employee/{user_id}', [EmployeeController::class, 'destroy'])->name('admin.employee.destroy');
         Route::post('admin/employee/upload', [EmployeeController::class, 'upload'])->name('admin.employee.upload');
-    });
-    ?>
-
-
-
-
+});
+?>

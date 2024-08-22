@@ -275,5 +275,5 @@
                 modal.classList.add('hidden');
             }
         });
-    });
+    });
 </script>
