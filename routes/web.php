@@ -23,8 +23,8 @@
     use App\Http\Controllers\EmployeeController;
     use App\Http\Controllers\IdentificationController;
     use App\Http\Controllers\PenyebabController;
-    use App\Http\Controllers\Context\Dampak;
     use App\Http\Controllers\DampakController;
+    use App\Http\Controllers\ResikoController;
 
     Route::get('/', function () {
         return view('auth.login');
@@ -61,6 +61,7 @@
         Route::resource('/identification', IdentificationController::class, ['as' => 'admin']);
         Route::resource('/penyebab', PenyebabController::class, ['as' => 'admin']);
         Route::resource('/dampak', DampakController::class, ['as' => 'admin']);
+        Route::resource('/resiko', ResikoController::class, ['as' => 'admin']);
 
 
     });
