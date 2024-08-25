@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('id_kategori_resiko');
             $table->integer('resiko_minimum_negatif');
-            $table->integer('resiko_miimum_positif');
+            $table->integer('resiko_minimum_positif');
             $table->timestamps(); // This creates 'created_at' and 'updated_at' columns
         });
     }

@@ -95,46 +95,4 @@ class ContextController extends Controller
     {
         return view('admin.ui-elements');
     }
-
-    public function storePemangkuKepentingan(Request $request)
-    {
-        $request->validate([
-            'pemangku_kepentingan' => 'required|string|max:255',
-            'kelompok_pemangku_kepentingan' => 'required|string|max:255',
-            'hubungan' => 'nullable|string|max:255',
-        ]);
-
-        Context::create([
-            'pemangku_kepentingan' => $request->pemangku_kepentingan,
-            'kelompok_pemangku_kepentingan' => $request->kelompok_pemangku_kepentingan,
-            'hubungan' => $request->hubungan,
-        ]);
-
-        return redirect()->route('admin.risk.context');
-    }
-
-    public function updatePemangkuKepentingan(Request $request, $id)
-    {
-        $request->validate([
-            'pemangku_kepentingan' => 'required|string|max:255',
-            'kelompok_pemangku_kepentingan' => 'required|string|max:255',
-            'hubungan' => 'nullable|string|max:255',
-        ]);
-
-        $pemangkuKepentingan = Context::findOrFail($id);
-        $pemangkuKepentingan->pemangku_kepentingan = $request->pemangku_kepentingan;
-        $pemangkuKepentingan->kelompok_pemangku_kepentingan = $request->kelompok_pemangku_kepentingan;
-        $pemangkuKepentingan->hubungan = $request->hubungan;
-        $pemangkuKepentingan->save();
-
-        return redirect()->route('admin.risk.context')->with('success', 'Pemangku Kepentingan updated successfully.');
-    }
-
-    public function destroyPemangkuKepentingan($id)
-    {
-        $pemangkuKepentingan = Context::findOrFail($id);
-        $pemangkuKepentingan->delete();
-
-        return redirect()->route('admin.risk.context')->with('success', 'Pemangku Kepentingan deleted successfully.');
-    }
 }

@@ -264,7 +264,6 @@
                 @csrf
                 @method('PUT')
                 <input type="hidden" id="editMatriksAnalisisResikoId" name="id">
-
                 <div class="mt-4">
                     <label class="block text-sm font-medium text-gray-700">Level Kemungkinan</label>
                     <select id="editIdLevelKemungkinan" name="id_level_kemungkinan"
@@ -361,15 +360,15 @@
             document.getElementById('editLevelResikoModal').classList.add('hidden');
         }
 
-        function openEditMatriksAnalisisResikoModal(id, idLevelKemungkinan, idLevelDampak, besaranResiko,
-            hasilLevelResiko) {
-            document.getElementById('editMatriksAnalisisResikoId').value = id;
-            document.getElementById('editIdLevelKemungkinan').value = idLevelKemungkinan;
-            document.getElementById('editIdLevelDampak').value = idLevelDampak;
-            document.getElementById('editBesaranResiko').value = besaranResiko;
-            document.getElementById('editHasilLevelResiko').value = hasilLevelResiko;
-            document.getElementById('editMatriksAnalisisResikoModal').classList.remove('hidden');
-        }
+        function openEditMatriksAnalisisResikoModal(url, id_level_kemungkinan, id_level_dampak, besaran_resiko,
+        hasil_level_resiko) {
+        document.getElementById('editMatriksAnalisisResikoModal').classList.remove('hidden');
+        document.getElementById('editMatriksAnalisisResikoForm').action = url;
+        document.getElementById('editIdLevelKemungkinan').value = id_level_kemungkinan;
+        document.getElementById('editIdLevelDampak').value = id_level_dampak;
+        document.getElementById('editBesaranResiko').value = besaran_resiko;
+        document.getElementById('editHasilLevelResiko').value = hasil_level_resiko;
+    }
 
         function closeEditMatriksAnalisisResikoModal() {
             document.getElementById('editMatriksAnalisisResikoModal').classList.add('hidden');

@@ -130,7 +130,7 @@
                 </div>
                 <!-- Body -->
                 <div class="flex justify-between items-center mb-4">
-                    <button id="addRiskBtn" class="bg-blue-500 text-white px-4 py-2 rounded-full">Tambah Resiko</button>
+                    <button id="btnresiko" class="bg-blue-500 text-white px-4 py-2 rounded-full">Tambah Resiko</button>
                     <div class="relative text-gray-600">
                         <input type="search" id="searchInput" name="search" placeholder="Cari" class="bg-white h-8 px-3 pr-8 rounded-full text-sm focus:outline-none" title="Cari Resiko">
                         <button type="submit" class="absolute right-0 top-0 mt-2 mr-3" title="Cari">
@@ -194,6 +194,7 @@
                 </script>
                 <!-- Footer -->
                 <div class="flex justify-end pt-2">
+                    <button class="bg-green-500 text-white px-4 py-2 rounded-full">Simpan</button>
                 </div>
             </div>
         </div>
@@ -388,17 +389,16 @@
         document.getElementById('resikoModal').classList.add('hidden');
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        // Tampilkan modal "Tambah Resiko"
-        document.getElementById('addRiskBtn').addEventListener('click', function() {
-            document.getElementById('resikoModal').classList.remove('hidden');
-        });
-
-        // Sembunyikan modal "Tambah Resiko"
-        document.getElementById('cancelResikoBtn').addEventListener('click', function() {
-            document.getElementById('resikoModal').classList.add('hidden');
-        });
+    // Tampilkan modal "Tambah Resiko"
+    document.getElementById('btnresiko').addEventListener('click', function() {
+        document.getElementById('resikoModal').classList.remove('hidden');
     });
+
+    // Sembunyikan modal "Tambah Resiko"
+    document.getElementById('cancelResikoBtn').addEventListener('click', function() {
+        document.getElementById('resikoModal').classList.add('hidden');
+    });
+
 
 
 

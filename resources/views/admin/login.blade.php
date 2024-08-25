@@ -28,12 +28,12 @@
 
                 <form class="mt-4" action="/" method="GET">
                     <label class="block">
-                        <span class="text-gray-700 text-sm">Email</span>
+                        <span class="text-black-700 text-sm">Email</span>
                         <input type="email" class="form-input mt-1 block w-full rounded-md focus:border-indigo-600">
                     </label>
 
                     <label class="block mt-3">
-                        <span class="text-gray-700 text-sm">Password</span>
+                        <span class="text-black-700 text-sm">Password</span>
                         <input type="password" class="form-input mt-1 block w-full rounded-md focus:border-indigo-600">
                     </label>
 

@@ -12,14 +12,6 @@ class SeleraResiko extends Model
     // Nama tabel yang terkait dengan model ini
     protected $table = 'selera_resiko';
 
-    // Primary Key
-    protected $primaryKey = 'id';
-
-    // Jika primary key tidak auto-incrementing
-    public $incrementing = false;
-
-    // Tipe data primary key
-    protected $keyType = 'bigint';
 
     // Mengizinkan atribut untuk diisi secara massal
     protected $fillable = [
@@ -28,12 +20,8 @@ class SeleraResiko extends Model
         'resiko_minimum_positif',
     ];
 
-    // Menentukan apakah timestamps (created_at, updated_at) digunakan
-    public $timestamps = false;
-
-    // Jika diperlukan, tambahkan relasi ke model lain
-    // public function kategoriResiko()
-    // {
-    //     return $this->belongsTo(KategoriResiko::class, 'id_kategori_resiko');
-    // }
+    public function kategoriResiko()
+    {
+        return $this->belongsTo(KategoriResiko::class, 'id_kategori_resiko');
+    }
 }

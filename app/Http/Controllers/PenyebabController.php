@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Penyebab; // Pastikan model ini ada
+use App\Models\Penyebab; 
 use Illuminate\Http\Request;
 
 class PenyebabController extends Controller
@@ -9,10 +9,19 @@ class PenyebabController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $penyebab = Penyebab::all(); // Mengambil semua data dari model Penyebab
-        return view('admin.penyebab', compact('penyebab')); // Mengirim data ke view
+        // Ambil query pencarian dari input
+        $query = $request->input('search');
+
+        // Jika ada pencarian, filter data; jika tidak, ambil semua data
+        $penyebab = Penyebab::when($query, function ($queryBuilder) use ($query) {
+            $queryBuilder->where('penyebab', 'like', '%' . $query . '%')
+                         ->orWhere('status', 'like', '%' . $query . '%');
+        })->get();
+
+        // Kirim data ke view
+        return view('admin.penyebab', compact('penyebab'));
     }
 
     /**
@@ -39,14 +48,6 @@ class PenyebabController extends Controller
      */
     public function store(Request $request)
     {
-        // dd ($request);
-        // Validasi data
-        // $request->validate([
-        //     'name' => 'required',
-        // ]);
-
-
-
         $request->validate([
             'penyebab' => 'required|string|max:255',
             'status' => 'nullable|in:Accepted,On Progress,Rejected',
@@ -80,9 +81,25 @@ class PenyebabController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        //
-    }
+{
+    // Validasi data
+    $request->validate([
+        'penyebab' => 'required|string|max:255',
+        'status' => 'nullable|in:Accepted,On Progress,Rejected',
+    ]);
+
+    // Temukan entitas yang akan diperbarui
+    $penyebab = Penyebab::findOrFail($id);
+
+    // Perbarui data
+    $penyebab->update([
+        'penyebab' => $request->penyebab,
+        'status' => $request->status ?? 'On Progress',
+    ]);
+
+    // Redirect kembali dengan pesan sukses
+    return redirect()->route('admin.penyebab.index')->with('success', 'Penyebab berhasil diperbarui.');
+}
 
     /**
      * Remove the specified resource from storage.
