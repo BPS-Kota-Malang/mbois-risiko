@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JenisResiko extends Model
+class ProsesBisnis extends Model
 {
     use HasFactory;
-    protected $table = 'jenis_resiko';
+
+    protected $table = 'proses_bisnis';
 
     protected $fillable = [
-        'kode',
-        'jenis_resiko',
+        'proses_bisnis',
     ];
 
     public $timestamps = true;
@@ -21,9 +21,4 @@ class JenisResiko extends Model
         'created_at',
         'updated_at',
     ];
-    
-    public function opsiPenanganan()
-    {
-        return $this->hasMany(opsiPenanganan::class, 'id_jenis_resiko');
-    }
 }
