@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/opsipenanganan', OpsiPenangananController::class, ['as' => 'admin']);
         Route::resource('/prosesbisnis', ProsesBisnisController::class, ['as' => 'admin']);
         Route::resource('/identification', IdentificationController::class, ['as' => 'admin']);
+        Route::resource('/resiko', RiskController::class, ['as' => 'admin']);
         Route::resource('/penyebab', PenyebabController::class, ['as' => 'admin']);
         Route::resource('/dampak', DampakController::class, ['as' => 'admin']);
 
