@@ -14,6 +14,7 @@ use App\Models\LevelResiko;
 use App\Models\MatriksAnalisisResiko;
 use App\Models\OpsiPenanganan;
 use App\Models\PeraturanPerundangUndangan;
+use App\Models\ProsesBisnis;
 use App\Models\SeleraResiko;
 use App\Models\SumberResiko;
 use App\Models\TimProject;
@@ -37,6 +38,7 @@ class ContextController extends Controller
         $matriksAnalisisResiko = MatriksAnalisisResiko::all();
         $seleraResiko = SeleraResiko::all();
         $opsiPenanganan = OpsiPenanganan::all();
+        $prosesBisnis = ProsesBisnis::all();
 
         // Filter KriteriaKemungkinan
         $kriteriaKemungkinanQuery = KriteriaKemungkinan::with('kategoriResiko', 'levelKemungkinan');
@@ -80,7 +82,8 @@ class ContextController extends Controller
             'levelResiko',
             'matriksAnalisisResiko',
             'seleraResiko',
-            'opsiPenanganan'
+            'opsiPenanganan',
+            'prosesBisnis'
         ));
     }
 

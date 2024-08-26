@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Context;
-
+use App\Models\ProsesBisnis;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -28,7 +28,14 @@ class ProsesBisnisController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'proses_bisnis'=> 'required|string|max:255',
+        ]);
+
+        ProsesBisnis::create([
+            'proses_bisnis' => $request->proses_bisnis,
+        ]);
+        return redirect()->route('admin.risk.context')->with('success', 'Proses Bisnis berhasil ditambahkan.');
     }
 
     /**
@@ -52,7 +59,15 @@ class ProsesBisnisController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'proses_bisnis'=> 'required|string|max:255',
+        ]);
+
+        $prosesBisnis = ProsesBisnis::findOrFail($id);
+        $prosesBisnis->update([
+            'proses_bisnis' => $request->proses_bisnis,
+        ]);
+        return redirect()->route('admin.risk.context')->with('success', 'Proses Bisnis berhasil ditambahkan.');
     }
 
     /**
@@ -60,6 +75,7 @@ class ProsesBisnisController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $prosesBisnis = ProsesBisnis::findOrFail($id);
+        $prosesBisnis->delete();
     }
 }

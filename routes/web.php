@@ -24,7 +24,8 @@
     use App\Http\Controllers\IdentificationController;
     use App\Http\Controllers\PenyebabController;
     use App\Http\Controllers\Context\OpsiPenangananController;
-    use App\Http\Controllers\DampakController;
+    use App\Http\Controllers\Context\ProsesBisnisController;
+use App\Http\Controllers\DampakController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -59,15 +60,14 @@ Route::middleware('auth')->group(function () {
         Route::resource('/matriksanalisisresiko', MatriksAnalisisResikoController::class, ['as' => 'admin']);
         Route::resource('/seleraresiko', SeleraResikoController::class, ['as' => 'admin']);
         Route::resource('/opsipenanganan', OpsiPenangananController::class, ['as' => 'admin']);
+        Route::resource('/prosesbisnis', ProsesBisnisController::class, ['as' => 'admin']);
         Route::resource('/identification', IdentificationController::class, ['as' => 'admin']);
         Route::resource('/penyebab', PenyebabController::class, ['as' => 'admin']);
         Route::resource('/dampak', DampakController::class, ['as' => 'admin']);
+        
+
 
 });
-
-<<<<<<< HEAD
-    });
-
 
     Route::group(['middleware' => ['role:admin']], function () {
         Route::get('/forms', [ContextController::class, 'forms'])->name('admin.forms');
@@ -94,29 +94,3 @@ Route::middleware('auth')->group(function () {
         Route::post('admin/employee/upload', [EmployeeController::class, 'upload'])->name('admin.employee.upload');
     });
     ?>
-=======
-Route::group(['middleware' => ['role:admin']], function () {
-    Route::get('/forms', [ContextController::class, 'forms'])->name('admin.forms');
-    Route::get('/tables', [ContextController::class, 'tables'])->name('admin.tables');
-    Route::get('/ui-elements', [ContextController::class, 'uiElements'])->name('admin.ui-elements');
-});
-
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('users', UserController::class);
-    Route::resource('roles', RoleController::class);
-    Route::resource('permissions', PermissionController::class);
-});
-
-require __DIR__ . '/auth.php';
-
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/admin/employee', [EmployeeController::class, 'index'])->name('admin.employee');
-    Route::get('/admin/employee', [EmployeeController::class, 'showEmployees'])->name('admin.employee');
-    Route::get('/admin/employee/create', [EmployeeController::class, 'create'])->name('admin.employee.create');
-    Route::post('/admin/employee', [EmployeeController::class, 'store'])->name('admin.employee.store');
-    Route::get('/admin/employee/{user_id}/edit', [EmployeeController::class, 'edit'])->name('admin.employee.edit');
-    Route::put('/admin/employee/{user_id}', [EmployeeController::class, 'update'])->name('admin.employee.update');
-    Route::get('/admin/employee/{user_id}', [EmployeeController::class, 'destroy'])->name('admin.employee.destroy');
-    Route::post('admin/employee/upload', [EmployeeController::class, 'upload'])->name('admin.employee.upload');
-});
->>>>>>> 941562f661ba28116e15fe783d2d2e9831a07807

@@ -24,6 +24,7 @@
                         'Level Resiko',
                         'Selera Resiko',
                         'Opsi Penanganan',
+                        'Proses Bisnis',
                     ];
                 @endphp
 
@@ -57,6 +58,7 @@
         @include('admin.tabs.level_resiko')
         @include('admin.tabs.selera_resiko')
         @include('admin.tabs.opsi_penanganan')
+        @include('admin.tabs.proses_bisnis')
     </div>
     </div>
     <script>

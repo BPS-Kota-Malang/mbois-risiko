@@ -179,6 +179,10 @@
 
 <script>
 
+    function toggleModal(modalId) {
+        document.getElementById(modalId).classList.toggle('hidden');
+    }
+
     function openEditseleraResikoModal(url, idKategoriResiko, resikominimumnegatif, resikominimumpositif) {
         const editseleraResikoForm = document.getElementById('editseleraResikoForm');
         editseleraResikoForm.action = url;

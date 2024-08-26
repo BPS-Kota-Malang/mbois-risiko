@@ -11,15 +11,12 @@ class SeleraResiko extends Model
 
     // Nama tabel yang terkait dengan model ini
     protected $table = 'selera_resiko';
-
-
     // Mengizinkan atribut untuk diisi secara massal
     protected $fillable = [
         'id_kategori_resiko',
         'resiko_minimum_negatif',
         'resiko_minimum_positif',
     ];
-
     public function kategoriResiko()
     {
         return $this->belongsTo(KategoriResiko::class, 'id_kategori_resiko');
