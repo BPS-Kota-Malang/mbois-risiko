@@ -80,27 +80,21 @@ class DampakController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-{
-    // Validasi data
-    $request->validate([
-        'dampak' => 'required|string|max:255',
-        'status' => 'nullable|in:Accepted,On Progress,Rejected',
-    ]);
-
-    // Temukan entitas yang akan diperbarui
-    $dampak = Dampak::findOrFail($id);
-
-    // Perbarui data
-    $dampak->update([
-        'dampak' => $request->dampak,
-        'status' => $request->status ?? 'On Progress',
-    ]);
-
-    // Redirect kembali dengan pesan sukses
-    return redirect()->route('admin.dampak.index')->with('success', 'Dampak berhasil diperbarui.');
-}
-
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'dampak' => 'required|string|max:255',
+            'status' => 'required|string|in:On Progress,Accepted,Rejected',
+        ]);
+    
+        $dampak = Dampak::findOrFail($id);
+        $dampak->update([
+            'dampak' => $request->dampak,
+            'status' => $request->status,
+        ]);
+    
+        return redirect()->route('admin.dampak.index')->with('success', 'Dampak updated successfully.');
+    }
     /**
      * Remove the specified resource from storage.
      */

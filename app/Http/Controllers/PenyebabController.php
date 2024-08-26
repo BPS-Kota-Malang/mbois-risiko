@@ -80,26 +80,21 @@ class PenyebabController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-{
-    // Validasi data
-    $request->validate([
-        'penyebab' => 'required|string|max:255',
-        'status' => 'nullable|in:Accepted,On Progress,Rejected',
-    ]);
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'penyebab' => 'required|string|max:255',
+            'status' => 'required|string|in:On Progress,Accepted,Rejected',
+        ]);
+    
+        $penyebab = Penyebab::findOrFail($id);
+        $penyebab->update([
+            'penyebab' => $request->penyebab,
+            'status' => $request->status,
+        ]);
 
-    // Temukan entitas yang akan diperbarui
-    $penyebab = Penyebab::findOrFail($id);
-
-    // Perbarui data
-    $penyebab->update([
-        'penyebab' => $request->penyebab,
-        'status' => $request->status ?? 'On Progress',
-    ]);
-
-    // Redirect kembali dengan pesan sukses
-    return redirect()->route('admin.penyebab.index')->with('success', 'Penyebab berhasil diperbarui.');
-}
+        return redirect()->route('admin.penyebab.index')->with('success', 'Penyebab updated successfully.');
+    }
 
     /**
      * Remove the specified resource from storage.

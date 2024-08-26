@@ -61,10 +61,21 @@ class ResikoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    public function update(Request $request, $id)
+{
+    $request->validate([
+        'resiko' => 'required|string|max:255',
+        'status' => 'required|string|in:On Progress,Accepted,Rejected',
+    ]);
+
+    $resiko = Resiko::findOrFail($id);
+    $resiko->update([
+        'resiko' => $request->resiko,
+        'status' => $request->status,
+    ]);
+
+    return redirect()->route('admin.resiko.index')->with('success', 'Resiko updated successfully.');
+}
 
     /**
      * Remove the specified resource from storage.

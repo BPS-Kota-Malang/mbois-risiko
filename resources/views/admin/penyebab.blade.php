@@ -31,7 +31,21 @@
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $penyebab->penyebab }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ $penyebab->status }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="
+                            @if($penyebab->status == 'On Progress') 
+                                bg-yellow-500 text-yellow-800 
+                            @elseif($penyebab->status == 'Accepted') 
+                                bg-green-500 text-green-800 
+                            @elseif($penyebab->status == 'Rejected') 
+                                bg-red-500 text-red-800 
+                            @else 
+                                bg-gray-500 text-gray-800 
+                            @endif
+                        font-semibold px-2 py-1 rounded">
+                            {{ $penyebab->status }}
+                        </span>
+                    </td>
                     <td class="px-6 py-4 whitespace-nowrap text-center">
                         <div class="inline-flex space-x-4 justify-center items-center">
                             <a href="javascript:void(0);" 
@@ -50,9 +64,6 @@
                                 </button>
                             </form>
                         </div>
-                        @if (session('penyebab_deleted'))
-                            <div class="text-red-600 mt-2">{{ session('penyebab_deleted') }}</div>
-                        @endif
                     </td>
                 </tr>
                 @endforeach
@@ -64,38 +75,37 @@
     <div id="modalOverlay" class="fixed inset-0 bg-gray-900 opacity-50 hidden"></div>
 
     <!-- Modal Structure -->
-<div id="editModal" class="fixed inset-0 flex items-center justify-center hidden">
-    <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
-        <div class="flex justify-between items-center border-b pb-2 mb-4">
-            <h2 class="text-xl font-bold">Edit Penyebab</h2>
-            <button id="closeModal" class="text-gray-700 text-xl">&times;</button>
+    <div id="editModal" class="fixed inset-0 flex items-center justify-center hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
+            <div class="flex justify-between items-center border-b pb-2 mb-4">
+                <h2 class="text-xl font-bold">Edit Penyebab</h2>
+                <button id="closeModal" class="text-gray-700 text-xl">&times;</button>
+            </div>
+            <form id="editForm" action="" method="POST" class="mt-4">
+                @csrf
+                @method('PUT')
+                <div class="mb-4">
+                    <label for="penyebab" class="block text-sm font-medium text-gray-700">Penyebab</label>
+                    <input type="text" name="penyebab" id="penyebabInput" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required>
+                </div>
+                <div class="mb-4">
+                    <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                    <select name="status" id="statusInput" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required>
+                        <option value="On Progress">On Progress</option>
+                        <option value="Accepted">Accepted</option>
+                        <option value="Rejected">Rejected</option>
+                    </select>
+                </div>
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Simpan</button>
+                </div>
+            </form>
         </div>
-        <form id="editForm" action="" method="POST" class="mt-4">
-            @csrf
-            @method('PUT')
-            <div class="mb-4">
-                <label for="penyebab" class="block text-sm font-medium text-gray-700">Penyebab</label>
-                <input type="text" name="penyebab" id="penyebabInput" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required>
-            </div>
-            <div class="mb-4">
-                <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                <select name="status" id="statusInput" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required>
-                    <option value="On Progress">On Progress</option>
-                    <option value="Accepted">Accepted</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-            </div>
-            <div class="flex justify-end">
-                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Simpan</button>
-            </div>
-        </form>
-        
     </div>
-</div>
 
-<!-- JavaScript to Handle Modal -->
-<script>
-   function openModal(action, penyebab, status) {
+    <!-- JavaScript to Handle Modal -->
+    <script>
+    function openModal(action, penyebab, status) {
     document.getElementById('editForm').action = action;
     document.getElementById('penyebabInput').value = penyebab;
     document.getElementById('statusInput').value = status;
@@ -104,11 +114,12 @@
     document.getElementById('modalOverlay').classList.remove('hidden');
 }
 
-document.getElementById('closeModal').addEventListener('click', function() {
-    document.getElementById('editModal').classList.add('hidden');
-    document.getElementById('modalOverlay').classList.add('hidden');
-});
 
-</script>
+    document.getElementById('closeModal').addEventListener('click', function() {
+        document.getElementById('editModal').classList.add('hidden');
+        document.getElementById('modalOverlay').classList.add('hidden');
+    });
+
+    </script>
 
 </x-admin-layout>
