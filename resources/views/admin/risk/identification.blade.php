@@ -130,7 +130,8 @@
                 </div>
                 <!-- Body -->
                 <div class="flex justify-between items-center mb-4">
-                    <button id="btnresiko" class="bg-blue-500 text-white px-4 py-2 rounded-full">Tambah Resiko</button>
+                    <button id="addResikoBtn" class="bg-blue-500 text-white px-4 py-2 rounded-full">Tambah Resiko</button>
+
                     <div class="relative text-gray-600">
                         <input type="search" id="searchInput" name="search" placeholder="Cari" class="bg-white h-8 px-3 pr-8 rounded-full text-sm focus:outline-none" title="Cari Resiko">
                         <button type="submit" class="absolute right-0 top-0 mt-2 mr-3" title="Cari">
@@ -163,7 +164,7 @@
                     </table>
                 </div>
                 <!-- Modal "Tambah Resiko" -->
-                <div id="resikoModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                <div id="TambahresikoModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
                     <div class="flex items-center justify-center min-h-screen px-4">
                         <form action="{{ route('admin.resiko.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
@@ -184,13 +185,7 @@
                     </div>
                 </div>
                 <script>
-                    document.getElementById('saveBtn').addEventListener('click', function() {
-                        var resiko = document.getElementById('resiko').value;
-                        if (resiko === '') {
-                            alert('Nama Resiko belum terisi. Tidak bisa disimpan.');
-                            return false;
-                        }
-                    });
+
                 </script>
                 <!-- Footer -->
                 <div class="flex justify-end pt-2">
@@ -227,7 +222,9 @@
                     </div>
                 </div>
                 <div class="mt-3">
-                    <table id="causes-table" class="min-w-full bg-white text-sm">
+
+                    </table>
+                </div>ll bg-white text-sm">
                         <thead>
                             <tr>
                                 <th class="px-3 py-2">CEK</th>
@@ -390,13 +387,13 @@
     });
 
     // Tampilkan modal "Tambah Resiko"
-    document.getElementById('btnresiko').addEventListener('click', function() {
-        document.getElementById('resikoModal').classList.remove('hidden');
+    document.getElementById('addResikoBtn').addEventListener('click', function() {
+        document.getElementById('TambahresikoModal').classList.remove('hidden');
     });
 
     // Sembunyikan modal "Tambah Resiko"
     document.getElementById('cancelResikoBtn').addEventListener('click', function() {
-        document.getElementById('resikoModal').classList.add('hidden');
+        document.getElementById('TambahresikoModal').classList.add('hidden');
     });
 
 

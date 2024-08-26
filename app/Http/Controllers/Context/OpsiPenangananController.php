@@ -85,5 +85,8 @@ class OpsiPenangananController extends Controller
     {
         $opsiPenanganan = OpsiPenanganan::findOrFail($id);
         $opsiPenanganan->delete();
+
+
+        return redirect()->route('admin.risk.context')->with('success', 'Peraturan Perundang Undangan deleted successfully.');
     }
 }
