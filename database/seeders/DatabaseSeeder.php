@@ -30,6 +30,11 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionsSeeder::class);
         $this->call(JenisResikoSeeder::class);
         $this->call(SumberResikoSeeder::class);
+        $this->call(AreaDampakSeeder::class);
+        $this->call(KategoriResikoSeeder::class);
+        $this->call(ResikoSeeder::class);
+        $this->call(TimProjectSeeder::class);
+        $this->call(ManajemenResikoSeeder::class);
     }
 
 

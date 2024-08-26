@@ -10,7 +10,7 @@
         <meta name="description" content="{{ $page->description }}">
 
         <title>{{ $page->title }}</title>
-        
+
         <link rel="stylesheet" href="{{ mix('css/main.css', 'assets/build') }}">
 
         <script src="{{ mix('js/main.js', 'assets/build') }}"></script>
@@ -28,12 +28,12 @@
 
                 <form class="mt-4" action="/" method="GET">
                     <label class="block">
-                        <span class="text-gray-700 text-sm">Email</span>
+                        <span class="text-black-700 text-sm">Email</span>
                         <input type="email" class="form-input mt-1 block w-full rounded-md focus:border-indigo-600">
                     </label>
 
                     <label class="block mt-3">
-                        <span class="text-gray-700 text-sm">Password</span>
+                        <span class="text-black-700 text-sm">Password</span>
                         <input type="password" class="form-input mt-1 block w-full rounded-md focus:border-indigo-600">
                     </label>
 
@@ -44,7 +44,7 @@
                                 <span class="mx-2 text-gray-600 text-sm">Remember me</span>
                             </label>
                         </div>
-                        
+
                         <div>
                             <a class="block text-sm fontme text-indigo-700 hover:underline" href="#">Forgot your password?</a>
                         </div>

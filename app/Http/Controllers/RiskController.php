@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Resiko;
 use App\Models\AreaDampak;
 use App\Models\JenisResiko;
 use App\Models\KategoriResiko;
@@ -19,7 +20,9 @@ class RiskController extends Controller
     }
 
     public function identification()
-    {   $jenisResiko = JenisResiko::all();
+    {
+        $resiko = Resiko::all();
+        $jenisResiko = JenisResiko::all();
         $sumberResiko = SumberResiko::all();
         $kategoriResiko = KategoriResiko::all();
         $areaDampak = AreaDampak::all();
@@ -28,8 +31,9 @@ class RiskController extends Controller
         $dampak = Dampak::all();
         $selectedTeam = TimProject::first();
 
+
         return view('admin.risk.identification', compact('jenisResiko', 'penyebab', 'sumberResiko', 'kategoriResiko',
-         'areaDampak', 'timProjects', 'selectedTeam', 'dampak'));
+         'areaDampak', 'timProjects', 'selectedTeam', 'dampak', 'resiko'));
 }
 
     public function analysis()

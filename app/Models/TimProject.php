@@ -21,4 +21,10 @@ class TimProject extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function manajemen_resiko()
+    {
+        return $this->hasMany(ManajemenResiko::class, 'id_tim_project');
+    }
+
 }
