@@ -23,7 +23,7 @@
     use App\Http\Controllers\EmployeeController;
     use App\Http\Controllers\IdentificationController;
     use App\Http\Controllers\PenyebabController;
-    use App\Http\Controllers\Context\Dampak;
+    use App\Http\Controllers\Context\OpsiPenangananController;
     use App\Http\Controllers\DampakController;
 
     Route::get('/', function () {
@@ -58,6 +58,7 @@
         Route::resource('/levelresiko', LevelResikoController::class, ['as' => 'admin']);
         Route::resource('/matriksanalisisresiko', MatriksAnalisisResikoController::class, ['as' => 'admin']);
         Route::resource('/seleraresiko', SeleraResikoController::class, ['as' => 'admin']);
+        Route::resource('/opsipenanganan', OpsiPenangananController::class, ['as' => 'admin']);
         Route::resource('/identification', IdentificationController::class, ['as' => 'admin']);
         Route::resource('/penyebab', PenyebabController::class, ['as' => 'admin']);
         Route::resource('/dampak', DampakController::class, ['as' => 'admin']);
@@ -91,7 +92,3 @@
         Route::post('admin/employee/upload', [EmployeeController::class, 'upload'])->name('admin.employee.upload');
     });
     ?>
-
-
-
-

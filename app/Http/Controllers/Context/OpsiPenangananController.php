@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Context;
-
 use App\Http\Controllers\Controller;
+use App\Models\OpsiPenanganan;
 use Illuminate\Http\Request;
 
 class OpsiPenangananController extends Controller
@@ -28,7 +28,18 @@ class OpsiPenangananController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'opsi_penanganan'=> 'required|string|max:255',
+            'deskripsi' => 'required|string|max:255',
+            'id_jenis_resiko' => 'required|exists:jenis_resiko,id',
+        ]);
+
+        OpsiPenanganan::create([
+            'opsi_penanganan' => $request->opsi_penanganan,
+            'deskripsi' => $request->deskripsi,
+            'id_jenis_resiko' => $request->id_jenis_resiko,
+        ]);
+        return redirect()->route('admin.risk.context')->with('success', 'Opsi Penanganan berhasil ditambahkan.');
     }
 
     /**
@@ -52,7 +63,19 @@ class OpsiPenangananController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'opsi_penanganan'=> 'required|string|max:255',
+            'deskripsi' => 'required|string|max:255',
+            'id_jenis_resiko' => 'required|exists:jenis_resiko,id',
+        ]);
+
+        $opsiPenanganan = OpsiPenanganan::findOrFail($id);
+        $opsiPenanganan->update([
+            'opsi_penanganan' => $request->opsi_penanganan,
+            'deskripsi' => $request->deskripsi,
+            'id_jenis_resiko' => $request->id_jenis_resiko,
+        ]);
+        return redirect()->route('admin.risk.context')->with('success', 'Opsi Penanganan berhasil ditambahkan.');
     }
 
     /**
@@ -60,6 +83,7 @@ class OpsiPenangananController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $opsiPenanganan = OpsiPenanganan::findOrFail($id);
+        $opsiPenanganan->delete();
     }
 }

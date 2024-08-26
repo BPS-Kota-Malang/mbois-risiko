@@ -21,4 +21,9 @@ class JenisResiko extends Model
         'created_at',
         'updated_at',
     ];
+    
+    public function opsiPenanganan()
+    {
+        return $this->hasMany(opsiPenanganan::class, 'id_jenis_resiko');
+    }
 }

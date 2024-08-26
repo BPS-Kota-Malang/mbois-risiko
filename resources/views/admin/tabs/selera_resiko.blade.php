@@ -179,10 +179,6 @@
 
 <script>
 
-    function toggleModal(modalId) {
-        document.getElementById(modalId).classList.toggle('hidden');
-    }
-
     function openEditseleraResikoModal(url, idKategoriResiko, resikominimumnegatif, resikominimumpositif) {
         const editseleraResikoForm = document.getElementById('editseleraResikoForm');
         editseleraResikoForm.action = url;
@@ -192,14 +188,6 @@
         document.getElementById('resiko_minimum_positif_edit').value = resikominimumpositif;
         toggleModal('editseleraResikoModal');
     }
-
-    // function openEditseleraResikoModal(url, idkategoriresiko, resikominimumNegatif, resikominimumPositif) {
-    //     const editSumberResikoForm = document.getElementById('editSumberResikoForm');
-    //     editSumberResikoForm.action = url;
-    //     document.getElementById('kode_edit_sumber_resiko').value = kode;
-    //     document.getElementById('sumber_resiko_edit').value = sumberResiko;
-    //     toggleModal('editSumberResikoModal');
-    // }
 
     document.addEventListener('click', function(event) {
         const modals = document.querySelectorAll('.modal');
