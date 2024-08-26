@@ -15,6 +15,7 @@ class ManajemenResiko extends Model
         'id_tim_project',
         'id_resiko',
         'id_jenis_resiko',
+        'id_proses_bisnis',
         'id_sumber_resiko',
         'id_kategori_resiko',
         'id_area_dampak',
@@ -37,6 +38,12 @@ class ManajemenResiko extends Model
         return $this->belongsTo(Resiko::class, 'id_resiko');
     }
 
+
+    public function prosesBisnis()
+    {
+        return $this->belongsTo(ProsesBisnis::class, 'id_proses_bisnis');
+    }
+
     public function jenisResiko()
     {
         return $this->belongsTo(JenisResiko::class, 'id_jenis_resiko');
@@ -56,4 +63,4 @@ class ManajemenResiko extends Model
     {
         return $this->belongsTo(AreaDampak::class, 'id_area_dampak');
     }
-}
+    }

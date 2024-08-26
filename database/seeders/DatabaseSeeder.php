@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ResikoSeeder::class);
         $this->call(ProsesBisnisSeeder::class);
         $this->call(TimProjectSeeder::class);
-        $this->call(ManajemenResikoSeeder::class);
+        // $this->call(ManajemenResikoSeeder::class);
     }
 
 

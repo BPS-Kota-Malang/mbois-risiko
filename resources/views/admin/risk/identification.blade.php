@@ -14,7 +14,9 @@
                 <div class="mb-4">
                     <label class="block text-gray-700 mb-2" for="proses-bisnis">Proses Bisnis</label>
                     <select id="proses-bisnis" class="w-full p-2 border rounded-lg">
-                        <option value="">Pilih Proses Bisnis</option>
+                        @foreach ($ProsesBisnis as $proses)
+                            <option value="{{ $proses->proses_bisnis }}">{{ $proses->proses_bisnis }}</option>
+                        @endforeach
                     </select>
                 </div>
             </form>
@@ -48,56 +50,55 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap"></td>
-                        <td class="px-6 py-4 whitespace-nowrap">4</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            @foreach ($timProjects as $tim)
-                                @if ($tim->nama_team == $selectedTeam)
-                                    {{ $tim->nama_team }}
-                                @endif
-                            @endforeach
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">Inda tidak fokus saat pelatihan</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <select class="form-select pr-8 py-2 border">
-                                @foreach ($jenisResiko as $jenis)
-                                    <option> {{ $jenis->jenis_resiko }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <select class="form-select pr-8 py-2 border">
-                                @foreach ($sumberResiko as $sumber)
-                                    <option>{{ $sumber->sumber_resiko }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <select class="form-select pr-8 py-2 border">
-                                @foreach ($kategoriResiko as $kategori)
-                                    <option>{{ $kategori->deskripsi }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <select class="form-select pr-8 py-2 border">
-                                @foreach ($areaDampak as $area)
-                                    <option>{{ $area->area_dampak }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <button class="bg-blue-500 text-white px-4 py-2 rounded" id="openModal">Pilih Penyebab</button>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <button class="bg-blue-500 text-white px-4 py-2 rounded" id="openModal2">Pilih Dampak</button>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <button class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
-                            <button class="bg-blue-500 text-white px-2 py-1 rounded">Edit</button>
-                            <button class="bg-green-500 text-white px-2 py-1 rounded">Save</button>
-                        </td>
+                    @foreach ($ManajemenResiko as $ManajemenResiko)
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $ManajemenResiko->id_proses_bisnis }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $ManajemenResiko->id_tim_project }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $ManajemenResiko->resiko }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <select name="jenis_resiko[]" class="form-select pr-8 py-2 border">
+                                    @foreach ($jenisResiko as $jenis)
+                                        <option value="{{ $jenis->id }}"> {{ $jenis->jenis_resiko }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <select name="sumber_resiko[]" class="form-select pr-8 py-2 border">
+                                    @foreach ($sumberResiko as $sumber)
+                                        <option value="{{ $sumber->id }}">{{ $sumber->sumber_resiko }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <select name="kategori_resiko[]" class="form-select pr-8 py-2 border">
+                                    @foreach ($kategoriResiko as $kategori)
+                                        <option value="{{ $kategori->id }}">{{ $kategori->deskripsi }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <select name="area_dampak[]" class="form-select pr-8 py-2 border">
+                                    @foreach ($areaDampak as $area)
+                                        <option value="{{ $area->id }}">{{ $area->area_dampak }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <button class="bg-blue-500 text-white px-4 py-2 rounded" id="openModal">Pilih Penyebab</button>
+                                <div id="selectedPenyebab" class="mt-2"></div>
+                                <input type="hidden" name="selected_penyebab[]" id="selectedPenyebabInput">
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <button class="bg-blue-500 text-white px-4 py-2 rounded" id="openModal2">Pilih Dampak</button>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <button class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
+                                <button class="bg-blue-500 text-white px-2 py-1 rounded">Edit</button>
+                                <button class="bg-green-500 text-white px-2 py-1 rounded">Save</button>
+                            </td>
+                        </tr>
+                    @endforeach
                     </tr>
                 </tbody>
             </table>
@@ -222,9 +223,7 @@
                     </div>
                 </div>
                 <div class="mt-3">
-
-                    </table>
-                </div>ll bg-white text-sm">
+                    <table id="penyebab-table" class="min-w-full bg-white text-sm">
                         <thead>
                             <tr>
                                 <th class="px-3 py-2">CEK</th>
@@ -233,10 +232,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ( $penyebab as $penyebab )
+                            @foreach ($penyebab as $penyebab)
                             <tr class="bg-gray-100">
                                 <td class="border px-3 py-1">
-                                    <input type="checkbox">
+                                    <input type="checkbox" title="Pilih Penyebab">
                                 </td>
                                 <td class="border px-3 py-1">{{ $penyebab->penyebab }}</td>
                                 <td class="border px-3 py-1">{{ $penyebab->status }}</td>

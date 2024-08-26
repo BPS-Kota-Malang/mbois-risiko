@@ -9,7 +9,10 @@ use App\Models\KategoriResiko;
 use App\Models\Penyebab;
 use App\Models\SumberResiko;
 use App\Models\TimProject;
+use App\Models\ProsesBisnis;
 use App\Models\Dampak;
+use App\Models\ManajemenResiko;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class RiskController extends Controller
@@ -29,11 +32,21 @@ class RiskController extends Controller
         $timProjects = TimProject::all();
         $penyebab = Penyebab::all();
         $dampak = Dampak::all();
-        $selectedTeam = TimProject::first();
+        $ProsesBisnis = ProsesBisnis::all();
+
+        $ManajemenResiko = DB::table('manajemen_resiko')
+        ->join('resiko', 'manajemen_resiko.id_resiko', '=', 'resiko.id')
+        ->select('manajemen_resiko.*', 'resiko.resiko as resiko')
+        ->get();
+
+        // $selectedTeam = TimProject::first();
 
 
-        return view('admin.risk.identification', compact('jenisResiko', 'penyebab', 'sumberResiko', 'kategoriResiko',
-         'areaDampak', 'timProjects', 'selectedTeam', 'dampak', 'resiko'));
+
+        return view('admin.risk.identification', compact('jenisResiko', 'penyebab',
+         'sumberResiko', 'kategoriResiko',
+         'areaDampak', 'timProjects',
+          'dampak', 'resiko', 'ProsesBisnis', 'ManajemenResiko'));
 }
 
     public function analysis()
