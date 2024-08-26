@@ -25,7 +25,8 @@
     use App\Http\Controllers\PenyebabController;
     use App\Http\Controllers\Context\OpsiPenangananController;
     use App\Http\Controllers\Context\ProsesBisnisController;
-use App\Http\Controllers\DampakController;
+    use App\Http\Controllers\DampakController;
+    use App\Http\Controllers\ResikoController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -64,6 +65,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/identification', IdentificationController::class, ['as' => 'admin']);
         Route::resource('/penyebab', PenyebabController::class, ['as' => 'admin']);
         Route::resource('/dampak', DampakController::class, ['as' => 'admin']);
+        Route::resource('/resiko', ResikoController::class, ['as' => 'admin']);
         
 
 
