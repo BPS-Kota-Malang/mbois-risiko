@@ -124,6 +124,18 @@
             </svg>
             <span class="mx-3">Penyebab</span>
         </a>
+        
+        <!-- "Dampak"  -->
+            <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.dampak') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
+            href="{{ route('admin.dampak.index') }}">
+            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10.29 3.86L1.82 18c-.58 1.01.16 2.25 1.29 2.25h18.78c1.13 0 1.87-1.24 1.29-2.25L13.71 3.86a1.5 1.5 0 00-2.42 0zM12 9v4m0 4h.01" />
+            </svg>
+            <span class="mx-3">Dampak</span>
+            </a>
+
+
         {{-- <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.tables') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-white"
             href="{{ route('admin.tables') }}">
             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -169,7 +181,7 @@
                     </svg>
                 </button>
                 <div id="new-dropdown-menu" class="dropdown_branding w-full">
-                    <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.users.index') ? 'text-white' : 'text-gray-500' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-white"
+                    <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.users.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-white"
                         href="{{ route('admin.users.index') }}">
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
@@ -180,7 +192,7 @@
                         <span class="mx-3">User</span>
                     </a>
 
-                    <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.roles.index') ? 'text-white' : 'text-gray-500' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-white"
+                    <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.roles.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-white"
                         href="{{ route('admin.roles.index') }}">
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
@@ -191,7 +203,7 @@
                         <span class="mx-3">Role</span>
                     </a>
 
-                    <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.permissions.index') ? 'text-white' : 'text-gray-500' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-white"
+                    <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.permissions.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-white"
                         href="{{ route('admin.permissions.index') }}">
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
