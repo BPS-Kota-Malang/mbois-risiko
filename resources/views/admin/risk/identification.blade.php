@@ -185,13 +185,7 @@
                     </div>
                 </div>
                 <script>
-                    document.getElementById('saveBtn').addEventListener('click', function() {
-                        var resiko = document.getElementById('resiko').value;
-                        if (resiko === '') {
-                            alert('Nama Resiko belum terisi. Tidak bisa disimpan.');
-                            return false;
-                        }
-                    });
+
                 </script>
                 <!-- Footer -->
                 <div class="flex justify-end pt-2">
@@ -228,7 +222,9 @@
                     </div>
                 </div>
                 <div class="mt-3">
-                    <table id="causes-table" class="min-w-full bg-white text-sm">
+
+                    </table>
+                </div>ll bg-white text-sm">
                         <thead>
                             <tr>
                                 <th class="px-3 py-2">CEK</th>

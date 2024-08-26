@@ -23,9 +23,10 @@
     use App\Http\Controllers\EmployeeController;
     use App\Http\Controllers\IdentificationController;
     use App\Http\Controllers\PenyebabController;
+    use App\Http\Controllers\ResikoController;
     use App\Http\Controllers\Context\OpsiPenangananController;
     use App\Http\Controllers\Context\ProsesBisnisController;
-use App\Http\Controllers\DampakController;
+    use App\Http\Controllers\DampakController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -62,7 +63,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/opsipenanganan', OpsiPenangananController::class, ['as' => 'admin']);
         Route::resource('/prosesbisnis', ProsesBisnisController::class, ['as' => 'admin']);
         Route::resource('/identification', IdentificationController::class, ['as' => 'admin']);
-        Route::resource('/resiko', RiskController::class, ['as' => 'admin']);
+        Route::resource('/resiko', ResikoController::class, ['as' => 'admin']);
         Route::resource('/penyebab', PenyebabController::class, ['as' => 'admin']);
         Route::resource('/dampak', DampakController::class, ['as' => 'admin']);
 

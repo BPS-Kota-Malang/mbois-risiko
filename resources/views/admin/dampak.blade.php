@@ -34,17 +34,17 @@
                     <td class="px-6 py-4 whitespace-nowrap">{{ $dampak->status }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-center">
                         <div class="inline-flex space-x-4 justify-center items-center">
-                            <a href="javascript:void(0);" 
-                               onclick="openModal('{{ route('admin.dampak.update', $dampak->id) }}', '{{ $dampak->dampak }}', '{{ $damapk->status }}')" 
-                               class="bg-blue-600 text-white hover:bg-blue-700 border border-blue-700 rounded px-4 py-2 transition duration-300 ease-in-out" 
+                            <a href="javascript:void(0);"
+                               onclick="openModal('{{ route('admin.dampak.update', $dampak->id) }}', '{{ $dampak->dampak }}', '{{ $dampak->status }}')"
+                               class="bg-blue-600 text-white hover:bg-blue-700 border border-blue-700 rounded px-4 py-2 transition duration-300 ease-in-out"
                                title="Edit">
                                 Edit
                             </a>
                             <form action="{{ route('admin.dampak.destroy', $dampak->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" 
-                                        class="bg-red-600 text-white hover:bg-red-700 border border-red-700 rounded px-4 py-2 transition duration-300 ease-in-out" 
+                                <button type="submit"
+                                        class="bg-red-600 text-white hover:bg-red-700 border border-red-700 rounded px-4 py-2 transition duration-300 ease-in-out"
                                         title="Delete">
                                     Delete
                                 </button>
@@ -89,7 +89,7 @@
                 <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Simpan</button>
             </div>
         </form>
-        
+
     </div>
 </div>
 
