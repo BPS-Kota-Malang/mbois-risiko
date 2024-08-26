@@ -77,5 +77,8 @@ class ProsesBisnisController extends Controller
     {
         $prosesBisnis = ProsesBisnis::findOrFail($id);
         $prosesBisnis->delete();
+
+        return redirect()->route('admin.risk.context')->with('success', 'Peraturan Perundang Undangan deleted successfully.');
     }
+
 }
