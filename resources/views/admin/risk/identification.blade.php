@@ -51,12 +51,12 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    @foreach ($ManajemenResiko as $ManajemenResiko)
+                    @foreach ($ManajemenResikos as $ManajemenResiko)
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $ManajemenResiko->id_proses_bisnis }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $ManajemenResiko->id_tim_project }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $ManajemenResiko->resiko }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $ManajemenResiko->prosesbisnis->proses_bisnis }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $ManajemenResiko->tim_project->nama_team }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $ManajemenResiko->resiko->resiko }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <select name="jenis_resiko[]" class="form-select pr-8 py-2 border">
                                     @foreach ($jenisResiko as $jenis)
@@ -291,15 +291,6 @@
             </form>
         </div>
     </div>
-    <script>
-        // document.getElementById('saveBtndampak').addEventListener('click', function() {
-        //     var dampak = document.getElementById('dampak').value;
-        //     if (dampak === '') {
-        //         alert('Nama Dampak belum terisi. Tidak bisa disimpan.');
-        //         return false;
-        //     }
-        // });
-    </script>
 
     <!-- Modal Dampak -->
     <div class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center hidden" id="dampakModal">
@@ -384,7 +375,9 @@
                 {
                     data: "id",
                     render: function(data, type, row) {
-                        return '<input type="checkbox" class="row-checkbox" value="' + data + '">';
+                        // return '<input type="checkbox" class="row-checkbox" value="' + data + '">';
+                        var isDisabled = (row.status === 'rejected' || row.status === 'onprogress') ? 'disabled' : '';
+                        return '<input type="checkbox" class="row-checkbox" value="' + data + '" ' + isDisabled + '>';
                     }
                 },
                 { data: "resiko" },
