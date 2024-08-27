@@ -5,19 +5,19 @@
             <form id="identifikasiResikoForm">
                 <div class="mb-4">
                     <label class="block text-gray-700 mb-2" for="tim-bidang">Tim/Bidang</label>
-                    <select id="proses-bisnis" class="w-full p-2 border rounded-lg">
+                    <select id="tim" name="tim" class="w-full p-2 border rounded-lg">
                         <option value="">-- Pilih Tim/Bidang --</option>
                         @foreach ($timProjects as $tim)
-                            <option value="{{ $tim->nama_team }}">{{ $tim->nama_team }}</option>
+                            <option value="{{ $tim->id }}">{{ $tim->nama_team }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 mb-2" for="proses-bisnis">Proses Bisnis</label>
-                    <select id="proses-bisnis" class="w-full p-2 border rounded-lg">
+                    <select id="proses_bisnis" name="proses_bisnis"  class="w-full p-2 border rounded-lg">
                         <option value="">-- Pilih Proses Bisnis --</option>
                         @foreach ($ProsesBisnis as $proses)
-                            <option value="{{ $proses->proses_bisnis }}">{{ $proses->proses_bisnis }}</option>
+                            <option value="{{ $proses->id }}">{{ $proses->proses_bisnis }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -116,7 +116,7 @@
     </div>
 
 
-    <!-- Modal Resiko -->
+    <!-- Modal Resiko Main-->
     <div class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center hidden" id="resikoModal">
         <div class="modal-overlay absolute w-full h-full bg-blue-900 opacity-50"></div>
         <div class="modal-container bg-gray-100 w-full md:max-w-4xl mx-auto h-screen md:h-4/5 rounded-lg shadow-lg z-50 overflow-y-auto ">
@@ -157,6 +157,39 @@
             </div>
         </div>
     </div>
+
+    {{-- <!-- Modal Tambah Resiko -> --}}
+    <div id="addResikoModal" class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center hidden">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+        <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded-lg shadow-lg z-50 overflow-y-auto">
+            <div class="modal-content py-4 text-left px-6">
+                <!-- Title -->
+                <div class="flex justify-between items-center pb-2">
+                    <p class="text-xl font-bold">Tambah Resiko</p>
+                    <div class="modal-close cursor-pointer z-50" id="closeAddModal" title="Tutup Modal">
+                        <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 18 18">
+                            <path d="M14.53 3.47a.75.75 0 00-1.06 0L9 7.94 4.53 3.47a.75.75 0 00-1.06 1.06L7.94 9l-4.47 4.47a.75.75 0 001.06 1.06L9 10.06l4.47 4.47a.75.75 0 001.06-1.06L10.06 9l4.47-4.47a.75.75 0 000-1.06z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <!-- Body -->
+                <div>
+                    <form id="addResikoForm">
+                        <div class="mb-4">
+                            <label for="resikoName" class="block text-sm font-medium text-gray-700">Nama Resiko</label>
+                            <input type="text" id="resikoName" name="resikoName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
+                        </div>
+                    </form>
+                </div>
+                <!-- Footer -->
+                <div class="flex justify-end pt-2">
+                    <button class="bg-red-500 text-white px-4 py-2 rounded-full" id="cancelAddResiko">Batal</button>
+                    <button class="bg-green-500 text-white px-4 py-2 rounded-full" id="saveResikoBtn">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     
 
     <!-- Modal Penyebab -->
@@ -228,15 +261,7 @@
                         </form>
                     </div>
                 </div>
-                <script>
-                    document.getElementById('saveBtn').addEventListener('click', function() {
-                        var penyebab = document.getElementById('penyebab').value;
-                        if (penyebab === '') {
-                            alert('Nama Penyebab belum terisi. Tidak bisa disimpan.');
-                            return false;
-                        }
-                    });
-                </script>
+                
                 <!-- Footer -->
                 <div class="flex justify-end pt-2">
                 </div>
@@ -352,20 +377,20 @@
         */
 
         var table = $('#resiko-table').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "ajax": "{{ route('admin.getresikodata') }}", // Adjust with your route for fetching data
-            "columns": [
+            processing : true,
+            serverSide: true,
+            ajax: "{{ route('admin.getresikodata') }}", // Adjust with your route for fetching data
+            columns: [
                 {
-                    "data": "id",
-                    "render": function(data, type, row) {
+                    data: "id",
+                    render: function(data, type, row) {
                         return '<input type="checkbox" class="row-checkbox" value="' + data + '">';
                     }
                 },
-                { "data": "resiko" },
-                { "data": "status" }
+                { data: "resiko" },
+                { data: "status" }
             ],
-            "initComplete": function() {
+            initComplete: function() {
                 // Adding search boxes to each column
                 this.api().columns().every(function() {
                     var column = this;
@@ -390,16 +415,86 @@
         });
 
         $('#addRowBtn').on('click', function() {
-            // Code for adding a new row
+            $('#addResikoModal').removeClass('hidden');
         });
+        
+          // Close the modal
+        $('#closeAddModal, #cancelAddResiko').on('click', function() {
+            $('#addResikoModal').addClass('hidden');
+        });
+
+        // Handle form submission
+        $('#saveResikoBtn').on('click', function() {
+            var resikoName = $('#resikoName').val();
+
+            if(resikoName.trim() !== '') {
+                // Optionally, you can send the data to the server via AJAX.
+                // Example:
+                
+                $.ajax({
+                    url: '{{ route('admin.resiko.store') }}',
+                    method: 'POST',
+                    data: {
+                        resiko: resikoName,
+                        _token: $('meta[name="csrf-token"]').attr('content') // Laravel CSRF token
+                    },
+                    success: function(response) {
+                        // Handle success (e.g., add the new resiko to the table)
+                        // $('#resiko-table tbody').append('<tr><td><input type="checkbox"></td><td>' + response.resiko + '</td><td>' + response.status + '</td></tr>');
+                        $('#addResikoModal').addClass('hidden');
+                        table.ajax.reload(null, false);
+                    },
+                    error: function(error) {
+                        // Handle error
+                    }
+                });
+                
+
+                // For now, simply close the modal
+                $('#addResikoModal').addClass('hidden');
+            } else {
+                alert('Please enter a valid resiko name.');
+            }
+        });
+
 
         $('#saveBtn').on('click', function() {
             var selected = [];
             $('input.row-checkbox:checked').each(function() {
                 selected.push($(this).val());
             });
-            // Handle selected IDs (e.g., submit them via AJAX)
+            
+            var formValues = {
+                tim: $('#tim').val(),
+                proses_bisnis: $('#proses_bisnis').val()
+            };
             console.log(selected);
+
+            $.ajax({
+                url: '{{ route('admin.manajemenresiko.initialstore') }}',
+                type: 'POST',
+                data: { 
+                    data : selected, 
+                    formValues: formValues,
+                    _token: $('meta[name="csrf-token"]').attr('content')},
+                
+                success: function(response) {
+                    if (response.errors) {
+                        // Handle validation errors
+                        console.log(response.errors);
+                        // Display errors in the modal or elsewhere
+                    } else if (response.success) {
+                        // Handle successful submission
+                        console.log(response.success);
+                        // Close the modal and/or update the UI as needed
+                        resikoModal.classList.add('hidden');
+                        table.ajax.reload(null, false);
+                    }
+                },
+                error: function(xhr) {
+                    console.error('Error:', xhr.responseText);
+                }
+            });
         });
 
 

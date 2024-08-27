@@ -49,9 +49,8 @@ class ResikoController extends Controller
     {
         $request->validate([
             'resiko' => 'required|string|max:255',
-            'status' => 'nullable|in:Accepted,On Progress,Rejected',
         ]);
-
+        
         Resiko::create([
             'resiko' => $request->resiko,
             'status' => $request->status ?? 'On Progress',
