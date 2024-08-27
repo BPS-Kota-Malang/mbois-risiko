@@ -98,5 +98,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/admin/employee/{user_id}', [EmployeeController::class, 'update'])->name('admin.employee.update');
         Route::get('/admin/employee/{user_id}', [EmployeeController::class, 'destroy'])->name('admin.employee.destroy');
         Route::post('admin/employee/upload', [EmployeeController::class, 'upload'])->name('admin.employee.upload');
+        Route::post('/admin/kriteriakemungkinan', [KriteriaKemungkinanController::class, 'store'])->name('admin.kriteriakemungkinan.store');
+
     });
     ?>

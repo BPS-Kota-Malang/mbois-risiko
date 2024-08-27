@@ -10,112 +10,73 @@ use Illuminate\Http\Request;
 
 class KriteriaKemungkinanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
-{
-    $query = KriteriaKemungkinan::query();
-
-    // Apply filters
-    if ($request->has('kategori_resiko') && $request->kategori_resiko) {
-        $query->where('id_kategori_resiko', $request->kategori_resiko);
-    }
-
-    $kriteriaKemungkinan = $query->get();
-
-    $kategoriResiko = KategoriResiko::all(); // Assuming you want to populate dropdown options
-
-    return view('admin.risk.context', compact('kriteriaKemungkinan', 'kategoriResiko'));
-}
-
-    
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function index()
     {
-        // Optional: Jika form untuk pembuatan berada di halaman terpisah, Anda bisa load data yang diperlukan di sini.
+        $kriteriaKemungkinan = KriteriaKemungkinan::with(['kategoriResiko', 'levelKemungkinan'])->get();
+        $kategoriResiko = KategoriResiko::all();
+        $levelKemungkinan = LevelKemungkinan::all();
+
+        return view('kriteria_kemungkinan.index', compact('kriteriaKemungkinan', 'kategoriResiko', 'levelKemungkinan'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        // Validasi input dari form
-        $request->validate([
+        $validated = $request->validate([
             'id_kategori_resiko' => 'required|exists:kategori_resiko,id',
             'id_level_kemungkinan' => 'required|exists:level_kemungkinan,id',
-            'presentase_kemungkinan' => 'required|string|max:255',
-            'jumlah_frekuensi' => 'required|string|max:255',
+            'presentase_kemungkinan' => 'required|numeric',
+            'jumlah_frekuensi' => 'required|numeric',
         ]);
 
-        // Simpan data ke dalam database
-        KriteriaKemungkinan::create([
-            'id_kategori_resiko' => $request->id_kategori_resiko,
-            'id_level_kemungkinan' => $request->id_level_kemungkinan,
-            'presentase_kemungkinan' => $request->presentase_kemungkinan,
-            'jumlah_frekuensi' => $request->jumlah_frekuensi,
-        ]);
+        $kriteriaKemungkinan = KriteriaKemungkinan::create($validated);
 
-        // Redirect ke halaman sebelumnya dengan pesan sukses
-        return redirect()->route('admin.risk.context')->with('success', 'Kriteria Kemungkinan created successfully.');
+        // Prepare response data for DataTables
+        $response = [
+            'no' => $kriteriaKemungkinan->id,
+            'kategori_resiko' => $kriteriaKemungkinan->kategoriResiko->deskripsi,
+            'level_kemungkinan' => $kriteriaKemungkinan->levelKemungkinan->level_kemungkinan,
+            'presentase_kemungkinan' => $kriteriaKemungkinan->presentase_kemungkinan,
+            'jumlah_frekuensi' => $kriteriaKemungkinan->jumlah_frekuensi,
+            'edit_url' => route('admin.kriteriakemungkinan.update', $kriteriaKemungkinan->id),
+            'delete_url' => route('admin.kriteriakemungkinan.destroy', $kriteriaKemungkinan->id),
+            'csrf_token' => csrf_token(),
+        ];
+
+        return response()->json($response);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function update(Request $request, $id)
     {
-        // Optional: Jika Anda ingin menampilkan detail dari sebuah Kriteria Kemungkinan
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        // Optional: Jika form untuk pengeditan berada di halaman terpisah, Anda bisa load data yang diperlukan di sini.
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        // Validasi input dari form
-        $request->validate([
+        $validated = $request->validate([
             'id_kategori_resiko' => 'required|exists:kategori_resiko,id',
             'id_level_kemungkinan' => 'required|exists:level_kemungkinan,id',
-            'presentase_kemungkinan' => 'required|string|max:255',
-            'jumlah_frekuensi' => 'required|string|max:255',
+            'presentase_kemungkinan' => 'required|numeric',
+            'jumlah_frekuensi' => 'required|numeric',
         ]);
 
-        // Cari data berdasarkan ID dan update
         $kriteriaKemungkinan = KriteriaKemungkinan::findOrFail($id);
-        $kriteriaKemungkinan->update([
-            'id_kategori_resiko' => $request->id_kategori_resiko,
-            'id_level_kemungkinan' => $request->id_level_kemungkinan,
-            'presentase_kemungkinan' => $request->presentase_kemungkinan,
-            'jumlah_frekuensi' => $request->jumlah_frekuensi,
-        ]);
+        $kriteriaKemungkinan->update($validated);
 
-        // Redirect ke halaman sebelumnya dengan pesan sukses
-        return redirect()->route('admin.risk.context')->with('success', 'Kriteria Kemungkinan updated successfully.');
+        // Prepare response data for DataTables
+        $response = [
+            'no' => $kriteriaKemungkinan->id,
+            'kategori_resiko' => $kriteriaKemungkinan->kategoriResiko->deskripsi,
+            'level_kemungkinan' => $kriteriaKemungkinan->levelKemungkinan->level_kemungkinan,
+            'presentase_kemungkinan' => $kriteriaKemungkinan->presentase_kemungkinan,
+            'jumlah_frekuensi' => $kriteriaKemungkinan->jumlah_frekuensi,
+            'edit_url' => route('admin.kriteriakemungkinan.update', $kriteriaKemungkinan->id),
+            'delete_url' => route('admin.kriteriakemungkinan.destroy', $kriteriaKemungkinan->id),
+            'csrf_token' => csrf_token(),
+        ];
+
+        return response()->json($response);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        // Cari data berdasarkan ID dan hapus
         $kriteriaKemungkinan = KriteriaKemungkinan::findOrFail($id);
         $kriteriaKemungkinan->delete();
 
-        // Redirect ke halaman sebelumnya dengan pesan sukses
-        return redirect()->route('admin.risk.context')->with('success', 'Kriteria Kemungkinan deleted successfully.');
+        return response()->json(['success' => 'Kriteria Kemungkinan deleted successfully.']);
     }
 }
