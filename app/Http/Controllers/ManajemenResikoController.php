@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ManajemenResiko;
+use Illuminate\Support\Facades\Log;
 
 class ManajemenResikoController extends Controller
 {
@@ -24,6 +25,38 @@ class ManajemenResikoController extends Controller
     }
 
     /**
+     * Add Row to Table
+     */
+
+     public function initialStore (Request $request)
+     {
+        // Retrieve the array of selected IDs and form values
+        $selectedIds = $request->input('data', []);
+        $formValues = $request->input('formValues', []);
+
+        // Validate formValues to ensure they exist
+        $tim = $formValues['tim'] ?? null;
+        $prosesBisnis = $formValues['proses_bisnis'] ?? null;
+
+        // Check if required values are provided
+        if (!$tim || !$prosesBisnis) {
+            return response()->json([
+                'errors' => 'Tim and Proses Bisnis are required.'
+            ], 400);
+        }
+
+        // Create records for each selected ID
+        foreach ($selectedIds as $id) {
+            ManajemenResiko::create([
+                'id_resiko' => $id,
+                'id_tim_project' => $tim,
+                'id_proses_bisnis' => $prosesBisnis,
+            ]);
+        }
+
+    return redirect()->route('admin.risk.identification');
+     }
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -31,18 +64,13 @@ class ManajemenResikoController extends Controller
         try {
             $data = $request->all();
 
-            // Simpan data ke database
-            $riskManagement = new ManajemenResiko();
-            $riskManagement->id_tim_project = $data['timProject'];
-            $riskManagement->id_proses_bisnis = $data['prosesBisnis'];
-            $riskManagement->id_resiko = $data['resiko'];
-            $riskManagement->id_jenis_resiko = $data['jenisRisiko'];
-            $riskManagement->id_sumber_resiko = $data['sumberRisiko'];
-            $riskManagement->id_kategori_resiko = $data['kategoriRisiko'];
-            $riskManagement->id_area_dampak = $data['areaDampak'];
-            $riskManagement->id_penyebab = json_encode($data['penyebab']);
-            $riskManagement->id_dampak = json_encode($data['dampak']);
-            $riskManagement->save();
+            foreach ($data['resikoIds'] as $resikoId) {
+                $riskManagement = new ManajemenResiko();
+                $riskManagement->id_tim_project = $data['timProject'];
+                $riskManagement->id_proses_bisnis = $data['prosesBisnis'];
+                $riskManagement->id_resiko = $resikoId;
+                $riskManagement->save();
+            }
 
             return response()->json(['message' => 'Data berhasil disimpan']);
         } catch (\Exception $e) {

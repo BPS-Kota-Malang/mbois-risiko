@@ -34,11 +34,12 @@ class RiskController extends Controller
         $dampak = Dampak::all();
         $ProsesBisnis = ProsesBisnis::all();
 
-        $ManajemenResiko = DB::table('manajemen_resiko')
-        ->join('resiko', 'manajemen_resiko.id_resiko', '=', 'resiko.id')
-        ->select('manajemen_resiko.*', 'resiko.resiko as resiko')
-        ->get();
+        // $ManajemenResikos = DB::table('manajemen_resiko')
+        // ->join('resiko', 'manajemen_resiko.id_resiko', '=', 'resiko.id')
+        // ->select('manajemen_resiko.*', 'resiko.resiko as resiko')
+        // ->get();
 
+        $ManajemenResikos = ManajemenResiko::all();
         // $selectedTeam = TimProject::first();
 
 
@@ -46,7 +47,7 @@ class RiskController extends Controller
         return view('admin.risk.identification', compact('jenisResiko', 'penyebab',
          'sumberResiko', 'kategoriResiko',
          'areaDampak', 'timProjects',
-          'dampak', 'resiko', 'ProsesBisnis', 'ManajemenResiko'));
+          'dampak', 'resiko', 'ProsesBisnis', 'ManajemenResikos'));
 }
 
     public function analysis()

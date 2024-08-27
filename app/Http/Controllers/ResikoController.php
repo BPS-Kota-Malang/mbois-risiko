@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Resiko;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class ResikoController extends Controller
 {
@@ -14,6 +15,23 @@ class ResikoController extends Controller
     {
         $resiko = Resiko::all();
         return view('admin.resiko', compact('resiko'));
+    }
+
+    public function getResikoData(Request $request)
+    {
+        $columns = ['id', 'resiko', 'status'];
+
+        $query = Resiko::select($columns);
+        
+        return DataTables::of($query)
+            ->filter(function ($query) use ($request) {
+                if ($request->has('search') && !empty($request->search['value'])) {
+                    $search = $request->search['value'];
+                    $query->where('pernyataan_resiko', 'like', "%{$search}%")
+                        ->orWhere('kemiripan', 'like', "%{$search}%");
+                }
+            })
+            ->make(true);
     }
 
     /**
@@ -31,9 +49,8 @@ class ResikoController extends Controller
     {
         $request->validate([
             'resiko' => 'required|string|max:255',
-            'status' => 'nullable|in:Accepted,On Progress,Rejected',
         ]);
-
+        
         Resiko::create([
             'resiko' => $request->resiko,
             'status' => $request->status ?? 'On Progress',
