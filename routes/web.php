@@ -27,6 +27,7 @@
     use App\Http\Controllers\Context\OpsiPenangananController;
     use App\Http\Controllers\Context\ProsesBisnisController;
     use App\Http\Controllers\DampakController;
+    use App\Http\Controllers\ManajemenResikoController;
 
 
 Route::get('/', function () {
@@ -68,7 +69,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('/penyebab', PenyebabController::class, ['as' => 'admin']);
         Route::resource('/dampak', DampakController::class, ['as' => 'admin']);
         Route::resource('/resiko', ResikoController::class, ['as' => 'admin']);
-        
+        Route::resource('/manajemenrisiko', ManajemenResikoController::class, ['as' => 'admin']);
+
 
 
 });

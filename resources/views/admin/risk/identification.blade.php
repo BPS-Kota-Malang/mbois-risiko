@@ -87,15 +87,15 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <button class="bg-blue-500 text-white px-4 py-2 rounded" id="openModal">Pilih Penyebab</button>
                                 <div id="selectedPenyebab" class="mt-2"></div>
-                                <input type="hidden" name="selected_penyebab[]" id="selectedPenyebabInput">
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <button class="bg-blue-500 text-white px-4 py-2 rounded" id="openModal2">Pilih Dampak</button>
+                                <div id="selectedDampak" class="mt-2"></div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <button class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
                                 <button class="bg-blue-500 text-white px-2 py-1 rounded">Edit</button>
-                                <button class="bg-green-500 text-white px-2 py-1 rounded">Save</button>
+                                <button class="bg-green-500 text-white px-2 py-1 rounded" id="saveRiskBtn">Save</button>
                             </td>
                         </tr>
                     @endforeach
@@ -235,7 +235,7 @@
                             @foreach ($penyebab as $penyebab)
                             <tr class="bg-gray-100">
                                 <td class="border px-3 py-1">
-                                    <input type="checkbox" title="Pilih Penyebab">
+                                    <input type="checkbox" class="penyebab-checkbox" data-penyebab="{{ $penyebab->penyebab }}" title="Pilih Penyebab">
                                 </td>
                                 <td class="border px-3 py-1">{{ $penyebab->penyebab }}</td>
                                 <td class="border px-3 py-1">{{ $penyebab->status }}</td>
@@ -304,13 +304,13 @@
         </div>
     </div>
     <script>
-        document.getElementById('saveBtndampak').addEventListener('click', function() {
-            var dampak = document.getElementById('dampak').value;
-            if (dampak === '') {
-                alert('Nama Dampak belum terisi. Tidak bisa disimpan.');
-                return false;
-            }
-        });
+        // document.getElementById('saveBtndampak').addEventListener('click', function() {
+        //     var dampak = document.getElementById('dampak').value;
+        //     if (dampak === '') {
+        //         alert('Nama Dampak belum terisi. Tidak bisa disimpan.');
+        //         return false;
+        //     }
+        // });
     </script>
 
     <!-- Modal Dampak -->
@@ -360,7 +360,7 @@
                             @foreach ($dampak as $dampak)
                             <tr class="bg-gray-100">
                                 <td class="border px-3 py-1">
-                                    <input type="checkbox">
+                                    <input type="checkbox" class="dampak-checkbox" data-dampak="{{ $dampak->dampak }}" title="Pilih Dampak">
                                 </td>
                                 <td class="border px-3 py-1">{{ $dampak->dampak }}</td>
                                 <td class="border px-3 py-1">{{ $dampak->status }}</td>
@@ -417,7 +417,45 @@
     document.getElementById('cancelCauseBtn').addEventListener('click', function() {
         document.getElementById('causeModal').classList.add('hidden');
     });
+    // perintah cekbox penyebab
+    document.addEventListener('DOMContentLoaded', function () {
+        const checkboxes = document.querySelectorAll('.penyebab-checkbox');
+        const selectedPenyebabContainer = document.getElementById('selectedPenyebab');
+        let selectedPenyebab = [];
 
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                const penyebab = this.getAttribute('data-penyebab');
+                if (this.checked) {
+                    selectedPenyebab.push(penyebab);
+                } else {
+                    selectedPenyebab = selectedPenyebab.filter(item => item !== penyebab);
+                }
+                updateSelectedPenyebab();
+            });
+        });
+
+        function updateSelectedPenyebab() {
+            selectedPenyebabContainer.innerHTML = '';
+            if (selectedPenyebab.length > 0) {
+                const ul = document.createElement('ul');
+                selectedPenyebab.forEach((penyebab, index) => {
+                    const li = document.createElement('li');
+                    li.textContent = penyebab;
+                    const destroyButton = document.createElement('button');
+                    destroyButton.textContent = 'Destroy';
+                    destroyButton.classList.add('bg-red-500', 'text-white', 'px-1', 'py-0.5', 'rounded', 'ml-2');
+                    destroyButton.addEventListener('click', function () {
+                        selectedPenyebab = selectedPenyebab.filter(item => item !== penyebab);
+                        updateSelectedPenyebab();
+                    });
+                    li.appendChild(destroyButton);
+                    ul.appendChild(li);
+                });
+                selectedPenyebabContainer.appendChild(ul);
+            }
+        }
+    });
 
 
     // Tampilkan modal "Pilih Dampak"
@@ -439,54 +477,96 @@
     document.getElementById('cancelImpactBtn').addEventListener('click', function() {
         document.getElementById('addImpactModal').classList.add('hidden');
     });
+    // perintah cekbox Dampak
+    document.addEventListener('DOMContentLoaded', function () {
+        const dampakCheckboxes = document.querySelectorAll('.dampak-checkbox');
+        const selectedDampakContainer = document.getElementById('selectedDampak');
+        let selectedDampak = [];
 
-    // // Simpan penyebab
-    // document.addEventListener('DOMContentLoaded', function() {
-    //     var saveCauseBtn = document.getElementById('saveCauseBtn');
-    //     if (saveCauseBtn) {
-    //         saveCauseBtn.addEventListener('click', function() {
-    //             // Ambil data yang akan disimpan
-    //             var penyebab = document.getElementById('causeName').value;
-    //             var status = document.getElementById('causeStatus').value;
+        dampakCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                const dampak = this.getAttribute('data-dampak');
+                if (this.checked) {
+                    selectedDampak.push(dampak);
+                } else {
+                    selectedDampak = selectedDampak.filter(item => item !== dampak);
+                }
+                updateSelectedDampak();
+            });
+        });
 
-    //             // Kirim permintaan AJAX
-    //             fetch('{{ route('admin.penyebab.store') }}', {
-    //                 method: 'POST',
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
-    //                 },
-    //                 body: JSON.stringify({ penyebab: penyebab, status: status })
-    //             })
-    //             .then(response => response.json())
-    //             .then(data => {
-    //                 alert(data.message);
-    //                 // Sembunyikan modal setelah berhasil disimpan
-    //                 var causeModal = document.getElementById('causeModal');
-    //                 if (causeModal) {
-    //                     causeModal.classList.add('hidden');
-    //                 }
-    //                 // Kosongkan input
-    //                 document.getElementById('causeName').value = '';
-    //                 document.getElementById('causeStatus').value = '';
-    //             })
-    //             .catch(error => {
-    //                 console.error('Error:', error);
-    //             });
-    //         });
-    //     }
+        function updateSelectedDampak() {
+            selectedDampakContainer.innerHTML = '';
+            if (selectedDampak.length > 0) {
+                const ul = document.createElement('ul');
+                selectedDampak.forEach((dampak, index) => {
+                    const li = document.createElement('li');
+                    li.textContent = dampak;
+                    const destroyButton = document.createElement('button');
+                    destroyButton.textContent = 'Destroy';
+                    destroyButton.classList.add('bg-red-500', 'text-white', 'px-2', 'py-1', 'rounded', 'ml-2');
+                    destroyButton.addEventListener('click', function () {
+                        selectedDampak = selectedDampak.filter(item => item !== dampak);
+                        updateSelectedDampak();
+                    });
+                    li.appendChild(destroyButton);
+                    ul.appendChild(li);
+                });
+                selectedDampakContainer.appendChild(ul);
+            }
+        }
+    });
 
-    //     var cancelCauseBtn = document.getElementById('cancelCauseBtn');
-    //     if (cancelCauseBtn) {
-    //         cancelCauseBtn.addEventListener('click', function() {
-    //             // Sembunyikan modal saat tombol Batal diklik
-    //             var causeModal = document.getElementById('causeModal');
-    //             if (causeModal) {
-    //                 causeModal.classList.add('hidden');
-    //             }
-    //         });
-    //     }
-    // });
+    //SAVE RESIKO
+    document.addEventListener('DOMContentLoaded', function () {
+        const saveRiskBtn = document.getElementById('saveRiskBtn');
+
+        saveRiskBtn.addEventListener('click', function () {
+            // Ambil data dari form
+            const timProject = document.querySelector('select[name="tim_project"]').value;
+            const prosesBisnis = document.querySelector('select[name="proses_bisnis"]').value;
+            const resiko = document.querySelector('select[name="resiko"]').value;
+            const jenisRisiko = document.querySelector('select[name="jenis_resiko[]"]').value;
+            const sumberRisiko = document.querySelector('select[name="sumber_resiko[]"]').value;
+            const kategoriRisiko = document.querySelector('select[name="kategori_resiko[]"]').value;
+            const areaDampak = document.querySelector('select[name="area_dampak[]"]').value;
+
+            const penyebab = Array.from(document.getElementById('selectedPenyebab').querySelectorAll('li')).map(li => li.textContent.replace('Destroy', '').trim());
+            const dampak = Array.from(document.getElementById('selectedDampak').querySelectorAll('li')).map(li => li.textContent.replace('Destroy', '').trim());
+
+            const riskData = {
+                timProject: timProject,
+                prosesBisnis: prosesBisnis,
+                resiko: resiko,
+                jenisRisiko: jenisRisiko,
+                sumberRisiko: sumberRisiko,
+                kategoriRisiko: kategoriRisiko,
+                areaDampak: areaDampak,
+                penyebab: penyebab,
+                dampak: dampak
+            };
+
+            fetch('{{ route('admin.manajemenrisiko.store') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify(riskData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                // Reset form after successful save
+                document.getElementById('riskForm').reset();
+                document.getElementById('selectedPenyebab').innerHTML = '';
+                document.getElementById('selectedDampak').innerHTML = '';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    });
 
     </script>
 
