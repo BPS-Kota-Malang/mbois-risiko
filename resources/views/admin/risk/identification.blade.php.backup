@@ -2,11 +2,10 @@
     <div class="flex justify-center mt-10">
         <div class="bg-white shadow-md rounded-lg p-6 w-full ">
             <h1 class="text-2xl font-bold mb-6">Identifikasi Risiko</h1>
-            <form id="identifikasiResikoForm">
+            <form>
                 <div class="mb-4">
                     <label class="block text-gray-700 mb-2" for="tim-bidang">Tim/Bidang</label>
                     <select id="proses-bisnis" class="w-full p-2 border rounded-lg">
-                        <option value="">-- Pilih Tim/Bidang --</option>
                         @foreach ($timProjects as $tim)
                             <option value="{{ $tim->nama_team }}">{{ $tim->nama_team }}</option>
                         @endforeach
@@ -15,7 +14,6 @@
                 <div class="mb-4">
                     <label class="block text-gray-700 mb-2" for="proses-bisnis">Proses Bisnis</label>
                     <select id="proses-bisnis" class="w-full p-2 border rounded-lg">
-                        <option value="">-- Pilih Proses Bisnis --</option>
                         @foreach ($ProsesBisnis as $proses)
                             <option value="{{ $proses->proses_bisnis }}">{{ $proses->proses_bisnis }}</option>
                         @endforeach
@@ -29,6 +27,7 @@
             <div class="flex space-x-4">
                 <button id="refreshBtn" class="bg-blue-500 text-white px-4 py-2 rounded-full border border-blue-500">Refresh</button>
                 <button id="tambahresiko" class="bg-red-500 text-white px-4 py-2 rounded-full border border-red-500">Tambah Risiko</button>
+                <button class="bg-green-500 text-white px-4 py-2 rounded-full border border-green-500">Simpan Perubahan</button>
             </div>
             <input type="text" id="searchInput" class="p-2 border rounded-lg" placeholder="Cari..." />
         </div>
@@ -119,8 +118,9 @@
     <!-- Modal Resiko -->
     <div class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center hidden" id="resikoModal">
         <div class="modal-overlay absolute w-full h-full bg-blue-900 opacity-50"></div>
-        <div class="modal-container bg-gray-100 w-full md:max-w-4xl mx-auto h-screen md:h-4/5 rounded-lg shadow-lg z-50 overflow-y-auto ">
+        <div class="modal-container bg-gray-100 w-11/12 md:max-w-md mx-auto rounded-lg shadow-lg z-50 overflow-y-auto">
             <div class="modal-content py-4 text-left px-6">
+                <!-- Title -->
                 <div class="flex justify-between items-center pb-2">
                     <p class="text-xl font-bold">Pilih Resiko</p>
                     <div class="modal-close cursor-pointer z-50" id="closeModal" title="Tutup Modal">
@@ -129,35 +129,72 @@
                         </svg>
                     </div>
                 </div>
+                <!-- Body -->
                 <div class="flex justify-between items-center mb-4">
-                    <input type="search" id="searchInput" placeholder="Masukkan kata kunci pencarian" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" />
-                </div>
-                <div class="flex justify-between mb-4">
-                    <button id="refreshBtn" class="bg-gray-500 text-white px-4 py-2 rounded-md">Refresh</button>
-                    <button id="addRowBtn" class="bg-blue-500 text-white px-4 py-2 rounded-md">Buat Baru</button>
+                    <button id="addResikoBtn" class="bg-blue-500 text-white px-4 py-2 rounded-full">Tambah Resiko</button>
+
+                    <div class="relative text-gray-600">
+                        <input type="search" id="searchInput" name="search" placeholder="Cari" class="bg-white h-8 px-3 pr-8 rounded-full text-sm focus:outline-none" title="Cari Resiko">
+                        <button type="submit" class="absolute right-0 top-0 mt-2 mr-3" title="Cari">
+                            <svg class="text-gray-600 h-3 w-3 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;">
+                                <path d="M55.146,51.887L41.588,38.329c3.486-4.146,5.594-9.43,5.594-15.17C47.182,10.366,36.815,0,24.09,0 C11.366,0,1,10.366,1,23.159c0,12.794,10.366,23.159,23.159,23.159c5.74,0,11.023-2.108,15.17-5.594l13.558,13.558 c0.391,0.391,0.902,0.586,1.414,0.586s1.023-0.195,1.414-0.586C55.928,53.933,55.928,52.669,55.146,51.887z M24.159,40.318 c-9.449,0-17.159-7.71-17.159-17.159S14.71,6,24.159,6s17.159,7.71,17.159,17.159S33.608,40.318,24.159,40.318z" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
                 <div class="mt-3">
                     <table id="resiko-table" class="min-w-full bg-white text-sm">
                         <thead>
                             <tr>
-                                <th><input type="checkbox" id="selectAll" /></th>
-                                <th>Pernyataan Resiko</th>
-                                <th>Status</th>
+                                <th class="px-3 py-2">CEK</th>
+                                <th class="px-3 py-2">RESIKO</th>
+                                <th class="px-3 py-2">STATUS</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Data will be loaded dynamically here -->
+                            @foreach ($resiko as $resiko)
+                            <tr class="bg-gray-100">
+                                <td class="border px-3 py-1">
+                                    <input type="checkbox" title="Pilih Resiko">
+                                </td>
+                                <td class="border px-3 py-1">{{ $resiko->resiko }}</td>
+                                <td class="border px-3 py-1">{{ $resiko->status }}</td>
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
+                <!-- Modal "Tambah Resiko" -->
+                <div id="TambahresikoModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                    <div class="flex items-center justify-center min-h-screen px-4">
+                        <form action="{{ route('admin.resiko.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="bg-white rounded-lg shadow-xl overflow-hidden max-w-sm w-full">
+                                <div class="px-4 py-3 border-b border-gray-200">
+                                    <h3 class="text-lg leading-6 font-medium text-gray-900">Tambah Resiko</h3>
+                                </div>
+                                <div class="px-4 py-5">
+                                    <label for="resiko" class="block text-sm font-medium text-gray-700">Nama Resiko</label>
+                                    <input type="text" id="resiko" name="resiko" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
+                                </div>
+                                <div class="px-4 py-3 bg-gray-50 text-right">
+                                    <button id="saveBtn" type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md" title="Simpan Resiko">Simpan</button>
+                                    <button id="cancelResikoBtn" type="button" class="bg-red-500 text-white px-4 py-2 rounded-md" title="Batal">Batal</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <script>
+
+                </script>
+                <!-- Footer -->
                 <div class="flex justify-end pt-2">
-                    <button id="cancelBtn" class="bg-red-500 text-white px-4 py-2 rounded-md">Batal</button>
-                    <button id="saveBtn" class="bg-green-500 text-white px-4 py-2 rounded-md">Simpan</button>
+                    <button class="bg-green-500 text-white px-4 py-2 rounded-full">Simpan</button>
                 </div>
             </div>
         </div>
     </div>
-    
 
     <!-- Modal Penyebab -->
     <div class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center hidden"  id="penyebabModal">
@@ -338,204 +375,87 @@
 
     <script>
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const tambahResikoBtn = document.getElementById('tambahresiko');
-        const resikoModal = document.getElementById('resikoModal');
-        const closeModalBtn = document.getElementById('closeModal');
-        const simpanResikoBtn = document.getElementById('simpanResiko');
-        const addResikoBtn = document.getElementById('addResikoBtn');
-        const tambahResikoModal = document.getElementById('TambahresikoModal');
-        const cancelResikoBtn = document.getElementById('cancelResikoBtn');
+    // Tampilkan modal "Pilih Resiko"
+    document.getElementById('tambahresiko').addEventListener('click', function() {
+        document.getElementById('resikoModal').classList.remove('hidden');
+    });
 
-        /**
-         * Risk Modal Script
-        */
+    // Tutup modal "Pilih Resiko"
+    document.getElementById('closeModal').addEventListener('click', function() {
+        document.getElementById('resikoModal').classList.add('hidden');
+    });
 
-        var table = $('#resiko-table').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "ajax": "{{ route('admin.getresikodata') }}", // Adjust with your route for fetching data
-            "columns": [
-                {
-                    "data": "id",
-                    "render": function(data, type, row) {
-                        return '<input type="checkbox" class="row-checkbox" value="' + data + '">';
-                    }
-                },
-                { "data": "resiko" },
-                { "data": "status" }
-            ],
-            "initComplete": function() {
-                // Adding search boxes to each column
-                this.api().columns().every(function() {
-                    var column = this;
-                    var input = $('<input type="text" placeholder="Search" class="w-full text-sm p-1 border rounded" />')
-                        .appendTo($(column.header()).empty())
-                        .on('keyup change clear', function() {
-                            if (column.search() !== this.value) {
-                                column.search(this.value).draw();
-                            }
-                        });
-                });
-            }
-        });
+    // Tampilkan modal "Tambah Resiko"
+    document.getElementById('addResikoBtn').addEventListener('click', function() {
+        document.getElementById('TambahresikoModal').classList.remove('hidden');
+    });
 
-        $('#selectAll').on('click', function() {
-            var rows = table.rows({ 'search': 'applied' }).nodes();
-            $('input[type="checkbox"]', rows).prop('checked', this.checked);
-        });
-
-        $('#refreshBtn').on('click', function() {
-            table.ajax.reload();
-        });
-
-        $('#addRowBtn').on('click', function() {
-            // Code for adding a new row
-        });
-
-        $('#saveBtn').on('click', function() {
-            var selected = [];
-            $('input.row-checkbox:checked').each(function() {
-                selected.push($(this).val());
-            });
-            // Handle selected IDs (e.g., submit them via AJAX)
-            console.log(selected);
-        });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-        // Tampilkan modal "Pilih Resiko"
-        tambahResikoBtn.addEventListener('click', function () {
-            resikoModal.classList.remove('hidden');
-        });
-
-        // Tutup modal "Pilih Resiko"
-        closeModalBtn.addEventListener('click', function () {
-            resikoModal.classList.add('hidden');
-        });
-
-        // Simpan resiko
-        simpanResikoBtn.addEventListener('click', function () {
-            const timProject = document.getElementById('tim_project').value;
-            const prosesBisnis = document.getElementById('proses_bisnis').value;
-            const resikoCheckboxes = document.querySelectorAll('.resiko-checkbox:checked');
-            const resikoIds = Array.from(resikoCheckboxes).map(checkbox => checkbox.value);
-
-            const riskData = {
-                timProject: timProject,
-                prosesBisnis: prosesBisnis,
-                resikoIds: resikoIds
-            };
-
-            fetch('/manajemenresiko/store', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify(riskData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-                // Optionally, refresh the table or add the new row dynamically
-                resikoModal.classList.add('hidden');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
-
-        // Tampilkan modal "Tambah Resiko"
-        addResikoBtn.addEventListener('click', function() {
-            tambahResikoModal.classList.remove('hidden');
-        });
-
-        // Sembunyikan modal "Tambah Resiko"
-        cancelResikoBtn.addEventListener('click', function() {
-            tambahResikoModal.classList.add('hidden');
-        });
+    // Sembunyikan modal "Tambah Resiko"
+    document.getElementById('cancelResikoBtn').addEventListener('click', function() {
+        document.getElementById('TambahresikoModal').classList.add('hidden');
     });
 
 
 
 
-            // Tampilkan modal "Pilih Penyebab"
-        document.getElementById('openModal').addEventListener('click', function() {
-            document.getElementById('penyebabModal').classList.remove('hidden');
-        });
+        // Tampilkan modal "Pilih Penyebab"
+    document.getElementById('openModal').addEventListener('click', function() {
+        document.getElementById('penyebabModal').classList.remove('hidden');
+    });
 
-        // Tutup modal "Pilih Penyebab"
-        document.getElementById('closeModal').addEventListener('click', function() {
-            document.getElementById('penyebabModal').classList.add('hidden');
-        });
+    // Tutup modal "Pilih Penyebab"
+    document.getElementById('closeModal').addEventListener('click', function() {
+        document.getElementById('penyebabModal').classList.add('hidden');
+    });
 
-        // Tampilkan modal "Tambah Penyebab"
-        document.getElementById('addCauseBtn').addEventListener('click', function() {
-            document.getElementById('causeModal').classList.remove('hidden');
-        });
+    // Tampilkan modal "Tambah Penyebab"
+    document.getElementById('addCauseBtn').addEventListener('click', function() {
+        document.getElementById('causeModal').classList.remove('hidden');
+    });
 
-        // Tutup modal "Tambah Penyebab"
-        document.getElementById('cancelCauseBtn').addEventListener('click', function() {
-            document.getElementById('causeModal').classList.add('hidden');
-        });
-        // perintah cekbox penyebab
-        document.addEventListener('DOMContentLoaded', function () {
-            const checkboxes = document.querySelectorAll('.penyebab-checkbox');
-            const selectedPenyebabContainer = document.getElementById('selectedPenyebab');
-            let selectedPenyebab = [];
+    // Tutup modal "Tambah Penyebab"
+    document.getElementById('cancelCauseBtn').addEventListener('click', function() {
+        document.getElementById('causeModal').classList.add('hidden');
+    });
+    // perintah cekbox penyebab
+    document.addEventListener('DOMContentLoaded', function () {
+        const checkboxes = document.querySelectorAll('.penyebab-checkbox');
+        const selectedPenyebabContainer = document.getElementById('selectedPenyebab');
+        let selectedPenyebab = [];
 
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function () {
-                    const penyebab = this.getAttribute('data-penyebab');
-                    if (this.checked) {
-                        selectedPenyebab.push(penyebab);
-                    } else {
-                        selectedPenyebab = selectedPenyebab.filter(item => item !== penyebab);
-                    }
-                    updateSelectedPenyebab();
-                });
-            });
-
-            function updateSelectedPenyebab() {
-                selectedPenyebabContainer.innerHTML = '';
-                if (selectedPenyebab.length > 0) {
-                    const ul = document.createElement('ul');
-                    selectedPenyebab.forEach((penyebab, index) => {
-                        const li = document.createElement('li');
-                        li.textContent = penyebab;
-                        const destroyButton = document.createElement('button');
-                        destroyButton.textContent = 'Destroy';
-                        destroyButton.classList.add('bg-red-500', 'text-white', 'px-1', 'py-0.5', 'rounded', 'ml-2');
-                        destroyButton.addEventListener('click', function () {
-                            selectedPenyebab = selectedPenyebab.filter(item => item !== penyebab);
-                            updateSelectedPenyebab();
-                        });
-                        li.appendChild(destroyButton);
-                        ul.appendChild(li);
-                    });
-                    selectedPenyebabContainer.appendChild(ul);
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                const penyebab = this.getAttribute('data-penyebab');
+                if (this.checked) {
+                    selectedPenyebab.push(penyebab);
+                } else {
+                    selectedPenyebab = selectedPenyebab.filter(item => item !== penyebab);
                 }
-            }
+                updateSelectedPenyebab();
+            });
         });
+
+        function updateSelectedPenyebab() {
+            selectedPenyebabContainer.innerHTML = '';
+            if (selectedPenyebab.length > 0) {
+                const ul = document.createElement('ul');
+                selectedPenyebab.forEach((penyebab, index) => {
+                    const li = document.createElement('li');
+                    li.textContent = penyebab;
+                    const destroyButton = document.createElement('button');
+                    destroyButton.textContent = 'Destroy';
+                    destroyButton.classList.add('bg-red-500', 'text-white', 'px-1', 'py-0.5', 'rounded', 'ml-2');
+                    destroyButton.addEventListener('click', function () {
+                        selectedPenyebab = selectedPenyebab.filter(item => item !== penyebab);
+                        updateSelectedPenyebab();
+                    });
+                    li.appendChild(destroyButton);
+                    ul.appendChild(li);
+                });
+                selectedPenyebabContainer.appendChild(ul);
+            }
+        }
+    });
 
 
     // Tampilkan modal "Pilih Dampak"
@@ -649,34 +569,5 @@
     });
 
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('#resiko-table').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "lengthChange": false, // Menyembunyikan "Show entries"
-                "searching": false // Menyembunyikan kotak "Search"
-                "pageLength": 10,      // Menampilkan 10 baris per halaman
-                "paging": true
-                "ajax": {
-                    "url": "{{ url('/api/resiko') }}",
-                    "type": "GET"
-                },
-                "columns": [
-                    { "data": "id", "render": function(data, type, row) {
-                        return '<input type="checkbox" class="resiko-checkbox" value="' + data + '" title="Pilih Resiko">';
-                    }},
-                    { "data": "resiko" },
-                    { "data": "status" }
-                ]
-            });
-        });
-    </script>
-
-    <!-- Include DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 
 </x-admin-layout>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Resiko;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class ResikoController extends Controller
 {
@@ -18,8 +19,19 @@ class ResikoController extends Controller
 
     public function getResikoData(Request $request)
     {
-        $resiko = Resiko::select(['id', 'resiko', 'status'])->get();
-        return response()->json(['data' => $resiko]);
+        $columns = ['id', 'resiko', 'status'];
+
+        $query = Resiko::select($columns);
+        
+        return DataTables::of($query)
+            ->filter(function ($query) use ($request) {
+                if ($request->has('search') && !empty($request->search['value'])) {
+                    $search = $request->search['value'];
+                    $query->where('pernyataan_resiko', 'like', "%{$search}%")
+                        ->orWhere('kemiripan', 'like', "%{$search}%");
+                }
+            })
+            ->make(true);
     }
 
     /**
