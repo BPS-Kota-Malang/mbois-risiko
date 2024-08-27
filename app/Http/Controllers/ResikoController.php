@@ -16,6 +16,12 @@ class ResikoController extends Controller
         return view('admin.resiko', compact('resiko'));
     }
 
+    public function getResikoData(Request $request)
+    {
+        $resiko = Resiko::select(['id', 'resiko', 'status'])->get();
+        return response()->json(['data' => $resiko]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

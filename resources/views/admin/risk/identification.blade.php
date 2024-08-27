@@ -2,10 +2,11 @@
     <div class="flex justify-center mt-10">
         <div class="bg-white shadow-md rounded-lg p-6 w-full ">
             <h1 class="text-2xl font-bold mb-6">Identifikasi Risiko</h1>
-            <form>
+            <form id="identifikasiResikoForm">
                 <div class="mb-4">
                     <label class="block text-gray-700 mb-2" for="tim-bidang">Tim/Bidang</label>
                     <select id="proses-bisnis" class="w-full p-2 border rounded-lg">
+                        <option value="">-- Pilih Tim/Bidang --</option>
                         @foreach ($timProjects as $tim)
                             <option value="{{ $tim->nama_team }}">{{ $tim->nama_team }}</option>
                         @endforeach
@@ -14,6 +15,7 @@
                 <div class="mb-4">
                     <label class="block text-gray-700 mb-2" for="proses-bisnis">Proses Bisnis</label>
                     <select id="proses-bisnis" class="w-full p-2 border rounded-lg">
+                        <option value="">-- Pilih Proses Bisnis --</option>
                         @foreach ($ProsesBisnis as $proses)
                             <option value="{{ $proses->proses_bisnis }}">{{ $proses->proses_bisnis }}</option>
                         @endforeach
@@ -27,7 +29,6 @@
             <div class="flex space-x-4">
                 <button id="refreshBtn" class="bg-blue-500 text-white px-4 py-2 rounded-full border border-blue-500">Refresh</button>
                 <button id="tambahresiko" class="bg-red-500 text-white px-4 py-2 rounded-full border border-red-500">Tambah Risiko</button>
-                <button class="bg-green-500 text-white px-4 py-2 rounded-full border border-green-500">Simpan Perubahan</button>
             </div>
             <input type="text" id="searchInput" class="p-2 border rounded-lg" placeholder="Cari..." />
         </div>
@@ -155,7 +156,7 @@
                             @foreach ($resiko as $resiko)
                             <tr class="bg-gray-100">
                                 <td class="border px-3 py-1">
-                                    <input type="checkbox" title="Pilih Resiko">
+                                    <input type="checkbox" class="resiko-checkbox" value="{{ $resiko->id }}" title="Pilih Resiko">
                                 </td>
                                 <td class="border px-3 py-1">{{ $resiko->resiko }}</td>
                                 <td class="border px-3 py-1">{{ $resiko->status }}</td>
@@ -179,7 +180,6 @@
                                 </div>
                                 <div class="px-4 py-3 bg-gray-50 text-right">
                                     <button id="saveBtn" type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md" title="Simpan Resiko">Simpan</button>
-                                    <button id="cancelResikoBtn" type="button" class="bg-red-500 text-white px-4 py-2 rounded-md" title="Batal">Batal</button>
                                 </div>
                             </div>
                         </form>
@@ -190,7 +190,8 @@
                 </script>
                 <!-- Footer -->
                 <div class="flex justify-end pt-2">
-                    <button class="bg-green-500 text-white px-4 py-2 rounded-full">Simpan</button>
+                    <button id="simpanResiko" type="button" class="bg-green-500 text-white px-4 py-2 rounded-full">Simpan</button>
+                    <button type="button" id="closeModal" class="bg-gray-500 text-white px-4 py-2 rounded-full border border-gray-500 ml-2">Tutup</button>
                 </div>
             </div>
         </div>
@@ -375,87 +376,129 @@
 
     <script>
 
-    // Tampilkan modal "Pilih Resiko"
-    document.getElementById('tambahresiko').addEventListener('click', function() {
-        document.getElementById('resikoModal').classList.remove('hidden');
-    });
-
-    // Tutup modal "Pilih Resiko"
-    document.getElementById('closeModal').addEventListener('click', function() {
-        document.getElementById('resikoModal').classList.add('hidden');
-    });
-
-    // Tampilkan modal "Tambah Resiko"
-    document.getElementById('addResikoBtn').addEventListener('click', function() {
-        document.getElementById('TambahresikoModal').classList.remove('hidden');
-    });
-
-    // Sembunyikan modal "Tambah Resiko"
-    document.getElementById('cancelResikoBtn').addEventListener('click', function() {
-        document.getElementById('TambahresikoModal').classList.add('hidden');
-    });
-
-
-
-
-        // Tampilkan modal "Pilih Penyebab"
-    document.getElementById('openModal').addEventListener('click', function() {
-        document.getElementById('penyebabModal').classList.remove('hidden');
-    });
-
-    // Tutup modal "Pilih Penyebab"
-    document.getElementById('closeModal').addEventListener('click', function() {
-        document.getElementById('penyebabModal').classList.add('hidden');
-    });
-
-    // Tampilkan modal "Tambah Penyebab"
-    document.getElementById('addCauseBtn').addEventListener('click', function() {
-        document.getElementById('causeModal').classList.remove('hidden');
-    });
-
-    // Tutup modal "Tambah Penyebab"
-    document.getElementById('cancelCauseBtn').addEventListener('click', function() {
-        document.getElementById('causeModal').classList.add('hidden');
-    });
-    // perintah cekbox penyebab
     document.addEventListener('DOMContentLoaded', function () {
-        const checkboxes = document.querySelectorAll('.penyebab-checkbox');
-        const selectedPenyebabContainer = document.getElementById('selectedPenyebab');
-        let selectedPenyebab = [];
+        const tambahResikoBtn = document.getElementById('tambahresiko');
+        const resikoModal = document.getElementById('resikoModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const simpanResikoBtn = document.getElementById('simpanResiko');
+        const addResikoBtn = document.getElementById('addResikoBtn');
+        const tambahResikoModal = document.getElementById('TambahresikoModal');
+        const cancelResikoBtn = document.getElementById('cancelResikoBtn');
 
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function () {
-                const penyebab = this.getAttribute('data-penyebab');
-                if (this.checked) {
-                    selectedPenyebab.push(penyebab);
-                } else {
-                    selectedPenyebab = selectedPenyebab.filter(item => item !== penyebab);
-                }
-                updateSelectedPenyebab();
+        // Tampilkan modal "Pilih Resiko"
+        tambahResikoBtn.addEventListener('click', function () {
+            resikoModal.classList.remove('hidden');
+        });
+
+        // Tutup modal "Pilih Resiko"
+        closeModalBtn.addEventListener('click', function () {
+            resikoModal.classList.add('hidden');
+        });
+
+        // Simpan resiko
+        simpanResikoBtn.addEventListener('click', function () {
+            const timProject = document.getElementById('tim_project').value;
+            const prosesBisnis = document.getElementById('proses_bisnis').value;
+            const resikoCheckboxes = document.querySelectorAll('.resiko-checkbox:checked');
+            const resikoIds = Array.from(resikoCheckboxes).map(checkbox => checkbox.value);
+
+            const riskData = {
+                timProject: timProject,
+                prosesBisnis: prosesBisnis,
+                resikoIds: resikoIds
+            };
+
+            fetch('/manajemenresiko/store', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify(riskData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                // Optionally, refresh the table or add the new row dynamically
+                resikoModal.classList.add('hidden');
+            })
+            .catch(error => {
+                console.error('Error:', error);
             });
         });
 
-        function updateSelectedPenyebab() {
-            selectedPenyebabContainer.innerHTML = '';
-            if (selectedPenyebab.length > 0) {
-                const ul = document.createElement('ul');
-                selectedPenyebab.forEach((penyebab, index) => {
-                    const li = document.createElement('li');
-                    li.textContent = penyebab;
-                    const destroyButton = document.createElement('button');
-                    destroyButton.textContent = 'Destroy';
-                    destroyButton.classList.add('bg-red-500', 'text-white', 'px-1', 'py-0.5', 'rounded', 'ml-2');
-                    destroyButton.addEventListener('click', function () {
-                        selectedPenyebab = selectedPenyebab.filter(item => item !== penyebab);
-                        updateSelectedPenyebab();
-                    });
-                    li.appendChild(destroyButton);
-                    ul.appendChild(li);
-                });
-                selectedPenyebabContainer.appendChild(ul);
-            }
-        }
+        // Tampilkan modal "Tambah Resiko"
+        addResikoBtn.addEventListener('click', function() {
+            tambahResikoModal.classList.remove('hidden');
+        });
+
+        // Sembunyikan modal "Tambah Resiko"
+        cancelResikoBtn.addEventListener('click', function() {
+            tambahResikoModal.classList.add('hidden');
+        });
     });
+
+
+
+
+            // Tampilkan modal "Pilih Penyebab"
+        document.getElementById('openModal').addEventListener('click', function() {
+            document.getElementById('penyebabModal').classList.remove('hidden');
+        });
+
+        // Tutup modal "Pilih Penyebab"
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('penyebabModal').classList.add('hidden');
+        });
+
+        // Tampilkan modal "Tambah Penyebab"
+        document.getElementById('addCauseBtn').addEventListener('click', function() {
+            document.getElementById('causeModal').classList.remove('hidden');
+        });
+
+        // Tutup modal "Tambah Penyebab"
+        document.getElementById('cancelCauseBtn').addEventListener('click', function() {
+            document.getElementById('causeModal').classList.add('hidden');
+        });
+        // perintah cekbox penyebab
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkboxes = document.querySelectorAll('.penyebab-checkbox');
+            const selectedPenyebabContainer = document.getElementById('selectedPenyebab');
+            let selectedPenyebab = [];
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    const penyebab = this.getAttribute('data-penyebab');
+                    if (this.checked) {
+                        selectedPenyebab.push(penyebab);
+                    } else {
+                        selectedPenyebab = selectedPenyebab.filter(item => item !== penyebab);
+                    }
+                    updateSelectedPenyebab();
+                });
+            });
+
+            function updateSelectedPenyebab() {
+                selectedPenyebabContainer.innerHTML = '';
+                if (selectedPenyebab.length > 0) {
+                    const ul = document.createElement('ul');
+                    selectedPenyebab.forEach((penyebab, index) => {
+                        const li = document.createElement('li');
+                        li.textContent = penyebab;
+                        const destroyButton = document.createElement('button');
+                        destroyButton.textContent = 'Destroy';
+                        destroyButton.classList.add('bg-red-500', 'text-white', 'px-1', 'py-0.5', 'rounded', 'ml-2');
+                        destroyButton.addEventListener('click', function () {
+                            selectedPenyebab = selectedPenyebab.filter(item => item !== penyebab);
+                            updateSelectedPenyebab();
+                        });
+                        li.appendChild(destroyButton);
+                        ul.appendChild(li);
+                    });
+                    selectedPenyebabContainer.appendChild(ul);
+                }
+            }
+        });
 
 
     // Tampilkan modal "Pilih Dampak"
@@ -569,5 +612,34 @@
     });
 
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#resiko-table').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "lengthChange": false, // Menyembunyikan "Show entries"
+                "searching": false // Menyembunyikan kotak "Search"
+                "pageLength": 10,      // Menampilkan 10 baris per halaman
+                "paging": true
+                "ajax": {
+                    "url": "{{ url('/api/resiko') }}",
+                    "type": "GET"
+                },
+                "columns": [
+                    { "data": "id", "render": function(data, type, row) {
+                        return '<input type="checkbox" class="resiko-checkbox" value="' + data + '" title="Pilih Resiko">';
+                    }},
+                    { "data": "resiko" },
+                    { "data": "status" }
+                ]
+            });
+        });
+    </script>
+
+    <!-- Include DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 
 </x-admin-layout>

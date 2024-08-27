@@ -31,18 +31,13 @@ class ManajemenResikoController extends Controller
         try {
             $data = $request->all();
 
-            // Simpan data ke database
-            $riskManagement = new ManajemenResiko();
-            $riskManagement->id_tim_project = $data['timProject'];
-            $riskManagement->id_proses_bisnis = $data['prosesBisnis'];
-            $riskManagement->id_resiko = $data['resiko'];
-            $riskManagement->id_jenis_resiko = $data['jenisRisiko'];
-            $riskManagement->id_sumber_resiko = $data['sumberRisiko'];
-            $riskManagement->id_kategori_resiko = $data['kategoriRisiko'];
-            $riskManagement->id_area_dampak = $data['areaDampak'];
-            $riskManagement->id_penyebab = json_encode($data['penyebab']);
-            $riskManagement->id_dampak = json_encode($data['dampak']);
-            $riskManagement->save();
+            foreach ($data['resikoIds'] as $resikoId) {
+                $riskManagement = new ManajemenResiko();
+                $riskManagement->id_tim_project = $data['timProject'];
+                $riskManagement->id_proses_bisnis = $data['prosesBisnis'];
+                $riskManagement->id_resiko = $resikoId;
+                $riskManagement->save();
+            }
 
             return response()->json(['message' => 'Data berhasil disimpan']);
         } catch (\Exception $e) {

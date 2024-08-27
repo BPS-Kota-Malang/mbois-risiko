@@ -69,6 +69,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/penyebab', PenyebabController::class, ['as' => 'admin']);
         Route::resource('/dampak', DampakController::class, ['as' => 'admin']);
         Route::resource('/resiko', ResikoController::class, ['as' => 'admin']);
+        Route::get('/api/resiko', [ResikoController::class, 'getResikoData'])->name('resiko.data');
         Route::resource('/manajemenrisiko', ManajemenResikoController::class, ['as' => 'admin']);
 
 
