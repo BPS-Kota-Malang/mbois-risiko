@@ -2,7 +2,11 @@
     <div class="bg-white p-4 mb-4 border-2 border-white rounded-lg">
         <h3 class="text-gray-700 text-2xl font-medium">Penyebab</h3>
     </div>
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 6c8eec272c3ccd7d58e6f0a87881fc1a97b48577
     <div class="flex justify-between items-center mb-4">
         <form action="{{ route('admin.penyebab.index') }}" method="GET" class="flex items-center">
             <label for="search" class="mr-2">Cari:</label>

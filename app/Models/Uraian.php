@@ -5,17 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Dampak extends Model
+class Uraian extends Model
 {
     use HasFactory;
-    protected $table = 'dampak';
+    protected $table = 'uraian';
 
-    protected $fillable = ['dampak', 'status']; // Tambahkan kolom status
+    protected $fillable = ['uraian', 'status']; // Tambahkan kolom status
 
     protected $attributes = [
         'status' => null,
     ];
-
-
-
 }

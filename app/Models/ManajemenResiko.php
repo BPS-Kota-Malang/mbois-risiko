@@ -19,13 +19,20 @@ class ManajemenResiko extends Model
         'id_sumber_resiko',
         'id_kategori_resiko',
         'id_area_dampak',
+        'id_level_kemungkinan',
+        'id_level_dampak',
+
         'id_penyebab',
         'id_dampak',
+<<<<<<< HEAD
         'id_level_kemungkinan',
         'id_level_resiko',
         'id_level_dampak',
         'uraian',
         'efektivitas',
+=======
+        'id_uraian',
+>>>>>>> 6c8eec272c3ccd7d58e6f0a87881fc1a97b48577
     ];
 
     protected $casts = [
@@ -70,6 +77,7 @@ class ManajemenResiko extends Model
         return $this->belongsTo(AreaDampak::class, 'id_area_dampak');
     }
 
+<<<<<<< HEAD
     public function penyebab()
     {
         return $this->belongsTo(Penyebab::class, 'id_penyebab');
@@ -94,4 +102,32 @@ class ManajemenResiko extends Model
     {
         return $this->belongsTo(LevelDampak::class, 'id_level_dampak');
     }
+=======
+    public function levelKemungkinan()
+    {
+        return $this->belongsTo(LevelKemungkinan::class, 'id_level_kemungkinan');
+>>>>>>> 6c8eec272c3ccd7d58e6f0a87881fc1a97b48577
     }
+
+    public function penyebab()
+    {
+        return $this->belongsTo(Penyebab::class, 'id_penyebab');
+    }
+
+
+
+    public function dampak()
+    {
+        return $this->belongsTo(Dampak::class, 'id_dampak');
+    }
+
+    public function uraian()
+    {
+        return $this->belongsTo(Uraian::class, 'id_uraian');
+    }
+
+
+
+
+
+}

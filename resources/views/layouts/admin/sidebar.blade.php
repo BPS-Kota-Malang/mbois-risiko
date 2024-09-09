@@ -14,7 +14,11 @@
     </div>
 
     <nav class="mt-10">
+<<<<<<< HEAD
         <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.dashboard.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
+=======
+        <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.dashboard') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
+>>>>>>> 6c8eec272c3ccd7d58e6f0a87881fc1a97b48577
             href="{{ route('admin.dashboard') }}">
             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
@@ -120,12 +124,12 @@
         <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.resiko') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
         href="{{ route('admin.resiko.index') }}">
         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M12 2a10 10 0 00-10 10 10 10 0 0010 10 10 10 0 0010-10A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16zm0-11a1 1 0 00-1 1v4a1 1 0 002 0v-4a1 1 0 00-1-1zm0 6a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/>
         </svg>
         <span class="mx-3">Resiko</span>
     </a>
-    
+
 
         <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.penyebab') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
         href="{{ route('admin.penyebab.index') }}">
@@ -136,7 +140,7 @@
             </svg>
             <span class="mx-3">Penyebab</span>
         </a>
-        
+
         <!-- "Dampak"  -->
             <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.dampak') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
             href="{{ route('admin.dampak.index') }}">
@@ -146,6 +150,19 @@
             </svg>
             <span class="mx-3">Dampak</span>
             </a>
+
+        <!-- "Uraian"  -->
+        <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.uraian') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25" href="{{ route('admin.uraian.index') }}">
+            <svg width="25" height="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 4H20V20H4V4Z" stroke="white" stroke-width="2" />
+                <path d="M4 8H20" stroke="white" stroke-width="2" />
+                <path d="M4 12H20" stroke="white" stroke-width="2" />
+                <path d="M4 16H20" stroke="white" stroke-width="2" />
+            </svg>
+            <span class="mx-3">Uraian</span>
+        </a>
+
+
 
 
         {{-- <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.tables') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-white"
