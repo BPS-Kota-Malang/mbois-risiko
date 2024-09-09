@@ -14,8 +14,8 @@
     </div>
 
     <nav class="mt-10">
-        <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.risk.context') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
-            href="{{ route('admin.risk.context') }}">
+        <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.dashboard') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
+            href="{{ route('admin.dashboard') }}">
             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -39,7 +39,7 @@
 
         <div class="relative group ">
             <button id="dropdown-button"
-                class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.risk.context') || Route::currentRouteNamed('admin.risk.identification') || Route::currentRouteNamed('admin.risk.analysis') || Route::currentRouteNamed('admin.risk.evaluation') || Route::currentRouteNamed('admin.risk.action_plan') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25">
+                class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.risk.context') || Route::currentRouteNamed('admin.manajemenrisiko.index') || Route::currentRouteNamed('admin.analisis.index') || Route::currentRouteNamed('admin.risk.evaluation') || Route::currentRouteNamed('admin.risk.action_plan') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25">
                 <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 24 24"stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -65,8 +65,8 @@
                     <span class="mx-3">Context Setting</span>
                 </a>
 
-                <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.risk.identification') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
-                    href="{{ route('admin.risk.identification') }}">
+                <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.manajemenrisiko.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
+                    href="{{ route('admin.manajemenrisiko.index') }}">
                     <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -75,8 +75,8 @@
                     <span class="mx-3">Risk Identification</span>
                 </a>
 
-                <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.risk.analysis') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
-                    href="{{ route('admin.risk.analysis') }}">
+                <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.analisis.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
+                    href="{{ route('admin.analisis.index') }}">
                     <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -119,12 +119,12 @@
         <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.resiko') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
         href="{{ route('admin.resiko.index') }}">
         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M12 2a10 10 0 00-10 10 10 10 0 0010 10 10 10 0 0010-10A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16zm0-11a1 1 0 00-1 1v4a1 1 0 002 0v-4a1 1 0 00-1-1zm0 6a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/>
         </svg>
         <span class="mx-3">Resiko</span>
     </a>
-    
+
 
         <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.penyebab') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
         href="{{ route('admin.penyebab.index') }}">
@@ -135,7 +135,7 @@
             </svg>
             <span class="mx-3">Penyebab</span>
         </a>
-        
+
         <!-- "Dampak"  -->
             <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.dampak') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
             href="{{ route('admin.dampak.index') }}">
@@ -145,6 +145,19 @@
             </svg>
             <span class="mx-3">Dampak</span>
             </a>
+
+        <!-- "Uraian"  -->
+        <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.uraian') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25" href="{{ route('admin.uraian.index') }}">
+            <svg width="25" height="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 4H20V20H4V4Z" stroke="white" stroke-width="2" />
+                <path d="M4 8H20" stroke="white" stroke-width="2" />
+                <path d="M4 12H20" stroke="white" stroke-width="2" />
+                <path d="M4 16H20" stroke="white" stroke-width="2" />
+            </svg>
+            <span class="mx-3">Uraian</span>
+        </a>
+
+
 
 
         {{-- <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.tables') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-white"

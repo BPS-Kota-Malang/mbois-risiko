@@ -85,6 +85,8 @@ class ContextController extends Controller
             'opsiPenanganan',
             'prosesBisnis'
         ));
+
+        return view('admin.risk.context');
     }
 
     public function forms()

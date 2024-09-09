@@ -16,4 +16,9 @@ class Penyebab extends Model
         'status' => null,
     ];
 
+    public function manajemenResiko()
+    {
+        return $this->hasMany(ManajemenResiko::class, 'id_penyebab');
+    }
+
 }

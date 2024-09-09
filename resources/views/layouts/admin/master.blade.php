@@ -14,11 +14,23 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+
+
+<!-- jQuery -->
+
+
+<!-- DataTables JS -->
+
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body>
+
     <div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-200 font-roboto">
         @include('layouts.admin.sidebar')
 
@@ -32,36 +44,10 @@
             </main>
         </div>
     </div>
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 
-    {{-- //modal dari identifikasi penyebab --}}
-    <script>
-        var openmodal = document.querySelectorAll('#openModal');
-        var closemodal = document.querySelectorAll('#closeModal, #closeModal2');
-        var modal = document.querySelector('#penyebabModal');
-        var body = document.querySelector('body');
 
-        openmodal.forEach(function(el) {
-            el.addEventListener('click', function(event) {
-                event.preventDefault();
-                modal.classList.remove('opacity-0');
-                modal.classList.add('opacity-100');
-                modal.classList.remove('pointer-events-none');
-                body.classList.add('modal-active');
-            });
-        });
-
-        closemodal.forEach(function(el) {
-            el.addEventListener('click', function(event) {
-                event.preventDefault();
-                modal.classList.remove('opacity-100');
-                modal.classList.add('opacity-0');
-                modal.classList.add('pointer-events-none');
-                body.classList.remove('modal-active');
-            });
-        });
-    </script>
-
-</body>
 </body>
 
 </html>
