@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ManajemenResiko extends Model
+class AnalisisResiko extends Model
 {
     use HasFactory;
 
-    protected $table = 'manajemen_resiko';
+    protected $table = 'analisis_resiko';
 
     protected $fillable = [
         'id_tim_project',
@@ -21,17 +21,11 @@ class ManajemenResiko extends Model
         'id_area_dampak',
         'id_penyebab',
         'id_dampak',
-        'id_level_kemungkinan',
-        'id_level_resiko',
-        'id_level_dampak',
-        'uraian',
-        'efektivitas',
     ];
 
     protected $casts = [
         'id_penyebab' => 'array',
         'id_dampak' => 'array',
-        'uraian' => 'array',
     ];
 
     public function tim_project()
@@ -68,30 +62,5 @@ class ManajemenResiko extends Model
     public function areaDampak()
     {
         return $this->belongsTo(AreaDampak::class, 'id_area_dampak');
-    }
-
-    public function penyebab()
-    {
-        return $this->belongsTo(Penyebab::class, 'id_penyebab');
-    }
-
-    public function dampak()
-    {
-        return $this->belongsTo(Dampak::class, 'id_dampak');
-    }
-
-    public function levelKemungkinan()
-    {
-        return $this->belongsTo(LevelKemungkinan::class, 'id_level_kemungkinan');
-    }
-
-    public function levelResiko()
-    {
-        return $this->belongsTo(LevelResiko::class, 'id_level_resiko');
-    }
-
-    public function levelDampak()
-    {
-        return $this->belongsTo(LevelDampak::class, 'id_level_dampak');
     }
     }

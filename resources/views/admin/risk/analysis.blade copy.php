@@ -124,11 +124,37 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            
+            const riskLevels = {
+                1: 'Sangat Rendah',
+                2: 'Sangat Rendah',
+                3: 'Sangat Rendah',
+                4: 'Sangat Rendah',
+                5: 'Sangat Rendah',
+                6: 'Rendah',
+                7: 'Rendah',
+                8: 'Rendah',
+                9: 'Rendah',
+                10: 'Rendah',
+                11: 'Sedang',
+                12: 'Sedang',
+                13: 'Sedang',
+                14: 'Sedang',
+                15: 'Sedang',
+                16: 'Tinggi',
+                17: 'Tinggi',
+                18: 'Tinggi',
+                19: 'Tinggi',
+                20: 'Tinggi',
+                21: 'Sangat Tinggi',
+                22: 'Sangat Tinggi',
+                23: 'Sangat Tinggi',
+                24: 'Sangat Tinggi',
+                25: 'Sangat Tinggi',
+            };
 
             function calculateRiskLevel(likelihood, impact) {
                 const combinedLevel = likelihood * impact;
-                return combinedLevel || 'Tidak Diketahui';
+                return riskLevels[combinedLevel] || 'Tidak Diketahui';
             }
 
             function updateRiskLevel(rowId) {
@@ -138,27 +164,28 @@
 
                 const riskLevelCell = document.getElementById(`riskLevel${rowId}`);
                 riskLevelCell.textContent = riskLevel;
-                
+
                 riskLevelCell.classList.remove('bg-green-500', 'bg-yellow-500', 'bg-red-500');
 
-                if (riskLevel <= 5) {
-                    riskLevelCell.textContent = "Sangat Rendah";
-                    riskLevelCell.classList.add('bg-green-500');
-                } else if (riskLevel > 5 && riskLevel <= 10) {
-                    riskLevelCell.textContent = "Rendah";
-                    riskLevelCell.classList.add('bg-yellow-500');
-                } else if (riskLevel > 10 && riskLevel <= 15) {
-                    riskLevelCell.textContent = "Sedang";
-                    riskLevelCell.classList.add('bg-yellow-500');
-                } else if (riskLevel > 15 && riskLevel <= 20) {
-                    riskLevelCell.textContent = "Tinggi";
-                    riskLevelCell.classList.add('bg-red-500');
-                } else if (riskLevel > 20 && riskLevel <= 25) {
-                    riskLevelCell.textContent = "Sangat Tinggi";
-                    riskLevelCell.classList.add('bg-red-600');
-                } else {
-                    riskLevelCell.textContent = "Tidak Tersedia";
-                    riskLevelCell.classList.add('bg-gray-800');
+                switch (riskLevel) {
+                    case 'Sangat Rendah':
+                        riskLevelCell.classList.add('bg-green-500');
+                        break;
+                    case 'Rendah':
+                        riskLevelCell.classList.add('bg-yellow-500');
+                        break;
+                    case 'Sedang':
+                        riskLevelCell.classList.add('bg-yellow-500');
+                        break;
+                    case 'Tinggi':
+                        riskLevelCell.classList.add('bg-red-500');
+                        break;
+                    case 'Sangat Tinggi':
+                        riskLevelCell.classList.add('bg-red-500');
+                        break;
+                    default:
+                        riskLevelCell.classList.add('bg-gray-200');
+                        break;
                 }
             }
 

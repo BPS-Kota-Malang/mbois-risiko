@@ -30,7 +30,7 @@ class AuthenticatedSessionController extends Controller
         // Regenerate session
         $request->session()->regenerate();
 
-        return redirect()->route('admin.risk.context')->with('success', 'Login successfully.');
+        return redirect()->route('admin.dashboard')->with('success', 'Login successfully.');
     }
 
 
