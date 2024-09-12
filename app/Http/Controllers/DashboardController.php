@@ -8,6 +8,11 @@ use App\Models\KategoriResiko;
 use App\Models\Resiko;
 use Carbon\Carbon; // Tambahkan Carbon untuk bekerja dengan tanggal
 
+use App\Models\User;
+use App\Models\KategoriResiko;
+use App\Models\Resiko;
+use Carbon\Carbon; // Tambahkan Carbon untuk bekerja dengan tanggal
+
 class DashboardController extends Controller
 {
     /**
@@ -15,9 +20,16 @@ class DashboardController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         // Menghitung jumlah pengguna
         $totalUsers = User::count();
 
+=======
+
+        // Menghitung jumlah pengguna
+        $totalUsers = User::count();
+        
+>>>>>>> 66706489f70e9320b6c7d802d4fdbd3223c9bb56
         // Menghitung jumlah kategori risiko
         $totalKategoriResiko = KategoriResiko::count();
 
@@ -52,6 +64,10 @@ class DashboardController extends Controller
 
         // Mengembalikan view 'admin.dashboard' dengan data yang diperlukan
         return view('admin.dashboard', compact('totalUsers', 'totalResiko', 'totalKategoriResiko', 'riskData', 'monthlyRiskData'));
+<<<<<<< HEAD
+=======
+
+>>>>>>> 66706489f70e9320b6c7d802d4fdbd3223c9bb56
     }
 
     /**
@@ -60,6 +76,10 @@ class DashboardController extends Controller
     public function create()
     {
         // Logika untuk menampilkan form pembuatan resource baru (jika diperlukan)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 66706489f70e9320b6c7d802d4fdbd3223c9bb56
     }
 
     /**
@@ -67,7 +87,15 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
+<<<<<<< HEAD
         // Logika untuk menyimpan data yang diinput di form (jika diperlukan)
+=======
+
+        // Logika untuk menyimpan data yang diinput di form (jika diperlukan)
+
+        //
+
+>>>>>>> 66706489f70e9320b6c7d802d4fdbd3223c9bb56
     }
 
     /**
@@ -75,7 +103,11 @@ class DashboardController extends Controller
      */
     public function show(string $id)
     {
+<<<<<<< HEAD
         // Logika untuk menampilkan detail resource tertentu (jika diperlukan)
+=======
+
+>>>>>>> 66706489f70e9320b6c7d802d4fdbd3223c9bb56
     }
 
     /**
@@ -83,7 +115,11 @@ class DashboardController extends Controller
      */
     public function edit(string $id)
     {
+<<<<<<< HEAD
         // Logika untuk menampilkan form edit resource tertentu (jika diperlukan)
+=======
+
+>>>>>>> 66706489f70e9320b6c7d802d4fdbd3223c9bb56
     }
 
     /**
@@ -91,7 +127,11 @@ class DashboardController extends Controller
      */
     public function update(Request $request, string $id)
     {
+<<<<<<< HEAD
         // Logika untuk memperbarui resource tertentu (jika diperlukan)
+=======
+
+>>>>>>> 66706489f70e9320b6c7d802d4fdbd3223c9bb56
     }
 
     /**
@@ -99,6 +139,11 @@ class DashboardController extends Controller
      */
     public function destroy(string $id)
     {
+<<<<<<< HEAD
         // Logika untuk menghapus resource tertentu (jika diperlukan)
+=======
+
+>>>>>>> 66706489f70e9320b6c7d802d4fdbd3223c9bb56
     }
+
 }

@@ -14,7 +14,7 @@
     </div>
 
     <nav class="mt-10">
-        <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.dashboard') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
+        <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.dashboard.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
             href="{{ route('admin.dashboard') }}">
             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
@@ -46,7 +46,7 @@
                         d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
                     </path>
                 </svg>
-                <span class="mx-3 ">Risk Management</span>
+                <span class="mx-3 ">Manajemen Resiko</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20"
                     fill="currentColor" aria-hidden="true">
                     <path fill-rule="evenodd"
@@ -62,7 +62,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" />
                     </svg>
-                    <span class="mx-3">Context Setting</span>
+                    <span class="mx-3">Setting Konteks</span>
                 </a>
 
                 <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.manajemenrisiko.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
@@ -72,7 +72,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                     </svg>
-                    <span class="mx-3">Risk Identification</span>
+                    <span class="mx-3">Identifikasi Resiko</span>
                 </a>
 
                 <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.analisis.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
@@ -82,7 +82,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
-                    <span class="mx-3">Risk Analysis</span>
+                    <span class="mx-3">Analisis Resiko</span>
                 </a>
 
                 <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.risk.evaluation') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
@@ -92,7 +92,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
-                    <span class="mx-3">Risk Evaluation</span>
+                    <span class="mx-3">Evaluasi Resiko</span>
                 </a>
 
                 <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.risk.action_plan') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
@@ -102,10 +102,11 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
-                    <span class="mx-3">Action Plan</span>
+                    <span class="mx-3">Perencanaan</span>
                 </a>
             </div>
         </div>
+        
         <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.employee') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
             href="{{ route('admin.employee') }}">
             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -119,12 +120,12 @@
         <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.resiko') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
         href="{{ route('admin.resiko.index') }}">
         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                 d="M12 2a10 10 0 00-10 10 10 10 0 0010 10 10 10 0 0010-10A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16zm0-11a1 1 0 00-1 1v4a1 1 0 002 0v-4a1 1 0 00-1-1zm0 6a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/>
         </svg>
         <span class="mx-3">Resiko</span>
     </a>
-
+    
 
         <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.penyebab') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
         href="{{ route('admin.penyebab.index') }}">
@@ -135,7 +136,7 @@
             </svg>
             <span class="mx-3">Penyebab</span>
         </a>
-
+        
         <!-- "Dampak"  -->
             <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.dampak') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
             href="{{ route('admin.dampak.index') }}">
@@ -146,6 +147,7 @@
             <span class="mx-3">Dampak</span>
             </a>
 
+        
         <!-- "Uraian"  -->
         <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.uraian') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25" href="{{ route('admin.uraian.index') }}">
             <svg width="25" height="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -155,9 +157,7 @@
                 <path d="M4 16H20" stroke="white" stroke-width="2" />
             </svg>
             <span class="mx-3">Uraian</span>
-        </a>
-
-
+        </a>
 
 
         {{-- <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.tables') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-white"
@@ -196,7 +196,7 @@
                             d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
                         </path>
                     </svg>
-                    <span class="mx-3">Configurations</span>
+                    <span class="mx-3">Konfigurasi</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20"
                         fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd"
@@ -235,7 +235,7 @@
                                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
 
-                        <span class="mx-3">Permission</span>
+                        <span class="mx-3">Perizinan</span>
                     </a>
                 </div>
             </div>
@@ -252,40 +252,54 @@
         const dropdownMenu = document.getElementById('dropdown-menu');
         const newDropdownButton = document.getElementById('new-dropdown-button');
         const newDropdownMenu = document.getElementById('new-dropdown-menu');
-        let isOpen = true; // Set to true to open the dropdown by default
+        let isDropdownOpen = false; // Set to false to keep the original dropdown closed by default
+        let isNewDropdownOpen = false; // Set to false to keep the new dropdown closed by default
 
-        // Function to toggle the dropdown state
+        // Function to toggle the original dropdown state
         function toggleDropdown() {
-            isOpen = !isOpen;
-            dropdownMenu.classList.toggle('hidden', !isOpen);
+            isDropdownOpen = !isDropdownOpen;
+            dropdownMenu.classList.toggle('hidden', !isDropdownOpen);
         }
 
         // Function to toggle the new dropdown state
         function toggleNewDropdown() {
-            isOpen = !isOpen;
-            newDropdownMenu.classList.toggle('hidden', !isOpen);
+            isNewDropdownOpen = !isNewDropdownOpen;
+            newDropdownMenu.classList.toggle('hidden', !isNewDropdownOpen);
         }
 
-        // Set initial state
-        toggleDropdown();
-        toggleNewDropdown();
+        // Initial state (ensure both dropdowns are closed by default)
+        dropdownMenu.classList.add('hidden');
+        newDropdownMenu.classList.add('hidden');
 
-        dropdownButton.addEventListener('click', () => {
+        dropdownButton.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent click event from bubbling up
             toggleDropdown();
+            if (isDropdownOpen) {
+                newDropdownMenu.classList.add('hidden');
+                isNewDropdownOpen = false; // Close new dropdown if original one is opened
+            }
         });
 
-
-        newDropdownButton.addEventListener('click', () => {
+        newDropdownButton.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent click event from bubbling up
             toggleNewDropdown();
+            if (isNewDropdownOpen) {
+                dropdownMenu.classList.add('hidden');
+                isDropdownOpen = false; // Close original dropdown if new one is opened
+            }
         });
 
         document.addEventListener('click', function(event) {
             if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
                 dropdownMenu.classList.add('hidden');
+                isDropdownOpen = false; // Update the state
             }
             if (!newDropdownButton.contains(event.target) && !newDropdownMenu.contains(event.target)) {
                 newDropdownMenu.classList.add('hidden');
+                isNewDropdownOpen = false; // Update the state
             }
         });
     });
 </script>
+
+

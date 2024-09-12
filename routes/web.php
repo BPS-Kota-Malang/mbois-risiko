@@ -45,6 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('manajemenrisiko/{id}', [IdentificationController::class, 'destroy'])->name('admin.manajemenrisiko.destroy');
+
 
     // Sidebar - Risk Management
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
@@ -72,6 +74,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/prosesbisnis', ProsesBisnisController::class, ['as' => 'admin']);
     Route::resource('/identification', IdentificationController::class, ['as' => 'admin']);
     Route::resource('/resiko', ResikoController::class, ['as' => 'admin']);
+    
 
     //penyebab
     Route::resource('/penyebab', PenyebabController::class, ['as' => 'admin']);
@@ -91,6 +94,7 @@ Route::middleware('auth')->group(function () {
     //uraian
     Route::resource('/uraian', UraianContoller::class, ['as' => 'admin']);
     Route::get('/api/uraian', [UraianContoller::class, 'getUraianData'])->name('admin.geturaiandata');
+    Route::put('admin/uraian/{id}', [UraianContoller::class, 'update'])->name('admin.uraian.update.custom');
 
     //resiko
     Route::resource('/resiko', ResikoController::class, ['as' => 'admin']);
@@ -137,5 +141,5 @@ Route::middleware('auth')->group(function () {
         Route::post('admin/employee/upload', [EmployeeController::class, 'upload'])->name('admin.employee.upload');
         Route::post('/admin/kriteriakemungkinan', [KriteriaKemungkinanController::class, 'store'])->name('admin.kriteriakemungkinan.store');
 
-    });
-    ?>
+});
+?>
