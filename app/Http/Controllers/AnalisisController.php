@@ -20,17 +20,16 @@ use App\Models\LevelResiko;
 use App\Models\LevelDampak;
 use App\Models\MatriksAnalisisResiko;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
 
 class AnalisisController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-     public function index(Request $request)
+
+    public function index(Request $request)
     {
         $tim = $request->input('tim');
         $prosesBisnis = $request->input('proses_bisnis');
-
         $resiko = Resiko::all();
         $jenisResiko = JenisResiko::all();
         $sumberResiko = SumberResiko::all();
@@ -40,26 +39,22 @@ class AnalisisController extends Controller
         $penyebab = Penyebab::all();
         $dampak = Dampak::all();
         $ProsesBisnis = ProsesBisnis::all();
-        $ManajemenResiko = ManajemenResiko::all();
+        $manajemenResiko = ManajemenResiko::all();
         $levelKemungkinan = LevelKemungkinan::all();
         $levelResiko = LevelResiko::all();
         $levelDampak = LevelDampak::all();
         $uraian = Uraian::all();
         $matriksAnalisisResiko = MatriksAnalisisResiko::all();
-
-
         $query = ManajemenResiko::query();
 
         if ($tim) {
-            $query->where('id_tim_project', $tim);  // Adjust 'id_tim' to the correct column name
+            $query->where('id_tim_project', $tim);
         }
 
         if ($prosesBisnis) {
-            $query->where('id_proses_bisnis', $prosesBisnis);  // Adjust 'id_proses_bisnis' to the correct column name
+            $query->where('id_proses_bisnis', $prosesBisnis);
         }
-
-        $ManajemenResiko = $query->with(['prosesbisnis', 'tim_project', 'resiko'])->get();
-
+        $ManajemenResiko = $query->with(['prosesBisnis', 'tim_project', 'resiko', 'matriksAnalisisResiko'])->get();
         return view('admin.risk.analysis', compact(
             'jenisResiko',
             'penyebab',
@@ -79,49 +74,6 @@ class AnalisisController extends Controller
         ));
     }
 
-
-    // public function index(Request $request)
-    // {
-    //     $tim = $request->input('tim');
-    //     $prosesBisnis = $request->input('proses_bisnis');
-    //     $query = ManajemenResiko::query();
-    //     $resiko = Resiko::all();
-    //     $jenisResiko = JenisResiko::all();
-    //     $sumberResiko = SumberResiko::all();
-    //     $kategoriResiko = KategoriResiko::all();
-    //     $areaDampak = AreaDampak::all();
-    //     $timProjects = TimProject::all();
-    //     $penyebab = Penyebab::all();
-    //     $dampak = Dampak::all();
-    //     $ProsesBisnis = ProsesBisnis::all();
-    //     $ManajemenResiko = ManajemenResiko::all();
-    //     $levelKemungkinan = LevelKemungkinan::all();
-    //     $levelResiko = LevelResiko::all();
-    //     $levelDampak = LevelDampak::all();
-    //     $uraian = Uraian::all(); // Tambahkan ini untuk mengambil data uraian
-
-    //     $query = ManajemenResiko::query();
-
-    //     if ($tim) {
-    //         $query->where('id_tim_project', $tim);  // Sesuaikan 'id_tim' dengan nama kolom yang benar
-    //     }
-
-    //     if ($prosesBisnis) {
-    //         $query->where('id_proses_bisnis', $prosesBisnis);  // Sesuaikan 'id_proses_bisnis' dengan nama kolom yang benar
-    //     }
-
-    //     $ManajemenResiko = $query->with(['prosesbisnis', 'tim_project', 'resiko'])->get();
-
-    //     $matriksRisiko = MatriksAnalisisResiko::all();
-
-    //     return view('admin.risk.analysis', compact(
-    //         'jenisResiko', 'penyebab', 'sumberResiko', 'kategoriResiko', 'areaDampak', 'timProjects', 'dampak', 'resiko',
-    //         'ProsesBisnis', 'ManajemenResiko', 'levelKemungkinan', 'levelResiko', 'levelDampak', 'matriksRisiko', 'uraian' // Tambahkan 'uraian' ke compact
-    //     ));
-    // }
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
@@ -140,8 +92,6 @@ class AnalisisController extends Controller
         if (!$manajemenResiko) {
             return response()->json(['success' => false, 'message' => 'Manajemen Resiko tidak ditemukan.'], 404);
         }
-
-        // Simpan uraian yang dipilih dalam format JSON
         $manajemenResiko->id_uraian = json_encode($validated['uraian']);
         $manajemenResiko->save();
 
@@ -152,18 +102,10 @@ class AnalisisController extends Controller
     {
         $dataUraian = Uraian::all();
         $manajemenResiko = ManajemenResiko::find($id);
-
-        //ambil data dampak yang sudah ada
         $Jsonuraian = json_decode($manajemenResiko->id_uraian);
-        //hapus data dampak yang dipilih
         $id_uraian = array_diff($Jsonuraian, [$uraian]);
-
-        //ubah key array
         $id_uraian = array_values($id_uraian);
-
         $id_uraian = json_encode($id_uraian);
-
-        //simpan kembali ke database
         $manajemenResiko->id_uraian = $id_uraian;
         $manajemenResiko->save();
 
@@ -178,6 +120,7 @@ class AnalisisController extends Controller
     {
         //
     }
+
 
     /**
      * Display the specified resource.
@@ -200,7 +143,29 @@ class AnalisisController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // dd($request->input('efektivitas'));
+        Log::info('Update request data:', $request->all());
+        $manajemenResiko = ManajemenResiko::findOrFail($id);
+        Log::info('Found ManajemenResiko record:', $manajemenResiko->toArray());
+        $manajemenResiko->id_level_kemungkinan = (int) $request->input('level_kemungkinan')[0];
+        $manajemenResiko->id_level_dampak = (int) $request->input('level_dampak')[0];
+        $calculatedRiskLevel = $this->calculateRiskLevel($request->input('level_kemungkinan'), $request->input('level_dampak'));
+        Log::info('Calculated Risk Level:', ['risk_level' => $calculatedRiskLevel]);
+        $manajemenResiko->id_matriks_analisis_resiko = $calculatedRiskLevel;
+        $manajemenResiko->efektivitas = ucfirst($request->input('efektivitas'));
+        $manajemenResiko->save();
+        Log::info('Updated ManajemenResiko record:', $manajemenResiko->toArray());
+        return redirect()->route('admin.analisis.index')->with('success', 'Data successfully updated');
+    }
+
+    private function calculateRiskLevel($levelKemungkinan, $levelDampak)
+    {
+        $riskMatrix = MatriksAnalisisResiko::where('id_level_kemungkinan', $levelKemungkinan)
+            ->where('id_level_dampak', $levelDampak)
+            ->first();
+
+        // Return the id of the risk matrix
+        return $riskMatrix ? $riskMatrix->id : null;
     }
 
     /**

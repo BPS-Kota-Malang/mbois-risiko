@@ -13,30 +13,44 @@ use App\Models\TimProject;
 use App\Models\ProsesBisnis;
 use App\Models\Dampak;
 use App\Models\ManajemenResiko;
-use PhpParser\Node\Expr\AssignOp\Plus;
 
 class ManajemenResikoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $ManajemenResiko = ManajemenResiko::all();
+        $tim = $request->input('tim'); 
+        $prosesBisnis = $request->input('proses_bisnis');
+
+        $resiko = Resiko::all();
         $jenisResiko = JenisResiko::all();
         $sumberResiko = SumberResiko::all();
         $kategoriResiko = KategoriResiko::all();
         $areaDampak = AreaDampak::all();
         $timProjects = TimProject::all();
-        $ProsesBisnis = ProsesBisnis::all();
         $penyebab = Penyebab::all();
         $dampak = Dampak::all();
+        $ProsesBisnis = ProsesBisnis::all();
+        $ManajemenResiko = ManajemenResiko::all();
+        
 
+        $query = ManajemenResiko::query();
 
+        if ($tim) {
+            $query->where('id_tim_project', $tim);  // Adjust 'id_tim' to the correct column name
+        }
+    
+        if ($prosesBisnis) {
+            $query->where('id_proses_bisnis', $prosesBisnis);  // Adjust 'id_proses_bisnis' to the correct column name
+        }
+    
+        $ManajemenResiko = $query->with(['prosesbisnis', 'tim_project', 'resiko'])->get();
 
         return view('admin.risk.identification', compact(
-            'jenisResiko',  'sumberResiko', 'kategoriResiko',
-            'areaDampak', 'timProjects',  'ProsesBisnis', 'ManajemenResiko', 'penyebab', 'dampak'
+            'jenisResiko', 'penyebab', 'sumberResiko', 'kategoriResiko',
+            'areaDampak', 'timProjects', 'dampak', 'resiko', 'ProsesBisnis', 'ManajemenResiko'
         ));
     }
 
@@ -110,7 +124,7 @@ class ManajemenResikoController extends Controller
             ]);
         }
 
-        return response()->json(['success' => 'Data berhasil disimpan.']);
+        return redirect()->route('admin.manajemenrisiko.index')->with('success', 'Data berhasil disimpan.');
      }
     /**
      * Store a newly created resource in storage.
@@ -189,53 +203,6 @@ class ManajemenResikoController extends Controller
         $manajemenResiko->save();
 
         return response()->json(['success' => true, 'message' => 'Penyebab berhasil disimpan.']);
-    }
-
-    public function hapusPenyebab($id, $penyebab)
-    {
-        $dataPenyebab = Penyebab::all();
-        $manajemenResiko = ManajemenResiko::find($id);
-
-
-        //ambil data penyebab yang sudah ada
-        $Jsonpenyebab = json_decode($manajemenResiko->id_penyebab);
-        //hapus data penyebab yang dipilih
-        $id_penyebab = array_diff($Jsonpenyebab, [$penyebab]);
-
-        //ubah key array
-        $id_penyebab = array_values($id_penyebab);
-
-        $id_penyebab = json_encode($id_penyebab);
-
-        //simpan kembali ke database
-        $manajemenResiko->id_penyebab = $id_penyebab;
-        $manajemenResiko->save();
-
-        //response route
-        return redirect()->route('admin.manajemenrisiko.index')->with('success', 'Data berhasil dihapus.');
-    }
-
-    public function hapusDampak($id, $dampak)
-    {
-        $dataDampak = Dampak::all();
-        $manajemenResiko = ManajemenResiko::find($id);
-
-        //ambil data dampak yang sudah ada
-        $Jsondampak = json_decode($manajemenResiko->id_dampak);
-        //hapus data dampak yang dipilih
-        $id_dampak = array_diff($Jsondampak, [$dampak]);
-
-        //ubah key array
-        $id_dampak = array_values($id_dampak);
-
-        $id_dampak = json_encode($id_dampak);
-
-        //simpan kembali ke database
-        $manajemenResiko->id_dampak = $id_dampak;
-        $manajemenResiko->save();
-
-        //response route
-        return redirect()->route('admin.manajemenrisiko.index')->with('success', 'Data berhasil dihapus.');
     }
 
     //backup punya savedampak

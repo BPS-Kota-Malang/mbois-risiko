@@ -48,10 +48,10 @@ class DampakController extends Controller
 
         Dampak::create([
             'dampak' => $request->dampak,
-            'status' => $request->status ?? 'pending', // default status if not provided
+            'status' => $request->status ?? 'On Progress', // default status if not provided
         ]);
 
-        return redirect()->route('admin.dampak.index')->with('success', 'Dampak created successfully.');
+        return redirect()->route('admin.manajemenrisiko.index')->with('success', 'Dampak created successfully.');
     }
 
     /**
