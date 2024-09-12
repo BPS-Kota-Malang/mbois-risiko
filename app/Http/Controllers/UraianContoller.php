@@ -1,44 +1,40 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Uraian;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class UraianContoller extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $query = $request->input('search');
-
-        // Jika ada pencarian, filter data; jika tidak, ambil semua data
-        $uraian = Uraian::when($query, function ($queryBuilder) use ($query) {
-            $queryBuilder->where('uraian', 'like', '%' . $query . '%')
-                         ->orWhere('status', 'like', '%' . $query . '%');
-        })->get();
-
-        // Kirim data ke view
+        $uraian = Uraian::paginate(10);
         return view('admin.uraian', compact('uraian'));
     }
 
-
+    /**
+     * Fetch dapek data for DataTables.
+     */
     public function getUraianData(Request $request)
     {
-        if ($request->ajax()) {
-            $data = Uraian::select(['id', 'uraian', 'status']);
-            return DataTables::of($data)->make(true);
-        }
-    }
+        $columns = ['id', 'uraian', 'status'];
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $query = Uraian::select($columns);
+
+        return DataTables::of($query)
+            ->filter(function ($query) use ($request) {
+                if ($request->has('search') && !empty($request->search['value'])) {
+                    $search = $request->search['value'];
+                    $query->where('uraian', 'like', "%{$search}%")
+                        ->orWhere('status', 'like', "%{$search}%");
+                }
+            })
+            ->make(true);
     }
 
     /**
@@ -48,62 +44,74 @@ class UraianContoller extends Controller
     {
         $request->validate([
             'uraian' => 'required|string|max:255',
-            'status' => 'nullable|in:Accepted,On Progress,Rejected',
         ]);
 
         Uraian::create([
             'uraian' => $request->uraian,
-            'status' => $request->status ?? 'On Progress',
+            'status' => $request->status ?? 'pending', // default status if not provided
         ]);
 
-        return redirect()->back()->with('success', 'Uraian berhasil ditambahkan.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        return redirect()->route('admin.uraian.index')->with('success', 'Uraian created successfully.');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $uraian = Uraian::findOrFail($id);
+        return response()->json($uraian);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'uraian' => 'required|string|max:255',
-            'status' => 'required|string|in:On Progress,Accepted,Rejected',
-        ]);
-
         $uraian = Uraian::findOrFail($id);
-        $uraian->update([
-            'uraian' => $request->uraian,
-            'status' => $request->status,
-        ]);
 
-        return redirect()->route('admin.uraian.index')->with('success', 'Uraian updated successfully.');
+        if ($request->has('uraian')) {
+            $uraian->uraian = $request->input('uraian');
+        }
+
+        if ($request->has('status')) {
+            $uraian->status = $request->input('status');
+        }
+
+        $uraian->save();
+
+        return response()->json(['success' => true]);
     }
 
+    /**
+     * Update the status of the resource.
+     */
+    public function updateStatus(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|integer|exists:uraians,id',
+            'status' => 'required|string',
+        ]);
+
+        $uraian = Uraian::findOrFail($request->id);
+        $uraian->update(['status' => $request->status]);
+
+        return response()->json([
+            'success' => true,
+            'id' => $uraian->id,
+            'resiko' => $uraian->uraian,
+            'status' => $uraian->status,
+        ]);
+    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         $uraian = Uraian::findOrFail($id);
         $uraian->delete();
 
-        return redirect()->route('admin.uraian.index')->with('success', 'Uraian berhasil dihapus.');
+        return redirect()->route('admin.uraian.index')->with('success', 'Uraian deleted successfully.');
     }
-
 }

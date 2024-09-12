@@ -1,7 +1,6 @@
 <x-admin-layout>
-<<<<<<< HEAD
     <!-- Header from previous code -->
-    <div class="bg-white shadow-md rounded-lg p-4">
+    <div class="bg-white shadow-md rounded-lg p-4 mb-4">
         <div class="flex justify-between items-center">
             <h2 class="text-2xl font-bold">Dashboard</h2>
         </div>
@@ -12,104 +11,105 @@
 
     <div class="container mx-auto mt-4 px-4">
         <!-- Row for Scorecards -->
-        <div class="flex gap-4 mb-4 p-4">
-            <!-- Scorecard 1 -->
-            <div class="w-full sm:w-1/2 lg:w-1/4">
-                <div class="card bg-white shadow-md rounded-lg p-6">
-                    <div class="flex">
-                        <div class="flex-1">
-                            <p class="text-base mb-0 text-uppercase font-weight-bold">Total Resiko</p>
-                            <h4 class="font-weight-bolder text-xl">
-                                {{ $totalResiko }}
-                            </h4>
-                        </div>
-                        <div class="flex-shrink-0 text-end">
-                            <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                                <i class="fas fa-exclamation-triangle text-2xl text-primary" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                    </div>
+<div class="flex gap-4 mb-4">
+      <!-- Scorecard 1 -->
+      <div class="w-full sm:w-1/2 lg:w-1/4">
+        <div class="card bg-white shadow-md rounded-lg p-6">
+            <div class="flex">
+                <div class="flex-1">
+                    <p class="text-base mb-0 text-uppercase font-weight-bold">Total Resiko</p>
+                    <h4 class="font-weight-bolder text-xl">
+                        {{ $totalResiko }}
+                    </h4>
                 </div>
-            </div>
-
-            <!-- Scorecard 2 -->
-            <div class="w-full sm:w-1/2 lg:w-1/4">
-                <div class="card bg-white shadow-md rounded-lg p-6">
-                    <div class="flex">
-                        <div class="flex-1">
-                            <p class="text-base mb-0 text-uppercase font-weight-bold">Kategori Resiko</p>
-                            <h4 class="font-weight-bolder text-xl">
-                                {{ $totalKategoriResiko }}
-                            </h4>
-                        </div>
-                        <div class="flex-shrink-0 text-end">
-                            <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-                                <i class="fas fa-project-diagram text-2xl text-success" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Scorecard 3 -->
-            <div class="w-full sm:w-1/2 lg:w-1/4">
-                <div class="card bg-white shadow-md rounded-lg p-6">
-                    <div class="flex">
-                        <div class="flex-1">
-                            <p class="text-base mb-0 text-uppercase font-weight-bold">Pending Tasks</p>
-                            <h4 class="font-weight-bolder text-xl">
-                                76
-                            </h4>
-                        </div>
-                        <div class="flex-shrink-0 text-end">
-                            <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
-                                <i class="fas fa-tasks text-2xl text-warning" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Scorecard 4 -->
-            <div class="w-full sm:w-1/2 lg:w-1/4">
-                <div class="card bg-white shadow-md rounded-lg p-6">
-                    <div class="flex">
-                        <div class="flex-1">
-                            <p class="text-base mb-0 text-uppercase font-weight-bold">Jumlah Pengguna</p>
-                            <h4 class="font-weight-bolder text-xl">
-                                {{ $totalUsers }}
-                            </h4>
-                        </div>
-                        <div class="flex-shrink-0 text-end">
-                            <div class="icon icon-shape bg-gradient-info shadow-info text-center rounded-circle">
-                                <i class="fas fa-users text-2xl text-info" aria-hidden="true"></i>
-                            </div>
-                        </div>
+                <div class="flex-shrink-0 text-end">
+                    <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
+                        <i class="fas fa-exclamation-triangle text-2xl text-primary" aria-hidden="true"></i>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Scorecard 2 -->
+    <div class="w-full sm:w-1/2 lg:w-1/4">
+        <div class="card bg-white shadow-md rounded-lg p-6">
+            <div class="flex">
+                <div class="flex-1">
+                    <p class="text-base mb-0 text-uppercase font-weight-bold">Kategori Resiko</p>
+                    <h4 class="font-weight-bolder text-xl">
+                        {{ $totalKategoriResiko }}
+                    </h4>
+                </div>
+                <div class="flex-shrink-0 text-end">
+                    <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
+                        <i class="fas fa-project-diagram text-2xl text-success" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scorecard 3 -->
+    <div class="w-full sm:w-1/2 lg:w-1/4">
+        <div class="card bg-white shadow-md rounded-lg p-6">
+            <div class="flex">
+                <div class="flex-1">
+                    <p class="text-base mb-0 text-uppercase font-weight-bold">Pending Tasks</p>
+                    <h4 class="font-weight-bolder text-xl">
+                        76
+                    </h4>
+                </div>
+                <div class="flex-shrink-0 text-end">
+                    <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
+                        <i class="fas fa-tasks text-2xl text-warning" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scorecard 4 -->
+    <div class="w-full sm:w-1/2 lg:w-1/4">
+        <div class="card bg-white shadow-md rounded-lg p-6">
+            <div class="flex">
+                <div class="flex-1">
+                    <p class="text-base mb-0 text-uppercase font-weight-bold">Jumlah Pengguna</p>
+                    <h4 class="font-weight-bolder text-xl">
+                        {{ $totalUsers }}
+                    </h4>
+                </div>
+                <div class="flex-shrink-0 text-end">
+                    <div class="icon icon-shape bg-gradient-info shadow-info text-center rounded-circle">
+                        <i class="fas fa-users text-2xl text-info" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
         <!-- Row for Charts and Calendar -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <!-- Bar Chart -->
-            <div class="bg-white shadow-md rounded-lg p-4 h-64">
+            <div class="bg-white shadow-md rounded-lg p-4">
                 <h6 class="text-lg font-bold mb-4">Jumlah Resiko Tim</h6>
-                <canvas id="barChart" class="h-full w-full"></canvas>
+                <canvas id="barChart" class="h-64 w-full"></canvas>
             </div>
 
             <!-- Line Chart and Calendar Side by Side -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <!-- Line Chart -->
-                <div class="bg-white shadow-md rounded-lg p-4 h-64">
+                <div class="bg-white shadow-md rounded-lg p-4">
                     <h6 class="text-lg font-bold mb-4">Total Resiko Per Bulan</h6>
-                    <canvas id="lineChart" class="h-full w-full"></canvas>
+                    <canvas id="lineChart" class="h-64 w-full"></canvas>
                 </div>
 
                 <!-- Calendar -->
-                <div class="bg-white shadow-md rounded-lg p-4 h-48">
+                <div class="bg-white shadow-md rounded-lg p-4">
                     <h6 class="text-lg font-bold mb-4">Kalender</h6>
-                    <div id="calendar" class="h-full w-full"></div>
+                    <div id="calendar" class="h-80 w-full border border-gray-300 rounded-lg"></div>
                 </div>
             </div>
         </div>
@@ -121,6 +121,16 @@
     <!-- FullCalendar CDN -->
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js"></script>
+
+    <style>
+        /* Styling untuk kalender */
+        #calendar {
+            border: 1px solid #e5e7eb; /* Border abu-abu terang */
+            border-radius: 0.5rem; /* Rounded corners */
+            padding: 1rem; /* Padding di dalam kalender */
+            background-color: #ffffff; /* Background color putih */
+        }
+    </style>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -195,23 +205,4 @@
             calendar.render();
         });
     </script>
-=======
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Dashboard
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-                    <div class="text-2xl">
-                        Welcome to cukit dulit clubbers
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
->>>>>>> 6c8eec272c3ccd7d58e6f0a87881fc1a97b48577
 </x-admin-layout>
