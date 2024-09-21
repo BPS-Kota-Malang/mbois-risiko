@@ -4,10 +4,12 @@
             <div
                 class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
                 <!-- Button to open the modal -->
+                @if (auth()->check() && auth()->user()->hasRole('admin'))
                 <button onclick="toggleModal('tambahperaturanModal')"
                     class="px-4 py-2 mb-2 bg-blue-500 rounded-md text-white font-medium tracking-wide hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300">
                     Tambah
                 </button>
+                @endif
                 {{-- <!-- Refresh button -->
                 <button onclick="refreshTable()"
                     class="px-4 py-2 mb-2 bg-blue-500 rounded-md text-white font-medium tracking-wide hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300">
@@ -23,8 +25,10 @@
                                 Peraturan Perundang-undangan</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Amanat</th>
+                                @if (auth()->check() && auth()->user()->hasRole('admin'))
                             <th class="px-6 py-3 text-center text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Actions</th>
+                                @endif
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -36,6 +40,7 @@
                                     {{ $item->peraturan_perundang_undangan }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ $item->amanat }}
                                 </td>
+                                @if (auth()->check() && auth()->user()->hasRole('admin'))
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                                     <div class="inline-flex space-x-4">
                                         <button
@@ -53,8 +58,9 @@
                                         </form>
                                     </div>
                                 </td>
-                                
-                                
+                                @endif
+
+
                             </tr>
                         @endforeach
                     </tbody>

@@ -3,10 +3,12 @@
     <section class="bg-white dark:bg-white">
         <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
             <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+                @if (auth()->check() && auth()->user()->hasRole('admin'))
                 <button onclick="toggleModal('tambahprosesBisnisModal')"
                     class="px-4 py-2 mb-2 bg-blue-500 rounded-full text-white font-medium tracking-wide hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300">
                     Tambah Proses Bisnis
                 </button>
+                @endif
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
@@ -16,9 +18,11 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Proses Bisnis
                             </th>
+                            @if (auth()->check() && auth()->user()->hasRole('admin'))
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Actions
                             </th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -30,6 +34,7 @@
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     {{ $proses->proses_bisnis }}
                                 </td>
+                                @if (auth()->check() && auth()->user()->hasRole('admin'))
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <a href="javascript:void(0)"
                                         onclick="openEditprosesBisnisModal('{{ route('admin.prosesbisnis.update', $proses->id) }}', '{{ $proses->proses_bisnis }}')"
@@ -42,6 +47,7 @@
                                         <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
                                     </form>
                                 </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>

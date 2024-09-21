@@ -48,7 +48,7 @@ class ResikoController extends Controller
 
         Resiko::create([
             'resiko' => $request->resiko,
-            'status' => $request->status ?? 'pending', // default status if not provided
+            'status' => $request->status ?? 'On Progress', // default status if not provided
         ]);
 
         return redirect()->route('admin.resiko.index')->with('success', 'Resiko created successfully.');

@@ -29,8 +29,8 @@
     use App\Http\Controllers\Context\OpsiPenangananController;
     use App\Http\Controllers\Context\ProsesBisnisController;
     use App\Http\Controllers\DampakController;
-    use App\Http\Controllers\UraianContoller;
     use App\Http\Controllers\ManajemenResikoController;
+    use App\Http\Controllers\UraianController;
 
 
 
@@ -79,9 +79,6 @@ Route::middleware('auth')->group(function () {
     Route::put('admin/penyebab/{id}', [PenyebabController::class, 'update'])->name('admin.penyebab.update.custom');
 
 
-
-    // Route::get('admin/getselectedpenyebab/{id}', [PenyebabController::class, 'getSelectedPenyebab'])->name('admin.getselectedpenyebab');
-
     //dampak
     Route::resource('/dampak', DampakController::class, ['as' => 'admin']);
     Route::get('/api/dampak', [DampakController::class, 'getDampakData'])->name('admin.getdampakdata');
@@ -89,8 +86,10 @@ Route::middleware('auth')->group(function () {
 
 
     //uraian
-    Route::resource('/uraian', UraianContoller::class, ['as' => 'admin']);
-    Route::get('/api/uraian', [UraianContoller::class, 'getUraianData'])->name('admin.geturaiandata');
+    route::resource('/uraian', UraianController::class, ['as' => 'admin']);
+    Route::get('/api/uraian', [UraianController::class, 'getUraianData'])->name('admin.geturaiandata');
+    Route::put('admin/uraian/{id}', [UraianController::class, 'update'])->name('admin.uraian.update.custom');
+
 
     //resiko
     Route::resource('/resiko', ResikoController::class, ['as' => 'admin']);
@@ -102,12 +101,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('/manajemenrisiko', ManajemenResikoController::class, ['as' => 'admin']);
 ;   Route::post('/admin/manajemenresiko/savedampak', [ManajemenResikoController::class, 'saveDampak'])->name('admin.manajemenresiko.savedampak');
     Route::post('/admin/manajemenresiko/savepenyebab', [ManajemenResikoController::class, 'savePenyebab'])->name('admin.manajemenresiko.savepenyebab');
-    Route::post('/admin/analisis/saveuraian', [AnalisisController::class, 'saveUraian'])->name('admin.analisis.saveuraian');
     Route::get('/admin/manajemenresiko/hapuspenyebab/{id}/{penyebab}', [ManajemenResikoController::class, 'hapusPenyebab']);
     Route::get('/admin/manajemenresiko/hapusdampak/{id}/{dampak}', [ManajemenResikoController::class, 'hapusDampak']);
     Route::get('/admin/analisis/hapusuraian/{id}/{uraian}', [AnalisisController::class, 'hapusUraian']);
     Route::resource('/analisis', AnalisisController::class, ['as' => 'admin']);
-
+    Route::post('/admin/analisis/saveuraian', [AnalisisController::class, 'saveUraian'])->name('admin.analisis.saveuraian');
 
 
 });

@@ -1,6 +1,6 @@
 <div class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center hidden" id="dampakModal">
     <div class="modal-overlay absolute w-full h-full bg-blue-900 opacity-50"></div>
-    <div class="modal-container bg-gray-100 w-11/12 md:max-w-md mx-auto rounded-lg shadow-lg z-50 overflow-y-auto">
+    <div class="modal-container bg-gray-100 md:max-w-4xl mx-auto md:h-4/5 rounded-lg shadow-lg z-50 overflow-y-auto " style="width: 1000px">
         <div class="modal-content py-4 text-left px-6">
             <!-- Title -->
             <div class="flex justify-between items-center pb-2">
@@ -13,7 +13,7 @@
             </div>
             <!-- Body -->
             <div class="flex justify-between items-center mb-4">
-                <button id="openAddImpactModal" class="bg-blue-500 text-white px-4 py-2 rounded-full">Tambah Dampak</button>
+                <button id="openAddImpactModal" class="bg-blue-500 text-white px-4 py-2 rounded-md ">Tambah Dampak</button>
                 <div class="relative text-gray-600">
                     <input type="search" id="searchInput" name="search" placeholder="Cari" class="bg-white h-8 px-3 pr-8 rounded-full text-sm focus:outline-none">
                     <button type="submit" class="absolute right-0 top-0 mt-2 mr-3">
@@ -36,25 +36,28 @@
                         <!-- Data will be fetched using DataTables -->
                 </table>
             </div>
-            {{--<!-- Modal "Tambah Dampak" --> --}}
+            <!-- Modal "Tambah Dampak" -->
             <div id="addImpactModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
                 <div class="flex items-center justify-center min-h-screen px-4">
-                    <form action="{{ route('admin.dampak.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="bg-white rounded-lg shadow-xl overflow-hidden max-w-sm w-full">
-                            <div class="px-4 py-3 border-b border-gray-200">
+                    <!-- Added a container with padding for better centering and spacing -->
+                    <div class="w-full max-w-2xl p-6 mx-auto bg-white rounded-lg shadow-xl">
+                        <form action="{{ route('admin.dampak.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="border-b border-gray-200">
                                 <h3 class="text-lg leading-6 font-medium text-gray-900">Tambah Dampak</h3>
                             </div>
-                            <div class="px-4 py-5">
+                            <div class="py-5">
                                 <label for="dampak" class="block text-sm font-medium text-gray-700">Nama Dampak</label>
                                 <input type="text" id="dampak" name="dampak" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
                             </div>
-                            <div class="px-4 py-3 bg-gray-50 text-right">
-                                <button id="saveBtndampak" type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Simpan</button>
-                                <button id="cancelImpactBtn" type="button" class="bg-red-500 text-white px-4 py-2 rounded-md">Batal</button>
+                            <div class="bg-gray-50 text-right">
+                                <div class="flex justify-between pt-2">
+                                    <button id="saveBtndampak" type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md">Simpan</button>
+                                    <button id="cancelImpactBtn" type="button" class="bg-red-500 text-white px-4 py-2 rounded-md">Batal</button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
             <!-- Footer -->

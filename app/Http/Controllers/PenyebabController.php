@@ -48,10 +48,10 @@ class PenyebabController extends Controller
 
         Penyebab::create([
             'penyebab' => $request->penyebab,
-            'status' => $request->status ?? 'pending', // default status if not provided
+            'status' => $request->status ?? 'On Progress', // default status if not provided
         ]);
 
-        return redirect()->route('admin.penyebab.index')->with('success', 'Penyebab created successfully.');
+        return redirect()->route('admin.manajemenrisiko.index')->with('success', 'Penyebab created successfully.');
     }
 
     /**
