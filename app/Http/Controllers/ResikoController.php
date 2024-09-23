@@ -11,9 +11,19 @@ class ResikoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $resiko = Resiko::paginate(10);
+        // Menangani pencarian melalui query string
+        $search = $request->input('search');
+        
+        $query = Resiko::query();
+
+        if ($search) {
+            $query->where('resiko', 'like', "%{$search}%")
+                  ->orWhere('status', 'like', "%{$search}%");
+        }
+
+        $resiko = $query->paginate(10); // pagination data resiko
         return view('admin.resiko', compact('resiko'));
     }
 
@@ -48,7 +58,7 @@ class ResikoController extends Controller
 
         Resiko::create([
             'resiko' => $request->resiko,
-            'status' => $request->status ?? 'pending', // default status if not provided
+            'status' => $request->status ?? 'pending', // default status jika tidak disediakan
         ]);
 
         return redirect()->route('admin.resiko.index')->with('success', 'Resiko created successfully.');

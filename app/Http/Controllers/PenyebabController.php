@@ -11,9 +11,19 @@ class PenyebabController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $penyebab = Penyebab::paginate(10);
+        // Menangani pencarian melalui query string
+        $search = $request->input('search');
+        
+        $query = Penyebab::query();
+
+        if ($search) {
+            $query->where('penyebab', 'like', "%{$search}%")
+                  ->orWhere('status', 'like', "%{$search}%");
+        }
+
+        $penyebab = $query->paginate(10); // pagination data penyebab
         return view('admin.penyebab', compact('penyebab'));
     }
 
@@ -48,7 +58,7 @@ class PenyebabController extends Controller
 
         Penyebab::create([
             'penyebab' => $request->penyebab,
-            'status' => $request->status ?? 'pending', // default status if not provided
+            'status' => $request->status ?? 'pending', // default status jika tidak disediakan
         ]);
 
         return redirect()->route('admin.penyebab.index')->with('success', 'Penyebab created successfully.');
@@ -99,7 +109,7 @@ class PenyebabController extends Controller
         return response()->json([
             'success' => true,
             'id' => $penyebab->id,
-            'resiko' => $penyebab->penyebab,
+            'penyebab' => $penyebab->penyebab,
             'status' => $penyebab->status,
         ]);
     }

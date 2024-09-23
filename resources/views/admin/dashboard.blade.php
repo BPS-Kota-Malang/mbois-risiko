@@ -115,6 +115,17 @@
         </div>
     </div>
 
+
+      <!-- Footer -->
+    <footer class="text-center mt-8">
+        <p class="text-gray-600 text-sm">
+            Website ini dibuat oleh Tim Cukit Dulit yang beranggotakan Bima, Ell, Hakek.
+        </p>
+        <p class="text-gray-600 text-sm">
+            &copy; {{ date('Y') }} Cukit Dulit. All Rights Reserved.
+        </p>
+    </footer>
+
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 

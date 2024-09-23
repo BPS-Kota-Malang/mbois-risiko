@@ -11,14 +11,24 @@ class UraianContoller extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $uraian = Uraian::paginate(10);
+        // Menangani pencarian melalui query string
+        $search = $request->input('search');
+        
+        $query = Uraian::query();
+
+        if ($search) {
+            $query->where('uraian', 'like', "%{$search}%")
+                  ->orWhere('status', 'like', "%{$search}%");
+        }
+
+        $uraian = $query->paginate(10); // pagination data uraian
         return view('admin.uraian', compact('uraian'));
     }
 
     /**
-     * Fetch dapek data for DataTables.
+     * Fetch uraian data for DataTables.
      */
     public function getUraianData(Request $request)
     {
@@ -48,7 +58,7 @@ class UraianContoller extends Controller
 
         Uraian::create([
             'uraian' => $request->uraian,
-            'status' => $request->status ?? 'pending', // default status if not provided
+            'status' => $request->status ?? 'pending', // default status jika tidak disediakan
         ]);
 
         return redirect()->route('admin.uraian.index')->with('success', 'Uraian created successfully.');
@@ -99,7 +109,7 @@ class UraianContoller extends Controller
         return response()->json([
             'success' => true,
             'id' => $uraian->id,
-            'resiko' => $uraian->uraian,
+            'uraian' => $uraian->uraian,
             'status' => $uraian->status,
         ]);
     }

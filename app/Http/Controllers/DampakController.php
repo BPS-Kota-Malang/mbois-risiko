@@ -11,14 +11,24 @@ class DampakController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $dampak = Dampak::paginate(10);
+        // Menangani pencarian melalui query string
+        $search = $request->input('search');
+        
+        $query = Dampak::query();
+
+        if ($search) {
+            $query->where('dampak', 'like', "%{$search}%")
+                  ->orWhere('status', 'like', "%{$search}%");
+        }
+
+        $dampak = $query->paginate(10); // pagination data dampak
         return view('admin.dampak', compact('dampak'));
     }
 
     /**
-     * Fetch dapek data for DataTables.
+     * Fetch dampak data for DataTables.
      */
     public function getDampakData(Request $request)
     {
@@ -48,7 +58,7 @@ class DampakController extends Controller
 
         Dampak::create([
             'dampak' => $request->dampak,
-            'status' => $request->status ?? 'pending', // default status if not provided
+            'status' => $request->status ?? 'pending', // default status jika tidak disediakan
         ]);
 
         return redirect()->route('admin.dampak.index')->with('success', 'Dampak created successfully.');
@@ -99,7 +109,7 @@ class DampakController extends Controller
         return response()->json([
             'success' => true,
             'id' => $dampak->id,
-            'resiko' => $dampak->dampak,
+            'dampak' => $dampak->dampak,
             'status' => $dampak->status,
         ]);
     }
