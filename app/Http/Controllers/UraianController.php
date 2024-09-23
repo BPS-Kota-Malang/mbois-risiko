@@ -13,11 +13,22 @@ class UraianController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $uraian = Uraian::paginate(10);
+        // Menangani pencarian melalui query string
+        $search = $request->input('search');
+
+        $query = Uraian::query();
+
+        if ($search) {
+            $query->where('uraian', 'like', "%{$search}%")
+                  ->orWhere('status', 'like', "%{$search}%");
+        }
+
+        $uraian = $query->paginate(10); // pagination data uraian
         return view('admin.uraian', compact('uraian'));
     }
+
 
 
     public function getUraianData(Request $request)

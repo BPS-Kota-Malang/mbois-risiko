@@ -954,7 +954,7 @@
                             // Handle success (e.g., add the new resiko to the table)
                             $('#addResikoModal').addClass('hidden');
 
-                            table.ajax.reload(null, false);
+                            table.ajax.reload();
                         },
                         error: function(error) {
                             // Handle error
