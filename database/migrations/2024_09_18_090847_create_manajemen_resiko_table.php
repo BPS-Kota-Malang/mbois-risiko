@@ -1,17 +1,17 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateManajemenResikoTable extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
-
         Schema::create('manajemen_resiko', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_tim_project')->constrained('tim_project')->onDelete('cascade');
@@ -24,20 +24,21 @@ return new class extends Migration
             $table->foreignId('id_level_kemungkinan')->nullable()->constrained('level_kemungkinan')->onDelete('cascade');
             $table->foreignId('id_level_dampak')->nullable()->constrained('level_dampak')->onDelete('cascade');
             $table->foreignId('id_matriks_analisis_resiko')->nullable()->constrained('matriks_analisis_resiko')->onDelete('cascade');
-            $table->string('efektifitas', 255)->collation('utf8mb4_unicode_ci')->nullable();
-            $table->json('id_penyebab')->nullable()->onDelete('cascade');
-            $table->json('id_dampak')->nullable()->onDelete('cascade');
-            $table->json('id_uraian')->nullable()->onDelete('cascade');
+            $table->enum('efektivitas', ['Efektif', 'Tidak Efektif'])->nullable();
+            $table->json('id_penyebab')->nullable();
+            $table->json('id_dampak')->nullable();
+            $table->json('id_uraian')->nullable();
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('manajemen_resiko');
     }
-
-};
+}

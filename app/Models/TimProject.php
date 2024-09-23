@@ -27,9 +27,4 @@ class TimProject extends Model
         return $this->hasMany(ManajemenResiko::class, 'id_tim_project');
     }
 
-    public function analisis_resiko()
-    {
-        return $this->hasMany(AnalisisResiko::class, 'id_tim_project');
-    }
-
 }

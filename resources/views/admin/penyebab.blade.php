@@ -2,6 +2,8 @@
     <div class="bg-white p-4 mb-4 border-2 border-white rounded-lg">
         <h3 class="text-gray-700 text-2xl font-medium">Penyebab</h3>
     </div>
+
+    <!-- Form Pencarian -->
     <div class="flex justify-between items-center mb-4">
         <form action="{{ route('admin.penyebab.index') }}" method="GET" class="flex items-center">
             <label for="search" class="mr-2">Cari:</label>
@@ -10,12 +12,14 @@
         </form>
     </div>
 
+    <!-- Pesan Sukses -->
     @if (session('success'))
         <div class="bg-green-500 p-4 mb-4 border-2 border-white rounded-lg text-white text-center">
             {{ session('success') }}
         </div>
     @endif
 
+    <!-- Tabel Penyebab -->
     <div class="overflow-x-auto bg-white shadow-md rounded-lg">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
@@ -42,15 +46,12 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-center">
                         <div class="inline-flex space-x-4 justify-center items-center">
-                            <!-- Ikon hijau dengan centang -->
                             <button onclick="updateStatus({{ $item->id }}, 'Accepted')" class="border-2 border-green-500 text-green-500 hover:text-white hover:bg-green-500 p-2 rounded-lg" title="Accept">
                                 <i class="fas fa-check"></i>
                             </button>
-                            <!-- Ikon merah dengan silang -->
                             <button onclick="updateStatus({{ $item->id }}, 'Rejected')" class="border-2 border-red-500 text-red-500 hover:text-white hover:bg-red-500 p-2 rounded-lg" title="Reject">
                                 <i class="fas fa-times"></i>
                             </button>
-                            <!-- Ikon abu-abu dengan sampah -->
                             <form action="{{ route('admin.penyebab.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus penyebab ini?');" class="inline">
                                 @csrf
                                 @method('DELETE')
@@ -68,7 +69,7 @@
 
     <!-- Pagination -->
     <div class="mt-4">
-        {{ $penyebab->links('pagination::tailwind') }}
+        {{ $penyebab->appends(request()->except('page'))->links('pagination::tailwind') }}
     </div>
 
     <!-- Struktur Modal -->
@@ -100,8 +101,6 @@
         </div>
     </div>
 
-    <!-- JavaScript untuk Menghandle Aksi -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script>
         function updateStatus(id, status) {
             fetch(`{{ url('admin/penyebab') }}/${id}`, {
@@ -133,20 +132,16 @@
 
             if (!penyebabText.classList.contains('editing')) {
                 penyebabText.classList.add('editing');
-                const currentText = penyebabText.textContent.trim(); // Hapus space kosong di sekitar teks
+                const currentText = penyebabText.textContent.trim();
 
-                // Atur input agar tidak mengubah layout
                 penyebabText.innerHTML = `<input type="text" value="${currentText}" class="border border-gray-300 rounded-md p-1">`;
 
-                // Fokuskan input
                 const inputField = penyebabText.querySelector('input');
                 inputField.focus();
 
-                // Tambahkan event listener untuk menyimpan perubahan saat input kehilangan fokus
                 inputField.addEventListener('blur', function() {
-                    const newValue = this.value.trim(); // Hapus space kosong di sekitar teks
+                    const newValue = this.value.trim();
 
-                    // Lakukan request PUT untuk menyimpan perubahan
                     fetch(`{{ url('admin/penyebab') }}/${id}`, {
                         method: 'PUT',
                         headers: {
@@ -155,7 +150,7 @@
                         },
                         body: JSON.stringify({
                             penyebab: newValue,
-                            status: statusText // Kirim status yang sama
+                            status: statusText
                         }),
                     })
                     .then(response => response.json())
@@ -173,7 +168,6 @@
                     });
                 });
 
-                // Tambahkan event listener untuk menyimpan perubahan saat Enter ditekan
                 inputField.addEventListener('keypress', function(event) {
                     if (event.key === 'Enter') {
                         this.blur();
@@ -186,25 +180,4 @@
             document.getElementById('editModal').classList.add('hidden');
         });
     </script>
-
-    <!-- Styling untuk Pagination -->
-    <style>
-        .pagination .page-link {
-            background-color: #1d4ed8; /* Warna biru cerah */
-            color: #ffffff; /* Warna teks putih */
-            border-radius: 0.375rem; /* Border radius */
-            padding: 0.5rem 1rem; /* Padding */
-            margin: 0 0.25rem; /* Margin */
-            text-decoration: none;
-        }
-
-        .pagination .page-link:hover {
-            background-color: #2563eb; /* Warna biru lebih gelap saat hover */
-        }
-
-        .pagination .page-link.active {
-            background-color: #2563eb; /* Warna biru lebih gelap untuk tombol aktif */
-            color: #ffffff; /* Warna teks putih */
-        }
-    </style>
 </x-admin-layout>

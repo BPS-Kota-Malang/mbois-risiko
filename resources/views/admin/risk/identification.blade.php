@@ -1,6 +1,6 @@
 <x-admin-layout>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 
     <div class="flex justify-center mt-10">
         <div class="bg-white shadow-md rounded-lg p-6 w-full ">
@@ -31,7 +31,9 @@
         <div class="flex justify-between items-center mb-4 space-x-4">
             <div class="flex space-x-4">
                 <button id="refreshIdentificationBtn" class="bg-blue-500 text-white px-4 py-2 rounded-full border border-blue-500">Refresh</button>
+                @if (auth()->check() && auth()->user()->hasRole('admin') || auth()->user()->hasRole('ketua_tim'))
                 <button id="tambahresiko" class="bg-gray-500 text-white px-4 py-2 rounded-full border border-gray-500" disabled>Tambah Risiko</button>
+                @endif
             </div>
             <input type="text" id="searchInput" class="p-2 border rounded-lg" placeholder="Cari..." />
         </div>
@@ -50,7 +52,9 @@
                     <th class="px-6 py-3 border border-gray-300 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider">Area Dampak</th>
                     <th class="px-6 py-3 border border-gray-300 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider">Penyebab</th>
                     <th class="px-6 py-3 border border-gray-300 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider">Dampak</th>
+                    @if (auth()->check() && auth()->user()->hasRole('admin') || auth()->user()->hasRole('ketua_tim'))
                     <th class="px-6 py-3 border border-gray-300 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                    @endif
                     </tr>
 
                 </thead>
@@ -67,24 +71,23 @@
                             <td class="px-6 py-4 whitespace-nowrap border border-gray-300">{{ $ManajemenResiko->tim_project->nama_team }}</td>
                             <td class="px-6 py-4 whitespace-nowrap border border-gray-300">{{ $ManajemenResiko->resiko->resiko }}</td>
                             <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
-                                <p style="color: red" id="alertjenis{{ $ManajemenResiko->id }}"  {{ (is_null($ManajemenResiko->id_jenis_resiko))? "":"hidden" }} >Jenis Kosong</p>
+                                <p style="color: red" id="alertjenis{{ $ManajemenResiko->id }}" {{ is_null($ManajemenResiko->id_jenis_resiko) ? "" : "hidden" }}>Jenis Kosong</p>
                                 <span id="jenisResikoText{{ $ManajemenResiko->id }}" {{ is_null($ManajemenResiko->id_jenis_resiko) ? "hidden" : "" }}>
-                                    {{ $ManajemenResiko->jenisResiko->jenis_resiko }}
+                                    {{ $ManajemenResiko->jenisResiko->jenis_resiko ?? '' }}
                                 </span>
-                                <select name="jenis_resiko[]" class="form-select pr-8 py-2 border" id="jenisResiko{{ $ManajemenResiko->id }}" {{ (!is_null($ManajemenResiko->id_jenis_resiko))? "hidden" : "" }}>
+                                <select name="jenis_resiko[]" class="form-select pr-8 py-2 border" id="jenisResiko{{ $ManajemenResiko->id }}" style="display: none;">
                                     <option value="">-- Pilih Jenis Resiko --</option>
                                     @foreach ($jenisResiko as $jenis)
-                                        <option value="{{ $jenis->id }}" {{ $jenis->id == $ManajemenResiko->id_jenis_resiko? "selected":""}}> {{ $jenis->jenis_resiko }}</option>
+                                        <option value="{{ $jenis->id }}" {{ $jenis->id == $ManajemenResiko->id_jenis_resiko ? "selected" : "" }}> {{ $jenis->jenis_resiko }}</option>
                                     @endforeach
                                 </select>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
                                 <p style="color: red" id="alertsumber{{ $ManajemenResiko->id }}"  {{ (is_null($ManajemenResiko->id_sumber_resiko))? "":"hidden" }}>Sumber Kosong</p>
                                 <span id="sumberResikoText{{ $ManajemenResiko->id }}" {{ is_null($ManajemenResiko->id_sumber_resiko) ? "hidden" : "" }}>
-                                    {{ $ManajemenResiko->sumberResiko->sumber_resiko }}
+                                    {{ $ManajemenResiko->sumberResiko ? $ManajemenResiko->sumberResiko->sumber_resiko : '' }}
                                 </span>
-                                <select name="sumber_resiko[]" class="form-select pr-8 py-2 border" id="sumberResiko{{ $ManajemenResiko->id }}"
-                                    {{(!is_null($ManajemenResiko->id_sumber_resiko))? "hidden" : ""}}>
+                                <select name="sumber_resiko[]" class="form-select pr-8 py-2 border" id="sumberResiko{{ $ManajemenResiko->id }}" style="display: none;">
                                     <option value="">-- Pilih Sumber Resiko --</option>
                                     @foreach ($sumberResiko as $sumber)
                                         <option value="{{ $sumber->id }}" {{ $sumber->id == $ManajemenResiko->id_sumber_resiko? "selected":"" }}>
@@ -96,53 +99,94 @@
                             <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
                                 <p style="color: red" id="alertskategori{{ $ManajemenResiko->id }}" {{ (is_null($ManajemenResiko->id_kategori_resiko))? "":"hidden" }}>Kategori Kosong</p>
                                 <span id="kategoriResikoText{{ $ManajemenResiko->id }}" {{ is_null($ManajemenResiko->id_kategori_resiko) ? "hidden" : "" }}>
-                                    {{ $ManajemenResiko->kategoriResiko->deskripsi }}
+                                    {{ $ManajemenResiko->kategoriResiko ? $ManajemenResiko->kategoriResiko->deskripsi : 'N/A' }}
                                 </span>
-                                <select name="kategori_resiko[]" class="form-select pr-8 py-2 border" id="kategoriResiko{{ $ManajemenResiko->id }}"
-                                    {{(!is_null($ManajemenResiko->id_kategori_resiko))? "hidden" : "" }}>
+                                <select name="kategori_resiko[]" class="form-select pr-8 py-2 border" id="kategoriResiko{{ $ManajemenResiko->id }}" style="display: none;">
                                     <option value="">-- Pilih Kategori Resiko --</option>
-                                    @foreach ($kategoriResiko as $kategori)
-                                        <option value="{{ $kategori->id }}" {{ $kategori->id == $ManajemenResiko->id_kategori_resiko? "selected":"" }}>
-                                            {{ $kategori->deskripsi }}
-                                        </option>
-                                    @endforeach
+                                    @if(!empty($kategoriResiko))
+                                        @foreach ($kategoriResiko as $kategori)
+                                            <option value="{{ $kategori->id }}" {{ $kategori->id == $ManajemenResiko->id_kategori_resiko? "selected":"" }}>
+                                                {{ $kategori->deskripsi }}
+                                            </option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
                                 <p style="color: red" id="alertarea{{ $ManajemenResiko->id }}" {{ (is_null($ManajemenResiko->id_area_dampak))? "":"hidden" }}>Area Kosong</p>
                                 <span id="areaDampakText{{ $ManajemenResiko->id }}" {{ is_null($ManajemenResiko->id_area_dampak) ? "hidden" : "" }}>
-                                    {{ $ManajemenResiko->areaDampak->dampak }}
+                                    {{ $ManajemenResiko->areaDampak ? $ManajemenResiko->areaDampak->area_dampak : 'N/A' }}
                                 </span>
-                                <select name="area_dampak[]" class="form-select pr-8 py-2 border" id="areadampak{{ $ManajemenResiko->id }}"
-                                    {{(!is_null($ManajemenResiko->id_area_dampak))? "hidden" : "" }}>
+                                <select name="area_dampak[]" class="form-select pr-8 py-2 border" id="areadampak{{ $ManajemenResiko->id }}" style="display: none;">
                                     <option value="">-- Pilih Area Dampak --</option>
-                                    @foreach ($areaDampak as $area)
-                                        <option value="{{ $area->id }}" {{ $area->id == $ManajemenResiko->id_area_dampak? "selected":"" }}>
-                                            {{ $area->area_dampak }}
-                                        </option>
-                                    @endforeach
+                                    @if(isset($areaDampak) && count($areaDampak) > 0)
+                                        @foreach ($areaDampak as $area)
+                                            <option value="{{ $area->id }}" {{ $area->id == $ManajemenResiko->id_area_dampak? "selected":"" }}>
+                                                {{ $area->area_dampak }}
+                                            </option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </td>
 
                             {{-- Penyebab --}}
-                            <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
-                                <div class="flex flex-col items-center">
-                                    <!-- Tombol Pilih Penyebab dipusatkan -->
-                                    <button class="bg-blue-500 text-white px-4 py-2 rounded openCauseModal"
-                                            data-manajemen-resiko-id="{{ $ManajemenResiko->id }}"
-                                            data-penyebab-id="{{ $ManajemenResiko->id_penyebab }}">
-                                        Pilih Penyebab
-                                    </button>
+                            @if (auth()->check() && auth()->user()->hasRole('admin') || auth()->user()->hasRole('ketua_tim'))
+                                <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                    <div class="flex flex-col items-center">
+                                        <!-- Tombol Pilih Penyebab dipusatkan -->
+                                        <button class="bg-blue-500 text-white px-4 py-2 rounded openCauseModal"
+                                                data-manajemen-resiko-id="{{ $ManajemenResiko->id }}"
+                                                data-penyebab-id="{{ $ManajemenResiko->id_penyebab }}">
+                                            Pilih Penyebab
+                                        </button>
 
-                                    <!-- Daftar Penyebab, ditampilkan rata kiri di bawah tombol -->
-                                    <div id="selectedPenyebab" class="mt-4 text-left w-full">
+                                        <!-- Daftar Penyebab, ditampilkan rata kiri di bawah tombol -->
+                                        <div id="selectedPenyebab" class="mt-4 text-left w-full">
+                                            @php
+                                                // Decode the JSON string into a PHP array
+                                                $penyebabIds = json_decode($ManajemenResiko->id_penyebab, true);
+                                            @endphp
+
+                                            @if (is_array($penyebabIds) && count($penyebabIds) > 0)
+                                            <ul class="list-disc list-inside text-gray-800 ml-4">
+                                                @foreach ($penyebabIds as $item)
+                                                    @foreach ($penyebab as $penyebabItem)
+                                                        @if ($penyebabItem->id == $item)
+                                                            @php
+                                                                // Membuat variabel yang menyimpan id dampak dalam bentuk json tanpa id yang dipilih
+                                                                $penyebabHapus = array_diff($penyebabIds, [$item]);
+                                                            @endphp
+                                                            <li class="flex justify-between items-center">
+                                                                <span>{{ $penyebabItem->penyebab }}</span>
+                                                                <a href="{{ url('/admin/manajemenresiko/hapuspenyebab/' . $ManajemenResiko->id . '/' . $item) }}"
+                                                                    class="text-red-500 hover:text-red-700 ml-2"
+                                                                    id="hapusPenyebab"
+                                                                    onclick="return confirm('Anda yakin ingin menghapus item ini?');">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </a>
+                                                            </li>
+                                                        @endif
+                                                    @endforeach
+                                                @endforeach
+                                            </ul>
+
+                                            @else
+                                                <!-- Jika tidak ada penyebab yang dipilih -->
+                                                <p class="text-red-500 italic ml-4">Tidak ada Penyebab yang dipilih</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </td>
+                                @else
+                                <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                    <div class="">
                                         @php
                                             // Decode the JSON string into a PHP array
                                             $penyebabIds = json_decode($ManajemenResiko->id_penyebab, true);
                                         @endphp
 
                                         @if (is_array($penyebabIds) && count($penyebabIds) > 0)
-                                        <ul class="list-disc list-inside text-gray-800 ml-4">
+                                        <ul class="px-6 py-4">
                                             @foreach ($penyebabIds as $item)
                                                 @foreach ($penyebab as $penyebabItem)
                                                     @if ($penyebabItem->id == $item)
@@ -150,14 +194,8 @@
                                                             // Membuat variabel yang menyimpan id dampak dalam bentuk json tanpa id yang dipilih
                                                             $penyebabHapus = array_diff($penyebabIds, [$item]);
                                                         @endphp
-                                                        <li class="flex justify-between items-center">
+                                                        <li class="list-disc ">
                                                             <span>{{ $penyebabItem->penyebab }}</span>
-                                                            <a href="/admin/manajemenresiko/hapusPenyebab/{{ $ManajemenResiko->id }}/{{ $item }}"
-                                                               class="text-red-500 hover:text-red-700 ml-2"
-                                                               id="hapusPenyebab"
-                                                               onclick="return confirm('Anda yakin ingin menghapus item ini?');">
-                                                               <i class="fas fa-trash-alt"></i>
-                                                            </a>
                                                         </li>
                                                     @endif
                                                 @endforeach
@@ -166,32 +204,32 @@
 
                                         @else
                                             <!-- Jika tidak ada penyebab yang dipilih -->
-                                            <p class="text-gray-500 italic ml-4">Tidak ada Penyebab yang dipilih</p>
+                                            <p class="text-red-500 italic ml-4">Tidak ada Penyebab yang dipilih</p>
                                         @endif
                                     </div>
-                                </div>
-                            </td>
+                                </td>
+                                @endif
 
 
-                            {{-- Dampak --}}
-                            <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
-                                <!-- Tombol Pilih Dampak dipusatkan -->
-                                <div class="flex justify-center">
-                                    <button class="bg-blue-500 text-white px-4 py-2 rounded mb-4"
+                             {{-- Dampak --}}
+                             @if (auth()->check() && auth()->user()->hasRole('admin') || auth()->user()->hasRole('ketua_tim'))
+                             <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                <div class="flex flex-col items-center">
+                                    <!-- Tombol Pilih Dampak dipusatkan -->
+                                    <button class="bg-blue-500 text-white px-4 py-2 rounded openImpactModal"
                                             data-manajemen-resiko-id="{{ $ManajemenResiko->id }}"
                                             data-dampak-id="{{ $ManajemenResiko->id_dampak }}">
                                         Pilih Dampak
                                     </button>
-                                </div>
 
-                                <!-- Daftar Dampak, ditampilkan rata kiri di bawah tombol -->
-                                <div id="selectedDampak" class="text-left w-full">
-                                    @php
-                                        // Decode the JSON string into a PHP array
-                                        $dampakIds = json_decode($ManajemenResiko->id_dampak, true);
-                                    @endphp
+                                    <!-- Daftar Dampak, ditampilkan rata kiri di bawah tombol -->
+                                    <div id="selectedDampak" class="mt-4 text-left w-full">
+                                        @php
+                                            // Decode the JSON string into a PHP array
+                                            $dampakIds = json_decode($ManajemenResiko->id_dampak, true);
+                                        @endphp
 
-                                    @if (is_array($dampakIds) && count($dampakIds) > 0)
+                                        @if (is_array($dampakIds) && count($dampakIds) > 0)
                                         <ul class="list-disc list-inside text-gray-800 ml-4">
                                             @foreach ($dampakIds as $item)
                                                 @foreach ($dampak as $dampakItem)
@@ -200,33 +238,67 @@
                                                             // Membuat variabel yang menyimpan id dampak dalam bentuk json tanpa id yang dipilih
                                                             $dampakHapus = array_diff($dampakIds, [$item]);
                                                         @endphp
-                                                        <li class="flex items-center justify-between">
+                                                        <li class="flex justify-between items-center">
                                                             <span>{{ $dampakItem->dampak }}</span>
-                                                            <a href="/admin/manajemenresiko/hapusDampak/{{ $ManajemenResiko->id }}/{{ $item }}"
-                                                               class="text-red-500 hover:text-red-700 ml-2 flex items-center"
-                                                               id="hapusDampak"
-                                                               onclick="return confirm('Anda yakin ingin menghapus item ini?');">
-                                                               <i class="fas fa-trash-alt"></i>
-                                                            </a>
+                                                            <a href="{{ url('/admin/manajemenresiko/hapusdampak/' . $ManajemenResiko->id . '/' . $item) }}"
+                                                                class="text-red-500 hover:text-red-700 ml-2"
+                                                                id="hapusDampak"
+                                                                onclick="return confirm('Anda yakin ingin menghapus item ini?');">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                             </a>
                                                         </li>
                                                     @endif
                                                 @endforeach
                                             @endforeach
                                         </ul>
+
+                                        @else
+                                            <!-- Jika tidak ada dampak yang dipilih -->
+                                            <p class="text-red-500 italic ml-4">Tidak ada Dampak yang dipilih</p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </td>
+                            @else
+                            <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                <div class="">
+                                    @php
+                                        // Decode the JSON string into a PHP array
+                                        $dampakIds = json_decode($ManajemenResiko->id_dampak, true);
+                                    @endphp
+
+                                    @if (is_array($dampakIds) && count($dampakIds) > 0)
+                                    <ul class="px-6 py-4">
+                                        @foreach ($dampakIds as $item)
+                                            @foreach ($dampak as $dampakItem)
+                                                @if ($dampakItem->id == $item)
+                                                    @php
+                                                        // Membuat variabel yang menyimpan id dampak dalam bentuk json tanpa id yang dipilih
+                                                        $dampakHapus = array_diff($dampakIds, [$item]);
+                                                    @endphp
+                                                    <li class="list-disc ">
+                                                        <span>{{ $dampakItem->dampak }}</span>
+                                                    </li>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                    </ul>
+
                                     @else
                                         <!-- Jika tidak ada dampak yang dipilih -->
-                                        <p class="text-gray-500 italic ml-4">Tidak ada Dampak yang dipilih</p>
+                                        <p class="text-red-500 italic ml-4">Tidak ada Dampak yang dipilih</p>
                                     @endif
                                 </div>
                             </td>
+                            @endif
 
 
 
                             </td>
 
-
+                            @if (auth()->check() && auth()->user()->hasRole('admin') || auth()->user()->hasRole('ketua_tim'))
                             <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
-                                <a  class="bg-blue-500 text-white width-mt-2 px-3 py-2 rounded cursor-pointer" id="btnEdit" data-id="{{ $ManajemenResiko->id }}">Edit</a>
+                                <a class="bg-blue-500 text-white width-mt-2 px-3 py-2 rounded cursor-pointer btnEdit" data-id="{{ $ManajemenResiko->id }}">Edit</a>
                                 <button type="submit" class="bg-green-500 text-white px-2 py-1 rounded" id="saveidentificationBtn">Save</button>
                             </form>
                                 <form action="{{ route('admin.manajemenrisiko.destroy', $ManajemenResiko->id) }}" method="POST" style="display:inline;">
@@ -235,6 +307,7 @@
                                     <button class="bg-red-500 text-white width-mt-2 px-3 py-1 rounded cursor-pointer" type="submit" onclick="return confirm('Are you sure?')">Delete</button>
                                 </form>
                             </td>
+                            @endif
 
 
                         </tr>
@@ -796,26 +869,25 @@
                     });
                 }
             });
-            document.querySelectorAll('#btnEdit').forEach(button => {
-            button.addEventListener('click', () => {
-                const id = button.dataset.id;
-                const jenisResiko = document.getElementById('jenisResiko' + id);
-                const sumberResiko = document.getElementById('sumberResiko' + id);
-                const kategoriResiko = document.getElementById('kategoriResiko' + id);
-                const areaDampak = document.getElementById('areadampak' + id);
+            document.querySelectorAll('.btnEdit').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.dataset.id;
+                    const jenisResiko = document.getElementById('jenisResiko' + id);
+                    const sumberResiko = document.getElementById('sumberResiko' + id);
+                    const kategoriResiko = document.getElementById('kategoriResiko' + id);
+                    const areaDampak = document.getElementById('areadampak' + id);
 
-                const alertjenis = document.getElementById('alertjenis' + id);
-                const alertsumber = document.getElementById('alertsumber' + id);
-                const alertskategori = document.getElementById('alertskategori' + id);
-                const alertarea = document.getElementById('alertarea' + id);
+                    const alertjenis = document.getElementById('alertjenis' + id);
+                    const alertsumber = document.getElementById('alertsumber' + id);
+                    const alertskategori = document.getElementById('alertskategori' + id);
+                    const alertarea = document.getElementById('alertarea' + id);
 
-                const jenisResikoText = document.getElementById('jenisResikoText' + id);
-                const sumberResikoText = document.getElementById('sumberResikoText' + id);
-                const kategoriResikoText = document.getElementById('kategoriResikoText' + id);
-                const areaDampakText = document.getElementById('areaDampakText' + id);
+                    const jenisResikoText = document.getElementById('jenisResikoText' + id);
+                    const sumberResikoText = document.getElementById('sumberResikoText' + id);
+                    const kategoriResikoText = document.getElementById('kategoriResikoText' + id);
+                    const areaDampakText = document.getElementById('areaDampakText' + id);
 
-                if (jenisResiko && sumberResiko && kategoriResiko && areaDampak && alertjenis && alertsumber && alertskategori && alertarea) {
-                    if (button.innerText === "Edit") {
+                    if (jenisResiko && sumberResiko && kategoriResiko && areaDampak && alertjenis && alertsumber && alertskategori && alertarea) {
                         // Switch to edit mode
                         jenisResiko.style.display = 'inline';  // Show dropdown
                         sumberResiko.style.display = 'inline';  // Show dropdown
@@ -838,40 +910,11 @@
                         sumberResiko.disabled = false;
                         kategoriResiko.disabled = false;
                         areaDampak.disabled = false;
-
-                        // Change button text to Save
-                        button.innerText = "Save";
                     } else {
-                        // Convert dropdown to text and disable editing
-                        jenisResiko.disabled = true;
-                        sumberResiko.disabled = true;
-                        kategoriResiko.disabled = true;
-                        areaDampak.disabled = true;
-
-                        alertjenis.innerText = jenisResiko.options[jenisResiko.selectedIndex].text;
-                        alertsumber.innerText = sumberResiko.options[sumberResiko.selectedIndex].text;
-                        alertskategori.innerText = kategoriResiko.options[kategoriResiko.selectedIndex].text;
-                        alertarea.innerText = areaDampak.options[areaDampak.selectedIndex].text;
-
-                        // Hide dropdowns and show the selected text
-                        jenisResiko.style.display = 'none';  // Hide dropdown
-                        sumberResiko.style.display = 'none';  // Hide dropdown
-                        kategoriResiko.style.display = 'none';  // Hide dropdown
-                        areaDampak.style.display = 'none';  // Hide dropdown
-
-                        alertjenis.style.display = 'inline';  // Show text
-                        alertsumber.style.display = 'inline';  // Show text
-                        alertskategori.style.display = 'inline';  // Show text
-                        alertarea.style.display = 'inline';  // Show text
-
-                        // Change button text back to Edit
-                        button.innerText = "Edit";
+                        console.error('Element not found for button with dataset id:', id);
                     }
-                } else {
-                    console.error('Element not found for button with dataset id:', id);
-                }
+                });
             });
-        });
 
 
             $('#selectAll').on('click', function() {
@@ -946,6 +989,8 @@
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(response) {
+                        console.log('AJAX request successful');
+                        location.reload();
                         if (response.errors) {
                             // Handle validation errors
                             console.log(response.errors);
@@ -955,9 +1000,9 @@
                             // Handle successful submission
                             console.log(response.success);
                             // Close the modal and/or update the UI as needed
-                            resikoModal.classList.add('hidden');
+                            $('#resikoModal').addClass('hidden');
                             alert(response.success); // Tampilkan pesan sukses
-                            location.reload();
+                            // Reload the page immediately
                         }
                     },
                     error: function(xhr) {

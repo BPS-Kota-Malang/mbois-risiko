@@ -11,9 +11,19 @@ class PenyebabController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $penyebab = Penyebab::paginate(10);
+        // Menangani pencarian melalui query string
+        $search = $request->input('search');
+
+        $query = Penyebab::query();
+
+        if ($search) {
+            $query->where('penyebab', 'like', "%{$search}%")
+                  ->orWhere('status', 'like', "%{$search}%");
+        }
+
+        $penyebab = $query->paginate(10); // pagination data penyebab
         return view('admin.penyebab', compact('penyebab'));
     }
 

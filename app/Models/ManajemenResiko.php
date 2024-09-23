@@ -26,8 +26,10 @@ class ManajemenResiko extends Model
     protected $casts = [
         'id_penyebab' => 'array',
         'id_dampak' => 'array',
-        'uraian' => 'array',
     ];
+
+
+
 
     public function tim_project()
     {
@@ -67,19 +69,25 @@ class ManajemenResiko extends Model
     {
         return $this->belongsTo(MatriksAnalisisResiko::class, 'id_matriks_analisis_resiko');
     }
-<<<<<<< HEAD
-=======
 
     public function penyebab()
     {
         return $this->belongsTo(Penyebab::class, 'id_penyebab');
     }
 
-
-
     public function dampak()
     {
         return $this->belongsTo(Dampak::class, 'id_dampak');
+    }
+
+    public function levelKemungkinan()
+    {
+        return $this->belongsTo(LevelKemungkinan::class, 'id_level_kemungkinan');
+    }
+
+    public function levelDampak()
+    {
+        return $this->belongsTo(LevelDampak::class, 'id_level_dampak');
     }
 
     public function uraian()
@@ -88,8 +96,4 @@ class ManajemenResiko extends Model
     }
 
 
-
-
-
->>>>>>> 66706489f70e9320b6c7d802d4fdbd3223c9bb56
 }

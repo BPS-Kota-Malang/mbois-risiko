@@ -11,11 +11,22 @@ class DampakController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $dampak = Dampak::paginate(10);
+        // Menangani pencarian melalui query string
+        $search = $request->input('search');
+
+        $query = Dampak::query();
+
+        if ($search) {
+            $query->where('dampak', 'like', "%{$search}%")
+                  ->orWhere('status', 'like', "%{$search}%");
+        }
+
+        $dampak = $query->paginate(10); // pagination data dampak
         return view('admin.dampak', compact('dampak'));
     }
+
 
     /**
      * Fetch dapek data for DataTables.
