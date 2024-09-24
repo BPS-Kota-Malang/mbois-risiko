@@ -15,7 +15,6 @@ class DampakController extends Controller
     {
         // Menangani pencarian melalui query string
         $search = $request->input('search');
-        
         $query = Dampak::query();
 
         if ($search) {
@@ -26,6 +25,7 @@ class DampakController extends Controller
         $dampak = $query->paginate(10); // pagination data dampak
         return view('admin.dampak', compact('dampak'));
     }
+
 
     /**
      * Fetch dampak data for DataTables.
@@ -58,10 +58,10 @@ class DampakController extends Controller
 
         Dampak::create([
             'dampak' => $request->dampak,
-            'status' => $request->status ?? 'pending', // default status jika tidak disediakan
+            'status' => $request->status ?? 'On Progress', // default status if not provided
         ]);
 
-        return redirect()->route('admin.dampak.index')->with('success', 'Dampak created successfully.');
+        return redirect()->route('admin.manajemenrisiko.index')->with('success', 'Dampak created successfully.');
     }
 
     /**

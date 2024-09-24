@@ -101,8 +101,7 @@
         </div>
     </div>
 
-    <!-- JavaScript untuk Menghandle Aksi -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+
     <script>
         function updateStatus(id, status) {
             fetch(`{{ url('admin/dampak') }}/${id}`, {
@@ -134,7 +133,7 @@
 
             if (!dampakText.classList.contains('editing')) {
                 dampakText.classList.add('editing');
-                const currentText = dampakText.textContent.trim(); 
+                const currentText = dampakText.textContent.trim();
 
                 dampakText.innerHTML = `<input type="text" value="${currentText}" class="border border-gray-300 rounded-md p-1">`;
 
@@ -152,7 +151,7 @@
                         },
                         body: JSON.stringify({
                             dampak: newValue,
-                            status: statusText 
+                            status: statusText
                         }),
                     })
                     .then(response => response.json())

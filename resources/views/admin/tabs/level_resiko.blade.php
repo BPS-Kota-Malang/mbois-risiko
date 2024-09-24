@@ -3,12 +3,14 @@
         <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
             <div
                 class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+                @if (auth()->check() && auth()->user()->hasRole('admin'))
                 <button
                     class="px-4 py-2 mb-2 bg-blue-500 rounded-md text-white font-medium tracking-wide hover:bg-blue-600"
                     onclick="toggleModal('addLevelResikoModal')">Tambah Level Resiko</button>
                 <button
                     class="px-4 py-2 mb-2 bg-green-500 rounded-md text-white font-medium tracking-wide hover:bg-green-600"
                     onclick="refreshTable('levelResikoTable')">Refresh</button>
+                @endif
                 <table id="levelResikoTable" class="min-w-full">
                     <thead>
                         <tr>
@@ -70,12 +72,14 @@
             </div>
             <div
                 class="mt-8 align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+                @if (auth()->check() && auth()->user()->hasRole('admin'))
                 <button
                     class="px-4 py-2 mb-2 bg-blue-500 rounded-md text-white font-medium tracking-wide hover:bg-blue-600"
                     onclick="toggleModal('addMatriksAnalisisResikoModal')">Tambah Matriks Analisis Resiko</button>
                 <button
                     class="px-4 py-2 mb-2 bg-green-500 rounded-md text-white font-medium tracking-wide hover:bg-green-600"
                     onclick="refreshTable('matriksAnalisisResikoTable')">Refresh</button>
+                @endif
                 <table id="matriksAnalisisResikoTable" class="min-w-full">
                     <thead>
                         <tr>
@@ -294,7 +298,7 @@
 
                 <div class="mt-4">
                     <label class="block text-sm font-medium text-gray-700">Level Resiko</label>
-                    <input type="text" name="hasil_level_resiko" id="editHasilLevelResiko" 
+                    <input type="text" name="hasil_level_resiko" id="editHasilLevelResiko"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         required>
                 </div>

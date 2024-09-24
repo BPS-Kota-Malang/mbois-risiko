@@ -101,8 +101,6 @@
         </div>
     </div>
 
-    <!-- JavaScript untuk Menghandle Aksi -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script>
         function updateStatus(id, status) {
             fetch(`{{ url('admin/penyebab') }}/${id}`, {
@@ -134,7 +132,7 @@
 
             if (!penyebabText.classList.contains('editing')) {
                 penyebabText.classList.add('editing');
-                const currentText = penyebabText.textContent.trim(); 
+                const currentText = penyebabText.textContent.trim(); // Hapus space kosong di sekitar teks
 
                 penyebabText.innerHTML = `<input type="text" value="${currentText}" class="border border-gray-300 rounded-md p-1">`;
 
@@ -152,7 +150,7 @@
                         },
                         body: JSON.stringify({
                             penyebab: newValue,
-                            status: statusText 
+                            status: statusText // Kirim status yang sama
                         }),
                     })
                     .then(response => response.json())

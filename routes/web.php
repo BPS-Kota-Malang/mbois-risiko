@@ -29,8 +29,8 @@
     use App\Http\Controllers\Context\OpsiPenangananController;
     use App\Http\Controllers\Context\ProsesBisnisController;
     use App\Http\Controllers\DampakController;
-    use App\Http\Controllers\UraianContoller;
     use App\Http\Controllers\ManajemenResikoController;
+    use App\Http\Controllers\UraianController;
 
 
 
@@ -45,8 +45,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::delete('manajemenrisiko/{id}', [IdentificationController::class, 'destroy'])->name('admin.manajemenrisiko.destroy');
-
 
     // Sidebar - Risk Management
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
@@ -74,16 +72,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('/prosesbisnis', ProsesBisnisController::class, ['as' => 'admin']);
     Route::resource('/identification', IdentificationController::class, ['as' => 'admin']);
     Route::resource('/resiko', ResikoController::class, ['as' => 'admin']);
-    
 
     //penyebab
     Route::resource('/penyebab', PenyebabController::class, ['as' => 'admin']);
     Route::get('/api/penyebab', [PenyebabController::class, 'getPenyebabData'])->name('admin.getpenyebabdata');
     Route::put('admin/penyebab/{id}', [PenyebabController::class, 'update'])->name('admin.penyebab.update.custom');
 
-
-
-    // Route::get('admin/getselectedpenyebab/{id}', [PenyebabController::class, 'getSelectedPenyebab'])->name('admin.getselectedpenyebab');
 
     //dampak
     Route::resource('/dampak', DampakController::class, ['as' => 'admin']);
@@ -92,9 +86,10 @@ Route::middleware('auth')->group(function () {
 
 
     //uraian
-    Route::resource('/uraian', UraianContoller::class, ['as' => 'admin']);
-    Route::get('/api/uraian', [UraianContoller::class, 'getUraianData'])->name('admin.geturaiandata');
-    Route::put('admin/uraian/{id}', [UraianContoller::class, 'update'])->name('admin.uraian.update.custom');
+    route::resource('/uraian', UraianController::class, ['as' => 'admin']);
+    Route::get('/api/uraian', [UraianController::class, 'getUraianData'])->name('admin.geturaiandata');
+    Route::put('admin/uraian/{id}', [UraianController::class, 'update'])->name('admin.uraian.update.custom');
+
 
     //resiko
     Route::resource('/resiko', ResikoController::class, ['as' => 'admin']);
@@ -106,12 +101,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('/manajemenrisiko', ManajemenResikoController::class, ['as' => 'admin']);
 ;   Route::post('/admin/manajemenresiko/savedampak', [ManajemenResikoController::class, 'saveDampak'])->name('admin.manajemenresiko.savedampak');
     Route::post('/admin/manajemenresiko/savepenyebab', [ManajemenResikoController::class, 'savePenyebab'])->name('admin.manajemenresiko.savepenyebab');
-    Route::post('/admin/analisis/saveuraian', [AnalisisController::class, 'saveUraian'])->name('admin.analisis.saveuraian');
     Route::get('/admin/manajemenresiko/hapuspenyebab/{id}/{penyebab}', [ManajemenResikoController::class, 'hapusPenyebab']);
     Route::get('/admin/manajemenresiko/hapusdampak/{id}/{dampak}', [ManajemenResikoController::class, 'hapusDampak']);
     Route::get('/admin/analisis/hapusuraian/{id}/{uraian}', [AnalisisController::class, 'hapusUraian']);
     Route::resource('/analisis', AnalisisController::class, ['as' => 'admin']);
-
+    Route::post('/admin/analisis/saveuraian', [AnalisisController::class, 'saveUraian'])->name('admin.analisis.saveuraian');
 
 
 });
@@ -141,5 +135,5 @@ Route::middleware('auth')->group(function () {
         Route::post('admin/employee/upload', [EmployeeController::class, 'upload'])->name('admin.employee.upload');
         Route::post('/admin/kriteriakemungkinan', [KriteriaKemungkinanController::class, 'store'])->name('admin.kriteriakemungkinan.store');
 
-});
-?>
+    });
+    ?>

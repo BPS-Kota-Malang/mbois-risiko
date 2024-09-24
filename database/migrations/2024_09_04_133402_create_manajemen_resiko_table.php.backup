@@ -24,11 +24,6 @@ return new class extends Migration
             $table->foreignId('id_level_kemungkinan')->nullable()->constrained('level_kemungkinan')->onDelete('cascade');
             $table->json('id_penyebab')->nullable()->onDelete('cascade');
             $table->json('id_dampak')->nullable()->onDelete('cascade');
-            $table->foreignId('id_level_kemungkinan')->nullable()->constrained('level_kemungkinan')->onDelete('cascade');
-            $table->foreignId('id_level_resiko')->nullable()->constrained('level_resiko')->onDelete('cascade');
-            $table->foreignId('id_level_dampak')->nullable()->constrained('level_dampak')->onDelete('cascade');
-            $table->json('uraian')->nullable()->onDelete('cascade');
-            $table->string('efektivitas')->nullable()->onDelete('cascade');
             $table->timestamps();
         });
     }

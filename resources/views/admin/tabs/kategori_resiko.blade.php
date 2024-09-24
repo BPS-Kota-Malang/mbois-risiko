@@ -3,11 +3,13 @@
         <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
             <div
                 class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+                @if (auth()->check() && auth()->user()->hasRole('admin'))
                 <button onclick="toggleModal('tambahKategoriResikoModal')"
                     class="px-4 py-2 mb-2 bg-blue-500 rounded-md text-white font-medium tracking-wide hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300">
                     Tambah Kategori Resiko
                 </button>
-                
+                @endif
+
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
@@ -20,9 +22,11 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Definisi
                             </th>
+                            @if (auth()->check() && auth()->user()->hasRole('admin'))
                             <th class="px-6 py-3 text-center text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Actions
                             </th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -37,6 +41,7 @@
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     {{ $kategori->definisi }}
                                 </td>
+                                @if (auth()->check() && auth()->user()->hasRole('admin'))
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center flex items-center justify-center space-x-4">
                                     <a href="javascript:void(0)"
                                         onclick="openEditKategoriResikoModal('{{ route('admin.kategoriresiko.update', $kategori->id) }}', '{{ $kategori->deskripsi }}', '{{ $kategori->definisi }}')"
@@ -49,7 +54,8 @@
                                         <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Delete</button>
                                     </form>
                                 </td>
-                                
+                                @endif
+
                             </tr>
                         @endforeach
                     </tbody>

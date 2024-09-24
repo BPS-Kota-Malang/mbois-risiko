@@ -90,7 +90,7 @@ class LevelResikoController extends Controller
             'ket_warna' => $request->ket_warna,
         ]);
 
-        return redirect()->route('risk.context.index')->with('success', 'Level Resiko updated successfully.');
+        return redirect()->route('admin.risk.context')->with('success', 'Level Resiko updated successfully.');
 
     }
 

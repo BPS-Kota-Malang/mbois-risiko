@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Models\User;
 use App\Models\KategoriResiko;
 use App\Models\Resiko;
@@ -16,10 +15,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-
         // Menghitung jumlah pengguna
         $totalUsers = User::count();
-        
+
         // Menghitung jumlah kategori risiko
         $totalKategoriResiko = KategoriResiko::count();
 
@@ -54,7 +52,6 @@ class DashboardController extends Controller
 
         // Mengembalikan view 'admin.dashboard' dengan data yang diperlukan
         return view('admin.dashboard', compact('totalUsers', 'totalResiko', 'totalKategoriResiko', 'riskData', 'monthlyRiskData'));
-
     }
 
     /**
@@ -63,7 +60,6 @@ class DashboardController extends Controller
     public function create()
     {
         // Logika untuk menampilkan form pembuatan resource baru (jika diperlukan)
-
     }
 
     /**
@@ -71,11 +67,7 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-
         // Logika untuk menyimpan data yang diinput di form (jika diperlukan)
-
-        //
-
     }
 
     /**
@@ -83,7 +75,7 @@ class DashboardController extends Controller
      */
     public function show(string $id)
     {
-
+        // Logika untuk menampilkan detail resource tertentu (jika diperlukan)
     }
 
     /**
@@ -91,7 +83,7 @@ class DashboardController extends Controller
      */
     public function edit(string $id)
     {
-
+        // Logika untuk menampilkan form edit resource tertentu (jika diperlukan)
     }
 
     /**
@@ -99,7 +91,7 @@ class DashboardController extends Controller
      */
     public function update(Request $request, string $id)
     {
-
+        // Logika untuk memperbarui resource tertentu (jika diperlukan)
     }
 
     /**
@@ -107,7 +99,6 @@ class DashboardController extends Controller
      */
     public function destroy(string $id)
     {
-
+        // Logika untuk menghapus resource tertentu (jika diperlukan)
     }
-
 }

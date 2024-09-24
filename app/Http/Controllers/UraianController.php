@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Uraian;
-use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class UraianContoller extends Controller
+
+use Illuminate\Http\Request;
+
+class UraianController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +17,6 @@ class UraianContoller extends Controller
     {
         // Menangani pencarian melalui query string
         $search = $request->input('search');
-        
         $query = Uraian::query();
 
         if ($search) {
@@ -27,9 +28,8 @@ class UraianContoller extends Controller
         return view('admin.uraian', compact('uraian'));
     }
 
-    /**
-     * Fetch uraian data for DataTables.
-     */
+
+
     public function getUraianData(Request $request)
     {
         $columns = ['id', 'uraian', 'status'];
@@ -48,6 +48,14 @@ class UraianContoller extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -58,10 +66,19 @@ class UraianContoller extends Controller
 
         Uraian::create([
             'uraian' => $request->uraian,
-            'status' => $request->status ?? 'pending', // default status jika tidak disediakan
+            'status' => $request->status ?? 'On Progress', // default status if not provided
         ]);
 
-        return redirect()->route('admin.uraian.index')->with('success', 'Uraian created successfully.');
+        return redirect()->route('admin.analisis.index')->with('success', 'Uraian created successfully.');
+    }
+
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
     }
 
     /**
@@ -72,6 +89,7 @@ class UraianContoller extends Controller
         $uraian = Uraian::findOrFail($id);
         return response()->json($uraian);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -93,9 +111,6 @@ class UraianContoller extends Controller
         return response()->json(['success' => true]);
     }
 
-    /**
-     * Update the status of the resource.
-     */
     public function updateStatus(Request $request)
     {
         $request->validate([
@@ -114,6 +129,7 @@ class UraianContoller extends Controller
         ]);
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
@@ -124,4 +140,5 @@ class UraianContoller extends Controller
 
         return redirect()->route('admin.uraian.index')->with('success', 'Uraian deleted successfully.');
     }
+
 }

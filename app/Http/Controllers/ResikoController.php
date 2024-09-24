@@ -15,7 +15,6 @@ class ResikoController extends Controller
     {
         // Menangani pencarian melalui query string
         $search = $request->input('search');
-        
         $query = Resiko::query();
 
         if ($search) {
@@ -26,6 +25,7 @@ class ResikoController extends Controller
         $resiko = $query->paginate(10); // pagination data resiko
         return view('admin.resiko', compact('resiko'));
     }
+
 
     /**
      * Fetch resiko data for DataTables.
@@ -58,7 +58,7 @@ class ResikoController extends Controller
 
         Resiko::create([
             'resiko' => $request->resiko,
-            'status' => $request->status ?? 'pending', // default status jika tidak disediakan
+            'status' => $request->status ?? 'On Progress', // default status if not provided
         ]);
 
         return redirect()->route('admin.resiko.index')->with('success', 'Resiko created successfully.');

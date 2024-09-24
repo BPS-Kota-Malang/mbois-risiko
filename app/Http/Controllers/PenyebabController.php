@@ -15,7 +15,6 @@ class PenyebabController extends Controller
     {
         // Menangani pencarian melalui query string
         $search = $request->input('search');
-        
         $query = Penyebab::query();
 
         if ($search) {
@@ -58,10 +57,10 @@ class PenyebabController extends Controller
 
         Penyebab::create([
             'penyebab' => $request->penyebab,
-            'status' => $request->status ?? 'pending', // default status jika tidak disediakan
+            'status' => $request->status ?? 'On Progress', // default status if not provided
         ]);
 
-        return redirect()->route('admin.penyebab.index')->with('success', 'Penyebab created successfully.');
+        return redirect()->route('admin.manajemenrisiko.index')->with('success', 'Penyebab created successfully.');
     }
 
     /**

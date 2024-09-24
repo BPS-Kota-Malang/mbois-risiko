@@ -115,11 +115,10 @@
         </div>
     </div>
 
-
-      <!-- Footer -->
+    <!-- Footer -->
     <footer class="text-center mt-8">
         <p class="text-gray-600 text-sm">
-            Website ini dibuat oleh Tim Cukit Dulit yang beranggotakan Bima, Ell, Hakek.
+            Website ini dibuat oleh Tim Cukit Dulit yang beranggotakan Bima, Ell, Haqi.
         </p>
         <p class="text-gray-600 text-sm">
             &copy; {{ date('Y') }} Cukit Dulit. All Rights Reserved.
