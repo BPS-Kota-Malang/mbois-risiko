@@ -574,4 +574,3 @@
     </script>
 
 </x-admin-layout>
-

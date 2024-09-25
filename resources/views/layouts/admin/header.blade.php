@@ -6,7 +6,7 @@
     <title>Sidebar Search</title>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <style>
-        /* Tailwind CSS styles can be included here atau linked externally */
+        /* Tailwind CSS styles can be included here or linked externally */
     </style>
 </head>
 <body>
@@ -78,54 +78,42 @@
     <script>
         function searchFeature() {
             var input = document.getElementById('searchInput').value.toLowerCase();
+            var message;
 
             switch (input) {
                 case 'dashboard':
-                    window.location.href = '/dashboard';
+                    message = 'Fitur yang anda cari ada di urutan pertama sidebar';
                     break;
-                case 'konteks':
-                case 'context':
-                case 'setting konteks':
-                    window.location.href = '/context';
-                    break;
-                case 'identifikasi':
-                    window.location.href = '/manajemenrisiko';
-                    break;
-                case 'analisis':
-                case 'analysis':
-                    window.location.href = '/analisis';
+                case 'context setting':
+                case 'risk identification':
+                case 'risk analysis':
+                case 'risk evaluation':
+                case 'action plan':
+                    message = 'Fitur yang anda cari ada di dalam Risk Management';
                     break;
                 case 'data pegawai':
-                case 'pegawai':
-                    window.location.href = '/admin/employee';
+                    message = 'Fitur yang anda cari ada di urutan ketiga sidebar';
                     break;
                 case 'resiko':
-                    window.location.href = '/resiko';
+                    message = 'Fitur yang anda cari ada di urutan keempat sidebar';
                     break;
                 case 'penyebab':
-                    window.location.href = '/penyebab';
+                    message = 'Fitur yang anda cari ada di urutan kelima sidebar';
                     break;
                 case 'dampak':
-                    window.location.href = '/dampak';
+                    message = 'Fitur yang anda cari ada di urutan keenam sidebar';
                     break;
-                case 'uraian':
-                    window.location.href = '/uraian';
-                    break;
-                case 'users':
                 case 'user':
-                    window.location.href = '/admin/users';
-                    break;
                 case 'role':
-                case 'roles':
-                    window.location.href = '/admin/roles';
-                    break;
-                case 'perizinan':
-                    window.location.href = '/admin/permissions';
+                case 'permission':
+                    message = 'Fitur yang anda cari ada di dalam Configuration';
                     break;
                 default:
-                    alert('Fitur yang anda cari tidak tersedia');
+                    message = 'Fitur Tidak Tersedia';
                     break;
             }
+
+            alert(message);
         }
     </script>
 </body>
