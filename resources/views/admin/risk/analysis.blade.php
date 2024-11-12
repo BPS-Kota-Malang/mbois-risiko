@@ -10,7 +10,7 @@
                         <option value="">-- Pilih Tim/Bidang --</option>
                         @foreach ($timProjects as $tim)
                             <option value="{{ $tim->id }}" {{ request('tim') == $tim->id ? 'selected' : '' }}>
-                                {{ $tim->nama_team }}
+                                {{ $tim->name }}
                             </option>
                         @endforeach
                     </select>
@@ -22,7 +22,7 @@
                         @foreach ($ProsesBisnis as $proses)
                             <option value="{{ $proses->id }}"
                                 {{ request('proses_bisnis') == $proses->id ? 'selected' : '' }}>
-                                {{ $proses->proses_bisnis }}
+                                {{ $proses->name }}
                             </option>
                         @endforeach
                     </select>
@@ -68,35 +68,43 @@
                                 style="width: 200px;">Uraian</th>
                             <th class="px-6 py-3 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-200"
                                 style="width: 100px;">Efektivitas</th>
+                            @if (auth()->check() && auth()->user()->hasRole('admin') || auth()->user()->hasRole('ketua_tim'))
                             <th class="px-6 py-3 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-200"
                                 style="width: 100px;">Action</th>
+                            @endif
                         </tr>
                     </thead>
-
-                    @foreach ($ManajemenResiko as $ManajemenResiko)
+                    @if ($manajemenResikos->isEmpty())
+                        <tr>
+                            <td colspan="15" class="text-center py-4">
+                                Data Tidak Ada
+                            </td>
+                        </tr>
+                    @else
+                    @foreach ($manajemenResikos as $ManajemenResiko)
                         <form action="{{ route('admin.analisis.update', $ManajemenResiko->id) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <tr>
                                 <input type="hidden" name="manajemen_resiko_ids[]" value="{{ $ManajemenResiko->id }}">
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                                    {{ $loop->iteration }}
+                                    {{ $loop->iteration + (($manajemenResikos->currentPage() - 1) * $manajemenResikos->perPage()) }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                                    {{ $ManajemenResiko->prosesbisnis->proses_bisnis }}</td>
+                                    {{ $ManajemenResiko->prosesbisnis->name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                                    {{ $ManajemenResiko->tim_project->nama_team }}</td>
+                                    {{ $ManajemenResiko->tim_project->name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                                    {{ $ManajemenResiko->resiko->resiko }}</td>
+                                    {{ $ManajemenResiko->resiko->name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
                                     @if ($ManajemenResiko->jenisResiko)
-                                        {{ $ManajemenResiko->jenisResiko->jenis_resiko }}
+                                        {{ $ManajemenResiko->jenisResiko->name }}
                                     @else<span class="text-red-500">Data Tidak Tersedia</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
                                     @if ($ManajemenResiko->sumberResiko)
-                                        {{ $ManajemenResiko->sumberResiko->sumber_resiko }}
+                                        {{ $ManajemenResiko->sumberResiko->name }}
                                     @else<span class="text-red-500">Data Tidak Tersedia</span>
                                     @endif
                                 </td>
@@ -108,7 +116,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
                                     @if ($ManajemenResiko->areaDampak)
-                                        {{ $ManajemenResiko->areaDampak->area_dampak }}
+                                        {{ $ManajemenResiko->areaDampak->name }}
                                     @else<span class="text-red-500">Data Tidak Tersedia</span>
                                     @endif
                                 </td>
@@ -117,14 +125,14 @@
                                         @php
                                             $penyebabIds = json_decode($ManajemenResiko->id_penyebab, true);
                                             $penyebabNames = \App\Models\Penyebab::whereIn('id', $penyebabIds)
-                                                ->pluck('penyebab')
+                                                ->pluck('name') // Ganti 'penyebab' dengan 'name'
                                                 ->toArray();
                                         @endphp
                                         @foreach ($penyebabNames as $penyebab)
                                             <li class="list-disc">{{ $penyebab }}</li>
                                         @endforeach
                                     @else
-                                        Tidak ada penyebab
+                                        <span class="text-red-500">Tidak ada penyebab</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
@@ -132,14 +140,14 @@
                                         @php
                                             $dampakIds = json_decode($ManajemenResiko->id_dampak, true);
                                             $dampakNames = \App\Models\Dampak::whereIn('id', $dampakIds)
-                                                ->pluck('dampak')
+                                                ->pluck('name') // Ganti 'dampak' dengan 'name'
                                                 ->toArray();
                                         @endphp
                                         @foreach ($dampakNames as $dampak)
                                             <li class="list-disc">{{ $dampak }}</li>
                                         @endforeach
                                     @else
-                                        Tidak ada dampak
+                                        <span class="text-red-500">Tidak ada dampak</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
@@ -150,7 +158,7 @@
                                         @foreach ($levelKemungkinan as $kemungkinan)
                                             <option value="{{ $kemungkinan->id }}"
                                                 {{ $kemungkinan->id == $ManajemenResiko->id_level_kemungkinan ? 'selected' : '' }}>
-                                                {{ $kemungkinan->level_kemungkinan }}
+                                                {{ $kemungkinan->name }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -163,25 +171,25 @@
                                         @foreach ($levelDampak as $dampak)
                                             <option value="{{ $dampak->id }}"
                                                 {{ $dampak->id == $ManajemenResiko->id_level_dampak ? 'selected' : '' }}>
-                                                {{ $dampak->level_dampak }}
+                                                {{ $dampak->name }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200 
-                                {{ is_null($ManajemenResiko->id_matriks_analisis_resiko)
-                                    ? ''
-                                    : ($ManajemenResiko->matriksAnalisisResiko->hasil_level_resiko === 'Sangat Tinggi'
-                                        ? 'bg-red-500 text-white'
-                                        : ($ManajemenResiko->matriksAnalisisResiko->hasil_level_resiko === 'Tinggi'
-                                            ? 'bg-yellow-500 text-black'
-                                            : ($ManajemenResiko->matriksAnalisisResiko->hasil_level_resiko === 'Sedang'
-                                                ? 'bg-yellow-200 text-black'
-                                                : ($ManajemenResiko->matriksAnalisisResiko->hasil_level_resiko === 'Rendah'
-                                                    ? 'bg-green-300 text-black'
-                                                    : ($ManajemenResiko->matriksAnalisisResiko->hasil_level_resiko === 'Sangat Rendah'
-                                                        ? 'bg-green-500 text-white'
-                                                        : ''))))) }}"
+                                <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200
+                                    {{ is_null($ManajemenResiko->id_matriks_analisis_resiko)
+                                        ? ''
+                                        : ($ManajemenResiko->matriksAnalisisResiko->hasil_level_resiko === 'Sangat Tinggi'
+                                            ? 'bg-red-600 text-white'
+                                            : ($ManajemenResiko->matriksAnalisisResiko->hasil_level_resiko === 'Tinggi'
+                                                ? 'bg-orange-600 text-white'
+                                                : ($ManajemenResiko->matriksAnalisisResiko->hasil_level_resiko === 'Sedang'
+                                                    ? 'bg-yellow-500 text-white'
+                                                    : ($ManajemenResiko->matriksAnalisisResiko->hasil_level_resiko === 'Rendah'
+                                                        ? 'bg-green-600 text-white'
+                                                        : ($ManajemenResiko->matriksAnalisisResiko->hasil_level_resiko === 'Sangat Rendah'
+                                                            ? 'bg-blue-600 text-white'
+                                                            : ''))))) }}"
                                     id="hasilLevelResiko{{ $ManajemenResiko->id }}">
                                     @if (is_null($ManajemenResiko->id_matriks_analisis_resiko))
                                         Data tidak tersedia
@@ -190,65 +198,118 @@
                                     @endif
                                 </td>
 
-                                <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                                    <button class="bg-blue-500 text-white px-4 py-2 rounded openUraianModal"
-                                        data-manajemen-resiko-id="{{ $ManajemenResiko->id }}"
-                                        data-uraian-id="{{ $ManajemenResiko->id_uraian }}"> Pilih Uraian </button>
-                                    <div id="selectedUraian" class="mt-2">
+                                @if (auth()->check() && auth()->user()->hasRole('admin') || auth()->user()->hasRole('ketua_tim'))
+                                <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                    <div class="flex flex-col items-center">
+                                        <!-- Tombol Pilih Uraian dipusatkan -->
+                                        <button class="bg-blue-500 text-white px-4 py-2 rounded openUraianModal"
+                                                data-manajemen-resiko-id="{{ $ManajemenResiko->id }}"
+                                                data-uraian-id="{{ $ManajemenResiko->id_uraian }}">
+                                            Pilih Uraian
+                                        </button>
+
+                                        <!-- Daftar Uraian, ditampilkan rata kiri di bawah tombol -->
+                                        <div id="selectedUraian" class="mt-4 text-left w-full">
+                                            @php
+                                                // Decode the JSON string into a PHP array
+                                                $uraianIds = json_decode($ManajemenResiko->id_uraian, true);
+                                            @endphp
+
+                                            @if (is_array($uraianIds) && count($uraianIds) > 0)
+                                            <ul class="list-disc list-inside text-gray-800 ml-4">
+                                                @foreach ($uraianIds as $item)
+                                                    @foreach ($uraian as $uraianItem)
+                                                        @if ($uraianItem->id == $item)
+                                                            @php
+                                                                // Membuat variabel yang menyimpan id uraian dalam bentuk json tanpa id yang dipilih
+                                                                $uraianHapus = array_diff($uraianIds, [$item]);
+                                                            @endphp
+                                                            <li class="flex justify-between items-center">
+                                                                <span>{{ $uraianItem->name }}</span>
+                                                                <a href="{{ url('/admin/analisis/hapusuraian/' . $ManajemenResiko->id . '/' . $item) }}"
+                                                                    class="text-red-500 hover:text-red-700 ml-2"
+                                                                    id="hapusUraian"
+                                                                    onclick="return confirm('Anda yakin ingin menghapus item ini?');">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </a>
+                                                            </li>
+                                                        @endif
+                                                    @endforeach
+                                                @endforeach
+                                            </ul>
+
+                                            @else
+                                                <!-- Jika tidak ada uraian yang dipilih -->
+                                                <p class="text-gray-500 italic ml-4 text-center">-</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </td>
+                                @else
+                                <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                    <div class="">
                                         @php
+                                            // Decode the JSON string into a PHP array
                                             $uraianIds = json_decode($ManajemenResiko->id_uraian, true);
                                         @endphp
 
-                                        @if (is_array($uraianIds))
+                                        @if (is_array($uraianIds) && count($uraianIds) > 0)
+                                        <ul class="px-6 py-4">
                                             @foreach ($uraianIds as $item)
                                                 @foreach ($uraian as $uraianItem)
                                                     @if ($uraianItem->id == $item)
                                                         @php
+                                                            // Membuat variabel yang menyimpan id uraian dalam bentuk json tanpa id yang dipilih
                                                             $uraianHapus = array_diff($uraianIds, [$item]);
                                                         @endphp
-                                                        <a href="#"
-                                                            class="text-black-50">{{ $uraianItem->uraian }}</a>
-                                                        <a href="/admin/analisis/hapusuraian/{{ $ManajemenResiko->id }}/{{ $item }}"
-                                                            class="text-red-500" id="hapusUraian">Hapus</a>
-                                                        <br>
+                                                        <li class="list-disc ">
+                                                            <span>{{ $uraianItem->name }}</span>
+                                                        </li>
                                                     @endif
                                                 @endforeach
                                             @endforeach
+                                        </ul>
+
                                         @else
-                                            <p>Tidak ada Uraian yang dipilih</p>
+                                            <!-- Jika tidak ada uraian yang dipilih -->
+                                            <p class="text-red-500 italic ml-4 text-center">-</p>
                                         @endif
                                     </div>
                                 </td>
+                                @endif
+
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                                    <select name="efektivitas" class="form-select pr-8 py-2 border"
+                                    <select name="efektivitas[]" class="form-select pr-8 py-2 border"
                                         id="efektivitas{{ $ManajemenResiko->id }}"
-                                        {{ is_null($ManajemenResiko->efektivitas) ? 'disabled' : '' }}
-                                        @disabled(true)>
-                                        <option value="">
-                                            -- Pilih Efektivitas --
-                                        </option>
-                                        <option value="efektif"
+                                        {{ is_null($ManajemenResiko->efektivitas) ? '' : 'disabled' }}>
+                                        <option value="">-- Pilih Efektivitas --</option>
+                                        <option value="Efektif"
                                             {{ $ManajemenResiko->efektivitas === 'Efektif' ? 'selected' : '' }}>
                                             Efektif
                                         </option>
-                                        <option value="Tidak_efektif"
-                                            {{ $ManajemenResiko->efektivitas === 'Tidak_efektif' ? 'selected' : '' }}>
+                                        <option value="Tidak Efektif"
+                                            {{ $ManajemenResiko->efektivitas === 'Tidak Efektif' ? 'selected' : '' }}>
                                             Tidak Efektif
                                         </option>
                                     </select>
                                 </td>
+                                @if (auth()->check() && auth()->user()->hasRole('admin') || auth()->user()->hasRole('ketua_tim'))
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
                                     <a class="bg-blue-500 text-white width-mt-2 px-2 py-2 rounded cursor-pointer"
                                         id="btnEdit" data-id="{{ $ManajemenResiko->id }}">Edit</a>
                                     <button type="submit"
-                                        class="bg-green-500 text-white px-2 py-1 rounded">Save</button>
-                        </form>
-                        </td>
-                        </tr>
-                        </form>
+                                        class="bg-green-500 text-white px-2 py-1 rounded">Save
+                                    </button>
+                                </td>
+                                @endif
+                    </form>
                     @endforeach
+                    @endif
                 </table>
             </div>
+        </div>
+        <div class="flex justify-center mt-4">
+            {{ $manajemenResikos->links() }}
         </div>
     </div>
     @include('admin.risk.components.modal-uraian')
@@ -284,27 +345,28 @@
                         item.id_level_dampak == idLevelDampak
                     );
                     hasilLevelResiko.innerText = result ? result.hasil_level_resiko : '';
-                    hasilLevelResiko.classList.remove('bg-red-500', 'bg-yellow-500', 'bg-yellow-200',
-                        'bg-green-300', 'bg-green-500', 'text-white', 'text-black');
+                    hasilLevelResiko.classList.remove('bg-red-600', 'bg-orange-600', 'bg-yellow-500',
+                        'bg-green-600', 'bg-blue-600', 'text-white');
                     if (result) {
                         if (result.hasil_level_resiko === 'Sangat Tinggi') {
-                            hasilLevelResiko.classList.add('bg-red-500', 'text-white');
+                            hasilLevelResiko.classList.add('bg-red-600', 'text-white');
                         } else if (result.hasil_level_resiko === 'Tinggi') {
-                            hasilLevelResiko.classList.add('bg-yellow-500', 'text-black');
+                            hasilLevelResiko.classList.add('bg-orange-600', 'text-white');
                         } else if (result.hasil_level_resiko === 'Sedang') {
-                            hasilLevelResiko.classList.add('bg-yellow-200', 'text-black');
+                            hasilLevelResiko.classList.add('bg-yellow-500', 'text-white');
                         } else if (result.hasil_level_resiko === 'Rendah') {
-                            hasilLevelResiko.classList.add('bg-green-300', 'text-white');
+                            hasilLevelResiko.classList.add('bg-green-600', 'text-white');
                         } else if (result.hasil_level_resiko === 'Sangat Rendah') {
-                            hasilLevelResiko.classList.add('bg-green-500', 'text-white');
+                            hasilLevelResiko.classList.add('bg-blue-600', 'text-white');
                         }
                     }
                 } else {
-                    hasilLevelResiko.value = 'cukitdulit';
-                    hasilLevelResiko.classList.remove('bg-red-500', 'bg-yellow-500', 'bg-yellow-200',
-                        'bg-green-300', 'bg-green-500', 'text-white', 'text-black');
+                    hasilLevelResiko.innerText = 'cukitdulit'; // Clear the value
+                    hasilLevelResiko.classList.remove('bg-red-600', 'bg-orange-600', 'bg-yellow-500',
+                        'bg-green-600', 'bg-blue-600', 'text-white');
                 }
             }
+
             levelKemungkinanSelects.forEach(select => {
                 select.addEventListener('change', () => updateHasilLevelResiko(select));
             });
@@ -313,77 +375,48 @@
                 select.addEventListener('change', () => updateHasilLevelResiko(select));
             });
 
+
             document.querySelectorAll('#btnEdit').forEach(editBtn => {
                 editBtn.addEventListener('click', function(event) {
                     event.preventDefault();
                     const rowId = this.getAttribute('data-id');
-                    const levelKemungkinanSelect = document.getElementById('levelKemungkinan' +
-                        rowId);
+                    console.log('Editing row:', rowId);
+                    const levelKemungkinanSelect = document.getElementById('levelKemungkinan' + rowId);
                     const levelDampakSelect = document.getElementById('levelDampak' + rowId);
                     const efektivitasSelect = document.getElementById('efektivitas' + rowId);
+
+                    console.log('levelKemungkinanSelect:', levelKemungkinanSelect);
+                    console.log('levelDampakSelect:', levelDampakSelect);
+                    console.log('efektivitasSelect:', efektivitasSelect);
 
                     if (levelKemungkinanSelect) levelKemungkinanSelect.disabled = false;
                     if (levelDampakSelect) levelDampakSelect.disabled = false;
                     if (efektivitasSelect) efektivitasSelect.disabled = false;
 
                     const saveBtn = this.closest('tr').querySelector('#saveanalisisBtn');
-                    saveBtn.disabled = false;
+                    if (saveBtn) saveBtn.disabled = false;
                 });
             });
 
             document.querySelectorAll('#saveanalisisBtn').forEach(saveBtn => {
                 saveBtn.addEventListener('click', function(event) {
                     event.preventDefault();
-                    const rowId = this.closest('tr').querySelector(
-                        'input[name="manajemen_resiko_ids[]"]').value;
-                    const levelKemungkinanSelect = document.getElementById('levelKemungkinan' +
-                        rowId);
+                    const rowId = this.closest('tr').querySelector('input[name="manajemen_resiko_ids[]"]').value;
+                    console.log('Saving row:', rowId);
+                    const levelKemungkinanSelect = document.getElementById('levelKemungkinan' + rowId);
                     const levelDampakSelect = document.getElementById('levelDampak' + rowId);
                     const efektivitasSelect = document.getElementById('efektivitas' + rowId);
 
+                    console.log('levelKemungkinanSelect:', levelKemungkinanSelect);
+                    console.log('levelDampakSelect:', levelDampakSelect);
+                    console.log('efektivitasSelect:', efektivitasSelect);
+
                     if (levelKemungkinanSelect) levelKemungkinanSelect.disabled = true;
                     if (levelDampakSelect) levelDampakSelect.disabled = true;
-                    if (efektivitasSelect) efektivitasSelect.disabled = true;
 
                     this.closest('form').submit();
                 });
             });
-
-            // document.querySelectorAll('#btnEdit').forEach(editBtn => {
-            //     editBtn.addEventListener('click', function(event) {
-            //         event.preventDefault();
-            //         const rowId = this.getAttribute('data-id');
-            //         const levelKemungkinanSelect = document.getElementById('levelKemungkinan-' +
-            //             rowId);
-            //         const levelDampakSelect = document.getElementById('levelDampak-' + rowId);
-            //         const efektivitasSelect = document.getElementById('efektivitas-' + rowId);
-
-            //         if (levelKemungkinanSelect) levelKemungkinanSelect.disabled = false;
-            //         if (levelDampakSelect) levelDampakSelect.disabled = false;
-            //         if (efektivitasSelect) efektivitasSelect.disabled = false;
-
-            //         const saveBtn = this.closest('tr').querySelector('#saveanalisisBtn');
-            //         if (saveBtn) saveBtn.disabled = false;
-            //     });
-            // });
-
-            // document.querySelectorAll('#saveanalisisBtn').forEach(saveBtn => {
-            //     saveBtn.addEventListener('click', function(event) {
-            //         event.preventDefault();
-            //         const rowId = this.closest('tr').querySelector(
-            //             'input[name="manajemen_resiko_ids[]"]').value;
-            //         const levelKemungkinanSelect = document.getElementById('levelKemungkinan-' +
-            //             rowId);
-            //         const levelDampakSelect = document.getElementById('levelDampak-' + rowId);
-            //         const efektivitasSelect = document.getElementById('efektivitas-' + rowId);
-
-            //         if (levelKemungkinanSelect) levelKemungkinanSelect.disabled = true;
-            //         if (levelDampakSelect) levelDampakSelect.disabled = true;
-            //         if (efektivitasSelect) efektivitasSelect.disabled = true;
-
-            //         this.closest('form').submit();
-            //     });
-            // });
 
 
 
@@ -418,7 +451,7 @@
                             }
                         },
                         {
-                            data: "uraian"
+                            data: "name"
                         },
                         {
                             data: "status",
@@ -534,37 +567,44 @@
             }
 
             if (saveUraianBtn) {
-                saveUraianBtn.addEventListener('click', function() {
+                saveUraianBtn.addEventListener('click', function () {
                     const selectedUraian = [];
-                    document.querySelectorAll('.uraian-checkbox:checked').forEach(function(checkbox) {
-                        selectedUraian.push(checkbox.getAttribute(
-                            'data-uraian-id'));
+                    document.querySelectorAll('.uraian-checkbox:checked').forEach(function (checkbox) {
+                        selectedUraian.push(checkbox.getAttribute('data-uraian-id')); // Ensure this attribute is the ID of the uraian
                     });
                     console.log(selectedUraian);
                     if (selectedUraian.length > 0) {
-                        fetch('{{ route('admin.analisis.saveuraian') }}', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                },
-                                body: JSON.stringify({
-                                    uraian: selectedUraian,
-                                    manajemen_resiko_id: selectedManajemenResikoId
-                                })
+                        fetch('{{ route("admin.analisis.saveuraian") }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({
+                                uraian: selectedUraian,
+                                manajemen_resiko_id: selectedManajemenResikoId
                             })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.success) {
-                                    console.log(selectedUraian);
-                                    alert('Uraian berhasil disimpan!');
-                                    uraianModal.classList.add('hidden');
-                                    location.reload();
-                                } else {
-                                    alert('Terjadi kesalahan saat menyimpan uraian.');
-                                }
-                            })
-                            .catch(error => console.error('Error:', error));
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                console.log(selectedUraian);
+                                alert('Uraian berhasil disimpan!');
+                                uraianModal.classList.add('hidden');
+                                location.reload();
+                            } else {
+                                alert('Terjadi kesalahan saat menyimpan uraian.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Terjadi kesalahan saat menyimpan uraian.');
+                        });
                     } else {
                         alert('Pilih setidaknya satu uraian.');
                     }

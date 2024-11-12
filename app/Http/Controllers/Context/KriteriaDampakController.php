@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Context;
 use App\Models\KriteriaDampak;
 use App\Http\Controllers\Controller;
+use App\Models\AreaDampak;
+use App\Models\LevelDampak;
 use Illuminate\Http\Request;
 
 class KriteriaDampakController extends Controller
@@ -10,9 +12,30 @@ class KriteriaDampakController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        {
+            // Ambil data filter dari request
+            $filterAreaDampak = $request->input('filter_area_dampak');
+            $filterLevelDampak = $request->input('filter_level_dampak');
+    
+            // Query untuk filter KriteriaDampak
+            $kriteriaDampaks = KriteriaDampak::query()
+                ->when($filterAreaDampak, function ($query, $filterAreaDampak) {
+                    return $query->where('id_area_dampak', $filterAreaDampak);
+                })
+                ->when($filterLevelDampak, function ($query, $filterLevelDampak) {
+                    return $query->where('id_level_dampak', $filterLevelDampak);
+                })
+                ->paginate(10); // Anda bisa mengganti paginate sesuai kebutuhan
+    
+            // Ambil data untuk filter dropdown
+            $areaDampak = AreaDampak::all(); // Mengambil semua area dampak
+            $levelDampak = LevelDampak::all(); // Mengambil semua level dampak
+    
+            // Kirim data ke view
+            return view('admin.risk.context.index', compact('kriteriaDampak', 'areaDampak', 'levelDampak'));
+       }
     }
 
     /**
@@ -20,8 +43,8 @@ class KriteriaDampakController extends Controller
      */
     public function create()
     {
-        //
-    }
+        
+   }
 
     /**
      * Store a newly created resource in storage.

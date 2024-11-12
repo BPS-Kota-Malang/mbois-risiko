@@ -12,7 +12,7 @@ class LevelResiko extends Model
     protected $table = 'level_resiko';
 
     protected $fillable = [
-        'level_resiko',
+        'name',
         'besaran_min',
         'besaran_max',
         'tindakan',

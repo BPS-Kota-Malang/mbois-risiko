@@ -34,15 +34,16 @@ class KriteriaKemungkinanController extends Controller
         $response = [
             'no' => $kriteriaKemungkinan->id,
             'kategori_resiko' => $kriteriaKemungkinan->kategoriResiko->deskripsi,
-            'level_kemungkinan' => $kriteriaKemungkinan->levelKemungkinan->level_kemungkinan,
+            'level_kemungkinan' => $kriteriaKemungkinan->levelKemungkinan->name,
             'presentase_kemungkinan' => $kriteriaKemungkinan->presentase_kemungkinan,
             'jumlah_frekuensi' => $kriteriaKemungkinan->jumlah_frekuensi,
             'edit_url' => route('admin.kriteriakemungkinan.update', $kriteriaKemungkinan->id),
             'delete_url' => route('admin.kriteriakemungkinan.destroy', $kriteriaKemungkinan->id),
             'csrf_token' => csrf_token(),
         ];
-
+        
         return response()->json($response);
+    
     }
 
     public function update(Request $request, $id)
@@ -61,7 +62,7 @@ class KriteriaKemungkinanController extends Controller
         $response = [
             'no' => $kriteriaKemungkinan->id,
             'kategori_resiko' => $kriteriaKemungkinan->kategoriResiko->deskripsi,
-            'level_kemungkinan' => $kriteriaKemungkinan->levelKemungkinan->level_kemungkinan,
+            'level_kemungkinan' => $kriteriaKemungkinan->levelKemungkinan->name,
             'presentase_kemungkinan' => $kriteriaKemungkinan->presentase_kemungkinan,
             'jumlah_frekuensi' => $kriteriaKemungkinan->jumlah_frekuensi,
             'edit_url' => route('admin.kriteriakemungkinan.update', $kriteriaKemungkinan->id),
@@ -72,11 +73,11 @@ class KriteriaKemungkinanController extends Controller
         return response()->json($response);
     }
 
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $kriteriaKemungkinan = KriteriaKemungkinan::findOrFail($id);
         $kriteriaKemungkinan->delete();
 
-        return response()->json(['success' => 'Kriteria Kemungkinan deleted successfully.']);
+        return redirect()->route('admin.risk.context')->with('success', 'Level Kemungkinan deleted successfully.');
     }
 }

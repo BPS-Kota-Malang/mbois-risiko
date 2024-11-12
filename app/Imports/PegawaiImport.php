@@ -16,19 +16,19 @@ class PegawaiImport implements ToModel, WithHeadingRow
         $user = User::updateOrCreate(
             ['email' => $row['email']],
             [
-                'name' => $row['nama_pegawai'],
-                'password' => Hash::make('bpsmalang123'), // Set a default password
+                'name' => $row['name'],
+                'password' => Hash::make('bpsmalang123'), // Set a default password // spell-check-ignore-line
             ]
         );
 
-        // Create or update pegawai
-        return Pegawai::updateOrCreate(
+        // Create or update pegawai // spell-check-ignore-line
+        return Pegawai::updateOrCreate( // spell-check-ignore-line
             ['user_id' => $user->id],
             [
-                'nama_pegawai' => $row['nama_pegawai'],
-                'jabatan' => $row['jabatan'],
-                'pangkat' => $row['pangkat'],
-                'golongan' => $row['golongan'],
+                'name' => $row['nama_pegawai'], // spell-check-ignore-line
+                'jabatan' => $row['jabatan'], // spell-check-ignore-line
+                'pangkat' => $row['pangkat'], // spell-check-ignore-line
+                'golongan' => $row['golongan'], // spell-check-ignore-line
                 'tim' => $row['tim'],
                 'no_hp' => $row['no_hp'],
                 'nip' => $row['nip'],

@@ -3,10 +3,12 @@
         <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
             <div
                 class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+                @if (auth()->check() && auth()->user()->hasRole('admin'))
                 <button onclick="toggleModal('tambahpemangkuKepentinganModal')"
                 class="px-4 py-2 mb-2 bg-blue-500 rounded-md text-white font-medium tracking-wide hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300">
                     Tambah
                 </button>
+                @endif
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
@@ -18,11 +20,13 @@
                                 Kelompok Pemangku Kepentingan</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Hubungan</th>
-                                <th class="px-6 py-3 text-center pl-6 pr-1 text-xs font-medium text-black-500 uppercase tracking-wider">
+                            @if (auth()->check() && auth()->user()->hasRole('admin'))
+                            <th class="px-6 py-3 text-center pl-6 pr-1 text-xs font-medium text-black-500 uppercase tracking-wider">
                                     Actions
-                                </th>
-                                
-                                
+                            </th>
+                            @endif
+
+
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -32,18 +36,19 @@
                                 {{ $loop->iteration }}
                             </td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                {{ $pemangku->pemangku_kepentingan }}
+                                {{ $pemangku->name }}
                             </td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                {{ $pemangku->kelompok_pemangku_kepentingan }}
+                                {{ $pemangku->kelompok }}
                             </td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                 {{ $pemangku->hubungan ?? '-' }}
                             </td>
+                            @if (auth()->check() && auth()->user()->hasRole('admin'))
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                                 <div class="inline-flex space-x-4">
                                     <button
-                                        onclick="openEditPemangkuKepentinganModal('{{ route('admin.pemangkukepentingan.update', $pemangku->id) }}', '{{ $pemangku->pemangku_kepentingan }}', '{{ $pemangku->kelompok_pemangku_kepentingan }}', '{{ $pemangku->hubungan ?? '' }}')"
+                                        onclick="openEditPemangkuKepentinganModal('{{ route('admin.pemangkukepentingan.update', $pemangku->id) }}', '{{ $pemangku->name }}', '{{ $pemangku->kelompok }}', '{{ $pemangku->hubungan ?? '' }}')"
                                         class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                                         Edit
                                     </button>
@@ -57,9 +62,10 @@
                                     </form>
                                 </div>
                             </td>
-                            
+                            @endif
+
                         </tr>
-                        
+
                         @endforeach
                     </tbody>
                 </table>
@@ -87,25 +93,25 @@
                         <form action="{{ route('admin.pemangkukepentingan.store') }}" method="POST">
                             @csrf
                             <div class="mb-4">
-                                <label class="block text-gray-700 mb-2" for="pemangku-kepentingan">Pemangku
+                                <label class="block text-gray-700 mb-2" for="name">Pemangku
                                     Kepentingan</label>
-                                <input type="text" name="pemangku_kepentingan" id="pemangku-kepentingan"
-                                    value="{{ old('pemangku_kepentingan') }}"
+                                <input type="text" name="name" id="name"
+                                    value="{{ old('neme') }}"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('pemangku_kepentingan')
+                                @error('name')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="mb-4">
-                                <label class="block text-gray-700 mb-2" for="kelompok-pemangku-kepentingan">Kelompok
+                                <label class="block text-gray-700 mb-2" for="kelompok">Kelompok
                                     Pemangku Kepentingan</label>
-                                <input type="text" name="kelompok_pemangku_kepentingan"
-                                    id="kelompok-pemangku-kepentingan"
-                                    value="{{ old('kelompok_pemangku_kepentingan') }}"
+                                <input type="text" name="kelompok"
+                                    id="kelompok"
+                                    value="{{ old('kelompok') }}"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('kelompok_pemangku_kepentingan')
+                                @error('kelompok')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -141,21 +147,21 @@
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2" for="pemangku_kepentingan_edit">Pemangku
                                     Kepentingan</label>
-                                <input type="text" name="pemangku_kepentingan" id="pemangku_kepentingan_edit"
+                                <input type="text" name="name" id="pemangku_kepentingan_edit"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('pemangku_kepentingan')
+                                @error('name')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2"
                                     for="kelompok_pemangku_kepentingan_edit">Kelompok Pemangku Kepentingan</label>
-                                <input type="text" name="kelompok_pemangku_kepentingan"
+                                <input type="text" name="kelompok"
                                     id="kelompok_pemangku_kepentingan_edit"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('kelompok_pemangku_kepentingan')
+                                @error('kelompok')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -185,10 +191,6 @@
     function toggleModal() {
         document.getElementById(modalId).classList.toggle('hidden');
     }
-
-    // function toggleEditModal() {
-    //     document.getElementById('editpemangkuKepentinganModal').classList.toggle('hidden');
-    // }
 
     function openEditPemangkuKepentinganModal(url, pemangkuKepentingan, kelompokPemangkuKepentingan, hubungan) {
         const editPemangkuKepentinganForm = document.getElementById('editPemangkuKepentinganForm');

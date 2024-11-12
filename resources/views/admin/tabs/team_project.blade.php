@@ -3,10 +3,12 @@
         <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
             <div
                 class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+                @if (auth()->check() && auth()->user()->hasRole('admin'))
                 <button onclick="toggleTimProjectModal('tambah')"
                 class="px-4 py-2 mb-2 bg-blue-500 rounded-md text-white font-medium tracking-wide hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300">
                     Tambah
                 </button>
+                @endif
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
@@ -16,8 +18,10 @@
                                 Nama Tim</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Deskripsi</th>
+                                @if (auth()->check() && auth()->user()->hasRole('admin'))
                             <th class="px-6 py-3 text-center text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Actions</th>
+                                @endif
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -26,13 +30,14 @@
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ $loop->iteration }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    {{ $timProject->nama_team }}</td>
+                                    {{ $timProject->name }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     {{ $timProject->deskripsi ?? '-' }}</td>
+                                    @if (auth()->check() && auth()->user()->hasRole('admin'))
                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                                         <div class="inline-flex space-x-4">
                                             <button
-                                                onclick="openEditTeamProjectModal('{{ route('admin.timproject.update', $timProject->id) }}', '{{ $timProject->nama_team }}', '{{ $timProject->deskripsi ?? '' }}')"
+                                                onclick="openEditTeamProjectModal('{{ route('admin.timproject.update', $timProject->id) }}', '{{ $timProject->name }}', '{{ $timProject->deskripsi ?? '' }}')"
                                                 class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                                 Edit
                                             </button>
@@ -46,7 +51,8 @@
                                             </form>
                                         </div>
                                     </td>
-                                    
+                                    @endif
+
                             </tr>
                         @endforeach
                     </tbody>
@@ -78,11 +84,11 @@
                         <form action="{{ route('admin.timproject.store') }}" method="POST">
                             @csrf
                             <div class="mb-4">
-                                <label class="block text-gray-700 mb-2" for="nama_team">Nama Tim</label>
-                                <input type="text" name="nama_team" id="nama_team" value="{{ old('nama_team') }}"
+                                <label class="block text-gray-700 mb-2" for="name">Nama Tim</label>
+                                <input type="text" name="name" id="name" value="{{ old('name') }}"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('nama_team')
+                                @error('name')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -117,10 +123,10 @@
                             @method('PUT')
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2" for="nama_team_edit">Nama Tim</label>
-                                <input type="text" name="nama_team" id="nama_team_edit"
+                                <input type="text" name="name" id="nama_team_edit"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('nama_team')
+                                @error('name')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>

@@ -29,12 +29,12 @@ class PeraturanPerundangUndanganController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'peraturan_perundang_undangan' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'amanat' => 'nullable|string|max:255',
         ]);
 
         PeraturanPerundangUndangan::create([
-            'peraturan_perundang_undangan' => $request->peraturan_perundang_undangan,
+            'name' => $request->name,
             'amanat' => $request->amanat,
         ]);
 
@@ -63,13 +63,13 @@ class PeraturanPerundangUndanganController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'peraturan_perundang_undangan' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'amanat' => 'nullable|string|max:255',
         ]);
 
         $peraturanPerundangUndangan = PeraturanPerundangUndangan::findOrFail($id);
         $peraturanPerundangUndangan->update([
-            'peraturan_perundang_undangan' => $request->peraturan_perundang_undangan,
+            'name' => $request->name,
             'amanat' => $request->amanat,
         ]);
         return redirect()->route('admin.risk.context');

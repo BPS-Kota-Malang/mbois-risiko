@@ -15,31 +15,31 @@ class LevelDampakSeeder extends Seeder
     {
         DB::table('level_dampak')->insert([
             [
-                'level_dampak' => 'Tidak Signifikan',
+                'name' => 'Tidak Signifikan',
                 'deskripsi' => 'Dampak sangat kecil, tidak mempengaruhi operasional',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'level_dampak' => 'Kurang Signifikan MINOR',
+                'name' => 'Kurang Signifikan MINOR',
                 'deskripsi' => 'Dampak kecil, sedikit mempengaruhi operasional',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'level_dampak' => 'Cukup Signifikan MODERATE',
+                'name' => 'Cukup Signifikan MODERATE',
                 'deskripsi' => 'Dampak sedang, mempengaruhi operasional secara signifikan',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'level_dampak' => 'Signifikan ',
+                'name' => 'Signifikan ',
                 'deskripsi' => 'Dampak besar, sangat mempengaruhi operasional',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'level_dampak' => 'Sangat Signifikan ',
+                'name' => 'Sangat Signifikan ',
                 'deskripsi' => 'Dampak sangat besar, menghentikan operasional',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

@@ -12,7 +12,7 @@ class LevelKemungkinan extends Model
     protected $table = 'level_kemungkinan';
 
     protected $fillable = [
-        'level_kemungkinan',
+        'name',
     ];
 
     public $timestamps = true;

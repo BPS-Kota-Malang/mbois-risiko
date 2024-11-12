@@ -12,7 +12,7 @@ class ProsesBisnis extends Model
     protected $table = 'proses_bisnis';
 
     protected $fillable = [
-        'proses_bisnis',
+        'name'
     ];
 
     public $timestamps = true;

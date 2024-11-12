@@ -29,11 +29,11 @@ class LevelKemungkinanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'level_kemungkinan' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
         ]);
 
         LevelKemungkinan::create([
-            'level_kemungkinan' => $request->level_kemungkinan,
+            'name' => $request->name,
         ]);
 
         return redirect()->route('admin.risk.context')->with('success', 'Level Kemungkinan created successfully.');
@@ -61,12 +61,12 @@ class LevelKemungkinanController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'level_kemungkinan' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
         ]);
 
         $levelKemungkinan = LevelKemungkinan::findOrFail($id);
         $levelKemungkinan->update([
-            'level_kemungkinan' => $request->level_kemungkinan,
+            'name' => $request->name,
         ]);
 
         return redirect()->route('admin.risk.context')->with('success', 'Level Kemungkinan updated successfully.');

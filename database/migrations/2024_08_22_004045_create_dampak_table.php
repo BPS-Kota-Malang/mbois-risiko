@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('dampak', function (Blueprint $table) {
             $table->id();
-            $table->string('dampak');
+            $table->string('name');
             $table->string('status')->nullable(); // Kolom status bisa kosong
             $table->timestamps();
         });

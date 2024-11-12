@@ -12,7 +12,7 @@ class LevelDampak extends Model
     protected $table = 'level_dampak';
 
     protected $fillable = [
-        'level_dampak',
+        'name',
         'deskripsi',
     ];
 

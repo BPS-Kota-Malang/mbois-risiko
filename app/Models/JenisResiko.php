@@ -12,7 +12,7 @@ class JenisResiko extends Model
 
     protected $fillable = [
         'kode',
-        'jenis_resiko',
+        'name',
     ];
 
     public $timestamps = true;
@@ -21,7 +21,7 @@ class JenisResiko extends Model
         'created_at',
         'updated_at',
     ];
-    
+
     public function opsiPenanganan()
     {
         return $this->hasMany(opsiPenanganan::class, 'id_jenis_resiko');

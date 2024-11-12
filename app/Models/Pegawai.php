@@ -2,38 +2,42 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\User;
-
+use App\Models\TimProject;
 
 class Pegawai extends Model
 {
-        // Tentukan tabel yang digunakan oleh model ini (opsional jika nama tabel tidak sesuai konvensi)
-        protected $table = 'data_pegawai';
+    // Specify the table used by this model (optional if table name does not follow convention)
+    protected $table = 'data_pegawai';
 
-        // Tentukan atribut yang dapat diisi (mass assignable)
-        protected $fillable = [
-            'nama_pegawai',
-            'user_id',
-            'jabatan',
-            'pangkat',
-            'golongan',
-            'tim',
-            'no_hp',
-            'nip',
-        ];
+    // Specify the attributes that are mass assignable
+    protected $fillable = [
+        'name',
+        'user_id',
+        'jabatan',
+        'pangkat',
+        'golongan',
+        'forengid', // Changed from 'tim' to 'forengid'
+        'no_hp',
+        'nip',
+    ];
 
-        // Tentukan atribut yang harus di-cast ke tipe data tertentu
-        protected $casts = [
-            'created_at' => 'datetime',
-            'updated_at' => 'datetime',
-        ];
+    // Specify the attributes that should be cast to specific data types
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
-        // Definisikan relasi ke model User
-        public function user() : BelongsTo
-        {
-            return $this->belongsTo(User::class);
-        }
+    // Define the relationship to the User model
+    public function user() : BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function timProject() : BelongsTo
+    {
+        return $this->belongsTo(TimProject::class, 'id_tim');
+    }
 }

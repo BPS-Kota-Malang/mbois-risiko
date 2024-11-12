@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('pemangku_kepentingan', function (Blueprint $table) {
             $table->id(); // This creates an auto-incrementing primary key
-            $table->string('pemangku_kepentingan', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
-            $table->string('kelompok_pemangku_kepentingan', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
+            $table->string('name', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
+            $table->string('kelompok', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
             $table->string('hubungan', 255)->collation('utf8mb4_unicode_ci')->nullable(true);
             $table->timestamps(); // This creates 'created_at' and 'updated_at' columns
         });

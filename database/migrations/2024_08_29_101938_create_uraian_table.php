@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('uraian', function (Blueprint $table) {
             $table->id();
-            $table->string('uraian');
+            $table->string('name');
             $table->string('status')->nullable(); // Kolom status bisa kosong
             $table->timestamps();
         });

@@ -13,7 +13,7 @@ class OpsiPenanganan extends Model
     protected $table = 'opsi_penanganan';
     // Mengizinkan atribut untuk diisi secara massal
     protected $fillable = [
-        'opsi_penanganan',
+        'name',
         'deskripsi',
         'id_jenis_resiko',
     ];

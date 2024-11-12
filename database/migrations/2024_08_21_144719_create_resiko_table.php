@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('resiko', function (Blueprint $table) {
             $table->id();
-            $table->string('resiko', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
+            $table->string('name', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
             $table->string('status')->nullable(); // Kolom status bisa kosong
             $table->timestamps();
         });
