@@ -59,7 +59,7 @@
                             <tr>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ $loop->iteration }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ $kriteria->kategoriResiko->deskripsi }}</td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ $kriteria->levelKemungkinan->level_kemungkinan }}</td>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ $kriteria->levelKemungkinan->name }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ $kriteria->presentase_kemungkinan }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ $kriteria->jumlah_frekuensi }}</td>
                                 @if (auth()->check() && auth()->user()->hasRole('admin'))
@@ -80,69 +80,69 @@
                 </table>
 
                 <!-- Modal for Tambah Kriteria Kemungkinan -->
-<div id="tambahKriteriaKemungkinanModal" class="fixed inset-0 flex items-center justify-center hidden">
-    <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
-    <div class="bg-white border border-black shadow-md rounded-lg p-6 relative z-10">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-bold">Tambah Kriteria Kemungkinan</h2>
-            <button onclick="toggleModal('tambahKriteriaKemungkinanModal')" class="text-gray-500 text-2xl">&times;</button>
-        </div>
-        <form id="tambahKriteriaKemungkinanForm" action="{{ route('admin.kriteriakemungkinan.store') }}" method="POST">
-            @csrf
-            <div class="mb-4">
-                <label class="block text-gray-700 mb-2" for="id_kategori_resiko">Kategori Resiko</label>
-                <select name="id_kategori_resiko" id="id_kategori_resiko"
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    required>
-                    @foreach ($kategoriResiko as $kategori)
-                        <option value="{{ $kategori->id }}">{{ $kategori->deskripsi }}</option>
-                    @endforeach
-                </select>
-                @error('id_kategori_resiko')
-                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                @enderror
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700 mb-2" for="id_level_kemungkinan">Level Kemungkinan</label>
-                <select name="id_level_kemungkinan" id="id_level_kemungkinan"
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    required>
-                    @foreach ($levelKemungkinan as $level)
-                        <option value="{{ $level->id }}">{{ $level->level_kemungkinan }}</option>
-                    @endforeach
-                </select>
-                @error('id_level_kemungkinan')
-                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                @enderror
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700 mb-2" for="presentase_kemungkinan">Presentase Kemungkinan</label>
-                <input type="text" name="presentase_kemungkinan" id="presentase_kemungkinan"
-                    value="{{ old('presentase_kemungkinan') }}"
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    required>
-                @error('presentase_kemungkinan')
-                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                @enderror
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700 mb-2" for="jumlah_frekuensi">Jumlah Frekuensi</label>
-                <input type="text" name="jumlah_frekuensi" id="jumlah_frekuensi"
-                    value="{{ old('jumlah_frekuensi') }}"
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    required>
-                @error('jumlah_frekuensi')
-                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                @enderror
-            </div>
-            <div class="flex justify-end">
-                <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Simpan</button>
-                <button type="button" onclick="toggleModal('tambahKriteriaKemungkinanModal')"
-                    class="px-4 py-2 ml-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">Batal</button>
-            </div>
-        </form>
-    </div>
-</div>
+                <div id="tambahKriteriaKemungkinanModal" class="fixed inset-0 flex items-center justify-center hidden">
+                    <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
+                    <div class="bg-white border border-black shadow-md rounded-lg p-6 relative z-10">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl font-bold">Tambah Kriteria Kemungkinan</h2>
+                            <button onclick="toggleModal('tambahKriteriaKemungkinanModal')" class="text-gray-500 text-2xl">&times;</button>
+                        </div>
+                        <form id="tambahKriteriaKemungkinanForm" action="{{ route('admin.kriteriakemungkinan.store') }}" method="POST">
+                            @csrf
+                            <div class="mb-4">
+                                <label class="block text-gray-700 mb-2" for="id_kategori_resiko">Kategori Resiko</label>
+                                <select name="id_kategori_resiko" id="id_kategori_resiko"
+                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    required>
+                                    @foreach ($kategoriResiko as $kategori)
+                                        <option value="{{ $kategori->id }}">{{ $kategori->deskripsi }}</option>
+                                    @endforeach
+                                </select>
+                                @error('id_kategori_resiko')
+                                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 mb-2" for="id_level_kemungkinan">Level Kemungkinan</label>
+                                <select name="id_level_kemungkinan" id="id_level_kemungkinan"
+                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    required>
+                                    @foreach ($levelKemungkinan as $level)
+                                        <option value="{{ $level->id }}">{{ $level->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('id_level_kemungkinan')
+                                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 mb-2" for="presentase_kemungkinan">Presentase Kemungkinan</label>
+                                <input type="text" name="presentase_kemungkinan" id="presentase_kemungkinan"
+                                    value="{{ old('presentase_kemungkinan') }}"
+                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    required>
+                                @error('presentase_kemungkinan')
+                                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 mb-2" for="jumlah_frekuensi">Jumlah Frekuensi</label>
+                                <input type="text" name="jumlah_frekuensi" id="jumlah_frekuensi"
+                                    value="{{ old('jumlah_frekuensi') }}"
+                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    required>
+                                @error('jumlah_frekuensi')
+                                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="flex justify-end">
+                                <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Simpan</button>
+                                <button type="button" onclick="toggleModal('tambahKriteriaKemungkinanModal')"
+                                    class="px-4 py-2 ml-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">Batal</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
 
                 <!-- Modal for Edit Kriteria Kemungkinan -->
@@ -176,7 +176,7 @@
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
                                     @foreach ($levelKemungkinan as $level)
-                                        <option value="{{ $level->id }}">{{ $level->level_kemungkinan }}</option>
+                                        <option value="{{ $level->id }}">{{ $level->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('id_level_kemungkinan')

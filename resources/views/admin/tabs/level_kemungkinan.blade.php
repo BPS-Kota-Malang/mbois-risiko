@@ -33,13 +33,13 @@
                                     {{ $loop->iteration }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
-                                    {{ $level->level_kemungkinan }}
+                                    {{ $level->name }}
                                 </td>
                                 @if (auth()->check() && auth()->user()->hasRole('admin'))
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                                     <div class="inline-flex space-x-4 justify-center">
                                         <button
-                                            onclick="openEditLevelKemungkinanModal('{{ route('admin.levelkemungkinan.update', $level->id) }}', '{{ $level->level_kemungkinan }}')"
+                                            onclick="openEditLevelKemungkinanModal('{{ route('admin.levelkemungkinan.update', $level->id) }}', '{{ $level->name }}')"
                                             class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                             Edit
                                         </button>
@@ -72,10 +72,10 @@
                         <form action="{{ route('admin.levelkemungkinan.store') }}" method="POST">
                             @csrf
                             <div class="mb-4">
-                                <label class="block text-gray-700 mb-2" for="level_kemungkinan">Level
+                                <label class="block text-gray-700 mb-2" for="name">Level
                                     Kemungkinan</label>
-                                <input type="text" name="level_kemungkinan" id="level_kemungkinan"
-                                    value="{{ old('level_kemungkinan') }}"
+                                <input type="text" name="name" id="level_kemungkinan"
+                                    value="{{ old('name') }}"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
                                 @error('level_kemungkinan')
@@ -105,10 +105,10 @@
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2" for="level_kemungkinan_edit">Level
                                     Kemungkinan</label>
-                                <input type="text" name="level_kemungkinan" id="level_kemungkinan_edit"
+                                <input type="text" name="name" id="level_kemungkinan_edit"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('level_kemungkinan')
+                                @error('name')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>

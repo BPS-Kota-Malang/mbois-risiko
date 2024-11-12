@@ -31,12 +31,12 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-                @foreach ($penyebab as $item)
+                @forelse ($penyebab as $item)
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration + ($penyebab->currentPage() - 1) * $penyebab->perPage() }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span id="penyebab-text-{{ $item->id }}" class="penyebab-text cursor-pointer" onclick="editPenyebab({{ $item->id }})">
-                            {{ $item->penyebab }}
+                            {{ $item->name }}
                         </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
@@ -62,7 +62,11 @@
                         </div>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="4" class="px-6 py-4 text-center text-gray-500">Data Penyebab Belum Ada</td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
@@ -149,7 +153,7 @@
                             'X-CSRF-TOKEN': '{{ csrf_token() }}',
                         },
                         body: JSON.stringify({
-                            penyebab: newValue,
+                            name: newValue,
                             status: statusText
                         }),
                     })
@@ -168,7 +172,7 @@
                     });
                 });
 
-                inputField.addEventListener('keypress', function(event) {
+                inputField.addEventListener('keydown', function(event) {
                     if (event.key === 'Enter') {
                         this.blur();
                     }
@@ -176,9 +180,8 @@
             }
         }
 
-        document.getElementById('closeModal').addEventListener('click', function() {
+        document.getElementById('closeModal').addEventListener('click', () => {
             document.getElementById('editModal').classList.add('hidden');
         });
-
     </script>
 </x-admin-layout>

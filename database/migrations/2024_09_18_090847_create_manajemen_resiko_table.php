@@ -28,6 +28,8 @@ class CreateManajemenResikoTable extends Migration
             $table->json('id_penyebab')->nullable();
             $table->json('id_dampak')->nullable();
             $table->json('id_uraian')->nullable();
+            $table->enum('respon_resiko', ['Mengurangi Risiko', 'Mengalihkan Risiko', 'Menghindari Risiko', 'Menerima Risiko'])->nullable();
+            $table->integer('prioritas')->nullable();
             $table->timestamps();
         });
     }

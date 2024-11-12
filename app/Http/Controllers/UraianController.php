@@ -17,7 +17,6 @@ class UraianController extends Controller
     {
         // Menangani pencarian melalui query string
         $search = $request->input('search');
-
         $query = Uraian::query();
 
         if ($search) {
@@ -30,10 +29,9 @@ class UraianController extends Controller
     }
 
 
-
     public function getUraianData(Request $request)
     {
-        $columns = ['id', 'uraian', 'status'];
+        $columns = ['id', 'name', 'status'];
 
         $query = Uraian::select($columns);
 
@@ -62,11 +60,11 @@ class UraianController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'uraian' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
         ]);
 
         Uraian::create([
-            'uraian' => $request->uraian,
+            'name' => $request->name,
             'status' => $request->status ?? 'On Progress', // default status if not provided
         ]);
 
@@ -99,8 +97,8 @@ class UraianController extends Controller
     {
         $uraian = Uraian::findOrFail($id);
 
-        if ($request->has('uraian')) {
-            $uraian->uraian = $request->input('uraian');
+        if ($request->has('name')) {
+            $uraian->name = $request->input('name');
         }
 
         if ($request->has('status')) {
@@ -125,7 +123,7 @@ class UraianController extends Controller
         return response()->json([
             'success' => true,
             'id' => $uraian->id,
-            'resiko' => $uraian->uraian,
+            'uraian' => $uraian->uraian,
             'status' => $uraian->status,
         ]);
     }

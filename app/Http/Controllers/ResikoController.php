@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Resiko;
+use App\Models\Resiko; // Ensure the Resiko model exists in App\Models namespace
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -15,7 +15,6 @@ class ResikoController extends Controller
     {
         // Menangani pencarian melalui query string
         $search = $request->input('search');
-
         $query = Resiko::query();
 
         if ($search) {
@@ -25,15 +24,15 @@ class ResikoController extends Controller
 
         $resiko = $query->paginate(10); // pagination data resiko
         return view('admin.resiko', compact('resiko'));
-
     }
+
 
     /**
      * Fetch resiko data for DataTables.
      */
     public function getResikoData(Request $request)
     {
-        $columns = ['id', 'resiko', 'status'];
+        $columns = ['id', 'name', 'status'];
 
         $query = Resiko::select($columns);
 
@@ -51,14 +50,15 @@ class ResikoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
         $request->validate([
-            'resiko' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
         ]);
 
         Resiko::create([
-            'resiko' => $request->resiko,
+            'name' => $request->name,
             'status' => $request->status ?? 'On Progress', // default status if not provided
         ]);
 
@@ -81,8 +81,8 @@ class ResikoController extends Controller
     {
         $resiko = Resiko::findOrFail($id);
 
-        if ($request->has('resiko')) {
-            $resiko->resiko = $request->input('resiko');
+        if ($request->has('name')) {
+            $resiko->name = $request->input('name');
         }
 
         if ($request->has('status')) {

@@ -32,12 +32,12 @@
                                     {{ $loop->iteration }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    {{ $proses->proses_bisnis }}
+                                    {{ $proses->name }}
                                 </td>
                                 @if (auth()->check() && auth()->user()->hasRole('admin'))
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <a href="javascript:void(0)"
-                                        onclick="openEditprosesBisnisModal('{{ route('admin.prosesbisnis.update', $proses->id) }}', '{{ $proses->proses_bisnis }}')"
+                                        onclick="openEditprosesBisnisModal('{{ route('admin.prosesbisnis.update', $proses->id) }}', '{{ $proses->name }}')"
                                         class="text-indigo-600 hover:text-indigo-900 ml-4">Edit</a>
                                     <form action="{{ route('admin.prosesbisnis.destroy', $proses->id) }}" method="POST"
                                         class="inline ml-4"
@@ -79,8 +79,8 @@
                             @csrf
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2" for="proses_bisnis">Proses Bisnis</label>
-                                <input type="text" name="proses_bisnis" id="proses_bisnis"
-                                    value="{{ old('proses_bisnis') }}"
+                                <input type="text" name="name" id="name"
+                                    value="{{ old('name') }}"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
                                 @error('proses_bisnis')
@@ -101,7 +101,7 @@
                         class="bg-white border border-black shadow-md rounded-lg p-6 modal modal-content relative z-10">
                         <div class="flex justify-between items-center mb-4">
                             <h2 class="text-xl font-bold">Edit Proses Bisnis</h2>
-                            <button onclick="toggleModal('editprosesBisnisnModal')"
+                            <button onclick="toggleModal('editprosesBisnisModal')"
                                 class="text-gray-500 text-2xl ml-4">&times;</button>
                         </div>
                         <form id="editprosesBisnisForm" method="POST">
@@ -109,10 +109,10 @@
                             @method('PUT')
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2" for="proses_bisnis_edit">Proses Bisnis</label>
-                                <input type="text" name="proses_bisnis" id="proses_bisnis_edit"
+                                <input type="text" name="name" id="proses_bisnis_edit"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('proses_bisnis')
+                                @error('name')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>

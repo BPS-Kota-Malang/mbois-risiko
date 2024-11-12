@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('jenis_resiko', function (Blueprint $table) {
             $table->id(); // This creates an auto-incrementing primary key
-            $table->string('kode', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
-            $table->string('jenis_resiko', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
+            $table->string('name', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
             $table->timestamps(); // This creates 'created_at' and 'updated_at' columns
         });
     }

@@ -13,19 +13,17 @@ class PenyebabController extends Controller
      */
     public function index(Request $request)
     {
-         // Menangani pencarian melalui query string
-         $search = $request->input('search');
+        // Menangani pencarian melalui query string
+        $search = $request->input('search');
+        $query = Penyebab::query();
 
-         $query = Penyebab::query();
+        if ($search) {
+            $query->where('penyebab', 'like', "%{$search}%")
+                  ->orWhere('status', 'like', "%{$search}%");
+        }
 
-         if ($search) {
-             $query->where('penyebab', 'like', "%{$search}%")
-                   ->orWhere('status', 'like', "%{$search}%");
-         }
-
-         $penyebab = $query->paginate(10); // pagination data penyebab
-         return view('admin.penyebab', compact('penyebab'));
-
+        $penyebab = $query->paginate(10); // pagination data penyebab
+        return view('admin.penyebab', compact('penyebab'));
     }
 
     /**
@@ -33,7 +31,7 @@ class PenyebabController extends Controller
      */
     public function getPenyebabData(Request $request)
     {
-        $columns = ['id', 'penyebab', 'status'];
+        $columns = ['id', 'name', 'status'];
 
         $query = Penyebab::select($columns);
 
@@ -54,11 +52,11 @@ class PenyebabController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'penyebab' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
         ]);
 
         Penyebab::create([
-            'penyebab' => $request->penyebab,
+            'name' => $request->name,
             'status' => $request->status ?? 'On Progress', // default status if not provided
         ]);
 
@@ -81,8 +79,8 @@ class PenyebabController extends Controller
     {
         $penyebab = Penyebab::findOrFail($id);
 
-        if ($request->has('penyebab')) {
-            $penyebab->penyebab = $request->input('penyebab');
+        if ($request->has('name')) {
+            $penyebab->name = $request->input('name');
         }
 
         if ($request->has('status')) {
@@ -110,7 +108,7 @@ class PenyebabController extends Controller
         return response()->json([
             'success' => true,
             'id' => $penyebab->id,
-            'resiko' => $penyebab->penyebab,
+            'penyebab' => $penyebab->penyebab,
             'status' => $penyebab->status,
         ]);
     }

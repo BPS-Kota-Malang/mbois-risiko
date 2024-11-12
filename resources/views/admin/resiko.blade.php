@@ -36,7 +36,7 @@
                     <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration + ($resiko->currentPage() - 1) * $resiko->perPage() }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span id="resiko-text-{{ $item->id }}" class="resiko-text cursor-pointer" onclick="editResiko({{ $item->id }})">
-                            {{ $item->resiko }}
+                            {{ $item->name }}
                         </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
@@ -150,7 +150,7 @@
                             'X-CSRF-TOKEN': '{{ csrf_token() }}',
                         },
                         body: JSON.stringify({
-                            resiko: newValue,
+                            name: newValue,
                             status: statusText
                         }),
                     })

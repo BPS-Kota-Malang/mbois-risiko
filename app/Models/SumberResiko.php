@@ -9,7 +9,7 @@ class SumberResiko extends Model
     protected $table = 'sumber_resiko';
     protected $fillable = [
         'kode',
-        'sumber_resiko',
+        'name',
     ];
     protected $guarded = [];
     public $timestamps = true;

@@ -36,7 +36,7 @@
                                     {{ $loop->iteration }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
-                                    {{ $leveldampak->level_dampak }}
+                                    {{ $leveldampak->name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                                     {{ $leveldampak->deskripsi }}
@@ -45,7 +45,7 @@
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                                     <div class="inline-flex space-x-4 justify-center">
                                         <button
-                                            onclick="openEditLevelDampakModal('{{ route('admin.leveldampak.update', $leveldampak->id) }}', '{{ $leveldampak->level_dampak }}', '{{ $leveldampak->deskripsi }}')"
+                                            onclick="openEditLevelDampakModal('{{ route('admin.leveldampak.update', $leveldampak->id) }}', '{{ $leveldampak->name }}', '{{ $leveldampak->deskripsi }}')"
                                             class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                             Edit
                                         </button>
@@ -78,12 +78,12 @@
                         <form action="{{ route('admin.leveldampak.store') }}" method="POST">
                             @csrf
                             <div class="mb-4">
-                                <label class="block text-gray-700 mb-2" for="level_dampak">Level Dampak</label>
-                                <input type="text" name="level_dampak" id="level_dampak"
-                                    value="{{ old('level_dampak') }}"
+                                <label class="block text-gray-700 mb-2" for="name">Level Dampak</label>
+                                <input type="text" name="name" id="level_dampak"
+                                    value="{{ old('name') }}"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('level_dampak')
+                                @error('name')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -118,10 +118,10 @@
                             @method('PUT')
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2" for="level_dampak_edit">Level Dampak</label>
-                                <input type="text" name="level_dampak" id="level_dampak_edit"
+                                <input type="text" name="name" id="level_dampak_edit"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('level_dampak')
+                                @error('name')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>

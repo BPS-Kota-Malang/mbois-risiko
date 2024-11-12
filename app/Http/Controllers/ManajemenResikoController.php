@@ -33,7 +33,7 @@ class ManajemenResikoController extends Controller
         $penyebab = Penyebab::all();
         $dampak = Dampak::all();
         $ProsesBisnis = ProsesBisnis::all();
-        $ManajemenResiko = ManajemenResiko::all();
+        $manajemenResikos = ManajemenResiko::all();
 
 
         $query = ManajemenResiko::query();
@@ -46,11 +46,11 @@ class ManajemenResikoController extends Controller
             $query->where('id_proses_bisnis', $prosesBisnis);  // Adjust 'id_proses_bisnis' to the correct column name
         }
 
-        $ManajemenResiko = $query->with(['prosesbisnis', 'tim_project', 'resiko'])->get();
+        $manajemenResikos = $query->with(['prosesbisnis', 'tim_project', 'resiko'])->paginate(10);
 
         return view('admin.risk.identification', compact(
             'jenisResiko', 'penyebab', 'sumberResiko', 'kategoriResiko',
-            'areaDampak', 'timProjects', 'dampak', 'resiko', 'ProsesBisnis', 'ManajemenResiko'
+            'areaDampak', 'timProjects', 'dampak', 'resiko', 'ProsesBisnis', 'manajemenResikos'
         ));
     }
 
@@ -62,41 +62,7 @@ class ManajemenResikoController extends Controller
         //
     }
 
-    /**
-     * Add Row to Table
-     */
 
-    //  public function initialStore(Request $request)
-    // {
-    //      // Retrieve the array of selected IDs and form values
-    //      $selectedIds = $request->input('data', []);
-    //      $formValues = $request->input('formValues', []);
-
-    //      // Validate formValues to ensure they exist
-    //      $tim = $formValues['tim'] ?? null;
-    //      $prosesBisnis = $formValues['proses_bisnis'] ?? null;
-
-    //      // Check if required values are provided
-    //      if (!$tim || !$prosesBisnis) {
-    //          return response()->json([
-    //              'errors' => 'Tim and Proses Bisnis are required.'
-    //          ], 400);
-    //      }
-
-    //      // Create records for each selected ID
-    //      foreach ($selectedIds as $id) {
-    //          ManajemenResiko::create([
-    //              'id_resiko' => $id,
-    //              'id_tim_project' => $tim,
-    //              'id_proses_bisnis' => $prosesBisnis,
-    //          ]);
-    //      }
-
-    //      return response()->json([
-    //          'success' => true,
-    //          'message' => 'Data berhasil disimpan.'
-    //      ]);
-    // }
 
      public function initialStore (Request $request)
      {
@@ -267,27 +233,6 @@ class ManajemenResikoController extends Controller
         // Response route
         return redirect()->route('admin.manajemenrisiko.index')->with('success', 'Data berhasil dihapus.');
     }
-
-    //backup punya savedampak
-    // public function saveDampak(Request $request)
-    // {
-    //     $request->validate([
-    //         'dampak' => 'required|array',
-    //         'manajemen_resiko_id' => 'required|exists:manajemen_resiko,id',
-    //     ]);
-
-    //     $manajemenResiko = ManajemenResiko::find($request->manajemen_resiko_id);
-
-    //     if (!$manajemenResiko) {
-    //         return response()->json(['success' => false, 'message' => 'Manajemen Resiko tidak ditemukan.'], 404);
-    //     }
-
-    //     // Simpan dampak yang dipilih dalam format JSON
-    //     $manajemenResiko->id_dampak = json_encode($request->dampak);
-    //     $manajemenResiko->save();
-
-    //     return response()->json(['success' => true, 'message' => 'Dampak berhasil disimpan.']);
-    // }
 
     /**
      * Display the specified resource.

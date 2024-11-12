@@ -29,7 +29,9 @@
     use App\Http\Controllers\Context\OpsiPenangananController;
     use App\Http\Controllers\Context\ProsesBisnisController;
     use App\Http\Controllers\DampakController;
+    use App\Http\Controllers\EvaluationController;
     use App\Http\Controllers\ManajemenResikoController;
+    use App\Http\Controllers\PerencanaanController;
     use App\Http\Controllers\UraianController;
 
 
@@ -49,9 +51,9 @@ Route::middleware('auth')->group(function () {
     // Sidebar - Risk Management
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/context', [ContextController::class, 'index'])->name('admin.risk.context');
-    Route::get('/admin/risk/analysis', [RiskController::class, 'analysis'])->name('admin.risk.analysis');
-    Route::get('/admin/risk/evaluation', [RiskController::class, 'evaluation'])->name('admin.risk.evaluation');
-    Route::get('/admin/risk/action_plan', [RiskController::class, 'actionPlan'])->name('admin.risk.action_plan');
+    Route::get('/admin/risk/analysis', [AnalisisController::class, 'analysis'])->name('admin.risk.analysis');
+    Route::get('/admin/risk/evaluation', [EvaluationController::class, 'evaluation'])->name('admin.risk.evaluation');
+    Route::get('/admin/risk/perencanaan', [PerencanaanController::class, 'perencanaan'])->name('admin.risk.perencanaan');
 
 
     Route::resource('/pemangkukepentingan', PemangkuKepentinganController::class, ['as' => 'admin']);
@@ -72,6 +74,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/prosesbisnis', ProsesBisnisController::class, ['as' => 'admin']);
     Route::resource('/identification', IdentificationController::class, ['as' => 'admin']);
     Route::resource('/resiko', ResikoController::class, ['as' => 'admin']);
+    Route::resource('/evaluation', EvaluationController::class, ['as' => 'admin']);
+    Route::resource('/perencanaan', PerencanaanController::class, ['as' => 'admin']);
 
     //penyebab
     Route::resource('/penyebab', PenyebabController::class, ['as' => 'admin']);
@@ -106,6 +110,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/analisis/hapusuraian/{id}/{uraian}', [AnalisisController::class, 'hapusUraian']);
     Route::resource('/analisis', AnalisisController::class, ['as' => 'admin']);
     Route::post('/admin/analisis/saveuraian', [AnalisisController::class, 'saveUraian'])->name('admin.analisis.saveuraian');
+    Route::post('/update-respon-resiko/{id}', [EvaluationController::class, 'updateResponResiko']);
 
 
 });

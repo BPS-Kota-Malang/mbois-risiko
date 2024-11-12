@@ -10,7 +10,7 @@ class Resiko extends Model
     use HasFactory;
     protected $table = 'resiko';
 
-    protected $fillable = ['resiko', 'status']; // Tambahkan kolom status
+    protected $fillable = ['name', 'status']; // Tambahkan kolom status
 
     protected $attributes = [
         'status' => null,

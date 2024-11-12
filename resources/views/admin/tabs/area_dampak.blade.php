@@ -33,12 +33,12 @@
                                     {{ $loop->iteration }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
-                                    {{ $area->area_dampak }}
+                                    {{ $area->name }}
                                 </td>
                                 @if (auth()->check() && auth()->user()->hasRole('admin'))
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center flex items-center justify-center space-x-4">
                                     <a href="javascript:void(0)"
-                                        onclick="openEditAreaDampakModal('{{ route('admin.areadampak.update', $area->id) }}', '{{ $area->area_dampak }}')"
+                                        onclick="openEditAreaDampakModal('{{ route('admin.areadampak.update', $area->id) }}', '{{ $area->name }}')"
                                         class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Edit</a>
                                     <form action="{{ route('admin.areadampak.destroy', $area->id) }}" method="POST"
                                         class="inline"
@@ -68,11 +68,11 @@
                             @csrf
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2" for="area_dampak">Area Dampak</label>
-                                <input type="text" name="area_dampak" id="area_dampak"
-                                    value="{{ old('area_dampak') }}"
+                                <input type="text" name="name" id="area_dampak"
+                                    value="{{ old('name') }}"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('area_dampak')
+                                @error('name')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -98,10 +98,10 @@
                             @method('PUT')
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2" for="area_dampak_edit">Area Dampak</label>
-                                <input type="text" name="area_dampak" id="area_dampak_edit"
+                                <input type="text" name="name" id="area_dampak_edit"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('area_dampak')
+                                @error('name')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>

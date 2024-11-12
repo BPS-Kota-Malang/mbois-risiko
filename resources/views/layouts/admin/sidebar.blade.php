@@ -26,7 +26,7 @@
 
         <div class="relative group ">
             <button id="dropdown-button"
-                class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.risk.context') || Route::currentRouteNamed('admin.manajemenrisiko.index') || Route::currentRouteNamed('admin.analisis.index') || Route::currentRouteNamed('admin.risk.evaluation') || Route::currentRouteNamed('admin.risk.action_plan') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25">
+                class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.risk.context') || Route::currentRouteNamed('admin.manajemenrisiko.index') || Route::currentRouteNamed('admin.analisis.index') || Route::currentRouteNamed('admin.risk.evaluation') || Route::currentRouteNamed('admin.risk.perencanaan') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25">
                 <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 24 24"stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -82,8 +82,8 @@
                     <span class="mx-3">Evaluasi Resiko</span>
                 </a>
 
-                <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.risk.action_plan') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
-                    href="{{ route('admin.risk.action_plan') }}">
+                <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.risk.perencanaan') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
+                    href="{{ route('admin.risk.perencanaan') }}">
                     <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

@@ -15,25 +15,24 @@ class DampakController extends Controller
     {
         // Menangani pencarian melalui query string
         $search = $request->input('search');
-
         $query = Dampak::query();
 
         if ($search) {
             $query->where('dampak', 'like', "%{$search}%")
-                    ->orWhere('status', 'like', "%{$search}%");
+                  ->orWhere('status', 'like', "%{$search}%");
         }
 
         $dampak = $query->paginate(10); // pagination data dampak
         return view('admin.dampak', compact('dampak'));
-
     }
 
+
     /**
-     * Fetch dapek data for DataTables.
+     * Fetch dampak data for DataTables.
      */
     public function getDampakData(Request $request)
     {
-        $columns = ['id', 'dampak', 'status'];
+        $columns = ['id', 'name', 'status'];
 
         $query = Dampak::select($columns);
 
@@ -54,11 +53,11 @@ class DampakController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'dampak' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
         ]);
 
         Dampak::create([
-            'dampak' => $request->dampak,
+            'name' => $request->name,
             'status' => $request->status ?? 'On Progress', // default status if not provided
         ]);
 
@@ -81,8 +80,8 @@ class DampakController extends Controller
     {
         $dampak = Dampak::findOrFail($id);
 
-        if ($request->has('dampak')) {
-            $dampak->dampak = $request->input('dampak');
+        if ($request->has('name')) {
+            $dampak->name = $request->input('name');
         }
 
         if ($request->has('status')) {
@@ -110,7 +109,7 @@ class DampakController extends Controller
         return response()->json([
             'success' => true,
             'id' => $dampak->id,
-            'resiko' => $dampak->dampak,
+            'dampak' => $dampak->dampak,
             'status' => $dampak->status,
         ]);
     }

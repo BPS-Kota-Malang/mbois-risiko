@@ -10,7 +10,7 @@
                         <option value="">-- Pilih Tim/Bidang --</option>
                         @foreach ($timProjects as $tim)
                             <option value="{{ $tim->id }}" {{ request('tim') == $tim->id ? 'selected' : '' }}>
-                                {{ $tim->nama_team }}
+                                {{ $tim->name }}
                             </option>
                         @endforeach
                     </select>
@@ -22,7 +22,7 @@
                         @foreach ($ProsesBisnis as $proses)
                             <option value="{{ $proses->id }}"
                                 {{ request('proses_bisnis') == $proses->id ? 'selected' : '' }}>
-                                {{ $proses->proses_bisnis }}
+                                {{ $proses->name }}
                             </option>
                         @endforeach
                     </select>
@@ -68,50 +68,56 @@
                                 style="width: 200px;">Uraian</th>
                             <th class="px-6 py-3 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-200"
                                 style="width: 100px;">Efektivitas</th>
-                            @if (auth()->check() && auth()->user()->hasRole('admin') || auth()->user()->hasRole('ketua_tim'))
+                            @if ((auth()->check() && auth()->user()->hasRole('admin')) || auth()->user()->hasRole('ketua_tim'))
                             <th class="px-6 py-3 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-200"
                                 style="width: 100px;">Action</th>
                             @endif
                         </tr>
                     </thead>
-
-                    @foreach ($ManajemenResiko as $ManajemenResiko)
+                    @if ($manajemenResikos->isEmpty())
+                        <tr>
+                            <td colspan="15" class="text-center py-4">
+                                Data Tidak Ada
+                            </td>
+                        </tr>
+                    @else
+                    @foreach ($manajemenResikos as $ManajemenResiko)
                         <form action="{{ route('admin.analisis.update', $ManajemenResiko->id) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <tr>
                                 <input type="hidden" name="manajemen_resiko_ids[]" value="{{ $ManajemenResiko->id }}">
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                                    {{ $loop->iteration }}
+                                    {{ $loop->iteration + (($manajemenResikos->currentPage() - 1) * $manajemenResikos->perPage()) }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                                    {{ $ManajemenResiko->prosesbisnis->proses_bisnis }}</td>
+                                    {{ $ManajemenResiko->prosesbisnis->name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                                    {{ $ManajemenResiko->tim_project->nama_team }}</td>
+                                    {{ $ManajemenResiko->tim_project->name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                                    {{ $ManajemenResiko->resiko->resiko }}</td>
+                                    {{ $ManajemenResiko->resiko->name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
                                     @if ($ManajemenResiko->jenisResiko)
-                                        {{ $ManajemenResiko->jenisResiko->jenis_resiko }}
-                                    @else<span class="text-red-500">Data Tidak Tersedia</span>
+                                        {{ $ManajemenResiko->jenisResiko->name }}
+                                    @else<span class="text-black text-center block">-</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
                                     @if ($ManajemenResiko->sumberResiko)
-                                        {{ $ManajemenResiko->sumberResiko->sumber_resiko }}
-                                    @else<span class="text-red-500">Data Tidak Tersedia</span>
+                                        {{ $ManajemenResiko->sumberResiko->name }}
+                                    @else<span class="text-black text-center block">-</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
                                     @if ($ManajemenResiko->kategoriResiko)
                                         {{ $ManajemenResiko->kategoriResiko->deskripsi }}
-                                    @else<span class="text-red-500">Data Tidak Tersedia</span>
+                                    @else<span class="text-black text-center block">-</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
                                     @if ($ManajemenResiko->areaDampak)
-                                        {{ $ManajemenResiko->areaDampak->area_dampak }}
-                                    @else<span class="text-red-500">Data Tidak Tersedia</span>
+                                        {{ $ManajemenResiko->areaDampak->name }}
+                                    @else<span class="text-black text-center block">-</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
@@ -119,14 +125,14 @@
                                         @php
                                             $penyebabIds = json_decode($ManajemenResiko->id_penyebab, true);
                                             $penyebabNames = \App\Models\Penyebab::whereIn('id', $penyebabIds)
-                                                ->pluck('penyebab')
+                                                ->pluck('name') // Ganti 'penyebab' dengan 'name'
                                                 ->toArray();
                                         @endphp
                                         @foreach ($penyebabNames as $penyebab)
                                             <li class="list-disc">{{ $penyebab }}</li>
                                         @endforeach
                                     @else
-                                        <span class="text-red-500">Tidak ada penyebab</span>
+                                        <span class="text-black text-center block">-</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
@@ -134,38 +140,38 @@
                                         @php
                                             $dampakIds = json_decode($ManajemenResiko->id_dampak, true);
                                             $dampakNames = \App\Models\Dampak::whereIn('id', $dampakIds)
-                                                ->pluck('dampak')
+                                                ->pluck('name') // Ganti 'dampak' dengan 'name'
                                                 ->toArray();
                                         @endphp
                                         @foreach ($dampakNames as $dampak)
                                             <li class="list-disc">{{ $dampak }}</li>
                                         @endforeach
                                     @else
-                                        <span class="text-red-500">Tidak ada dampak</span>
+                                        <span class="text-black text-center block">-</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                                    <select name="level_kemungkinan[]" class="form-select pr-8 py-2 border"
+                                    <select name="level_kemungkinan[]" class="form-select pr-8 py-2 border rounded-lg"
                                         id="levelKemungkinan{{ $ManajemenResiko->id }}"
                                         {{ !is_null($ManajemenResiko->id_level_kemungkinan) ? 'disabled' : '' }}>
-                                        <option value="">-- Pilih Level Kemungkinan --</option>
+                                        <option  value="">-- Pilih Level Kemungkinan --</option>
                                         @foreach ($levelKemungkinan as $kemungkinan)
-                                            <option value="{{ $kemungkinan->id }}"
+                                            <option  value="{{ $kemungkinan->id }}"
                                                 {{ $kemungkinan->id == $ManajemenResiko->id_level_kemungkinan ? 'selected' : '' }}>
-                                                {{ $kemungkinan->level_kemungkinan }}
+                                                {{ $kemungkinan->name }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                                    <select name="level_dampak[]" class="form-select pr-8 py-2 border"
+                                    <select name="level_dampak[]" class="form-select pr-8 py-2 border rounded-lg"
                                         id="levelDampak{{ $ManajemenResiko->id }}"
                                         {{ !is_null($ManajemenResiko->id_level_dampak) ? 'disabled' : '' }}>
                                         <option value="">-- Pilih Level Dampak --</option>
                                         @foreach ($levelDampak as $dampak)
                                             <option value="{{ $dampak->id }}"
                                                 {{ $dampak->id == $ManajemenResiko->id_level_dampak ? 'selected' : '' }}>
-                                                {{ $dampak->level_dampak }}
+                                                {{ $dampak->name }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -192,7 +198,8 @@
                                     @endif
                                 </td>
 
-                                @if (auth()->check() && auth()->user()->hasRole('admin') || auth()->user()->hasRole('ketua_tim'))
+                                {{-- uraian --}}
+                                @if ((auth()->check() && auth()->user()->hasRole('admin')) || (auth()->user()->hasRole('ketua_tim') && optional(auth()->user()->pegawai)->team_id == $ManajemenResiko->tim_project->id))
                                 <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
                                     <div class="flex flex-col items-center">
                                         <!-- Tombol Pilih Uraian dipusatkan -->
@@ -219,7 +226,7 @@
                                                                 $uraianHapus = array_diff($uraianIds, [$item]);
                                                             @endphp
                                                             <li class="flex justify-between items-center">
-                                                                <span>{{ $uraianItem->uraian }}</span>
+                                                                <span>{{ $uraianItem->name }}</span>
                                                                 <a href="{{ url('/admin/analisis/hapusuraian/' . $ManajemenResiko->id . '/' . $item) }}"
                                                                     class="text-red-500 hover:text-red-700 ml-2"
                                                                     id="hapusUraian"
@@ -234,7 +241,7 @@
 
                                             @else
                                                 <!-- Jika tidak ada uraian yang dipilih -->
-                                                <p class="text-gray-500 italic ml-4">Tidak ada Uraian yang dipilih</p>
+                                                <p class="text-gray-500 italic ml-4 text-center">-</p>
                                             @endif
                                         </div>
                                     </div>
@@ -257,7 +264,7 @@
                                                             $uraianHapus = array_diff($uraianIds, [$item]);
                                                         @endphp
                                                         <li class="list-disc ">
-                                                            <span>{{ $uraianItem->uraian }}</span>
+                                                            <span>{{ $uraianItem->name }}</span>
                                                         </li>
                                                     @endif
                                                 @endforeach
@@ -266,14 +273,14 @@
 
                                         @else
                                             <!-- Jika tidak ada uraian yang dipilih -->
-                                            <p class="text-red-500 italic ml-4">Tidak ada Uraian yang dipilih</p>
+                                            <p class="text-red-500 italic ml-4 text-center">-</p>
                                         @endif
                                     </div>
                                 </td>
                                 @endif
 
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                                    <select name="efektivitas[]" class="form-select pr-8 py-2 border"
+                                    <select name="efektivitas[]" class="form-select pr-8 py-2 border rounded-lg"
                                         id="efektivitas{{ $ManajemenResiko->id }}"
                                         {{ is_null($ManajemenResiko->efektivitas) ? '' : 'disabled' }}>
                                         <option value="">-- Pilih Efektivitas --</option>
@@ -287,19 +294,38 @@
                                         </option>
                                     </select>
                                 </td>
-                                @if (auth()->check() && auth()->user()->hasRole('admin') || auth()->user()->hasRole('ketua_tim'))
-                                <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                                    <a class="bg-blue-500 text-white width-mt-2 px-2 py-2 rounded cursor-pointer"
-                                        id="btnEdit" data-id="{{ $ManajemenResiko->id }}">Edit</a>
-                                    <button type="submit"
-                                        class="bg-green-500 text-white px-2 py-1 rounded">Save
-                                    </button>
-                                </td>
+                                @if (auth()->user()->hasRole('admin'))
+                                    <!-- Admin specific content -->
+                                    <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
+                                        <a class="bg-blue-500 text-white width-mt-2 px-2 py-2 rounded cursor-pointer"
+                                            id="btnEdit" data-id="{{ $ManajemenResiko->id }}">Edit</a>
+                                        <button type="submit"
+                                            class="bg-green-500 text-white px-2 py-1 rounded">Save
+                                        </button>
+                                    </td>
+                                @elseif (auth()->user()->hasRole('ketua_tim'))
+                                    @if ((optional(auth()->user()->pegawai)->team_id == $ManajemenResiko->tim_project->id))
+                                        <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
+                                            <a class="bg-blue-500 text-white width-mt-2 px-2 py-2 rounded cursor-pointer"
+                                                id="btnEdit" data-id="{{ $ManajemenResiko->id }}">Edit</a>
+                                            <button type="submit"
+                                                class="bg-green-500 text-white px-2 py-1 rounded">Save
+                                            </button>
+                                        </td>
+                                    @else
+                                        <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                            <p class="text-red-500 text-center">Tidak Memiliki Izin Beda TIM</p>
+                                        </td>
+                                    @endif
                                 @endif
                     </form>
                     @endforeach
+                    @endif
                 </table>
             </div>
+        </div>
+        <div class="flex justify-center mt-4">
+            {{ $manajemenResikos->links() }}
         </div>
     </div>
     @include('admin.risk.components.modal-uraian')
@@ -441,7 +467,7 @@
                             }
                         },
                         {
-                            data: "uraian"
+                            data: "name"
                         },
                         {
                             data: "status",

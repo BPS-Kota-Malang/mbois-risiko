@@ -13,7 +13,7 @@
                                 @foreach ($areaDampak as $area)
                                     <option value="{{ $area->id }}"
                                         {{ request('filter_area_dampak') == $area->id ? 'selected' : '' }}>
-                                        {{ $area->area_dampak }}
+                                        {{ $area->name }}
                                     </option>
                                 @endforeach
                             </select>
@@ -27,7 +27,7 @@
                                 @foreach ($levelDampak as $level)
                                     <option value="{{ $level->id }}"
                                         {{ request('filter_level_dampak') == $level->id ? 'selected' : '' }}>
-                                        {{ $level->level_dampak }}
+                                        {{ $level->name }}
                                     </option>
                                 @endforeach
                             </select>
@@ -79,10 +79,10 @@
                                     {{ $loop->iteration }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    {{ $kriteria->areaDampak->area_dampak }}
+                                    {{ $kriteria->areaDampak->name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    {{ $kriteria->levelDampak->level_dampak }}
+                                    {{ $kriteria->levelDampak->name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     {{ $kriteria->deskripsi_negatif }}
@@ -134,7 +134,7 @@
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
                                     @foreach ($areaDampak as $area)
-                                        <option value="{{ $area->id }}">{{ $area->area_dampak }}</option>
+                                        <option value="{{ $area->id }}">{{ $area->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('id_area_dampak')
@@ -147,7 +147,7 @@
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
                                     @foreach ($levelDampak as $level)
-                                        <option value="{{ $level->id }}">{{ $level->level_dampak }}</option>
+                                        <option value="{{ $level->id }}">{{ $level->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('id_level_dampak')
@@ -209,7 +209,7 @@
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
                                     @foreach ($areaDampak as $area)
-                                        <option value="{{ $area->id }}">{{ $area->area_dampak }}</option>
+                                        <option value="{{ $area->id }}">{{ $area->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('edit_id_area_dampak')
@@ -223,7 +223,7 @@
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
                                     @foreach ($levelDampak as $level)
-                                        <option value="{{ $level->id }}">{{ $level->level_dampak }}</option>
+                                        <option value="{{ $level->id }}">{{ $level->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('edit_id_level_dampak')

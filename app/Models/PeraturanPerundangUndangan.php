@@ -12,7 +12,7 @@ class PeraturanPerundangUndangan extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'peraturan_perundang_undangan',
+        'name',
         'amanat',
     ];
 }

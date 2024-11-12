@@ -31,12 +31,12 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-                @foreach ($dampak as $item)
+                @forelse ($dampak as $item)
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration + ($dampak->currentPage() - 1) * $dampak->perPage() }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span id="dampak-text-{{ $item->id }}" class="dampak-text cursor-pointer" onclick="editDampak({{ $item->id }})">
-                            {{ $item->dampak }}
+                            {{ $item->name }}
                         </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
@@ -62,7 +62,11 @@
                         </div>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="4" class="px-6 py-4 text-center text-gray-500">Data Dampak Belum Ada</td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>

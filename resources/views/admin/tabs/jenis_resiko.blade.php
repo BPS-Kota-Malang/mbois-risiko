@@ -16,9 +16,6 @@
                                 No
                             </th>
                             <th class="px-6 py-3 text-center text-xs font-medium text-black-500 uppercase tracking-wider">
-                                Kode
-                            </th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Jenis Resiko
                             </th>
                             @if (auth()->check() && auth()->user()->hasRole('admin'))
@@ -35,16 +32,13 @@
                                     {{ $loop->iteration }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
-                                    {{ $jenis->kode }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
-                                    {{ $jenis->jenis_resiko }}
+                                    {{ $jenis->name }}
                                 </td>
                                 @if (auth()->check() && auth()->user()->hasRole('admin'))
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                                     <div class="inline-flex space-x-4 justify-center">
                                         <button
-                                            onclick="openEditJenisResikoModal('{{ route('admin.jenisresiko.update', $jenis->id) }}', '{{ $jenis->kode }}', '{{ $jenis->jenis_resiko }}')"
+                                            onclick="openEditJenisResikoModal('{{ route('admin.jenisresiko.update', $jenis->id) }}', '{{ $jenis->name }}')"
                                             class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                             Edit
                                         </button>
@@ -91,21 +85,12 @@
                         <form action="{{ route('admin.jenisresiko.store') }}" method="POST">
                             @csrf
                             <div class="mb-4">
-                                <label class="block text-gray-700 mb-2" for="kode">Kode</label>
-                                <input type="text" name="kode" id="kode" value="{{ old('kode') }}"
-                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    required>
-                                @error('kode')
-                                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div class="mb-4">
-                                <label class="block text-gray-700 mb-2" for="jenis_resiko">Jenis Resiko</label>
-                                <input type="text" name="jenis_resiko" id="jenis_resiko"
+                                <label class="block text-gray-700 mb-2" for="name">Jenis Resiko</label>
+                                <input type="text" name="name" id="name"
                                     value="{{ old('jenis_resiko') }}"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('jenis_resiko')
+                                @error('name')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -131,20 +116,11 @@
                             @csrf
                             @method('PUT')
                             <div class="mb-4">
-                                <label class="block text-gray-700 mb-2" for="kode_edit">Kode</label>
-                                <input type="text" name="kode" id="kode_edit"
-                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    required>
-                                @error('kode')
-                                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div class="mb-4">
                                 <label class="block text-gray-700 mb-2" for="jenis_resiko_edit">Jenis Resiko</label>
-                                <input type="text" name="jenis_resiko" id="jenis_resiko_edit"
+                                <input type="text" name="name" id="jenis_resiko_edit"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('jenis_resiko')
+                                @error('name')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -164,10 +140,9 @@
         document.getElementById(modalId).classList.toggle('hidden');
     }
 
-    function openEditJenisResikoModal(url, kode, jenisResiko) {
+    function openEditJenisResikoModal(url, jenisResiko) {
         const editJenisResikoForm = document.getElementById('editJenisResikoForm');
         editJenisResikoForm.action = url;
-        document.getElementById('kode_edit').value = kode;
         document.getElementById('jenis_resiko_edit').value = jenisResiko;
         toggleModal('editJenisResikoModal');
     }

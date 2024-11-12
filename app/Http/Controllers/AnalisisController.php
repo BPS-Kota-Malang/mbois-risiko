@@ -55,7 +55,7 @@ class AnalisisController extends Controller
         }
 
         // Use paginate method on the query builder instance
-        $ManajemenResiko = $query->with(['prosesBisnis', 'tim_project', 'resiko', 'matriksAnalisisResiko'])->paginate(10);
+        $manajemenResikos = $query->with(['prosesBisnis', 'tim_project', 'resiko', 'matriksAnalisisResiko'])->paginate(10);
 
         return view('admin.risk.analysis', compact(
             'jenisResiko',
@@ -67,7 +67,7 @@ class AnalisisController extends Controller
             'dampak',
             'resiko',
             'ProsesBisnis',
-            'ManajemenResiko',
+            'manajemenResikos',
             'levelKemungkinan',
             'levelResiko',
             'levelDampak',

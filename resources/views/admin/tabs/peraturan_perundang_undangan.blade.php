@@ -37,14 +37,14 @@
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ $loop->iteration }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    {{ $item->peraturan_perundang_undangan }}</td>
+                                    {{ $item->name }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ $item->amanat }}
                                 </td>
                                 @if (auth()->check() && auth()->user()->hasRole('admin'))
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                                     <div class="inline-flex space-x-4">
                                         <button
-                                            onclick="openEditPPUModal('{{ route('admin.peraturan.update', $item->id) }}', '{{ $item->peraturan_perundang_undangan }}', '{{ $item->amanat }}')"
+                                            onclick="openEditPPUModal('{{ route('admin.peraturan.update', $item->id) }}', '{{ $item->name }}', '{{ $item->amanat }}')"
                                             class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                             Edit
                                         </button>
@@ -80,13 +80,13 @@
             <form action="{{ route('admin.peraturan.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
-                    <label class="block text-gray-700 mb-2" for="peraturan-perundang-undangan">Peraturan
+                    <label class="block text-gray-700 mb-2" for="name">Peraturan
                         Perundang-undangan</label>
-                    <input type="text" name="peraturan_perundang_undangan" id="peraturan-perundang-undangan"
-                        value="{{ old('peraturan_perundang_undangan') }}"
+                    <input type="text" name="name" id="name"
+                        value="{{ old('name') }}"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         required>
-                    @error('peraturan_perundang_undangan')
+                    @error('name')
                         <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                     @enderror
                 </div>
@@ -119,10 +119,10 @@
                 <div class="mb-4">
                     <label class="block text-gray-700 mb-2" for="peraturan_perundang_undangan_edit">Peraturan
                         Perundang-undangan</label>
-                    <input type="text" name="peraturan_perundang_undangan" id="peraturan_perundang_undangan_edit"
+                    <input type="text" name="name" id="peraturan_perundang_undangan_edit"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         required>
-                    @error('peraturan_perundang_undangan')
+                    @error('name')
                         <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                     @enderror
                 </div>
@@ -146,10 +146,6 @@
     function toggleModal() {
         document.getElementById(ModalID).classList.toggle('hidden');
     }
-
-    // function toggleEditPPUModal() {
-    //     document.getElementById('editPPUModal').classList.toggle('hidden');
-    // }
 
     function openEditPPUModal(url, peraturanPerundangUndangan, amanat) {
         const editPPUForm = document.getElementById('editPPUForm');

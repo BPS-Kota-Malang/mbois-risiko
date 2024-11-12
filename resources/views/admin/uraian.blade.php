@@ -19,8 +19,8 @@
         </div>
     @endif
 
-    <!-- Tabel Uraian -->
-    <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+     <!-- Tabel Uraian -->
+     <div class="overflow-x-auto bg-white shadow-md rounded-lg">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
@@ -31,12 +31,12 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-                @foreach ($uraian as $item)
+                @forelse ($uraian as $item)
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration + ($uraian->currentPage() - 1) * $uraian->perPage() }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span id="uraian-text-{{ $item->id }}" class="uraian-text cursor-pointer" onclick="editUraian({{ $item->id }})">
-                            {{ $item->uraian }}
+                            {{ $item->name }}
                         </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
@@ -62,7 +62,11 @@
                         </div>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="4" class="px-6 py-4 text-center text-gray-500">Data Uraian Belum Ada</td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
@@ -150,7 +154,7 @@
                             'X-CSRF-TOKEN': '{{ csrf_token() }}',
                         },
                         body: JSON.stringify({
-                            uraian: newValue,
+                            name: newValue,
                             status: statusText
                         }),
                     })

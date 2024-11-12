@@ -41,7 +41,7 @@
                                     {{ $key + 1 }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    {{ $levelResikoItem->level_resiko }}
+                                    {{ $levelResikoItem->name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     {{ $levelResikoItem->besaran_min }}-{{ $levelResikoItem->besaran_max }}
@@ -54,7 +54,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <button class="text-blue-500 hover:text-blue-700"
-                                        onclick="openEditLevelResikoModal('{{ route('admin.levelresiko.update', $levelResikoItem->id) }}', '{{ $levelResikoItem->level_resiko }}', '{{ $levelResikoItem->besaran_min }}','{{ $levelResikoItem->besaran_max }}', '{{ $levelResikoItem->tindakan }}', '{{ $levelResikoItem->ket_warna }}')">
+                                        onclick="openEditLevelResikoModal('{{ route('admin.levelresiko.update', $levelResikoItem->id) }}', '{{ $levelResikoItem->name }}', '{{ $levelResikoItem->besaran_min }}','{{ $levelResikoItem->besaran_max }}', '{{ $levelResikoItem->tindakan }}', '{{ $levelResikoItem->ket_warna }}')">
                                         Edit
                                     </button>
                                     <form action="{{ route('admin.levelresiko.destroy', $levelResikoItem->id) }}"
@@ -109,9 +109,9 @@
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ $key + 1 }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    {{ $matriksAnalisisResiko->levelKemungkinan->level_kemungkinan }}</td>
+                                    {{ $matriksAnalisisResiko->levelKemungkinan->name }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    {{ $matriksAnalisisResiko->levelDampak->level_dampak }}</td>
+                                    {{ $matriksAnalisisResiko->levelDampak->name }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     {{ $matriksAnalisisResiko->besaran_resiko }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -143,7 +143,7 @@
                 @csrf
                 <div class="mt-4">
                     <label class="block text-sm font-medium text-gray-700">Level Resiko</label>
-                    <input type="text" name="level_resiko"
+                    <input type="text" name="name"
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                 </div>
                 <div class="mt-4">
@@ -184,7 +184,7 @@
                 <input type="hidden" id="editLevelResikoId" name="id">
                 <div class="mt-4">
                     <label class="block text-sm font-medium text-gray-700">Level Resiko</label>
-                    <input type="text" id="editLevelResiko" name="level_resiko"
+                    <input type="text" id="editLevelResiko" name="name"
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                 </div>
                 <div class="mt-4">
@@ -227,7 +227,7 @@
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                         <option value="" disabled selected>Pilih Level Kemungkinan</option>
                         @foreach ($levelKemungkinan as $kemungkinan)
-                            <option value="{{ $kemungkinan->id }}">{{ $kemungkinan->level_kemungkinan }}</option>
+                            <option value="{{ $kemungkinan->id }}">{{ $kemungkinan->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -237,7 +237,7 @@
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                         <option value="" disabled selected>Pilih Level Dampak</option>
                         @foreach ($levelDampak as $dampak)
-                            <option value="{{ $dampak->id }}">{{ $dampak->level_dampak }}</option>
+                            <option value="{{ $dampak->id }}">{{ $dampak->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -274,7 +274,7 @@
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                         <option value="" disabled>Pilih Level Kemungkinan</option>
                         @foreach ($levelKemungkinan as $kemungkinan)
-                            <option value="{{ $kemungkinan->id }}">{{ $kemungkinan->level_kemungkinan }}</option>
+                            <option value="{{ $kemungkinan->id }}">{{ $kemungkinan->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -285,7 +285,7 @@
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                         <option value="" disabled>Pilih Level Dampak</option>
                         @foreach ($levelDampak as $dampak)
-                            <option value="{{ $dampak->id }}">{{ $dampak->level_dampak }}</option>
+                            <option value="{{ $dampak->id }}">{{ $dampak->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -320,12 +320,12 @@
 
             for (let range of levelResikoRanges) {
                 if (besaranResiko >= range.besaran_min && besaranResiko <= range.besaran_max) {
-                    levelResiko = range.level_resiko;
+                    levelResiko = range.name;
                     break;
                 }
             }
 
-            document.getElementById('hasil_level_resiko').value = levelResiko;
+            document.getElementById('hasil_level_resiko').value = levelResiko ;
         }
 
         function updateEditMatriksAnalisisResikoLevelResiko() {
@@ -334,7 +334,7 @@
 
             for (let range of levelResikoRanges) {
                 if (besaranResiko >= range.besaran_min && besaranResiko <= range.besaran_max) {
-                    levelResiko = range.level_resiko;
+                    levelResiko = range.name;
                     break;
                 }
             }
@@ -350,9 +350,9 @@
             modal.classList.toggle('hidden');
         }
 
-        function openEditLevelResikoModal(url, levelResiko, besaran_min, besaran_max, tindakan, ketWarna) {
+        function openEditLevelResikoModal(url, name, besaran_min, besaran_max, tindakan, ketWarna) {
             document.getElementById('editLevelResikoForm').action = url;
-            document.getElementById('editLevelResiko').value = levelResiko;
+            document.getElementById('editLevelResiko').value = name;
             document.getElementById('editRentangBesaranResikoMin').value = besaran_min;
             document.getElementById('editRentangBesaranResikoMax').value = besaran_max;
             document.getElementById('editTindakan').value = tindakan;
@@ -372,7 +372,7 @@
         document.getElementById('editIdLevelDampak').value = id_level_dampak;
         document.getElementById('editBesaranResiko').value = besaran_resiko;
         document.getElementById('editHasilLevelResiko').value = hasil_level_resiko;
-    }
+    }
 
         function closeEditMatriksAnalisisResikoModal() {
             document.getElementById('editMatriksAnalisisResikoModal').classList.add('hidden');
