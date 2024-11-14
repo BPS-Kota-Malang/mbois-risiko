@@ -10,7 +10,7 @@ class Dampak extends Model
     use HasFactory;
     protected $table = 'dampak';
 
-    protected $fillable = ['name', 'status']; // Tambahkan kolom status
+    protected $fillable = ['dampak', 'status']; // Tambahkan kolom status
 
     protected $attributes = [
         'status' => null,

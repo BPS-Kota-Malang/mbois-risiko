@@ -150,8 +150,8 @@
                                 @enderror
                             </div>
                             <div class="mb-4">
-                                <label class="block text-gray-700 mb-2" for="deskripsi_edit">Deskripsi</label>
-                                <input type="text" name="deskripsi" id="deskripsi_edit1"
+                                <label class="block text-gray-700 mb-2" for="deskripsi_edit1">Deskripsi</label>
+                                <input type="text" name="deskripsi" id="deskripsi_edit"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
                                 @error('deskripsi')

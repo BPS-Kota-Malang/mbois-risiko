@@ -21,6 +21,9 @@ class ManajemenResiko extends Model
         'id_area_dampak',
         'id_penyebab',
         'id_dampak',
+        'respon_resiko',
+        'prioritas',
+
     ];
 
     protected $casts = [

@@ -31,7 +31,7 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-                @foreach ($penyebab as $item)
+                @forelse ($penyebab as $item)
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration + ($penyebab->currentPage() - 1) * $penyebab->perPage() }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
@@ -62,7 +62,11 @@
                         </div>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="4" class="px-6 py-4 text-center text-gray-500">Data Penyebab Belum Ada</td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
@@ -132,7 +136,7 @@
 
             if (!penyebabText.classList.contains('editing')) {
                 penyebabText.classList.add('editing');
-                const currentText = penyebabText.textContent.trim(); // Hapus space kosong di sekitar teks
+                const currentText = penyebabText.textContent.trim();
 
                 penyebabText.innerHTML = `<input type="text" value="${currentText}" class="border border-gray-300 rounded-md p-1">`;
 
@@ -149,8 +153,8 @@
                             'X-CSRF-TOKEN': '{{ csrf_token() }}',
                         },
                         body: JSON.stringify({
-                            penyebab: newValue,
-                            status: statusText // Kirim status yang sama
+                            name: newValue,
+                            status: statusText
                         }),
                     })
                     .then(response => response.json())
@@ -168,7 +172,7 @@
                     });
                 });
 
-                inputField.addEventListener('keypress', function(event) {
+                inputField.addEventListener('keydown', function(event) {
                     if (event.key === 'Enter') {
                         this.blur();
                     }
@@ -176,9 +180,8 @@
             }
         }
 
-        document.getElementById('closeModal').addEventListener('click', function() {
+        document.getElementById('closeModal').addEventListener('click', () => {
             document.getElementById('editModal').classList.add('hidden');
         });
-
     </script>
 </x-admin-layout>

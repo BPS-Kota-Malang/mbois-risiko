@@ -150,7 +150,7 @@
                             'X-CSRF-TOKEN': '{{ csrf_token() }}',
                         },
                         body: JSON.stringify({
-                            resiko: newValue,
+                            name: newValue,
                             status: statusText
                         }),
                     })

@@ -68,7 +68,7 @@
                                 style="width: 200px;">Uraian</th>
                             <th class="px-6 py-3 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-200"
                                 style="width: 100px;">Efektivitas</th>
-                            @if (auth()->check() && auth()->user()->hasRole('admin') || auth()->user()->hasRole('ketua_tim'))
+                            @if ((auth()->check() && auth()->user()->hasRole('admin')) || auth()->user()->hasRole('ketua_tim'))
                             <th class="px-6 py-3 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-200"
                                 style="width: 100px;">Action</th>
                             @endif
@@ -99,25 +99,25 @@
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
                                     @if ($ManajemenResiko->jenisResiko)
                                         {{ $ManajemenResiko->jenisResiko->name }}
-                                    @else<span class="text-red-500">Data Tidak Tersedia</span>
+                                    @else<span class="text-black text-center block">-</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
                                     @if ($ManajemenResiko->sumberResiko)
                                         {{ $ManajemenResiko->sumberResiko->name }}
-                                    @else<span class="text-red-500">Data Tidak Tersedia</span>
+                                    @else<span class="text-black text-center block">-</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
                                     @if ($ManajemenResiko->kategoriResiko)
                                         {{ $ManajemenResiko->kategoriResiko->deskripsi }}
-                                    @else<span class="text-red-500">Data Tidak Tersedia</span>
+                                    @else<span class="text-black text-center block">-</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
                                     @if ($ManajemenResiko->areaDampak)
                                         {{ $ManajemenResiko->areaDampak->name }}
-                                    @else<span class="text-red-500">Data Tidak Tersedia</span>
+                                    @else<span class="text-black text-center block">-</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
@@ -132,7 +132,7 @@
                                             <li class="list-disc">{{ $penyebab }}</li>
                                         @endforeach
                                     @else
-                                        <span class="text-red-500">Tidak ada penyebab</span>
+                                        <span class="text-black text-center block">-</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
@@ -147,16 +147,16 @@
                                             <li class="list-disc">{{ $dampak }}</li>
                                         @endforeach
                                     @else
-                                        <span class="text-red-500">Tidak ada dampak</span>
+                                        <span class="text-black text-center block">-</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                                    <select name="level_kemungkinan[]" class="form-select pr-8 py-2 border"
+                                    <select name="level_kemungkinan[]" class="form-select pr-8 py-2 border rounded-lg"
                                         id="levelKemungkinan{{ $ManajemenResiko->id }}"
                                         {{ !is_null($ManajemenResiko->id_level_kemungkinan) ? 'disabled' : '' }}>
-                                        <option value="">-- Pilih Level Kemungkinan --</option>
+                                        <option  value="">-- Pilih Level Kemungkinan --</option>
                                         @foreach ($levelKemungkinan as $kemungkinan)
-                                            <option value="{{ $kemungkinan->id }}"
+                                            <option  value="{{ $kemungkinan->id }}"
                                                 {{ $kemungkinan->id == $ManajemenResiko->id_level_kemungkinan ? 'selected' : '' }}>
                                                 {{ $kemungkinan->name }}
                                             </option>
@@ -164,7 +164,7 @@
                                     </select>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                                    <select name="level_dampak[]" class="form-select pr-8 py-2 border"
+                                    <select name="level_dampak[]" class="form-select pr-8 py-2 border rounded-lg"
                                         id="levelDampak{{ $ManajemenResiko->id }}"
                                         {{ !is_null($ManajemenResiko->id_level_dampak) ? 'disabled' : '' }}>
                                         <option value="">-- Pilih Level Dampak --</option>
@@ -198,7 +198,8 @@
                                     @endif
                                 </td>
 
-                                @if (auth()->check() && auth()->user()->hasRole('admin') || auth()->user()->hasRole('ketua_tim'))
+                                {{-- uraian --}}
+                                @if ((auth()->check() && auth()->user()->hasRole('admin')) || (auth()->user()->hasRole('ketua_tim') && optional(auth()->user()->pegawai)->team_id == $ManajemenResiko->tim_project->id))
                                 <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
                                     <div class="flex flex-col items-center">
                                         <!-- Tombol Pilih Uraian dipusatkan -->
@@ -279,7 +280,7 @@
                                 @endif
 
                                 <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                                    <select name="efektivitas[]" class="form-select pr-8 py-2 border"
+                                    <select name="efektivitas[]" class="form-select pr-8 py-2 border rounded-lg"
                                         id="efektivitas{{ $ManajemenResiko->id }}"
                                         {{ is_null($ManajemenResiko->efektivitas) ? '' : 'disabled' }}>
                                         <option value="">-- Pilih Efektivitas --</option>
@@ -293,14 +294,29 @@
                                         </option>
                                     </select>
                                 </td>
-                                @if (auth()->check() && auth()->user()->hasRole('admin') || auth()->user()->hasRole('ketua_tim'))
-                                <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                                    <a class="bg-blue-500 text-white width-mt-2 px-2 py-2 rounded cursor-pointer"
-                                        id="btnEdit" data-id="{{ $ManajemenResiko->id }}">Edit</a>
-                                    <button type="submit"
-                                        class="bg-green-500 text-white px-2 py-1 rounded">Save
-                                    </button>
-                                </td>
+                                @if (auth()->user()->hasRole('admin'))
+                                    <!-- Admin specific content -->
+                                    <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
+                                        <a class="bg-blue-500 text-white width-mt-2 px-2 py-2 rounded cursor-pointer"
+                                            id="btnEdit" data-id="{{ $ManajemenResiko->id }}">Edit</a>
+                                        <button type="submit"
+                                            class="bg-green-500 text-white px-2 py-1 rounded">Save
+                                        </button>
+                                    </td>
+                                @elseif (auth()->user()->hasRole('ketua_tim'))
+                                    @if ((optional(auth()->user()->pegawai)->team_id == $ManajemenResiko->tim_project->id))
+                                        <td class="px-6 py-4 whitespace-nowrap border-r border-gray-200">
+                                            <a class="bg-blue-500 text-white width-mt-2 px-2 py-2 rounded cursor-pointer"
+                                                id="btnEdit" data-id="{{ $ManajemenResiko->id }}">Edit</a>
+                                            <button type="submit"
+                                                class="bg-green-500 text-white px-2 py-1 rounded">Save
+                                            </button>
+                                        </td>
+                                    @else
+                                        <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                            <p class="text-red-500 text-center">Tidak Memiliki Izin Beda TIM</p>
+                                        </td>
+                                    @endif
                                 @endif
                     </form>
                     @endforeach

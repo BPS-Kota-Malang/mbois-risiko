@@ -19,7 +19,7 @@ class Pegawai extends Model
         'jabatan',
         'pangkat',
         'golongan',
-        'forengid', // Changed from 'tim' to 'forengid'
+        'id_tim', // Changed from 'tim' to 'forengid'
         'no_hp',
         'nip',
     ];

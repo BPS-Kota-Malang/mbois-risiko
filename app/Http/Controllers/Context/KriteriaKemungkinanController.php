@@ -41,9 +41,8 @@ class KriteriaKemungkinanController extends Controller
             'delete_url' => route('admin.kriteriakemungkinan.destroy', $kriteriaKemungkinan->id),
             'csrf_token' => csrf_token(),
         ];
-        
+
         return response()->json($response);
-    
     }
 
     public function update(Request $request, $id)
@@ -73,11 +72,11 @@ class KriteriaKemungkinanController extends Controller
         return response()->json($response);
     }
 
-    public function destroy(string $id)
+    public function destroy($id)
     {
         $kriteriaKemungkinan = KriteriaKemungkinan::findOrFail($id);
         $kriteriaKemungkinan->delete();
 
-        return redirect()->route('admin.risk.context')->with('success', 'Level Kemungkinan deleted successfully.');
+        return response()->json(['success' => 'Kriteria Kemungkinan deleted successfully.']);
     }
 }

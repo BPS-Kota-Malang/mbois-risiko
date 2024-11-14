@@ -7,6 +7,7 @@ use App\Imports\PegawaiImport;
 use App\Models\TimProject;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class EmployeeController extends Controller
 {
@@ -36,6 +37,7 @@ class EmployeeController extends Controller
         return view('admin.employee.create', compact('users', 'teams'));
     }
 
+
     public function store(Request $request)
     {
         $request->validate([
@@ -46,28 +48,28 @@ class EmployeeController extends Controller
             'no_hp' => 'required',
             'nip' => 'required',
             'name' => 'required', // Add 'name' field validation
+            'email' => 'required|email|unique:users,email', // Add unique validation for email
         ]);
 
-        $user = User::create(
-            [
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-            ]
-        );
 
-        $employee = Pegawai::create(
-            [
-                'name' => $request->name, // Add 'name' field
-                'jabatan' => $request->jabatan,
-                'pangkat' => $request->pangkat,
-                'golongan' => $request->golongan,
-                'id_tim' => $request->id_tim, // Change 'tim' to 'tim_id'
-                'no_hp' => $request->no_hp,
-                'nip' => $request->nip,
-                'user_id' => $user->id,
-            ]
-        );
+
+        $id_tim = $request->id_tim;
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        $employee = Pegawai::create([
+            'name' => $request->name, // Add 'name' field
+            'jabatan' => $request->jabatan,
+            'pangkat' => $request->pangkat,
+            'golongan' => $request->golongan,
+            'id_tim' => $id_tim, // Change 'tim' to 'tim_id'
+            'no_hp' => $request->no_hp,
+            'nip' => $request->nip,
+            'user_id' => $user->id,
+        ]);
 
         return redirect()->route('admin.employee')
             ->with('success', 'Employee created successfully.');
@@ -103,12 +105,13 @@ class EmployeeController extends Controller
             'jabatan' => 'required',
             'pangkat' => 'required',
             'golongan' => 'required',
-            'tim' => 'required',
+            'id_tim' => 'required',
             'no_hp' => 'required',
             'nip' => 'required',
             'name' => 'required', // Add 'name' field validation
         ]);
 
+        $id_tim = $request->id_tim;
         $user = User::find($user_id);
         $employee = Pegawai::where('user_id', $user_id)->first();
         $user->update(
@@ -123,7 +126,7 @@ class EmployeeController extends Controller
                 'jabatan' => $request->jabatan,
                 'pangkat' => $request->pangkat,
                 'golongan' => $request->golongan,
-                'tim' => $request->tim,
+                'id_tim' => $id_tim,
                 'no_hp' => $request->no_hp,
                 'nip' => $request->nip,
             ]
@@ -135,19 +138,23 @@ class EmployeeController extends Controller
 
     public function upload(Request $request)
     {
+        // Validasi file yang diupload (harus berupa Excel)
         $request->validate([
             'excel_file' => 'required|mimes:xlsx,xls,csv',
         ]);
 
-        try{
+        try {
+            // Import data dari file Excel menggunakan PegawaiImport
             Excel::import(new PegawaiImport, $request->file('excel_file'));
+
+            // Jika berhasil, redirect dengan pesan sukses
             return redirect()->route('admin.employee')->with('success', 'Employees imported successfully.');
         } catch (\Exception $e) {
+            // Jika gagal, log error untuk memudahkan debugging
+            Log::error('Error during import: ' . $e->getMessage());
+
+            // Redirect dengan pesan error
             return redirect()->route('admin.employee')->with('error', 'Error importing employees.');
         }
-
-        // Excel::import(new PegawaiImport, $request->file('excel_file'));
-
-        // return redirect()->route('admin.employee')->with('success', 'Employees imported successfully.');
     }
 }

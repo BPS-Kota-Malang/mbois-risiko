@@ -31,7 +31,7 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-                @foreach ($dampak as $item)
+                @forelse ($dampak as $item)
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration + ($dampak->currentPage() - 1) * $dampak->perPage() }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
@@ -62,7 +62,11 @@
                         </div>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="4" class="px-6 py-4 text-center text-gray-500">Data Dampak Belum Ada</td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
@@ -101,7 +105,8 @@
         </div>
     </div>
 
-
+    <!-- JavaScript untuk Menghandle Aksi -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script>
         function updateStatus(id, status) {
             fetch(`{{ url('admin/dampak') }}/${id}`, {
@@ -180,6 +185,5 @@
         document.getElementById('closeModal').addEventListener('click', function() {
             document.getElementById('editModal').classList.add('hidden');
         });
-
     </script>
 </x-admin-layout>

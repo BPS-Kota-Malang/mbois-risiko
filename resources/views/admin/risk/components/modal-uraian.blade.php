@@ -50,7 +50,7 @@
                             </div>
                             <div class="py-5">
                                 <label for="uraian" class="block text-sm font-medium text-gray-700">Nama Uraian</label>
-                                <input type="text" id="uraian" name="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
+                                <input type="text" id="uraian" name="uraian" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
                             </div>
                             <div class="bg-gray-50 text-right">
                                 <div class="flex justify-between pt-2">

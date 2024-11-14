@@ -97,8 +97,8 @@ class UraianController extends Controller
     {
         $uraian = Uraian::findOrFail($id);
 
-        if ($request->has('uraian')) {
-            $uraian->uraian = $request->input('uraian');
+        if ($request->has('name')) {
+            $uraian->name = $request->input('name');
         }
 
         if ($request->has('status')) {

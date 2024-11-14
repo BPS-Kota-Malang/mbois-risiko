@@ -495,17 +495,18 @@
     @include('admin.risk.components.modal-dampak')
 
     <script>
+        // Mendapatkan status role dari Laravel blade
         var isAdmin = @json(auth()->user()->hasRole('admin'));
         var isKetuaTim = @json(auth()->user()->hasRole('ketua_tim'));
-        var userTeamId = @json(optional(auth()->user()->pegawai)->team_id);
+        var userTeamId = @json(optional(auth()->user()->pegawai)->id_tim);
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             //resiko
+            // Mendapatkan elemen tombol dan dropdown
             const tambahResikoBtn = document.getElementById('tambahresiko');
-            const timDropdown = document.getElementById('tim'); // Ganti dengan id dropdown tim Anda
-            const prosesBisnisDropdown = document.getElementById(
-            'proses_bisnis'); // Ganti dengan id dropdown proses bisnis Anda
+            const timDropdown = document.getElementById('tim'); // Dropdown Tim
+            const prosesBisnisDropdown = document.getElementById('proses_bisnis'); // Dropdown Proses Bisnis
             const resikoModal = document.getElementById('resikoModal');
             const closeModalBtn = document.getElementById('closeModal');
             const simpanResikoBtn = document.getElementById('simpanResiko');
@@ -936,41 +937,44 @@
 
 
 
-            // Fungsi untuk mengecek apakah kedua dropdown sudah dipilih
-            function checkDropdowns() {
-                console.log('Checking dropdown values:', timDropdown.value, prosesBisnisDropdown.value);
+        // Fungsi untuk mengecek apakah kedua dropdown sudah dipilih dan memeriksa role
+        function checkDropdowns() {
+            console.log('Checking dropdown values:', timDropdown.value, prosesBisnisDropdown.value);
+            console.log('isAdmin:', isAdmin, 'isKetuaTim:', isKetuaTim, 'userTeamId:', userTeamId);
 
-
-                if (isAdmin) {
-                    // Admin can select any team and enable the button
-                    if (timDropdown.value !== '' && prosesBisnisDropdown.value !== '') {
-                        tambahResikoBtn.disabled = false;
-                        tambahResikoBtn.style.backgroundColor = 'red'; // Change button color to red
-                    } else {
-                        tambahResikoBtn.disabled = true;
-                    }
-                } else if (isKetuaTim) {
-                    // Ketua tim can only select their own team
-                    if (timDropdown.value == userTeamId && prosesBisnisDropdown.value !== '') {
-                        tambahResikoBtn.disabled = false;
-                        tambahResikoBtn.style.backgroundColor = 'red'; // Change button color to red
-                    } else {
-                        tambahResikoBtn.disabled = true;
-                        tambahResikoBtn.style.backgroundColor = 'gray';
-                    }
+            if (isAdmin) {
+                // Jika Admin, tombol hidup selama kedua dropdown terpilih
+                if (timDropdown.value !== '' && prosesBisnisDropdown.value !== '') {
+                    tambahResikoBtn.disabled = false;
+                    tambahResikoBtn.style.backgroundColor = 'red'; // Ubah warna tombol menjadi merah
                 } else {
-                    // Other roles, disable the button
                     tambahResikoBtn.disabled = true;
+                    tambahResikoBtn.style.backgroundColor = 'gray'; // Kembali ke abu-abu
                 }
+            } else if (isKetuaTim) {
+                // Jika Ketua Tim, hanya bisa memilih tim sendiri
+                if (parseInt(timDropdown.value) === parseInt(userTeamId) && prosesBisnisDropdown.value !== '') {
+                    tambahResikoBtn.disabled = false;
+                    tambahResikoBtn.style.backgroundColor = 'red'; // Tombol aktif
+                } else {
+                    tambahResikoBtn.disabled = true;
+                    tambahResikoBtn.style.backgroundColor = 'gray'; // Tombol nonaktif
+                }
+            } else {
+                // Role lain tidak bisa menambah risiko
+                tambahResikoBtn.disabled = true;
+                tambahResikoBtn.style.backgroundColor = 'gray'; // Tombol tetap nonaktif
             }
+        }
 
-            if (timDropdown && prosesBisnisDropdown) {
-                timDropdown.addEventListener('change', checkDropdowns);
-                prosesBisnisDropdown.addEventListener('change', checkDropdowns);
-            }
+        // Menambahkan event listener untuk dropdown
+        if (timDropdown && prosesBisnisDropdown) {
+            timDropdown.addEventListener('change', checkDropdowns);
+            prosesBisnisDropdown.addEventListener('change', checkDropdowns);
+        }
 
-            // Initial check
-            checkDropdowns();
+        // Pengecekan awal saat halaman dimuat
+        checkDropdowns();
 
             /**
              * Risk Modal Script

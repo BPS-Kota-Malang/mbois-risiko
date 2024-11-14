@@ -18,19 +18,4 @@ use Illuminate\Http\Request;
 class RiskController extends Controller
 {
 
-
-    public function analysis()
-    {
-        return view('admin.risk.analysis');
-    }
-
-    public function evaluation()
-    {
-        return view('admin.risk.evaluation');
-    }
-
-    public function actionPlan()
-    {
-        return view('admin.risk.action_plan');
-    }
 }

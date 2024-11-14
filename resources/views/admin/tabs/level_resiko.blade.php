@@ -372,7 +372,7 @@
         document.getElementById('editIdLevelDampak').value = id_level_dampak;
         document.getElementById('editBesaranResiko').value = besaran_resiko;
         document.getElementById('editHasilLevelResiko').value = hasil_level_resiko;
-    }
+    }
 
         function closeEditMatriksAnalisisResikoModal() {
             document.getElementById('editMatriksAnalisisResikoModal').classList.add('hidden');

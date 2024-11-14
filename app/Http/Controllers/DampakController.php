@@ -80,8 +80,8 @@ class DampakController extends Controller
     {
         $dampak = Dampak::findOrFail($id);
 
-        if ($request->has('dampak')) {
-            $dampak->dampak = $request->input('dampak');
+        if ($request->has('name')) {
+            $dampak->name = $request->input('name');
         }
 
         if ($request->has('status')) {

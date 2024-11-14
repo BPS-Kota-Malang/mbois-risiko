@@ -54,7 +54,7 @@
                         <td class="px-6 py-4 whitespace-nowrap">{{ $employee->pangkat }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $employee->golongan }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            {{ is_object($employee->tim) ? $employee->tim->name : (\App\Models\TimProject::find($employee->tim)->name ?? 'N/A') }}
+                            {{ $employee->timProject->name }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $employee->no_hp }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">

@@ -279,7 +279,6 @@
                         '</form>'
                     ];
 
-                    // Add the new row and redraw the table
                     table.row.add(newRowData).draw(false);
 
                     // Close modal after successful submission
@@ -307,50 +306,53 @@
             $('#editKriteriaKemungkinanModal').removeClass('hidden');
         };
 
-        // Handle form submission in "Edit Kriteria Kemungkinan" modal via AJAX
         $('#editKriteriaKemungkinanForm').submit(function(e) {
-            e.preventDefault(); // Prevent default form submission
+    e.preventDefault(); // Prevent default form submission
 
-            var form = $(this);
-            var actionUrl = form.attr('action');
-            var formData = form.serialize();
+    var form = $(this);
+    var actionUrl = form.attr('action');
+    var formData = form.serialize();
 
-            $.ajax({
-                url: actionUrl,
-                method: "POST",
-                data: formData,
-                success: function(response) {
-                    // Assuming response contains updated data
-                    var updatedRowData = [
-                        response.no,
-                        response.kategori_resiko,
-                        response.level_kemungkinan,
-                        response.presentase_kemungkinan,
-                        response.jumlah_frekuensi,
-                        '<button onclick="openEditKriteriaKemungkinanModal(\'' + response.edit_url + '\', \'' + response.id_kategori_resiko + '\', \'' + response.id_level_kemungkinan + '\', \'' + response.presentase_kemungkinan + '\', \'' + response.jumlah_frekuensi + '\')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Edit</button> ' +
-                        '<form action="' + response.delete_url + '" method="POST" class="inline" onsubmit="return confirm(\'Are you sure you want to delete this kriteria kemungkinan?\');">' +
-                        '<input type="hidden" name="_token" value="' + response.csrf_token + '">' +
-                        '<input type="hidden" name="_method" value="DELETE">' +
-                        '<button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Delete</button>' +
-                        '</form>'
-                    ];
+    $.ajax({
+        url: actionUrl,
+        method: "POST",
+        data: formData,
+        success: function(response) {
+            // Assuming response contains updated data
+            var updatedRowData = [
+                response.no,
+                response.kategori_resiko,
+                response.level_kemungkinan,
+                response.presentase_kemungkinan,
+                response.jumlah_frekuensi,
+                '<button onclick="openEditKriteriaKemungkinanModal(\'' + response.edit_url + '\', \'' + response.id_kategori_resiko + '\', \'' + response.id_level_kemungkinan + '\', \'' + response.presentase_kemungkinan + '\', \'' + response.jumlah_frekuensi + '\')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Edit</button> ' +
+                '<form action="' + response.delete_url + '" method="POST" class="inline" onsubmit="return confirm(\'Are you sure you want to delete this kriteria kemungkinan?\');">' +
+                '<input type="hidden" name="_token" value="' + response.csrf_token + '">' +
+                '<input type="hidden" name="_method" value="DELETE">' +
+                '<button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Delete</button>' +
+                '</form>'
+            ];
 
-                    // Find the row index and update it with new data
-                    var rowIndex = table.row('.selected').index();
-                    table.row(rowIndex).data(updatedRowData).draw(false);
+            // Assuming you're editing the selected row
+            var rowIndex = table.row('.selected').index();
+            table.row(rowIndex).data(updatedRowData).draw(false);
 
-                    // Close modal
-                    $('#editKriteriaKemungkinanModal').addClass('hidden');
+            // Close modal
+            $('#editKriteriaKemungkinanModal').addClass('hidden');
 
-                    // Reset form
-                    form.trigger("reset");
-                },
-                error: function(xhr) {
-                    console.error(xhr.responseText);
-                }
-            });
-        });
+            // Reset form
+            form.trigger("reset");
+        },
+        error: function(xhr) {
+            console.error(xhr.responseText);
+        }
+    });
+});
+
+        // Function to toggle modal visibility
+        function toggleModal(modalId) {
+            $('#' + modalId).toggleClass('hidden');
+        }
     });
 </script>
-
 

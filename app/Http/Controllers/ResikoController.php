@@ -81,8 +81,8 @@ class ResikoController extends Controller
     {
         $resiko = Resiko::findOrFail($id);
 
-        if ($request->has('resiko')) {
-            $resiko->resiko = $request->input('resiko');
+        if ($request->has('name')) {
+            $resiko->name = $request->input('name');
         }
 
         if ($request->has('status')) {

@@ -79,8 +79,8 @@ class PenyebabController extends Controller
     {
         $penyebab = Penyebab::findOrFail($id);
 
-        if ($request->has('penyebab')) {
-            $penyebab->penyebab = $request->input('penyebab');
+        if ($request->has('name')) {
+            $penyebab->name = $request->input('name');
         }
 
         if ($request->has('status')) {
