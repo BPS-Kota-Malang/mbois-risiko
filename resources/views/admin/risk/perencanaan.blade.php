@@ -32,7 +32,7 @@
         </div>
     </div>
 
-     <div class="container mx-auto mt-10">
+    <div class="container mx-auto mt-10">
         <div class="flex justify-between items-center mb-4 space-x-4">
             <div class="overflow-x-auto bg-white shadow-md rounded-lg">
                 <table class="min-w-full divide-y divide-gray-200" id="riskTable">
@@ -51,27 +51,60 @@
                             <th class="px-6 py-3 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-200 text-center"
                                 style="width: 300px;">Rencana Tindak Penanganan</th>
                         </tr>
-
                     </thead>
-                    @if ($manajemenResikos->isEmpty())
+                    <tbody>
+                        <!-- Data Dummy -->
                         <tr>
-                            <td colspan="15" class="text-center py-4">
-                                Data Tidak Ada
+                            <td class="px-6 py-4 text-center border-r border-gray-200">3</td>
+                            <td class="px-6 py-4 text-center border-r border-gray-200">Rendah</td>
+                            <td class="px-6 py-4 border-r border-gray-200">Resiko keterlambatan proyek karena kendala logistik</td>
+                            <td class="px-6 py-4 text-center border-r border-gray-200">20%</td>
+                            <td class="px-6 py-4 text-center border-r border-gray-200">15%</td>
+                            <td class="px-6 py-4 text-center border-r border-gray-200">
+                                <a href="#" class="text-blue-500 hover:text-blue-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5h6M5 5h6M9 3l3 3-3 3M5 13v2a2 2 0 002 2h12a2 2 0 002-2v-5a2 2 0 00-2-2h-7a2 2 0 00-2 2v1M15 7H7a2 2 0 00-2 2v8a2 2 0 002 2h2m10-10v4m-5-4v4" />
+                                    </svg>
+                                </a>
                             </td>
                         </tr>
-                    @else
-                    @foreach ($manajemenResikos as $ManajemenResiko)
-
-
-
-                    </form>
-                    @endforeach
-                    @endif
+                        <tr>
+                            <td class="px-6 py-4 text-center border-r border-gray-200">3</td>
+                            <td class="px-6 py-4 text-center border-r border-gray-200">Rendah</td>
+                            <td class="px-6 py-4 border-r border-gray-200">Resiko keterlambatan proyek karena kendala logistik</td>
+                            <td class="px-6 py-4 text-center border-r border-gray-200">20%</td>
+                            <td class="px-6 py-4 text-center border-r border-gray-200">15%</td>
+                            <td class="px-6 py-4 text-center border-r border-gray-200">
+                                <a href="#" class="text-blue-500 hover:text-blue-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5h6M5 5h6M9 3l3 3-3 3M5 13v2a2 2 0 002 2h12a2 2 0 002-2v-5a2 2 0 00-2-2h-7a2 2 0 00-2 2v1M15 7H7a2 2 0 00-2 2v8a2 2 0 002 2h2m10-10v4m-5-4v4" />
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 text-center border-r border-gray-200">3</td>
+                            <td class="px-6 py-4 text-center border-r border-gray-200">Rendah</td>
+                            <td class="px-6 py-4 border-r border-gray-200">Resiko keterlambatan proyek karena kendala logistik</td>
+                            <td class="px-6 py-4 text-center border-r border-gray-200">20%</td>
+                            <td class="px-6 py-4 text-center border-r border-gray-200">15%</td>
+                            <td class="px-6 py-4 text-center border-r border-gray-200">
+                                <a href="#" class="text-blue-500 hover:text-blue-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5h6M5 5h6M9 3l3 3-3 3M5 13v2a2 2 0 002 2h12a2 2 0 002-2v-5a2 2 0 00-2-2h-7a2 2 0 00-2 2v1M15 7H7a2 2 0 00-2 2v8a2 2 0 002 2h2m10-10v4m-5-4v4" />
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
         <div class="flex justify-center mt-4">
-            {{ $manajemenResikos->links() }}
+            <!-- Pagination -->
+            <nav class="inline-flex">
+                <!-- Placeholder for pagination links if necessary -->
+            </nav>
         </div>
     </div>
     @include('admin.risk.components.modal-uraian')
@@ -119,7 +152,7 @@
                         }
                     }
                 } else {
-                    hasilLevelResiko.innerText = 'cukitdulit'; // Clear the value
+                    hasilLevelResiko.innerText = 'cukitdulit';
                     hasilLevelResiko.classList.remove('bg-red-600', 'bg-orange-600', 'bg-yellow-500',
                         'bg-green-600', 'bg-blue-600', 'text-white');
                 }
@@ -133,7 +166,6 @@
                 select.addEventListener('change', () => updateHasilLevelResiko(select));
             });
 
-            // Edit Button functionality
             document.querySelectorAll('#btnEdit').forEach(editBtn => {
                 editBtn.addEventListener('click', function (event) {
                     event.preventDefault();
@@ -151,7 +183,6 @@
                 });
             });
 
-            // Save Button functionality
             document.querySelectorAll('#saveanalisisBtn').forEach(saveBtn => {
                 saveBtn.addEventListener('click', function (event) {
                     event.preventDefault();
@@ -160,93 +191,9 @@
                     const levelDampakSelect = document.getElementById('levelDampak' + rowId);
                     const efektivitasSelect = document.getElementById('efektivitas' + rowId);
 
-                    if (levelKemungkinanSelect) levelKemungkinanSelect.disabled = true;
-                    if (levelDampakSelect) levelDampakSelect.disabled = true;
-
-                    this.closest('form').submit();
+                    // Save functionality here
                 });
             });
-
-
-
-
-            document.addEventListener('click', function (event) {
-                if (event.target.classList.contains('openUraianModal')) {
-                    event.preventDefault();
-                    selectedManajemenResikoId = event.target.getAttribute('data-manajemen-resiko-id');
-                    selectedUraianID = event.target.getAttribute('data-uraian-id');
-
-                    if (selectedUraianID && selectedUraianID.trim() !== '') {
-                        try {
-                            window.selectedUraianIds = JSON.parse(selectedUraianID);
-                            if (!Array.isArray(window.selectedUraianIds)) {
-                                window.selectedUraianIds = [];
-                            }
-                        } catch (e) {
-                            console.error('Error parsing JSON:', e);
-                            window.selectedUraianIds = [];
-                        }
-                    } else {
-                        window.selectedUraianIds = [];
-                    }
-                    uraianModal.classList.remove('hidden');
-                    if (openAdduraianModal) openAdduraianModal.classList.add('hidden');
-                }
-            });
-
-            if (closeModal4) {
-                closeModal4.addEventListener('click', function () {
-                    uraianModal.classList.add('hidden');
-                    openAdduraianModal.classList.remove('hidden');
-                });
-            }
-
-            // Initialize Uraian Table
-            initializeUraianTable();
-
-
-
-
         });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            // Set nilai respon yang disimpan di localStorage saat halaman dimuat
-            document.querySelectorAll('select[id^="responResiko"]').forEach(selectElement => {
-                const rowId = selectElement.id.replace('responResiko', '');
-                const savedValue = localStorage.getItem('responResiko' + rowId);
-                if (savedValue) {
-                    selectElement.value = savedValue;
-                    updatePrioritas(selectElement); // Memperbarui prioritas sesuai pilihan yang tersimpan
-                }
-            });
-        });
-
-        function updatePrioritas(selectElement) {
-            const rowId = selectElement.id.replace('responResiko', ''); // Mendapatkan id dari baris
-            const prioritasElement = document.getElementById('prioritas' + rowId);
-
-            let prioritasValue;
-
-            // Menyimpan nilai respon resiko ke localStorage
-            localStorage.setItem('responResiko' + rowId, selectElement.value);
-
-            // Menggunakan if-else untuk menentukan nilai prioritas
-            if (selectElement.value === 'Mengurangi Risiko') {
-                prioritasValue = 1;
-            } else if (selectElement.value === 'Mengalihkan Risiko') {
-                prioritasValue = 2;
-            } else if (selectElement.value === 'Menghindari Risiko') {
-                prioritasValue = 3;
-            } else if (selectElement.value === 'Menerima Risiko') {
-                prioritasValue = 4;
-            } else {
-                prioritasValue = '-';
-            }
-
-            // Update elemen prioritas dengan nilai yang baru
-            prioritasElement.textContent = prioritasValue;
-        }
-
     </script>
-
 </x-admin-layout>
