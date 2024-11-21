@@ -61,12 +61,15 @@
                             <td class="px-6 py-4 text-center border-r border-gray-200">20%</td>
                             <td class="px-6 py-4 text-center border-r border-gray-200">15%</td>
                             <td class="px-6 py-4 text-center border-r border-gray-200">
-                                <a href="#" class="text-blue-500 hover:text-blue-700">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5h6M5 5h6M9 3l3 3-3 3M5 13v2a2 2 0 002 2h12a2 2 0 002-2v-5a2 2 0 00-2-2h-7a2 2 0 00-2 2v1M15 7H7a2 2 0 00-2 2v8a2 2 0 002 2h2m10-10v4m-5-4v4" />
+                                <button onclick="openEditModal()" class="inline-block p-2 rounded-md border border-blue-500 text-blue-500 hover:bg-blue-100">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M11.293 2.293a1 1 0 011.414 0l8.586 8.586a1 1 0 010 1.414L11 22H3v-8l8.293-8.293zM13 4L4 13v2h2L20 6l-7-2zm-9 13.5V21h3.5L17 10.5l-3-3L4 17.5z" />
                                     </svg>
-                                </a>
+                                </button>
                             </td>
+                            
+                            
+                            
                         </tr>
                         <tr>
                             <td class="px-6 py-4 text-center border-r border-gray-200">3</td>
@@ -75,12 +78,13 @@
                             <td class="px-6 py-4 text-center border-r border-gray-200">20%</td>
                             <td class="px-6 py-4 text-center border-r border-gray-200">15%</td>
                             <td class="px-6 py-4 text-center border-r border-gray-200">
-                                <a href="#" class="text-blue-500 hover:text-blue-700">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5h6M5 5h6M9 3l3 3-3 3M5 13v2a2 2 0 002 2h12a2 2 0 002-2v-5a2 2 0 00-2-2h-7a2 2 0 00-2 2v1M15 7H7a2 2 0 00-2 2v8a2 2 0 002 2h2m10-10v4m-5-4v4" />
+                                <button onclick="openEditModal()" class="inline-block p-2 rounded-md border border-blue-500 text-blue-500 hover:bg-blue-100">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M11.293 2.293a1 1 0 011.414 0l8.586 8.586a1 1 0 010 1.414L11 22H3v-8l8.293-8.293zM13 4L4 13v2h2L20 6l-7-2zm-9 13.5V21h3.5L17 10.5l-3-3L4 17.5z" />
                                     </svg>
-                                </a>
+                                </button>
                             </td>
+                            
                         </tr>
                         <tr>
                             <td class="px-6 py-4 text-center border-r border-gray-200">3</td>
@@ -89,16 +93,64 @@
                             <td class="px-6 py-4 text-center border-r border-gray-200">20%</td>
                             <td class="px-6 py-4 text-center border-r border-gray-200">15%</td>
                             <td class="px-6 py-4 text-center border-r border-gray-200">
-                                <a href="#" class="text-blue-500 hover:text-blue-700">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5h6M5 5h6M9 3l3 3-3 3M5 13v2a2 2 0 002 2h12a2 2 0 002-2v-5a2 2 0 00-2-2h-7a2 2 0 00-2 2v1M15 7H7a2 2 0 00-2 2v8a2 2 0 002 2h2m10-10v4m-5-4v4" />
+                                <button onclick="openEditModal()" class="inline-block p-2 rounded-md border border-blue-500 text-blue-500 hover:bg-blue-100">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M11.293 2.293a1 1 0 011.414 0l8.586 8.586a1 1 0 010 1.414L11 22H3v-8l8.293-8.293zM13 4L4 13v2h2L20 6l-7-2zm-9 13.5V21h3.5L17 10.5l-3-3L4 17.5z" />
                                     </svg>
-                                </a>
+                                </button>
                             </td>
+                            
                         </tr>
                     </tbody>
                 </table>
             </div>
+
+            <!-- Modal -->
+        <div id="editModal" class="fixed z-10 inset-0 hidden overflow-y-auto" aria-labelledby="modal-title" aria-hidden="true">
+            <div class="flex items-center justify-center min-h-screen px-4 text-center">
+                <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl p-6">
+                    <div class="flex items-left justify-between mb-4">
+                        <h3 class="text-lg font-medium text-gray-900" id="modal-title">Pilih Rencana</h3>
+                        <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600">
+                            &times;
+                        </button>
+                    </div>
+                    <div class="mb-4 text-left">
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                            Perencanaan
+                        </button>
+                    </div>
+                    
+                    <table id="editTable" class="min-w-full border border-gray-300">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="px-4 py-2">Search</th>
+                                <th class="px-4 py-2">Search</th>
+                                <th class="px-4 py-2">Search</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="3" class="text-center py-4 text-gray-500">No data available in table</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="flex items-center justify-between mt-4">
+                        <span>Showing 0 to 0 of 0 entries</span>
+                        <div class="space-x-2">
+                            <button class="bg-gray-200 text-gray-700 px-3 py-1 rounded-md">Previous</button>
+                            <button class="bg-gray-200 text-gray-700 px-3 py-1 rounded-md">Next</button>
+                        </div>
+                    </div>
+                    <div class="mt-6 text-right">
+                        <button onclick="closeEditModal()" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
+                            Simpan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         </div>
         <div class="flex justify-center mt-4">
             <!-- Pagination -->
@@ -195,5 +247,16 @@
                 });
             });
         });
+
+        function openEditModal() {
+                const modal = document.getElementById('editModal');
+                modal.classList.remove('hidden');
+            }
+
+            function closeEditModal() {
+                const modal = document.getElementById('editModal');
+                modal.classList.add('hidden');
+            }
+
     </script>
 </x-admin-layout>
