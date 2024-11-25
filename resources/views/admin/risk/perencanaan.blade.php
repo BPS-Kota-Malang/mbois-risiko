@@ -105,51 +105,88 @@
                 </table>
             </div>
 
-            <!-- Modal -->
-        <div id="editModal" class="fixed z-10 inset-0 hidden overflow-y-auto" aria-labelledby="modal-title" aria-hidden="true">
-            <div class="flex items-center justify-center min-h-screen px-4 text-center">
-                <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl p-6">
-                    <div class="flex items-left justify-between mb-4">
-                        <h3 class="text-lg font-medium text-gray-900" id="modal-title">Pilih Rencana</h3>
-                        <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600">
-                            &times;
-                        </button>
+           
+        <!-- Modal -->
+        <div id="editModal" class="fixed inset-0 hidden flex items-center justify-center z-50">
+            <div class="relative bg-white rounded-lg shadow-lg w-3/4 p-6" style="margin-left: 100px;">
+        
+                <div class="flex justify-between items-center bg-gray-100 px-4 py-3 rounded-t-lg">
+                    <h2 class="text-lg font-semibold">Rencana Tindak Penanganan</h2>
+                    <button class="text-gray-500 hover:text-gray-700" onclick="closeModal()">✕</button>
+
+                </div>
+                <div class="p-4">
+                    <div class="mb-4">
+                        <p><strong>Risiko:</strong> Inda tidak fokus saat pelatihan</p>
+                        <p><strong>Level Kemungkinan:</strong> [3] Kadang Terjadi</p>
+                        <p><strong>Level Dampak:</strong> [3] Cukup Signifikan (Moderat)</p>
+                        <p><strong>Besaran Risiko:</strong> 14</p>
                     </div>
-                    <div class="mb-4 text-left">
+                    <div class="mb-4 flex justify-start gap-4">
                         <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-                            Perencanaan
+                            Refresh
+                        </button>
+                        <button class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
+                            Tambah
                         </button>
                     </div>
                     
-                    <table id="editTable" class="min-w-full border border-gray-300">
-                        <thead class="bg-gray-100">
-                            <tr>
-                                <th class="px-4 py-2">Search</th>
-                                <th class="px-4 py-2">Search</th>
-                                <th class="px-4 py-2">Search</th>
+                    
+                    <table class="w-full border-collapse border border-gray-300">
+                        <thead>
+                            <tr class="bg-gray-200 text-left">
+                                <th class="border border-gray-300 px-2 py-1">No</th>
+                                <th class="border border-gray-300 px-2 py-1">Rencana Tindak Penanganan</th>
+                                <th class="border border-gray-300 px-2 py-1">Target Output</th>
+                                <th class="border border-gray-300 px-2 py-1">Target Waktu</th>
+                                <th class="border border-gray-300 px-2 py-1">Penanggung Jawab</th>
+                                <th class="border border-gray-300 px-2 py-1">Level Kemungkinan</th>
+                                <th class="border border-gray-300 px-2 py-1">Level Dampak</th>
+                                <th class="border border-gray-300 px-2 py-1">Besaran Risiko</th>
+                                <th class="border border-gray-300 px-2 py-1 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td colspan="3" class="text-center py-4 text-gray-500">No data available in table</td>
+                            <tr class="odd:bg-white even:bg-gray-100">
+                                <td class="border border-gray-300 px-2 py-1">1</td>
+                                <td class="border border-gray-300 px-2 py-1">Pengawasan/supervisi pelatihan lebih diintensifkan</td>
+                                <td class="border border-gray-300 px-2 py-1">Inda menjadi lebih fokus dalam penyampaian materi</td>
+                                <td class="border border-gray-300 px-2 py-1">17/02/2023</td>
+                                <td class="border border-gray-300 px-2 py-1"></td>
+                                <td class="border border-gray-300 px-2 py-1">[2] Jarang Terjadi</td>
+                                <td class="border border-gray-300 px-2 py-1">[4] Signifikan</td>
+                                <td class="border border-gray-300 px-2 py-1">13</td>
+                                <td class="border border-gray-300 px-2 py-1 text-center">
+                                    <div class="flex justify-center gap-4">
+                                        <button class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600">✎</button>
+                                        <button class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600">🗑</button>
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                            <tr class="odd:bg-white even:bg-gray-100">
+                                <td class="border border-gray-300 px-2 py-1">2</td>
+                                <td class="border border-gray-300 px-2 py-1">Dimintakan feedback peserta pelatihan terhadap/tingkat kepuasan terhadap proses transfer pengetahuan dan kemampuan Inda secara keseluruhan</td>
+                                <td class="border border-gray-300 px-2 py-1">Mengetahui kelemahan dan kelebihan Inda</td>
+                                <td class="border border-gray-300 px-2 py-1">28/02/2023</td>
+                                <td class="border border-gray-300 px-2 py-1"></td>
+                                <td class="border border-gray-300 px-2 py-1">[2] Jarang Terjadi</td>
+                                <td class="border border-gray-300 px-2 py-1">[4] Signifikan</td>
+                                <td class="border border-gray-300 px-2 py-1">13</td>
+                                <td class="border border-gray-300 px-2 py-1 text-center">
+                                    <div class="flex justify-center gap-4">
+                                        <button class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600">✎</button>
+                                        <button class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600">🗑</button>
+                                    </div>
+                                </td>
+                                
                             </tr>
                         </tbody>
                     </table>
-                    <div class="flex items-center justify-between mt-4">
-                        <span>Showing 0 to 0 of 0 entries</span>
-                        <div class="space-x-2">
-                            <button class="bg-gray-200 text-gray-700 px-3 py-1 rounded-md">Previous</button>
-                            <button class="bg-gray-200 text-gray-700 px-3 py-1 rounded-md">Next</button>
-                        </div>
-                    </div>
-                    <div class="mt-6 text-right">
-                        <button onclick="closeEditModal()" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
-                            Simpan
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
+
 
         </div>
         <div class="flex justify-center mt-4">
@@ -248,15 +285,21 @@
             });
         });
 
-        function openEditModal() {
-                const modal = document.getElementById('editModal');
-                modal.classList.remove('hidden');
-            }
+            function closeModal() {
+            document.getElementById('editModal').classList.add('hidden');
+        }
 
-            function closeEditModal() {
-                const modal = document.getElementById('editModal');
-                modal.classList.add('hidden');
+        function openEditModal() {
+            document.getElementById('editModal').classList.remove('hidden');
+        }
+
+        document.getElementById('editModal').addEventListener('click', function (event) {
+            if (event.target.id === 'editModal') {
+                closeModal();
             }
+        });
+
+
 
     </script>
 </x-admin-layout>
