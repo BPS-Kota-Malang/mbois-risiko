@@ -105,87 +105,135 @@
                 </table>
             </div>
 
-           
-        <!-- Modal -->
-        <div id="editModal" class="fixed inset-0 hidden flex items-center justify-center z-50">
-            <div class="relative bg-white rounded-lg shadow-lg w-3/4 p-6" style="margin-left: 100px;">
-        
-                <div class="flex justify-between items-center bg-gray-100 px-4 py-3 rounded-t-lg">
-                    <h2 class="text-lg font-semibold">Rencana Tindak Penanganan</h2>
-                    <button class="text-gray-500 hover:text-gray-700" onclick="closeModal()">✕</button>
+           {{-- Modal --}}
+            <div id="editModal" class="fixed inset-0 hidden flex items-center justify-center z-50">
+                <!-- Overlay -->
+                <div class="fixed inset-0 bg-black opacity-50"></div>
+                <!-- Modal Content -->
+                <div class="relative bg-white rounded-lg shadow-lg w-3/4 p-6" style="margin-left: 250px;">
+                    <div class="flex justify-between items-center bg-gray-100 px-4 py-3 rounded-t-lg">
+                        <h2 class="text-lg font-semibold">Rencana Tindak Penanganan</h2>
+                        <button class="text-gray-500 hover:text-gray-700" onclick="closeModal()">✕</button>
+                    </div>
+                    <div class="p-4">
+                        <div class="mb-4">
+                            <p><strong>Risiko:</strong> Inda tidak fokus saat pelatihan</p>
+                            <p><strong>Level Kemungkinan:</strong> [3] Kadang Terjadi</p>
+                            <p><strong>Level Dampak:</strong> [3] Cukup Signifikan (Moderat)</p>
+                            <p><strong>Besaran Risiko:</strong> 14</p>
+                        </div>
+                        <div class="mb-4 flex justify-start gap-4">
+                            <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" onclick="refreshTable()">
+                                Refresh
+                            </button>
+                            
+                            <button class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600" onclick="openTambahModal()">
+                                Tambah
+                            </button>
+                        </div>
+                        <table class="w-full border-collapse border border-gray-300">
+                            <thead>
+                                <tr class="bg-gray-200 text-left">
+                                    <th class="border border-gray-300 px-2 py-1">No</th>
+                                    <th class="border border-gray-300 px-2 py-1">Rencana Tindak Penanganan</th>
+                                    <th class="border border-gray-300 px-2 py-1">Target Output</th>
+                                    <th class="border border-gray-300 px-2 py-1">Target Waktu</th>
+                                    <th class="border border-gray-300 px-2 py-1">Penanggung Jawab</th>
+                                    <th class="border border-gray-300 px-2 py-1">Level Kemungkinan</th>
+                                    <th class="border border-gray-300 px-2 py-1">Level Dampak</th>
+                                    <th class="border border-gray-300 px-2 py-1">Besaran Risiko</th>
+                                    <th class="border border-gray-300 px-2 py-1 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="odd:bg-white even:bg-gray-100">
+                                    <td class="border border-gray-300 px-2 py-1">1</td>
+                                    <td class="border border-gray-300 px-2 py-1">Pengawasan/supervisi pelatihan lebih diintensifkan</td>
+                                    <td class="border border-gray-300 px-2 py-1">Inda menjadi lebih fokus dalam penyampaian materi</td>
+                                    <td class="border border-gray-300 px-2 py-1">17/02/2023</td>
+                                    <td class="border border-gray-300 px-2 py-1"></td>
+                                    <td class="border border-gray-300 px-2 py-1">[2] Jarang Terjadi</td>
+                                    <td class="border border-gray-300 px-2 py-1">[4] Signifikan</td>
+                                    <td class="border border-gray-300 px-2 py-1">13</td>
+                                    <td class="border border-gray-300 px-2 py-1 text-center">
+                                        <div class="flex justify-center gap-4">
+                                            <button class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600">✎</button>
+                                            <button class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600">🗑</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="odd:bg-white even:bg-gray-100">
+                                    <td class="border border-gray-300 px-2 py-1">2</td>
+                                    <td class="border border-gray-300 px-2 py-1">Dimintakan feedback peserta pelatihan terhadap/tingkat kepuasan terhadap proses transfer pengetahuan dan kemampuan Inda secara keseluruhan</td>
+                                    <td class="border border-gray-300 px-2 py-1">Mengetahui kelemahan dan kelebihan Inda</td>
+                                    <td class="border border-gray-300 px-2 py-1">28/02/2023</td>
+                                    <td class="border border-gray-300 px-2 py-1"></td>
+                                    <td class="border border-gray-300 px-2 py-1">[2] Jarang Terjadi</td>
+                                    <td class="border border-gray-300 px-2 py-1">[4] Signifikan</td>
+                                    <td class="border border-gray-300 px-2 py-1">13</td>
+                                    <td class="border border-gray-300 px-2 py-1 text-center">
+                                        <div class="flex justify-center gap-4">
+                                            <button class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600">✎</button>
+                                            <button class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600">🗑</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
 
+        <!-- Modal Tambah Perencanaan -->
+        <div id="tambahModal" class="fixed inset-0 hidden flex items-center justify-center z-50 bg-transparent bg-opacity-50">
+
+            <!-- Overlay -->
+            <div class="fixed inset-0 bg-black opacity-50"></div>
+
+            <div class="relative bg-white rounded-lg shadow-lg w-3 p-3">
+                <div class="flex justify-between items-center bg-gray-100 px-4 py-3 rounded-t-lg">
+                    <h2 class="text-lg font-semibold">TAMBAH PERENCANAAN</h2>
+                    <button class="text-gray-500 hover:text-gray-700" onclick="closeTambahModal()">
+                        ✕
+                    </button>
                 </div>
                 <div class="p-4">
-                    <div class="mb-4">
-                        <p><strong>Risiko:</strong> Inda tidak fokus saat pelatihan</p>
-                        <p><strong>Level Kemungkinan:</strong> [3] Kadang Terjadi</p>
-                        <p><strong>Level Dampak:</strong> [3] Cukup Signifikan (Moderat)</p>
-                        <p><strong>Besaran Risiko:</strong> 14</p>
-                    </div>
-                    <div class="mb-4 flex justify-start gap-4">
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-                            Refresh
-                        </button>
-                        <button class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
-                            Tambah
-                        </button>
-                    </div>
-                    
-                    
-                    <table class="w-full border-collapse border border-gray-300">
-                        <thead>
-                            <tr class="bg-gray-200 text-left">
-                                <th class="border border-gray-300 px-2 py-1">No</th>
-                                <th class="border border-gray-300 px-2 py-1">Rencana Tindak Penanganan</th>
-                                <th class="border border-gray-300 px-2 py-1">Target Output</th>
-                                <th class="border border-gray-300 px-2 py-1">Target Waktu</th>
-                                <th class="border border-gray-300 px-2 py-1">Penanggung Jawab</th>
-                                <th class="border border-gray-300 px-2 py-1">Level Kemungkinan</th>
-                                <th class="border border-gray-300 px-2 py-1">Level Dampak</th>
-                                <th class="border border-gray-300 px-2 py-1">Besaran Risiko</th>
-                                <th class="border border-gray-300 px-2 py-1 text-center">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="odd:bg-white even:bg-gray-100">
-                                <td class="border border-gray-300 px-2 py-1">1</td>
-                                <td class="border border-gray-300 px-2 py-1">Pengawasan/supervisi pelatihan lebih diintensifkan</td>
-                                <td class="border border-gray-300 px-2 py-1">Inda menjadi lebih fokus dalam penyampaian materi</td>
-                                <td class="border border-gray-300 px-2 py-1">17/02/2023</td>
-                                <td class="border border-gray-300 px-2 py-1"></td>
-                                <td class="border border-gray-300 px-2 py-1">[2] Jarang Terjadi</td>
-                                <td class="border border-gray-300 px-2 py-1">[4] Signifikan</td>
-                                <td class="border border-gray-300 px-2 py-1">13</td>
-                                <td class="border border-gray-300 px-2 py-1 text-center">
-                                    <div class="flex justify-center gap-4">
-                                        <button class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600">✎</button>
-                                        <button class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600">🗑</button>
-                                    </div>
-                                </td>
-                                
-                            </tr>
-                            <tr class="odd:bg-white even:bg-gray-100">
-                                <td class="border border-gray-300 px-2 py-1">2</td>
-                                <td class="border border-gray-300 px-2 py-1">Dimintakan feedback peserta pelatihan terhadap/tingkat kepuasan terhadap proses transfer pengetahuan dan kemampuan Inda secara keseluruhan</td>
-                                <td class="border border-gray-300 px-2 py-1">Mengetahui kelemahan dan kelebihan Inda</td>
-                                <td class="border border-gray-300 px-2 py-1">28/02/2023</td>
-                                <td class="border border-gray-300 px-2 py-1"></td>
-                                <td class="border border-gray-300 px-2 py-1">[2] Jarang Terjadi</td>
-                                <td class="border border-gray-300 px-2 py-1">[4] Signifikan</td>
-                                <td class="border border-gray-300 px-2 py-1">13</td>
-                                <td class="border border-gray-300 px-2 py-1 text-center">
-                                    <div class="flex justify-center gap-4">
-                                        <button class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600">✎</button>
-                                        <button class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600">🗑</button>
-                                    </div>
-                                </td>
-                                
-                            </tr>
-                        </tbody>
-                    </table>
+                    <form>
+                        <div class="grid grid-cols-2 gap-4">
+                            <!-- RTP -->
+                            <div>
+                                <label for="rtp" class="block text-sm font-medium">RTP</label>
+                                <input id="rtp" type="text" class="w-full border border-gray-300 rounded-md px-3 py-2" placeholder="Rencana Tindak Penanganan">
+                            </div>
+                            <!-- Target Output -->
+                            <div>
+                                <label for="targetOutput" class="block text-sm font-medium">Target Output</label>
+                                <input id="targetOutput" type="text" class="w-full border border-gray-300 rounded-md px-3 py-2" placeholder="Target Output">
+                            </div>
+                            <!-- Penanggung Jawab -->
+                            <div>
+                                <label for="penanggungJawab" class="block text-sm font-medium">Penanggung Jawab</label>
+                                <select id="penanggungJawab" class="w-full border border-gray-300 rounded-md px-3 py-2">
+                                    <option>--Penanggung Jawab--</option>
+                                    <option>Person A</option>
+                                    <option>Person B</option>
+                                </select>
+                            </div>
+                            <!-- Target Waktu -->
+                            <div>
+                                <label for="targetWaktu" class="block text-sm font-medium">Target Waktu</label>
+                                <input id="targetWaktu" type="date" class="w-full border border-gray-300 rounded-md px-3 py-2">
+                            </div>
+                        </div>
+                        <div class="mt-6 flex justify-end">
+                            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">SAVE</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+
 
 
         </div>
@@ -298,6 +346,25 @@
                 closeModal();
             }
         });
+
+        function openTambahModal() {
+            document.getElementById('tambahModal').classList.remove('hidden');
+        }
+
+        function closeTambahModal() {
+            document.getElementById('tambahModal').classList.add('hidden');
+        }
+
+        function refreshTable() {
+            // Logika untuk memperbarui data tabel
+            console.log("Refreshing table...");
+
+            // Jika menggunakan DataTables
+            if ($.fn.DataTable.isDataTable('#yourTableId')) {
+                $('#yourTableId').DataTable().ajax.reload(null, false); // Reload data tanpa mengubah halaman
+            }
+        }
+
 
 
 
