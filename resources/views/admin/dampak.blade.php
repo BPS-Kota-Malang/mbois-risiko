@@ -105,8 +105,7 @@
         </div>
     </div>
 
-    <!-- JavaScript untuk Menghandle Aksi -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+
     <script>
         function updateStatus(id, status) {
             fetch(`{{ url('admin/dampak') }}/${id}`, {
@@ -155,7 +154,7 @@
                             'X-CSRF-TOKEN': '{{ csrf_token() }}',
                         },
                         body: JSON.stringify({
-                            dampak: newValue,
+                            name: newValue,
                             status: statusText
                         }),
                     })
@@ -185,5 +184,6 @@
         document.getElementById('closeModal').addEventListener('click', function() {
             document.getElementById('editModal').classList.add('hidden');
         });
+
     </script>
 </x-admin-layout>

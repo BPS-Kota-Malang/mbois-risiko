@@ -40,4 +40,9 @@ class Pegawai extends Model
     {
         return $this->belongsTo(TimProject::class, 'id_tim');
     }
+
+    public function rencanaTindakPenanganan()
+    {
+        return $this->hasMany(RencanaTindakPenanganan::class, 'id_data_pegawai');
+    }
 }

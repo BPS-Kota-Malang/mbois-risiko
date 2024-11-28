@@ -25,4 +25,8 @@ class MatriksAnalisisResiko extends Model
     {
         return $this->belongsTo(LevelDampak::class, 'id_level_dampak');
     }
+    public function rencanaTindakPenanganan()
+    {
+        return $this->hasMany(RencanaTindakPenanganan::class, 'id_matriks_analisis_resiko');
+    }
 }

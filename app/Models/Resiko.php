@@ -15,4 +15,11 @@ class Resiko extends Model
     protected $attributes = [
         'status' => null,
     ];
+
+    public function manajemenResiko()
+    {
+        return $this->hasMany(ManajemenResiko::class, 'id_resiko');
+    }
+
+
 }

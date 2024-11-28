@@ -72,10 +72,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('/seleraresiko', SeleraResikoController::class, ['as' => 'admin']);
     Route::resource('/opsipenanganan', OpsiPenangananController::class, ['as' => 'admin']);
     Route::resource('/prosesbisnis', ProsesBisnisController::class, ['as' => 'admin']);
-    Route::resource('/identification', IdentificationController::class, ['as' => 'admin']);
     Route::resource('/resiko', ResikoController::class, ['as' => 'admin']);
     Route::resource('/evaluation', EvaluationController::class, ['as' => 'admin']);
     Route::resource('/perencanaan', PerencanaanController::class, ['as' => 'admin']);
+    Route::get('/getmanajemen/{id}', [PerencanaanController::class, 'getManajemen'], ['as' => 'admin']);
+    Route::get('/getmanajemenDetail/{id}', [PerencanaanController::class, 'getManajemenDetail']);
 
     //penyebab
     Route::resource('/penyebab', PenyebabController::class, ['as' => 'admin']);
@@ -111,6 +112,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/analisis', AnalisisController::class, ['as' => 'admin']);
     Route::post('/admin/analisis/saveuraian', [AnalisisController::class, 'saveUraian'])->name('admin.analisis.saveuraian');
     Route::post('/update-respon-resiko/{id}', [EvaluationController::class, 'updateResponResiko']);
+
 
 
 });

@@ -260,9 +260,6 @@
                                     @endif
                                 </span> <!-- Nilai prioritas akan ditampilkan sesuai respon risiko -->
                             </td>
-
-
-                    </form>
                     @endforeach
                     @endif
                 </table>

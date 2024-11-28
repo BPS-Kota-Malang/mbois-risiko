@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\ProsesBisnis;
@@ -22,7 +21,7 @@ use Illuminate\Support\Facades\Log;
 
 class EvaluationController extends Controller
 {
-    public function evaluation(Request $request)
+    public function index(Request $request)
     {
         $tim = $request->input('tim');
         $prosesBisnis = $request->input('proses_bisnis');
@@ -42,7 +41,6 @@ class EvaluationController extends Controller
         $uraian = Uraian::all() ?? collect();
         $matriksAnalisisResiko = MatriksAnalisisResiko::all() ?? collect();
         $query = ManajemenResiko::query();
-
 
         if ($tim) {
             $query->where('id_tim_project', $tim);
@@ -119,7 +117,6 @@ class EvaluationController extends Controller
         //
     }
 
-
     public function store(Request $request)
     {
         //
@@ -137,9 +134,8 @@ class EvaluationController extends Controller
 
     public function update(Request $request, string $id)
     {
-
+        //
     }
-
 
     public function destroy(string $id)
     {

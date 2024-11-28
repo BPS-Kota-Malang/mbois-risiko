@@ -53,139 +53,232 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Data Dummy -->
-                        <tr>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">3</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">Rendah</td>
-                            <td class="px-6 py-4 border-r border-gray-200">Resiko keterlambatan proyek karena kendala logistik</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">20%</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">15%</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">
-                                <button onclick="openEditModal()" class="inline-block p-2 rounded-md border border-blue-500 text-blue-500 hover:bg-blue-100">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M11.293 2.293a1 1 0 011.414 0l8.586 8.586a1 1 0 010 1.414L11 22H3v-8l8.293-8.293zM13 4L4 13v2h2L20 6l-7-2zm-9 13.5V21h3.5L17 10.5l-3-3L4 17.5z" />
-                                    </svg>
-                                </button>
-                            </td>
-                            
-                            
-                            
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">3</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">Rendah</td>
-                            <td class="px-6 py-4 border-r border-gray-200">Resiko keterlambatan proyek karena kendala logistik</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">20%</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">15%</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">
-                                <button onclick="openEditModal()" class="inline-block p-2 rounded-md border border-blue-500 text-blue-500 hover:bg-blue-100">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M11.293 2.293a1 1 0 011.414 0l8.586 8.586a1 1 0 010 1.414L11 22H3v-8l8.293-8.293zM13 4L4 13v2h2L20 6l-7-2zm-9 13.5V21h3.5L17 10.5l-3-3L4 17.5z" />
-                                    </svg>
-                                </button>
-                            </td>
-                            
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">3</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">Rendah</td>
-                            <td class="px-6 py-4 border-r border-gray-200">Resiko keterlambatan proyek karena kendala logistik</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">20%</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">15%</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">
-                                <button onclick="openEditModal()" class="inline-block p-2 rounded-md border border-blue-500 text-blue-500 hover:bg-blue-100">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M11.293 2.293a1 1 0 011.414 0l8.586 8.586a1 1 0 010 1.414L11 22H3v-8l8.293-8.293zM13 4L4 13v2h2L20 6l-7-2zm-9 13.5V21h3.5L17 10.5l-3-3L4 17.5z" />
-                                    </svg>
-                                </button>
-                            </td>
-                            
-                        </tr>
+                        @php $counter = 1; @endphp
+
+                        @foreach ($manajemenResikos as $ManajemenResiko)
+                            @if ($ManajemenResiko->prioritas == 1 || $ManajemenResiko->prioritas == 2)
+                                <tr>
+                                    <td class="px-6 py-4 text-center border-r border-gray-200">{{ $counter }}</td>
+                                    <td class="px-6 py-4 text-center border-r border-gray-200">
+                                        {{ $ManajemenResiko->prioritas }}</td>
+                                    <td class="px-6 py-4 border-r border-gray-200">{{ $ManajemenResiko->resiko->name }}
+                                    </td>
+                                    <td class="px-6 py-4 text-center border-r border-gray-200"></td>
+                                    <td class="px-6 py-4 text-center border-r border-gray-200"></td>
+                                    <td class="px-6 py-4 text-center border-r border-gray-200">
+                                        <button
+                                            class="inline-block p-2 rounded-md border border-blue-500 text-blue-500 hover:bg-blue-100 openModal"
+                                            data-id="{{ $ManajemenResiko->id }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24"
+                                                fill="currentColor">
+                                                <path
+                                                    d="M11.293 2.293a1 1 0 011.414 0l8.586 8.586a1 1 0 010 1.414L11 22H3v-8l8.293-8.293zM13 4L4 13v2h2L20 6l-7-2zm-9 13.5V21h3.5L17 10.5l-3-3L4 17.5z" />
+                                            </svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                                @php $counter++; @endphp
+                            @endif
+                        @endforeach
                     </tbody>
                 </table>
             </div>
 
-           
-        <!-- Modal -->
-        <div id="editModal" class="fixed inset-0 hidden flex items-center justify-center z-50">
-            <div class="relative bg-white rounded-lg shadow-lg w-3/4 p-6" style="margin-left: 100px;">
-        
-                <div class="flex justify-between items-center bg-gray-100 px-4 py-3 rounded-t-lg">
-                    <h2 class="text-lg font-semibold">Rencana Tindak Penanganan</h2>
-                    <button class="text-gray-500 hover:text-gray-700" onclick="closeModal()">✕</button>
+            {{-- Modal --}}
+            <div id="editModal" class="fixed inset-0 hidden flex items-center justify-center z-50">
+                <!-- Overlay -->
+                <div class="fixed inset-0 bg-black opacity-50"></div>
+                <!-- Modal Content -->
+                <div class="relative bg-white rounded-lg shadow-lg w-3/4 p-6" style="margin-left: 250px;">
+                    <div class="flex justify-between items-center bg-gray-100 px-4 py-3 rounded-t-lg">
+                        <h2 class="text-lg font-semibold">Rencana Tindak Penanganan</h2>
+                        <button class="text-gray-500 hover:text-gray-700" onclick="closeModal()">✕</button>
+                    </div>
+                    <div class="p-4">
+                        <div class="mb-4 deskripsi-rtp">
+                            <!-- Deskripsi RTP -->
+                        </div>
+                        <div class="mb-4 flex justify-start gap-4">
+                            <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                                onclick="refreshTable()">
+                                Refresh
+                            </button>
 
-                </div>
-                <div class="p-4">
-                    <div class="mb-4">
-                        <p><strong>Risiko:</strong> Inda tidak fokus saat pelatihan</p>
-                        <p><strong>Level Kemungkinan:</strong> [3] Kadang Terjadi</p>
-                        <p><strong>Level Dampak:</strong> [3] Cukup Signifikan (Moderat)</p>
-                        <p><strong>Besaran Risiko:</strong> 14</p>
+                            <button class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
+                                onclick="openTambahModal()">
+                                Tambah
+                            </button>
+                        </div>
+
+                        <table class="w-full border-collapse border border-gray-300" id="rtpTable">
+                            <thead>
+                                <tr class="bg-gray-200 text-left">
+                                    <th class="border border-gray-300 px-2 py-1">No</th>
+                                    <th class="border border-gray-300 px-2 py-1">Rencana Tindak Penanganan</th>
+                                    <th class="border border-gray-300 px-2 py-1">Target Output</th>
+                                    <th class="border border-gray-300 px-2 py-1">Target Waktu</th>
+                                    <th class="border border-gray-300 px-2 py-1">Penanggung Jawab</th>
+                                    <th class="border border-gray-300 px-2 py-1">Level Kemungkinan</th>
+                                    <th class="border border-gray-300 px-2 py-1">Level Dampak</th>
+                                    <th class="border border-gray-300 px-2 py-1">Besaran Risiko</th>
+                                    <th class="border border-gray-300 px-2 py-1 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="mb-4 flex justify-start gap-4">
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-                            Refresh
-                        </button>
-                        <button class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
-                            Tambah
-                        </button>
-                    </div>
-                    
-                    
-                    <table class="w-full border-collapse border border-gray-300">
-                        <thead>
-                            <tr class="bg-gray-200 text-left">
-                                <th class="border border-gray-300 px-2 py-1">No</th>
-                                <th class="border border-gray-300 px-2 py-1">Rencana Tindak Penanganan</th>
-                                <th class="border border-gray-300 px-2 py-1">Target Output</th>
-                                <th class="border border-gray-300 px-2 py-1">Target Waktu</th>
-                                <th class="border border-gray-300 px-2 py-1">Penanggung Jawab</th>
-                                <th class="border border-gray-300 px-2 py-1">Level Kemungkinan</th>
-                                <th class="border border-gray-300 px-2 py-1">Level Dampak</th>
-                                <th class="border border-gray-300 px-2 py-1">Besaran Risiko</th>
-                                <th class="border border-gray-300 px-2 py-1 text-center">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="odd:bg-white even:bg-gray-100">
-                                <td class="border border-gray-300 px-2 py-1">1</td>
-                                <td class="border border-gray-300 px-2 py-1">Pengawasan/supervisi pelatihan lebih diintensifkan</td>
-                                <td class="border border-gray-300 px-2 py-1">Inda menjadi lebih fokus dalam penyampaian materi</td>
-                                <td class="border border-gray-300 px-2 py-1">17/02/2023</td>
-                                <td class="border border-gray-300 px-2 py-1"></td>
-                                <td class="border border-gray-300 px-2 py-1">[2] Jarang Terjadi</td>
-                                <td class="border border-gray-300 px-2 py-1">[4] Signifikan</td>
-                                <td class="border border-gray-300 px-2 py-1">13</td>
-                                <td class="border border-gray-300 px-2 py-1 text-center">
-                                    <div class="flex justify-center gap-4">
-                                        <button class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600">✎</button>
-                                        <button class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600">🗑</button>
-                                    </div>
-                                </td>
-                                
-                            </tr>
-                            <tr class="odd:bg-white even:bg-gray-100">
-                                <td class="border border-gray-300 px-2 py-1">2</td>
-                                <td class="border border-gray-300 px-2 py-1">Dimintakan feedback peserta pelatihan terhadap/tingkat kepuasan terhadap proses transfer pengetahuan dan kemampuan Inda secara keseluruhan</td>
-                                <td class="border border-gray-300 px-2 py-1">Mengetahui kelemahan dan kelebihan Inda</td>
-                                <td class="border border-gray-300 px-2 py-1">28/02/2023</td>
-                                <td class="border border-gray-300 px-2 py-1"></td>
-                                <td class="border border-gray-300 px-2 py-1">[2] Jarang Terjadi</td>
-                                <td class="border border-gray-300 px-2 py-1">[4] Signifikan</td>
-                                <td class="border border-gray-300 px-2 py-1">13</td>
-                                <td class="border border-gray-300 px-2 py-1 text-center">
-                                    <div class="flex justify-center gap-4">
-                                        <button class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600">✎</button>
-                                        <button class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600">🗑</button>
-                                    </div>
-                                </td>
-                                
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
-        </div>
+
+
+            <!-- Modal Tambah Perencanaan -->
+            <div id="tambahModal"
+                class="fixed inset-0 hidden flex items-center justify-center z-50 bg-transparent bg-opacity-50">
+
+                <!-- Overlay -->
+                <div class="fixed inset-0 bg-black opacity-50"></div>
+
+                <div class="relative bg-white rounded-lg shadow-lg w-3 p-3">
+                    <div class="flex justify-between items-center bg-gray-100 px-4 py-3 rounded-t-lg">
+                        <h2 class="text-lg font-semibold">TAMBAH PERENCANAAN</h2>
+                        <button class="text-gray-500 hover:text-gray-700" onclick="closeTambahModal()">
+                            ✕
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <form id="tambahRtp" action="{{ route('admin.perencanaan.store') }}" method="POST">
+                            @csrf
+                            <div class="grid grid-cols-2 gap-4">
+                                <!-- RTP -->
+                                <div>
+                                    <label for="rtp" class="block text-sm font-medium">RTP</label>
+                                    <input id="rtp" name="name" type="text"
+                                        class="w-full border border-gray-300 rounded-md px-3 py-2"
+                                        placeholder="Rencana Tindak Penanganan">
+                                </div>
+                                <!-- Target Output -->
+                                <div>
+                                    <label for="targetOutput" class="block text-sm font-medium">Target Output</label>
+                                    <input id="targetOutput" name="target_output" type="text"
+                                        class="w-full border border-gray-300 rounded-md px-3 py-2"
+                                        placeholder="Target Output">
+                                </div>
+                                <!-- Penanggung Jawab -->
+                                <div>
+                                    <label for="penanggungJawab" class="block text-sm font-medium">Penanggung
+                                        Jawab</label>
+                                    <select id="penanggungJawab" name="id_data_pegawai"
+                                        class="w-full border border-gray-300 rounded-md px-3 py-2">
+                                        <option value="">-- Pilih Penanggung Jawab --</option>
+                                        @foreach ($dataPegawai as $pegawai)
+                                            <option value="{{ $pegawai->id }}">{{ $pegawai->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <!-- Target Waktu -->
+                                <div>
+                                    <label for="targetWaktu" class="block text-sm font-medium">Target Waktu</label>
+                                    <input id="targetWaktu" name="target_waktu" type="date"
+                                        class="w-full border border-gray-300 rounded-md px-3 py-2">
+                                </div>
+                                <!-- Level Kemungkinan -->
+                                <div class="hidden">
+                                    <label for="levelKemungkinan" class="block text-sm font-medium">Level
+                                        Kemungkinan</label>
+                                    <input type="text" name="id_level_kemungkinan" value="">
+                                </div>
+                                <!-- Level Dampak -->
+                                <div class="hidden">
+                                    <label for="levelDampak" class="block text-sm font-medium">Level Dampak</label>
+                                    <input type="text" name="id_level_dampak" value="">
+                                </div>
+                                <!-- Besaran Risiko -->
+                                <div class="hidden">
+                                    <label for="besaranRisiko" class="block text-sm font-medium">Besaran
+                                        Risiko</label>
+                                    <input type="text" name="id_matriks_analisis_resiko" value="">
+                                </div>
+                                <!-- manajemen resiko -->
+                                <div class="hidden">
+                                    <label for="manajemenResiko" class="block text-sm font-medium">manajemen
+                                        resiko</label>
+                                    <input type="text" name="id_manajemen_resiko" value="">
+                                </div>
+                            </div>
+                            <div class="mt-6 flex justify-end">
+                                <button type="submit"
+                                    class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">SAVE</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Edit -->
+            <div id="editHandlingPlanModal"
+                class="fixed inset-0 hidden flex items-center justify-center z-50 bg-transparent bg-opacity-50">
+                <!-- Overlay -->
+                <div class="fixed inset-0 bg-black opacity-50"></div>
+
+                <div class="relative bg-white rounded-lg shadow-lg w-2/3">
+                    <!-- Header -->
+                    <div
+                        class="flex justify-between items-center bg-gray-100 px-6 py-4 rounded-t-lg border-b border-gray-300">
+                        <h2 class="text-xl font-bold">EDIT PERENCANAAN</h2>
+                        <button class="text-red-500 hover:text-red-700 font-bold text-2xl"
+                            onclick="closeEditHandlingPlanModal()">✖</button>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="p-6">
+                        <form id="editForm" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <!-- Rencana Tindak Penanganan -->
+                            <div>
+                                <label for="rtpEdit" class="block text-sm font-bold mb-2">Rencana Tindak Penanganan
+                                    (RTP)</label>
+                                <input id="rtpEdit" type="text"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Rencana Tindak Penanganan">
+                            </div>
+                            <!-- Target Output -->
+                            <div>
+                                <label for="targetOutputEdit" class="block text-sm font-bold mb-2">Target
+                                    Output</label>
+                                <input id="targetOutputEdit" type="text"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Target Output">
+                            </div>
+                            <!-- Penanggung Jawab -->
+                            <div>
+                                <label for="penanggungJawabEdit" class="block text-sm font-bold mb-2">Penanggung
+                                    Jawab</label>
+                                <select name="id_data_pegawai" id="penanggungJawabEdit" class="form-control">
+                                    <option value="">-- Pilih Penanggung Jawab --</option>
+                                    @foreach ($dataPegawai as $pegawai)
+                                        <option value="{{ $pegawai->id }}">{{ $pegawai->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <!-- Target Waktu -->
+                            <div>
+                                <label for="targetWaktuEdit" class="block text-sm font-bold mb-2">Target Waktu</label>
+                                <input id="targetWaktuEdit" type="date"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                        </form>
+                        <!-- Tombol -->
+                        <div class="flex justify-left mt-6">
+                            <button
+                                class="bg-green-500 text-white px-12 py-2 rounded font-bold hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+                                onclick="saveEditHandlingPlan()">SAVE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
 
         </div>
@@ -196,110 +289,185 @@
             </nav>
         </div>
     </div>
-    @include('admin.risk.components.modal-uraian')
+
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const uraianModal = document.getElementById('uraianModal');
-            const closeModal4 = document.getElementById('closeModal4');
-            const openAdduraianModal = document.getElementById('openAddUraianModal');
-            const cancelUraianBtn = document.getElementById('cancelUraianBtn');
-            const saveUraianBtn = document.getElementById('saveUraianBtn');
-            const matriksAnalisisResiko = @json($matriksAnalisisResiko);
-            const levelKemungkinanSelects = document.querySelectorAll('select[name="level_kemungkinan[]"]');
-            const levelDampakSelects = document.querySelectorAll('select[name="level_dampak[]"]');
-            let selectedManajemenResikoId = null;
-            window.selectedUraianIds = [];
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.openModal').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const selectedId = button.getAttribute('data-id');
 
-            function updateHasilLevelResiko(selectElement) {
-                const rowId = selectElement.id.replace(/\D/g, '');
-                const levelKemungkinanSelect = document.getElementById('levelKemungkinan' + rowId);
-                const levelDampakSelect = document.getElementById('levelDampak' + rowId);
-                const hasilLevelResiko = document.getElementById('hasilLevelResiko' + rowId);
-                const idLevelKemungkinan = levelKemungkinanSelect.value;
-                const idLevelDampak = levelDampakSelect.value;
+                    // Ambil data deskripsi RTP
+                    fetch('/getmanajemen/' + selectedId)
+                        .then(response => response.json())
+                        .then(data => {
+                            document.querySelector('.deskripsi-rtp').innerHTML = `
+                            <p><strong>Resiko:</strong> ${data.resiko}</p>
+                            <p><strong>Level Kemungkinan:</strong> ${data.levelKemungkinan || '-'}</p>
+                            <p><strong>Level Dampak:</strong> ${data.levelDampak || '-'}</p>
+                            <p><strong>Besaran Risiko:</strong> ${data.matriksAnalisisResiko || '-'}</p>
+                        `;
 
-                if (idLevelKemungkinan && idLevelDampak) {
-                    const result = matriksAnalisisResiko.find(item =>
-                        item.id_level_kemungkinan == idLevelKemungkinan &&
-                        item.id_level_dampak == idLevelDampak
-                    );
-                    hasilLevelResiko.innerText = result ? result.hasil_level_resiko : '';
-                    hasilLevelResiko.classList.remove('bg-red-600', 'bg-orange-600', 'bg-yellow-500',
-                        'bg-green-600', 'bg-blue-600', 'text-white');
-                    if (result) {
-                        if (result.hasil_level_resiko === 'Sangat Tinggi') {
-                            hasilLevelResiko.classList.add('bg-red-600', 'text-white');
-                        } else if (result.hasil_level_resiko === 'Tinggi') {
-                            hasilLevelResiko.classList.add('bg-orange-600', 'text-white');
-                        } else if (result.hasil_level_resiko === 'Sedang') {
-                            hasilLevelResiko.classList.add('bg-yellow-500', 'text-white');
-                        } else if (result.hasil_level_resiko === 'Rendah') {
-                            hasilLevelResiko.classList.add('bg-green-600', 'text-white');
-                        } else if (result.hasil_level_resiko === 'Sangat Rendah') {
-                            hasilLevelResiko.classList.add('bg-blue-600', 'text-white');
-                        }
-                    }
-                } else {
-                    hasilLevelResiko.innerText = 'cukitdulit';
-                    hasilLevelResiko.classList.remove('bg-red-600', 'bg-orange-600', 'bg-yellow-500',
-                        'bg-green-600', 'bg-blue-600', 'text-white');
-                }
-            }
+                            document.querySelector('input[name="id_level_kemungkinan"]').value =
+                                data.level_kemungkinan || '-';
+                            document.querySelector('input[name="id_level_dampak"]').value = data
+                                .level_dampak || '-';
+                            document.querySelector('input[name="id_matriks_analisis_resiko"]')
+                                .value = data.matriksAnalisisResiko || '-';
+                            document.querySelector('input[name="id_manajemen_resiko"]').value =
+                                data.idManajemenResiko || '-';
+                        });
 
-            levelKemungkinanSelects.forEach(select => {
-                select.addEventListener('change', () => updateHasilLevelResiko(select));
-            });
+                    // Ambil data tabel
+                    fetch('/getmanajemenDetail/' + selectedId)
+                        .then(response => response.json())
+                        .then(data => {
+                            const tbody = document.querySelector('#rtpTable tbody');
+                            tbody.innerHTML = ''; // Kosongkan tabel terlebih dahulu
+                            //ubah data menjadi array
+                            data = Object.values(data);
+                            console.log(data[0]);
+                            if (data[0].length === 0) {
+                                const tr = document.createElement('tr');
+                                tr.innerHTML = `
+                                <td class="border border-gray-300 px-2 py-1 text-center" colspan="9">Tidak ada data</td>
+                            `;
+                                tbody.appendChild(tr);
+                            } else {
 
-            levelDampakSelects.forEach(select => {
-                select.addEventListener('change', () => updateHasilLevelResiko(select));
-            });
+                                if (Array.isArray(data) && data.length > 0) {
+                                    data[0].forEach((item, index) => {
+                                        const tr = document.createElement('tr');
+                                        tr.innerHTML = `
+            <td class="border border-gray-300 px-2 py-1">${index + 1}</td>
+            <td class="border border-gray-300 px-2 py-1">${item.name}</td>
+            <td class="border border-gray-300 px-2 py-1">${item.target_output}</td>
+            <td class="border border-gray-300 px-2 py-1">${item.target_waktu}</td>
+            <td class="border border-gray-300 px-2 py-1">${item.id_data_pegawai}</td>
+            <td class="border border-gray-300 px-2 py-1">${item.id_level_kemungkinan}</td>
+            <td class="border border-gray-300 px-2 py-1">${item.id_level_dampak}</td>
+            <td class="border border-gray-300 px-2 py-1">${item.id_matriks_analisis_resiko}</td>
+            <td class="border border-gray-300 px-2 py-1 text-center">
+                <button 
+                    class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600"
+                    data-rtp='${JSON.stringify(item)}'
+                    onclick="openEditHandlingPlanModal(this)">
+                    ✎
+                </button>
+                <button 
+                    class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
+                    onclick="deleteHandlingPlan(${item.id})">
+                    Hapus
+                </button>
+            </td>
+        `;
+                                        tbody.appendChild(tr);
+                                    });
+                                } else {
+                                    console.error('Data yang diterima bukan array atau kosong:',
+                                        data);
+                                }
 
-            document.querySelectorAll('#btnEdit').forEach(editBtn => {
-                editBtn.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    const rowId = this.getAttribute('data-id');
-                    const levelKemungkinanSelect = document.getElementById('levelKemungkinan' + rowId);
-                    const levelDampakSelect = document.getElementById('levelDampak' + rowId);
-                    const efektivitasSelect = document.getElementById('efektivitas' + rowId);
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
 
-                    if (levelKemungkinanSelect) levelKemungkinanSelect.disabled = false;
-                    if (levelDampakSelect) levelDampakSelect.disabled = false;
-                    if (efektivitasSelect) efektivitasSelect.disabled = false;
-
-                    const saveBtn = this.closest('tr').querySelector('#saveanalisisBtn');
-                    if (saveBtn) saveBtn.disabled = false;
+                    // Tampilkan modal
+                    openModal();
                 });
-            });
 
-            document.querySelectorAll('#saveanalisisBtn').forEach(saveBtn => {
-                saveBtn.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    const rowId = this.closest('tr').querySelector('input[name="manajemen_resiko_ids[]"]').value;
-                    const levelKemungkinanSelect = document.getElementById('levelKemungkinan' + rowId);
-                    const levelDampakSelect = document.getElementById('levelDampak' + rowId);
-                    const efektivitasSelect = document.getElementById('efektivitas' + rowId);
-
-                    // Save functionality here
-                });
             });
         });
 
-            function closeModal() {
+
+        function closeModal() {
             document.getElementById('editModal').classList.add('hidden');
         }
 
-        function openEditModal() {
+        function openModal() {
             document.getElementById('editModal').classList.remove('hidden');
+
         }
 
-        document.getElementById('editModal').addEventListener('click', function (event) {
-            if (event.target.id === 'editModal') {
-                closeModal();
+
+        function openTambahModal() {
+            document.getElementById('tambahModal').classList.remove('hidden');
+        }
+
+        function closeTambahModal() {
+            document.getElementById('tambahModal').classList.add('hidden');
+        }
+
+        function refreshTable() {
+            // Logika untuk memperbarui data tabel
+            console.log("Refreshing table...");
+
+            // Jika menggunakan DataTables
+            if ($.fn.DataTable.isDataTable('#yourTableId')) {
+                $('#yourTableId').DataTable().ajax.reload(null, false); // Reload data tanpa mengubah halaman
             }
-        });
+        }
 
+        function openEditHandlingPlanModal(button) {
+            const data = JSON.parse(button.getAttribute('data-rtp'));
 
+            if (!data || !data.id_matriks_analisis_resiko) {
+                console.error('Data tidak valid:', data);
+                return;
+            }
+            document.getElementById('rtpEdit').value = data.name || '';
+            document.getElementById('targetOutputEdit').value = data.target_output || '';
+            document.getElementById('targetWaktuEdit').value = data.target_waktu || '';
 
+            document.getElementById('editForm').action = `/perencanaan/${data.id}`; 
+            
+
+            const penanggungJawabSelect = document.getElementById('penanggungJawabEdit');
+            if (penanggungJawabSelect) {
+                penanggungJawabSelect.value = data.id_data_pegawai || '';
+            }
+
+            document.getElementById('editHandlingPlanModal').classList.remove('hidden');
+        }
+
+        function closeEditHandlingPlanModal() {
+            document.getElementById('editHandlingPlanModal').classList.add('hidden');
+        }
+
+        function saveEditHandlingPlan() {
+            const rtp = document.getElementById('rtpEdit').value; // Nama rencana tindak penanganan
+            const targetOutput = document.getElementById('targetOutputEdit').value; // Output target
+            const targetWaktu = document.getElementById('targetWaktuEdit').value; // Waktu target
+            const idDataPegawai = document.getElementById('penanggungJawabEdit').value; // ID pegawai yang bertanggung jawab
+            const formData = {
+                name: rtp,
+                target_output: targetOutput,
+                target_waktu: targetWaktu,
+                id_data_pegawai: idDataPegawai
+            };
+            const formAction = document.getElementById('editForm').action;
+            fetch(formAction, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success === true) {
+                        alert('Data berhasil diperbarui!');
+                        window.location.reload();
+                    } else {
+                        console.error('Failed to update:', data.message);
+                        alert('Gagal memperbarui data: ' + (data.message || 'Tidak ada pesan error'));
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat memperbarui data!');
+                });
+        }
     </script>
 </x-admin-layout>
