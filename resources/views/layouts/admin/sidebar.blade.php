@@ -6,12 +6,16 @@
     <div class="flex items-center justify-center mt-8">
         <div class="flex items-center">
             <image src="{{ asset('images/MBOIS1.png') }}" x="0" y="0" width="250" height="250" />
+
+
+
+        {{-- <span class="mx-2 text-2xl font-semibold text-white">BPS</span> --}}
         </div>
     </div>
 
     <nav class="mt-10">
-        <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.dashboard.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
-            href="{{ route('admin.dashboard') }}">
+        <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.risk.context') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
+            href="{{ route('admin.risk.context') }}">
             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -23,17 +27,26 @@
             <span class="mx-3">Dashboard</span>
         </a>
 
+        {{-- <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.forms') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
+            href="{{ route('admin.forms') }}">
+            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" />
+            </svg>
+            <span class="mx-3">Forms</span>
+        </a> --}}
 
         <div class="relative group ">
             <button id="dropdown-button"
-                class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.risk.context') || Route::currentRouteNamed('admin.manajemenrisiko.index') || Route::currentRouteNamed('admin.analisis.index') || Route::currentRouteNamed('admin.evaluation.index') || Route::currentRouteNamed('admin.perencanaan.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25">
+                class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.risk.context') || Route::currentRouteNamed('admin.manajemenrisiko.index') || Route::currentRouteNamed('admin.analisis.index') || Route::currentRouteNamed('admin.risk.evaluation') || Route::currentRouteNamed('admin.risk.action_plan') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25">
                 <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 24 24"stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
                     </path>
                 </svg>
-                <span class="mx-3 ">Manajemen Resiko</span>
+                <span class="mx-3 ">Risk Management</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20"
                     fill="currentColor" aria-hidden="true">
                     <path fill-rule="evenodd"
@@ -41,7 +54,7 @@
                         clip-rule="evenodd" />
                 </svg>
             </button>
-            <div id="dropdown-menu" class="dropdown_branding w-full" hidden>
+            <div id="dropdown-menu" class="dropdown_branding w-full">
                 <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.risk.context') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
                     href="{{ route('admin.risk.context') }}">
                     <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -49,7 +62,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" />
                     </svg>
-                    <span class="mx-3">Setting Konteks</span>
+                    <span class="mx-3">Context Setting</span>
                 </a>
 
                 <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.manajemenrisiko.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
@@ -59,7 +72,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                     </svg>
-                    <span class="mx-3">Identifikasi Resiko</span>
+                    <span class="mx-3">Risk Identification</span>
                 </a>
 
                 <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.analisis.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
@@ -69,72 +82,73 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
-                    <span class="mx-3">Analisis Resiko</span>
+                    <span class="mx-3">Risk Analysis</span>
                 </a>
 
-                <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.evaluation.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
-                    href="{{ route('admin.evaluation.index') }}">
+                <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.risk.evaluation') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
+                    href="{{ route('admin.risk.evaluation') }}">
                     <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
-                    <span class="mx-3">Evaluasi Resiko</span>
+                    <span class="mx-3">Risk Evaluation</span>
                 </a>
 
-                <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.perencanaan.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
-                    href="{{ route('admin.perencanaan.index') }}">
+                <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.risk.action_plan') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
+                    href="{{ route('admin.risk.action_plan') }}">
                     <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
-                    <span class="mx-3">Perencanaan</span>
+                    <span class="mx-3">Action Plan</span>
                 </a>
             </div>
         </div>
-
-
-        @if (auth()->check() && auth()->user()->hasRole('admin'))
         <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.employee') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
             href="{{ route('admin.employee') }}">
-            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" />
+            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" />
             </svg>
             <span class="mx-3">Data Pegawai</span>
         </a>
 
         <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.resiko') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
-            href="{{ route('admin.resiko.index') }}">
-            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 2a10 10 0 00-10 10 10 10 0 0010 10 10 10 0 0010-10A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16zm0-11a1 1 0 00-1 1v4a1 1 0 002 0v-4a1 1 0 00-1-1zm0 6a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/>
-            </svg>
-            <span class="mx-3">Resiko</span>
-        </a>
+        href="{{ route('admin.resiko.index') }}">
+        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 2a10 10 0 00-10 10 10 10 0 0010 10 10 10 0 0010-10A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16zm0-11a1 1 0 00-1 1v4a1 1 0 002 0v-4a1 1 0 00-1-1zm0 6a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/>
+        </svg>
+        <span class="mx-3">Resiko</span>
+    </a>
+
 
         <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.penyebab') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
-            href="{{ route('admin.penyebab.index') }}">
+        href="{{ route('admin.penyebab.index') }}">
             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 6a6 6 0 016 6v6a6 6 0 01-6 6H6a6 6 0 01-6-6V12a6 6 0 016-6h6zm0 2H6a4 4 0 00-4 4v6a4 4 0 004 4h6a4 4 0 004-4v-6a4 4 0 00-4-4zm0 2a2 2 0 00-2 2v4a2 2 0 002 2 2 2 0 002-2v-4a2 2 0 00-2-2z" />
+            <!-- Ganti path dengan SVG icon yang sesuai untuk "Penyebab" -->
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 6a6 6 0 016 6v6a6 6 0 01-6 6H6a6 6 0 01-6-6V12a6 6 0 016-6h6zm0 2H6a4 4 0 00-4 4v6a4 4 0 004 4h6a4 4 0 004-4v-6a4 4 0 00-4-4zm0 2a2 2 0 00-2 2v4a2 2 0 002 2 2 2 0 002-2v-4a2 2 0 00-2-2z" />
             </svg>
             <span class="mx-3">Penyebab</span>
         </a>
 
         <!-- "Dampak"  -->
-        <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.dampak') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
+            <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.dampak') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
             href="{{ route('admin.dampak.index') }}">
             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M10.29 3.86L1.82 18c-.58 1.01.16 2.25 1.29 2.25h18.78c1.13 0 1.87-1.24 1.29-2.25L13.71 3.86a1.5 1.5 0 00-2.42 0zM12 9v4m0 4h.01" />
             </svg>
             <span class="mx-3">Dampak</span>
-        </a>
+            </a>
 
         <!-- "Uraian"  -->
-        <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.uraian') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25" href="{{ route('admin.uraian.index') }}">
+        <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.uraian') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
+            href="{{ route('admin.uraian.index') }}">
             <svg width="25" height="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M4 4H20V20H4V4Z" stroke="white" stroke-width="2" />
                 <path d="M4 8H20" stroke="white" stroke-width="2" />
@@ -142,62 +156,7 @@
                 <path d="M4 16H20" stroke="white" stroke-width="2" />
             </svg>
             <span class="mx-3">Uraian</span>
-        </a>
-
-
-        <div class="relative group">
-            <button id="new-dropdown-button"
-                class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.users.index') || Route::currentRouteNamed('admin.roles.index') || Route::currentRouteNamed('admin.permissions.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-white">
-                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
-                    </path>
-                </svg>
-                <span class="mx-3">Konfigurasi</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20"
-                    fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd"
-                        d="M6.293 9.293a1 1 0 011.414 0L10 11.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                        clip-rule="evenodd" />
-                </svg>
-            </button>
-            <div id="new-dropdown-menu" class="dropdown_branding w-full" hidden>
-                <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.users.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-white"
-                    href="{{ route('admin.users.index') }}">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" />
-                    </svg>
-
-                    <span class="mx-3">User</span>
-                </a>
-
-                <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.roles.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-white"
-                    href="{{ route('admin.roles.index') }}">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                    </svg>
-
-                    <span class="mx-3">Role</span>
-                </a>
-
-                <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.permissions.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-white"
-                    href="{{ route('admin.permissions.index') }}">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                    </svg>
-
-                    <span class="mx-3">Perizinan</span>
-                </a>
-            </div>
-        </div>
-        @endif
+            </a>
 
 
         {{-- <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.tables') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-white"
@@ -222,16 +181,64 @@
             <span class="mx-3">UI Elements</span>
         </a> --}}
 
-        {{-- <a class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.forms') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25"
-            href="{{ route('admin.forms') }}">
-            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" />
-            </svg>
-            <span class="mx-3">Forms</span>
-        </a> --}}
+        @php
+            $userRole = auth()->user()->role; // Assuming the user's role is stored in the 'role' column of the users table
+        @endphp
 
+        @if ($userRole != 'ketua_tim' && $userRole != 'anggota_tim')
+            <div class="relative group">
+                <button id="new-dropdown-button"
+                    class="flex items-center px-6 py-2 mt-4 {{ Route::currentRouteNamed('admin.users.index') || Route::currentRouteNamed('admin.roles.index') || Route::currentRouteNamed('admin.permissions.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-white">
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                        </path>
+                    </svg>
+                    <span class="mx-3">Configurations</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20"
+                        fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M6.293 9.293a1 1 0 011.414 0L10 11.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </button>
+                <div id="new-dropdown-menu" class="dropdown_branding w-full">
+                    <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.users.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-white"
+                        href="{{ route('admin.users.index') }}">
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" />
+                        </svg>
+
+                        <span class="mx-3">User</span>
+                    </a>
+
+                    <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.roles.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-white"
+                        href="{{ route('admin.roles.index') }}">
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                        </svg>
+
+                        <span class="mx-3">Role</span>
+                    </a>
+
+                    <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.permissions.index') ? 'text-white' : 'text-white' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-white"
+                        href="{{ route('admin.permissions.index') }}">
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+
+                        <span class="mx-3">Permission</span>
+                    </a>
+                </div>
+            </div>
+        @endif
 
     </nav>
 </div>
@@ -244,29 +251,40 @@
         const dropdownMenu = document.getElementById('dropdown-menu');
         const newDropdownButton = document.getElementById('new-dropdown-button');
         const newDropdownMenu = document.getElementById('new-dropdown-menu');
-        let isDropdownOpen = false; // Set to false to keep the original dropdown closed by default
-        let isNewDropdownOpen = false; // Set to false to keep the new dropdown closed by default
+        let isOpen = true; // Set to true to open the dropdown by default
 
+        // Function to toggle the dropdown state
+        function toggleDropdown() {
+            isOpen = !isOpen;
+            dropdownMenu.classList.toggle('hidden', !isOpen);
+        }
 
-        dropdownButton.addEventListener('click', (event) => {
-            if (dropdownMenu.hidden === false) {
-                //add attribute hidden
-                dropdownMenu.hidden = true;
-            } else {
-                dropdownMenu.hidden = false;
-            }
+        // Function to toggle the new dropdown state
+        function toggleNewDropdown() {
+            isOpen = !isOpen;
+            newDropdownMenu.classList.toggle('hidden', !isOpen);
+        }
+
+        // Set initial state
+        toggleDropdown();
+        toggleNewDropdown();
+
+        dropdownButton.addEventListener('click', () => {
+            toggleDropdown();
         });
 
-        newDropdownButton.addEventListener('click', (event) => {
-           if (newDropdownMenu.hidden === false) {
-                //add attribute hidden
-                newDropdownMenu.hidden = true;
-            } else {
-                newDropdownMenu.hidden = false;
-            }
+
+        newDropdownButton.addEventListener('click', () => {
+            toggleNewDropdown();
         });
 
+        document.addEventListener('click', function(event) {
+            if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.add('hidden');
+            }
+            if (!newDropdownButton.contains(event.target) && !newDropdownMenu.contains(event.target)) {
+                newDropdownMenu.classList.add('hidden');
+            }
+        });
     });
 </script>
-
-

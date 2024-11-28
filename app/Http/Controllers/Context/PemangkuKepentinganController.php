@@ -29,14 +29,14 @@ class PemangkuKepentinganController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'kelompok' => 'required|string|max:255',
+            'pemangku_kepentingan' => 'required|string|max:255',
+            'kelompok_pemangku_kepentingan' => 'required|string|max:255',
             'hubungan' => 'nullable|string|max:255',
         ]);
 
         Context::create([
-            'name' => $request->name,
-            'kelompok' => $request->kelompok,
+            'pemangku_kepentingan' => $request->pemangku_kepentingan,
+            'kelompok_pemangku_kepentingan' => $request->kelompok_pemangku_kepentingan,
             'hubungan' => $request->hubungan,
         ]);
 
@@ -65,14 +65,14 @@ class PemangkuKepentinganController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'kelompok' => 'required|string|max:255',
+            'pemangku_kepentingan' => 'required|string|max:255',
+            'kelompok_pemangku_kepentingan' => 'required|string|max:255',
             'hubungan' => 'nullable|string|max:255',
         ]);
 
         $pemangkuKepentingan = Context::findOrFail($id);
-        $pemangkuKepentingan->name = $request->name;
-        $pemangkuKepentingan->kelompok = $request-> kelompok;
+        $pemangkuKepentingan->pemangku_kepentingan = $request->pemangku_kepentingan;
+        $pemangkuKepentingan->kelompok_pemangku_kepentingan = $request->kelompok_pemangku_kepentingan;
         $pemangkuKepentingan->hubungan = $request->hubungan;
         $pemangkuKepentingan->save();
 

@@ -22,12 +22,12 @@ class TimProjectController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'nama_team' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
         ]);
 
         $timProject = TimProject::create([
-            'name' => $request->name,
+            'nama_team' => $request->nama_team,
             'deskripsi' => $request->deskripsi,
         ]);
 
@@ -58,13 +58,13 @@ class TimProjectController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'nama_team' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
         ]);
 
         $timProject = TimProject::findOrFail($id);
         $timProject->update([
-            'name' => $request->name,
+            'nama_team' => $request->nama_team,
             'deskripsi' => $request->deskripsi,
         ]);
 

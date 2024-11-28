@@ -29,7 +29,7 @@ class LevelResikoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'level_resiko' => 'required|string|max:255',
             'besaran_min' => 'required|integer|max:255',
             'besaran_max' => 'required|integer|max:255',
             'tindakan' => 'required|string|max:255',
@@ -37,7 +37,7 @@ class LevelResikoController extends Controller
         ]);
 
         LevelResiko::create([
-            'name' => $request->name,
+            'level_resiko' => $request->level_resiko,
             'besaran_min' => $request->besaran_min,
             'besaran_max' => $request->besaran_max,
             'tindakan' => $request->tindakan,
@@ -69,7 +69,7 @@ class LevelResikoController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'level_resiko' => 'required|string|max:255',
             'besaran_min' => 'required|integer|max:255',
             'besaran_max' => 'required|integer|max:255',
             'tindakan' => 'required|string|max:255',
@@ -83,14 +83,14 @@ class LevelResikoController extends Controller
         }
 
         $levelResiko->update([
-            'name' => $request->name,
+            'level_resiko' => $request->level_resiko,
             'besaran_min' => $request->besaran_min,
             'besaran_max' => $request->besaran_max,
             'tindakan' => $request->tindakan,
             'ket_warna' => $request->ket_warna,
         ]);
 
-        return redirect()->route('admin.risk.context')->with('success', 'Level Resiko updated successfully.');
+        return redirect()->route('risk.context.index')->with('success', 'Level Resiko updated successfully.');
 
     }
 

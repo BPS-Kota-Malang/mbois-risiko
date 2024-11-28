@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('penyebab', function (Blueprint $table) {
                 $table->id();
-                $table->string('name'); // Menggunakan string bukan varchar
+                $table->string('penyebab'); // Menggunakan string bukan varchar
                 $table->string('status')->nullable(); // Kolom status bisa kosong
                 $table->timestamps();
         });

@@ -12,7 +12,7 @@ class AreaDampak extends Model
     protected $table = 'area_dampak';
 
     protected $fillable = [
-        'name',
+        'area_dampak',
     ];
 
     public $timestamps = true;

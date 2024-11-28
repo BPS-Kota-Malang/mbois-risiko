@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('peraturan_perundang_undangan', function (Blueprint $table) {
             $table->id(); // This creates an auto-incrementing primary key
-            $table->string('name', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
+            $table->string('peraturan_perundang_undangan', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
             $table->string('amanat', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
             $table->timestamps(); // This creates 'created_at' and 'updated_at' columns
         });

@@ -15,17 +15,17 @@ class ProsesBisnisSeeder extends Seeder
     {
         // Define the business processes
         $businessProcesses = [
-            ['name' => 'Persiapan'],
-            ['name' => 'Pelaksanaan'],
-            ['name' => 'Pengolahan'],
-            ['name' => 'Hasil'],
-            ['name' => 'Desiminasi'],
+            ['proses_bisnis' => 'Persiapan'],
+            ['proses_bisnis' => 'Pelaksanaan'],
+            ['proses_bisnis' => 'Pengolahan'],
+            ['proses_bisnis' => 'Hasil'],
+            ['proses_bisnis' => 'Desiminasi'],
         ];
 
         // Insert or update the business processes
         foreach ($businessProcesses as $process) {
             DB::table('proses_bisnis')->updateOrInsert(
-                ['name' => $process['name']], // Use 'proses_bisnis' as the unique identifier
+                ['proses_bisnis' => $process['proses_bisnis']], // Use 'proses_bisnis' as the unique identifier
                 $process
             );
         }

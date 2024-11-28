@@ -3,14 +3,12 @@
         <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
             <div
                 class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
-                @if (auth()->check() && auth()->user()->hasRole('admin'))
                 <button
                     class="px-4 py-2 mb-2 bg-blue-500 rounded-md text-white font-medium tracking-wide hover:bg-blue-600"
                     onclick="toggleModal('addLevelResikoModal')">Tambah Level Resiko</button>
                 <button
                     class="px-4 py-2 mb-2 bg-green-500 rounded-md text-white font-medium tracking-wide hover:bg-green-600"
                     onclick="refreshTable('levelResikoTable')">Refresh</button>
-                @endif
                 <table id="levelResikoTable" class="min-w-full">
                     <thead>
                         <tr>
@@ -41,7 +39,7 @@
                                     {{ $key + 1 }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    {{ $levelResikoItem->name }}
+                                    {{ $levelResikoItem->level_resiko }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     {{ $levelResikoItem->besaran_min }}-{{ $levelResikoItem->besaran_max }}
@@ -54,7 +52,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <button class="text-blue-500 hover:text-blue-700"
-                                        onclick="openEditLevelResikoModal('{{ route('admin.levelresiko.update', $levelResikoItem->id) }}', '{{ $levelResikoItem->name }}', '{{ $levelResikoItem->besaran_min }}','{{ $levelResikoItem->besaran_max }}', '{{ $levelResikoItem->tindakan }}', '{{ $levelResikoItem->ket_warna }}')">
+                                        onclick="openEditLevelResikoModal('{{ route('admin.levelresiko.update', $levelResikoItem->id) }}', '{{ $levelResikoItem->level_resiko }}', '{{ $levelResikoItem->besaran_min }}','{{ $levelResikoItem->besaran_max }}', '{{ $levelResikoItem->tindakan }}', '{{ $levelResikoItem->ket_warna }}')">
                                         Edit
                                     </button>
                                     <form action="{{ route('admin.levelresiko.destroy', $levelResikoItem->id) }}"
@@ -72,14 +70,12 @@
             </div>
             <div
                 class="mt-8 align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
-                @if (auth()->check() && auth()->user()->hasRole('admin'))
                 <button
                     class="px-4 py-2 mb-2 bg-blue-500 rounded-md text-white font-medium tracking-wide hover:bg-blue-600"
                     onclick="toggleModal('addMatriksAnalisisResikoModal')">Tambah Matriks Analisis Resiko</button>
                 <button
                     class="px-4 py-2 mb-2 bg-green-500 rounded-md text-white font-medium tracking-wide hover:bg-green-600"
                     onclick="refreshTable('matriksAnalisisResikoTable')">Refresh</button>
-                @endif
                 <table id="matriksAnalisisResikoTable" class="min-w-full">
                     <thead>
                         <tr>
@@ -109,9 +105,9 @@
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ $key + 1 }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    {{ $matriksAnalisisResiko->levelKemungkinan->name }}</td>
+                                    {{ $matriksAnalisisResiko->levelKemungkinan->level_kemungkinan }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                    {{ $matriksAnalisisResiko->levelDampak->name }}</td>
+                                    {{ $matriksAnalisisResiko->levelDampak->level_dampak }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     {{ $matriksAnalisisResiko->besaran_resiko }}</td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -143,7 +139,7 @@
                 @csrf
                 <div class="mt-4">
                     <label class="block text-sm font-medium text-gray-700">Level Resiko</label>
-                    <input type="text" name="name"
+                    <input type="text" name="level_resiko"
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                 </div>
                 <div class="mt-4">
@@ -184,7 +180,7 @@
                 <input type="hidden" id="editLevelResikoId" name="id">
                 <div class="mt-4">
                     <label class="block text-sm font-medium text-gray-700">Level Resiko</label>
-                    <input type="text" id="editLevelResiko" name="name"
+                    <input type="text" id="editLevelResiko" name="level_resiko"
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                 </div>
                 <div class="mt-4">
@@ -227,7 +223,7 @@
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                         <option value="" disabled selected>Pilih Level Kemungkinan</option>
                         @foreach ($levelKemungkinan as $kemungkinan)
-                            <option value="{{ $kemungkinan->id }}">{{ $kemungkinan->name }}</option>
+                            <option value="{{ $kemungkinan->id }}">{{ $kemungkinan->level_kemungkinan }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -237,7 +233,7 @@
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                         <option value="" disabled selected>Pilih Level Dampak</option>
                         @foreach ($levelDampak as $dampak)
-                            <option value="{{ $dampak->id }}">{{ $dampak->name }}</option>
+                            <option value="{{ $dampak->id }}">{{ $dampak->level_dampak }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -274,7 +270,7 @@
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                         <option value="" disabled>Pilih Level Kemungkinan</option>
                         @foreach ($levelKemungkinan as $kemungkinan)
-                            <option value="{{ $kemungkinan->id }}">{{ $kemungkinan->name }}</option>
+                            <option value="{{ $kemungkinan->id }}">{{ $kemungkinan->level_kemungkinan }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -285,7 +281,7 @@
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                         <option value="" disabled>Pilih Level Dampak</option>
                         @foreach ($levelDampak as $dampak)
-                            <option value="{{ $dampak->id }}">{{ $dampak->name }}</option>
+                            <option value="{{ $dampak->id }}">{{ $dampak->level_dampak }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -298,7 +294,7 @@
 
                 <div class="mt-4">
                     <label class="block text-sm font-medium text-gray-700">Level Resiko</label>
-                    <input type="text" name="hasil_level_resiko" id="editHasilLevelResiko"
+                    <input type="text" name="hasil_level_resiko" id="editHasilLevelResiko" 
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         required>
                 </div>
@@ -320,12 +316,12 @@
 
             for (let range of levelResikoRanges) {
                 if (besaranResiko >= range.besaran_min && besaranResiko <= range.besaran_max) {
-                    levelResiko = range.name;
+                    levelResiko = range.level_resiko;
                     break;
                 }
             }
 
-            document.getElementById('hasil_level_resiko').value = levelResiko ;
+            document.getElementById('hasil_level_resiko').value = levelResiko;
         }
 
         function updateEditMatriksAnalisisResikoLevelResiko() {
@@ -334,7 +330,7 @@
 
             for (let range of levelResikoRanges) {
                 if (besaranResiko >= range.besaran_min && besaranResiko <= range.besaran_max) {
-                    levelResiko = range.name;
+                    levelResiko = range.level_resiko;
                     break;
                 }
             }
@@ -350,9 +346,9 @@
             modal.classList.toggle('hidden');
         }
 
-        function openEditLevelResikoModal(url, name, besaran_min, besaran_max, tindakan, ketWarna) {
+        function openEditLevelResikoModal(url, levelResiko, besaran_min, besaran_max, tindakan, ketWarna) {
             document.getElementById('editLevelResikoForm').action = url;
-            document.getElementById('editLevelResiko').value = name;
+            document.getElementById('editLevelResiko').value = levelResiko;
             document.getElementById('editRentangBesaranResikoMin').value = besaran_min;
             document.getElementById('editRentangBesaranResikoMax').value = besaran_max;
             document.getElementById('editTindakan').value = tindakan;
@@ -372,7 +368,7 @@
         document.getElementById('editIdLevelDampak').value = id_level_dampak;
         document.getElementById('editBesaranResiko').value = besaran_resiko;
         document.getElementById('editHasilLevelResiko').value = hasil_level_resiko;
-    }
+    }
 
         function closeEditMatriksAnalisisResikoModal() {
             document.getElementById('editMatriksAnalisisResikoModal').classList.add('hidden');

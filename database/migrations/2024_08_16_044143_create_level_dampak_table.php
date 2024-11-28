@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('level_dampak', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
+            $table->string('level_dampak', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
             $table->string('deskripsi', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
             $table->timestamp('created_at')->nullable(true)->default(null);
             $table->timestamp('updated_at')->nullable(true)->default(null);

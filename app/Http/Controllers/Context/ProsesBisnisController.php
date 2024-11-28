@@ -29,11 +29,11 @@ class ProsesBisnisController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=> 'required|string|max:255',
+            'proses_bisnis'=> 'required|string|max:255',
         ]);
 
         ProsesBisnis::create([
-            'name' => $request->name,
+            'proses_bisnis' => $request->proses_bisnis,
         ]);
         return redirect()->route('admin.risk.context')->with('success', 'Proses Bisnis berhasil ditambahkan.');
     }
@@ -60,12 +60,12 @@ class ProsesBisnisController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name'=> 'required|string|max:255',
+            'proses_bisnis'=> 'required|string|max:255',
         ]);
 
         $prosesBisnis = ProsesBisnis::findOrFail($id);
         $prosesBisnis->update([
-            'name' => $request->name,
+            'proses_bisnis' => $request->proses_bisnis,
         ]);
         return redirect()->route('admin.risk.context')->with('success', 'Proses Bisnis berhasil ditambahkan.');
     }

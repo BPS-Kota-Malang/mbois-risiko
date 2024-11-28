@@ -29,11 +29,13 @@ class JenisResikoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'kode' => 'required|string|max:255',
+            'jenis_resiko' => 'required|string|max:255',
         ]);
 
         JenisResiko::create([
-            'name' => $request->name,
+            'kode' => $request->kode,
+            'jenis_resiko' => $request->jenis_resiko,
         ]);
 
         return redirect()->route('admin.risk.context');
@@ -61,12 +63,14 @@ class JenisResikoController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'kode' => 'required|string|max:255',
+            'jenis_resiko' => 'required|string|max:255',
         ]);
 
         $jenisResiko = JenisResiko::findOrFail($id);
         $jenisResiko->update([
-            'name' => $request->name,
+            'kode' => $request->kode,
+            'jenis_resiko' => $request->jenis_resiko,
         ]);
 
         return redirect()->route('admin.risk.context')->with('success', 'Jenis Resiko updated successfully.');

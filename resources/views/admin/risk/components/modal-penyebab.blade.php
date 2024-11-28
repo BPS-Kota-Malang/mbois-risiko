@@ -1,12 +1,12 @@
 <!-- Modal Penyebab -->
-<div class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center hidden" id="penyebabModal">
+<div class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center hidden"  id="penyebabModal">
     <div class="modal-overlay absolute w-full h-full bg-blue-900 opacity-50"></div>
-    <div class="modal-container bg-gray-100 md:max-w-4xl mx-auto md:h-4/5 rounded-lg shadow-lg z-50 overflow-y-auto " style="width: 1000px">
+    <div class="modal-container bg-gray-100 w-11/12 md:max-w-md mx-auto rounded-lg shadow-lg z-50 overflow-y-auto">
         <div class="modal-content py-4 text-left px-6">
             <!-- Title -->
             <div class="flex justify-between items-center pb-2">
                 <p class="text-xl font-bold">Pilih Penyebab</p>
-                <div class="modal-close cursor-pointer z-50" id="closeModal3">
+                <div class="modal-close cursor-pointer z-50" id="closeModal">
                     <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 18 18">
                         <path d="M14.53 3.47a.75.75 0 00-1.06 0L9 7.94 4.53 3.47a.75.75 0 00-1.06 1.06L7.94 9l-4.47 4.47a.75.75 0 001.06 1.06L9 10.06l4.47 4.47a.75.75 0 001.06-1.06L10.06 9l4.47-4.47a.75.75 0 000-1.06z"></path>
                     </svg>
@@ -14,7 +14,7 @@
             </div>
             <!-- Body -->
             <div class="flex justify-between items-center mb-4">
-                <button id="openAddCauseModal" class="bg-blue-500 text-white px-4 py-2 rounded-md ">Tambah Penyebab</button>
+                <button id="addCauseBtn" class="bg-blue-500 text-white px-4 py-2 rounded-full">Tambah Penyebab</button>
                 <div class="relative text-gray-600">
                     <input type="search" id="searchInput" name="search" placeholder="Cari" class="bg-white h-8 px-3 pr-8 rounded-full text-sm focus:outline-none">
                     <button type="submit" class="absolute right-0 top-0 mt-2 mr-3">
@@ -34,40 +34,105 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Data will be fetched using DataTables -->
+                        @foreach ($penyebab as $penyebab)
+                        <tr class="bg-gray-100">
+                            <td class="border px-3 py-1">
+                                <input type="checkbox" class="penyebab-checkbox" data-penyebab="{{ $penyebab->penyebab }}" title="Pilih Penyebab">
+                            </td>
+                            <td class="border px-3 py-1">{{ $penyebab->penyebab }}</td>
+                            <td class="border px-3 py-1">{{ $penyebab->status }}</td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
             <!-- Modal "Tambah Penyebab" -->
-            <div id="addCauseModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+            <div id="causeModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
                 <div class="flex items-center justify-center min-h-screen px-4">
-                    <!-- Added a container with padding for better centering and spacing -->
-                    <div class="w-full max-w-2xl p-6 mx-auto bg-white rounded-lg shadow-xl">
-                        <form action="{{ route('admin.penyebab.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="border-b border-gray-200">
+                    <form action="{{ route('admin.penyebab.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="bg-white rounded-lg shadow-xl overflow-hidden max-w-sm w-full">
+                            <div class="px-4 py-3 border-b border-gray-200">
                                 <h3 class="text-lg leading-6 font-medium text-gray-900">Tambah Penyebab</h3>
                             </div>
-                            <div class="py-5">
+                            <div class="px-4 py-5">
                                 <label for="penyebab" class="block text-sm font-medium text-gray-700">Nama Penyebab</label>
-                                <input type="text" id="penyebab" name="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
+                                <input type="text" id="penyebab" name="penyebab" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
                             </div>
-                            <div class="bg-gray-50 text-right">
-                                <div class="flex justify-between pt-2">
-                                    <button id="saveCauseBtn" type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md">Simpan</button>
-                                    <button id="cancelCauseBtn" type="button" class="bg-red-500 text-white px-4 py-2 rounded-md">Batal</button>
-                                </div>
+                            <div class="px-4 py-3 bg-gray-50 text-right">
+                                <button id="saveBtn" type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Simpan</button>
+                                <button id="cancelCauseBtn" class="bg-red-500 text-white px-4 py-2 rounded-md">Batal</button>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
 
-
             <!-- Footer -->
             <div class="flex justify-end pt-2">
-                <button id="savePenyebabBtn" class="bg-green-500 text-white px-4 py-2 rounded-md">Simpan</button>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+        // Tampilkan modal "Pilih Penyebab"
+        document.getElementById('openModal').addEventListener('click', function() {
+            document.getElementById('penyebabModal').classList.remove('hidden');
+        });
+
+        // Tutup modal "Pilih Penyebab"
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('penyebabModal').classList.add('hidden');
+        });
+
+        // Tampilkan modal "Tambah Penyebab"
+        document.getElementById('addCauseBtn').addEventListener('click', function() {
+            document.getElementById('causeModal').classList.remove('hidden');
+        });
+
+        // Tutup modal "Tambah Penyebab"
+        document.getElementById('cancelCauseBtn').addEventListener('click', function() {
+            document.getElementById('causeModal').classList.add('hidden');
+        });
+        // perintah cekbox penyebab
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkboxes = document.querySelectorAll('.penyebab-checkbox');
+            const selectedPenyebabContainer = document.getElementById('selectedPenyebab');
+            let selectedPenyebab = [];
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    const penyebab = this.getAttribute('data-penyebab');
+                    if (this.checked) {
+                        selectedPenyebab.push(penyebab);
+                    } else {
+                        selectedPenyebab = selectedPenyebab.filter(item => item !== penyebab);
+                    }
+                    updateSelectedPenyebab();
+                });
+            });
+
+            function updateSelectedPenyebab() {
+                selectedPenyebabContainer.innerHTML = '';
+                if (selectedPenyebab.length > 0) {
+                    const ul = document.createElement('ul');
+                    selectedPenyebab.forEach((penyebab, index) => {
+                        const li = document.createElement('li');
+                        li.textContent = penyebab;
+                        const destroyButton = document.createElement('button');
+                        destroyButton.textContent = 'Destroy';
+                        destroyButton.classList.add('bg-red-500', 'text-white', 'px-1', 'py-0.5', 'rounded', 'ml-2');
+                        destroyButton.addEventListener('click', function () {
+                            selectedPenyebab = selectedPenyebab.filter(item => item !== penyebab);
+                            updateSelectedPenyebab();
+                        });
+                        li.appendChild(destroyButton);
+                        ul.appendChild(li);
+                    });
+                    selectedPenyebabContainer.appendChild(ul);
+                }
+            }
+        });
+
+</script>

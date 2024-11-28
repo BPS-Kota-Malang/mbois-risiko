@@ -8,8 +8,8 @@ class Context extends Model
 {
     protected $table = 'pemangku_kepentingan';
     protected $fillable = [
-        'name',
-        'kelompok',
+        'pemangku_kepentingan',
+        'kelompok_pemangku_kepentingan',
         'hubungan'
     ];
     public $timestamps = true;

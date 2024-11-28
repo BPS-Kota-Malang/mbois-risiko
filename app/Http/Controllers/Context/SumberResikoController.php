@@ -21,11 +21,13 @@ class SumberResikoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'kode' => 'required|string|max:255',
+            'sumber_resiko' => 'required|string|max:255',
         ]);
 
         SumberResiko::create([
-            'name' => $request->name,
+            'kode' => $request->kode,
+            'sumber_resiko' => $request->sumber_resiko,
         ]);
 
         return redirect()->route('admin.risk.context')->with('success', 'Sumber Resiko created successfully.');
@@ -42,12 +44,14 @@ class SumberResikoController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'kode' => 'required|string|max:255',
+            'sumber_resiko' => 'required|string|max:255',
         ]);
 
         $sumberResiko = SumberResiko::findOrFail($id);
         $sumberResiko->update([
-            'name' => $request->name,
+            'kode' => $request->kode,
+            'sumber_resiko' => $request->sumber_resiko,
         ]);
 
         return redirect()->route('admin.risk.context')->with('success', 'Sumber Resiko updated successfully.');

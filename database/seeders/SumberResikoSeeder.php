@@ -15,14 +15,15 @@ class SumberResikoSeeder extends Seeder
     {
         // Define the risk sources
         $riskSources = [
-            [ 'name' => 'Internal'],
-            [ 'name' => 'Eksternal'],
+            ['kode' => '01', 'sumber_resiko' => 'Internal'],
+            ['kode' => '02', 'sumber_resiko' => 'Eksternal'],
         ];
 
         // Insert or update the risk sources
         foreach ($riskSources as $riskSource) {
             DB::table('sumber_resiko')->updateOrInsert(
-                ['name' => $riskSource['name']]
+                ['kode' => $riskSource['kode']], // Use 'kode' as the unique identifier
+                ['sumber_resiko' => $riskSource['sumber_resiko']]
             );
         }
     }

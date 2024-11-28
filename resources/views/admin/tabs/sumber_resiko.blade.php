@@ -3,12 +3,10 @@
         <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
             <div
                 class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
-                @if (auth()->check() && auth()->user()->hasRole('admin'))
                 <button onclick="toggleModal('tambahSumberResikoModal')"
                 class="px-4 py-2 mb-2 bg-blue-500 rounded-md text-white font-medium tracking-wide hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300">
                     Tambah Sumber Resiko
                 </button>
-                @endif
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
@@ -16,13 +14,14 @@
                                 No
                             </th>
                             <th class="px-6 py-3 text-center text-xs font-medium text-black-500 uppercase tracking-wider">
+                                Kode
+                            </th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Sumber Resiko
                             </th>
-                            @if (auth()->check() && auth()->user()->hasRole('admin'))
                             <th class="px-6 py-3 text-center text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Actions
                             </th>
-                            @endif
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -32,14 +31,17 @@
                                     {{ $loop->iteration }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
-                                    {{ $sumber->name }}
+                                    {{ $sumber->kode }}
                                 </td>
-
-                                @if (auth()->check() && auth()->user()->hasRole('admin'))
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
+                                    {{ $sumber->sumber_resiko }}
+                                </td>
+                                
+                                
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                                     <div class="inline-flex space-x-4 justify-center">
                                         <button
-                                            onclick="openEditSumberResikoModal('{{ route('admin.sumberresiko.update', $sumber->id) }}', '{{ $sumber->name }}')"
+                                            onclick="openEditSumberResikoModal('{{ route('admin.sumberresiko.update', $sumber->id) }}', '{{ $sumber->kode }}', '{{ $sumber->sumber_resiko }}')"
                                             class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                             Edit
                                         </button>
@@ -53,8 +55,7 @@
                                         </form>
                                     </div>
                                 </td>
-                                @endif
-
+                                
                             </tr>
                         @endforeach
                     </tbody>
@@ -84,12 +85,21 @@
                         <form action="{{ route('admin.sumberresiko.store') }}" method="POST">
                             @csrf
                             <div class="mb-4">
+                                <label class="block text-gray-700 mb-2" for="kode">Kode</label>
+                                <input type="text" name="kode" id="kode" value="{{ old('kode') }}"
+                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    required>
+                                @error('kode')
+                                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="mb-4">
                                 <label class="block text-gray-700 mb-2" for="sumber_resiko">Sumber Resiko</label>
-                                <input type="text" name="name" id="name"
+                                <input type="text" name="sumber_resiko" id="sumber_resiko"
                                     value="{{ old('sumber_resiko') }}"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('name')
+                                @error('sumber_resiko')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -113,11 +123,20 @@
                             @csrf
                             @method('PUT')
                             <div class="mb-4">
-                                <label class="block text-gray-700 mb-2" for="sumber_resiko_edit">Sumber Resiko</label>
-                                <input type="text" name="name" id="sumber_resiko_edit"
+                                <label class="block text-gray-700 mb-2" for="kode_edit_sumber_resiko">Kode</label>
+                                <input type="text" name="kode" id="kode_edit_sumber_resiko"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('name')
+                                @error('kode')
+                                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 mb-2" for="sumber_resiko_edit">Sumber Resiko</label>
+                                <input type="text" name="sumber_resiko" id="sumber_resiko_edit"
+                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    required>
+                                @error('sumber_resiko')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -136,9 +155,10 @@
         document.getElementById(modalId).classList.toggle('hidden');
     }
 
-    function openEditSumberResikoModal(url, sumberResiko) {
+    function openEditSumberResikoModal(url, kode, sumberResiko) {
         const editSumberResikoForm = document.getElementById('editSumberResikoForm');
         editSumberResikoForm.action = url;
+        document.getElementById('kode_edit_sumber_resiko').value = kode;
         document.getElementById('sumber_resiko_edit').value = sumberResiko;
         toggleModal('editSumberResikoModal');
     }

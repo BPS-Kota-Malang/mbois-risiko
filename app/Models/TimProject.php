@@ -12,7 +12,7 @@ class TimProject extends Model
     protected $table = 'tim_project';
 
     protected $fillable = [
-        'name',
+        'nama_team',
         'deskripsi',
     ];
 
@@ -25,11 +25,6 @@ class TimProject extends Model
     public function manajemen_resiko()
     {
         return $this->hasMany(ManajemenResiko::class, 'id_tim_project');
-    }
-
-    public function pegawai()
-    {
-        return $this->hasMany(Pegawai::class, 'id_tim');
     }
 
 }

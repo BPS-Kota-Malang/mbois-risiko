@@ -15,14 +15,15 @@ class JenisResikoSeeder extends Seeder
     {
         // Define the risk types
         $riskTypes = [
-            ['name' => 'Negatif'],
-            ['name' => 'Positif'],
+            ['kode' => '01', 'jenis_resiko' => 'Negatif'],
+            ['kode' => '02', 'jenis_resiko' => 'Positif'],
         ];
 
         // Insert or update the risk types
         foreach ($riskTypes as $riskType) {
             DB::table('jenis_resiko')->updateOrInsert(
-                ['name' => $riskType['name']] // Data to be updated or inserted
+                ['kode' => $riskType['kode']], // Use 'kode' as the unique identifier
+                ['jenis_resiko' => $riskType['jenis_resiko']]
             );
         }
     }

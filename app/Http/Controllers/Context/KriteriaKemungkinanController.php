@@ -34,7 +34,7 @@ class KriteriaKemungkinanController extends Controller
         $response = [
             'no' => $kriteriaKemungkinan->id,
             'kategori_resiko' => $kriteriaKemungkinan->kategoriResiko->deskripsi,
-            'level_kemungkinan' => $kriteriaKemungkinan->levelKemungkinan->name,
+            'level_kemungkinan' => $kriteriaKemungkinan->levelKemungkinan->level_kemungkinan,
             'presentase_kemungkinan' => $kriteriaKemungkinan->presentase_kemungkinan,
             'jumlah_frekuensi' => $kriteriaKemungkinan->jumlah_frekuensi,
             'edit_url' => route('admin.kriteriakemungkinan.update', $kriteriaKemungkinan->id),
@@ -61,7 +61,7 @@ class KriteriaKemungkinanController extends Controller
         $response = [
             'no' => $kriteriaKemungkinan->id,
             'kategori_resiko' => $kriteriaKemungkinan->kategoriResiko->deskripsi,
-            'level_kemungkinan' => $kriteriaKemungkinan->levelKemungkinan->name,
+            'level_kemungkinan' => $kriteriaKemungkinan->levelKemungkinan->level_kemungkinan,
             'presentase_kemungkinan' => $kriteriaKemungkinan->presentase_kemungkinan,
             'jumlah_frekuensi' => $kriteriaKemungkinan->jumlah_frekuensi,
             'edit_url' => route('admin.kriteriakemungkinan.update', $kriteriaKemungkinan->id),

@@ -29,11 +29,11 @@ class AreaDampakController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'area_dampak' => 'required|string|max:255',
         ]);
 
         AreaDampak::create([
-            'name' => $request->name,
+            'area_dampak' => $request->area_dampak,
         ]);
 
         return redirect()->route('admin.risk.context')->with('success', 'Area Dampak created successfully.');
@@ -62,12 +62,12 @@ class AreaDampakController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'area_dampak' => 'required|string|max:255',
         ]);
 
         $areaDampak = AreaDampak::findOrFail($id);
         $areaDampak->update([
-            'name' => $request->name,
+            'area_dampak' => $request->area_dampak,
         ]);
 
         return redirect()->route('admin.risk.context')->with('success', 'Area Dampak updated successfully.');

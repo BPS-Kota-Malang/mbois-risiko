@@ -10,16 +10,9 @@ class Resiko extends Model
     use HasFactory;
     protected $table = 'resiko';
 
-    protected $fillable = ['name', 'status']; // Tambahkan kolom status
+    protected $fillable = ['resiko', 'status']; // Tambahkan kolom status
 
     protected $attributes = [
         'status' => null,
     ];
-
-    public function manajemenResiko()
-    {
-        return $this->hasMany(ManajemenResiko::class, 'id_resiko');
-    }
-
-
 }

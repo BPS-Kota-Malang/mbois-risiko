@@ -1,10 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Dampak;
+use App\Models\Dampak; 
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 
 class DampakController extends Controller
 {
@@ -13,38 +11,36 @@ class DampakController extends Controller
      */
     public function index(Request $request)
     {
-        // Menangani pencarian melalui query string
-        $search = $request->input('search');
-        $query = Dampak::query();
+        // Ambil query pencarian dari input
+        $query = $request->input('search');
 
-        if ($search) {
-            $query->where('dampak', 'like', "%{$search}%")
-                  ->orWhere('status', 'like', "%{$search}%");
-        }
+        // Jika ada pencarian, filter data; jika tidak, ambil semua data
+        $dampak = Dampak::when($query, function ($queryBuilder) use ($query) {
+            $queryBuilder->where('dampak', 'like', '%' . $query . '%')
+                         ->orWhere('status', 'like', '%' . $query . '%');
+        })->get();
 
-        $dampak = $query->paginate(10); // pagination data dampak
+        // Kirim data ke view
         return view('admin.dampak', compact('dampak'));
     }
 
-
     /**
-     * Fetch dampak data for DataTables.
+     * Show the form for creating a new resource.
      */
-    public function getDampakData(Request $request)
+    public function create(Request $request)
     {
-        $columns = ['id', 'name', 'status'];
+        // // Validasi data
+        // $validatedData = $request->validate([
+        //     'dampak' => 'required|string|max:255',
+        //     'status' => 'nullable|string|max:255', // Validasi kolom status bisa kosong
+        // ]);
 
-        $query = Dampak::select($columns);
 
-        return DataTables::of($query)
-            ->filter(function ($query) use ($request) {
-                if ($request->has('search') && !empty($request->search['value'])) {
-                    $search = $request->search['value'];
-                    $query->where('dampak', 'like', "%{$search}%")
-                        ->orWhere('status', 'like', "%{$search}%");
-                }
-            })
-            ->make(true);
+        // // Simpan data ke database
+        // Dampak::create($validatedData);
+
+        // // Kembalikan respons
+        // return response()->json(['message' => 'Data berhasil disimpan']);
     }
 
     /**
@@ -53,24 +49,32 @@ class DampakController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'dampak' => 'required|string|max:255',
+            'status' => 'nullable|in:Accepted,On Progress,Rejected',
         ]);
 
         Dampak::create([
-            'name' => $request->name,
-            'status' => $request->status ?? 'On Progress', // default status if not provided
+            'dampak' => $request->dampak,
+            'status' => $request->status ?? 'On Progress',
         ]);
 
-        return redirect()->route('admin.manajemenrisiko.index')->with('success', 'Dampak created successfully.');
+        return redirect()->back()->with('success', 'Dampak berhasil ditambahkan.');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(string $id)
     {
-        $dampak = Dampak::findOrFail($id);
-        return response()->json($dampak);
+        //
     }
 
     /**
@@ -78,50 +82,27 @@ class DampakController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $dampak = Dampak::findOrFail($id);
-
-        if ($request->has('name')) {
-            $dampak->name = $request->input('name');
-        }
-
-        if ($request->has('status')) {
-            $dampak->status = $request->input('status');
-        }
-
-        $dampak->save();
-
-        return response()->json(['success' => true]);
-    }
-
-    /**
-     * Update the status of the resource.
-     */
-    public function updateStatus(Request $request)
-    {
         $request->validate([
-            'id' => 'required|integer|exists:dampaks,id',
-            'status' => 'required|string',
+            'dampak' => 'required|string|max:255',
+            'status' => 'required|string|in:On Progress,Accepted,Rejected',
         ]);
-
-        $dampak = Dampak::findOrFail($request->id);
-        $dampak->update(['status' => $request->status]);
-
-        return response()->json([
-            'success' => true,
-            'id' => $dampak->id,
-            'dampak' => $dampak->dampak,
-            'status' => $dampak->status,
+    
+        $dampak = Dampak::findOrFail($id);
+        $dampak->update([
+            'dampak' => $request->dampak,
+            'status' => $request->status,
         ]);
+    
+        return redirect()->route('admin.dampak.index')->with('success', 'Dampak updated successfully.');
     }
-
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $dampak = Dampak::findOrFail($id);
         $dampak->delete();
 
-        return redirect()->route('admin.dampak.index')->with('success', 'Dampak deleted successfully.');
+        return redirect()->route('admin.dampak.index')->with('success', 'Dampak berhasil dihapus.');
     }
 }

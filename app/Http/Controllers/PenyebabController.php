@@ -1,10 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Penyebab;
+use App\Models\Penyebab; 
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 
 class PenyebabController extends Controller
 {
@@ -13,37 +11,36 @@ class PenyebabController extends Controller
      */
     public function index(Request $request)
     {
-        // Menangani pencarian melalui query string
-        $search = $request->input('search');
-        $query = Penyebab::query();
+        // Ambil query pencarian dari input
+        $query = $request->input('search');
 
-        if ($search) {
-            $query->where('penyebab', 'like', "%{$search}%")
-                  ->orWhere('status', 'like', "%{$search}%");
-        }
+        // Jika ada pencarian, filter data; jika tidak, ambil semua data
+        $penyebab = Penyebab::when($query, function ($queryBuilder) use ($query) {
+            $queryBuilder->where('penyebab', 'like', '%' . $query . '%')
+                         ->orWhere('status', 'like', '%' . $query . '%');
+        })->get();
 
-        $penyebab = $query->paginate(10); // pagination data penyebab
+        // Kirim data ke view
         return view('admin.penyebab', compact('penyebab'));
     }
 
     /**
-     * Fetch penyebab data for DataTables.
+     * Show the form for creating a new resource.
      */
-    public function getPenyebabData(Request $request)
+    public function create(Request $request)
     {
-        $columns = ['id', 'name', 'status'];
+        // // Validasi data
+        // $validatedData = $request->validate([
+        //     'penyebab' => 'required|string|max:255',
+        //     'status' => 'nullable|string|max:255', // Validasi kolom status bisa kosong
+        // ]);
 
-        $query = Penyebab::select($columns);
 
-        return DataTables::of($query)
-            ->filter(function ($query) use ($request) {
-                if ($request->has('search') && !empty($request->search['value'])) {
-                    $search = $request->search['value'];
-                    $query->where('penyebab', 'like', "%{$search}%")
-                        ->orWhere('status', 'like', "%{$search}%");
-                }
-            })
-            ->make(true);
+        // // Simpan data ke database
+        // Penyebab::create($validatedData);
+
+        // // Kembalikan respons
+        // return response()->json(['message' => 'Data berhasil disimpan']);
     }
 
     /**
@@ -52,24 +49,32 @@ class PenyebabController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'penyebab' => 'required|string|max:255',
+            'status' => 'nullable|in:Accepted,On Progress,Rejected',
         ]);
 
         Penyebab::create([
-            'name' => $request->name,
-            'status' => $request->status ?? 'On Progress', // default status if not provided
+            'penyebab' => $request->penyebab,
+            'status' => $request->status ?? 'On Progress',
         ]);
 
-        return redirect()->route('admin.manajemenrisiko.index')->with('success', 'Penyebab created successfully.');
+        return redirect()->back()->with('success', 'Penyebab berhasil ditambahkan.');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(string $id)
     {
-        $penyebab = Penyebab::findOrFail($id);
-        return response()->json($penyebab);
+        //
     }
 
     /**
@@ -77,50 +82,28 @@ class PenyebabController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $penyebab = Penyebab::findOrFail($id);
-
-        if ($request->has('name')) {
-            $penyebab->name = $request->input('name');
-        }
-
-        if ($request->has('status')) {
-            $penyebab->status = $request->input('status');
-        }
-
-        $penyebab->save();
-
-        return response()->json(['success' => true]);
-    }
-
-    /**
-     * Update the status of the resource.
-     */
-    public function updateStatus(Request $request)
-    {
         $request->validate([
-            'id' => 'required|integer|exists:penyebabs,id',
-            'status' => 'required|string',
+            'penyebab' => 'required|string|max:255',
+            'status' => 'required|string|in:On Progress,Accepted,Rejected',
+        ]);
+    
+        $penyebab = Penyebab::findOrFail($id);
+        $penyebab->update([
+            'penyebab' => $request->penyebab,
+            'status' => $request->status,
         ]);
 
-        $penyebab = Penyebab::findOrFail($request->id);
-        $penyebab->update(['status' => $request->status]);
-
-        return response()->json([
-            'success' => true,
-            'id' => $penyebab->id,
-            'penyebab' => $penyebab->penyebab,
-            'status' => $penyebab->status,
-        ]);
+        return redirect()->route('admin.penyebab.index')->with('success', 'Penyebab updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $penyebab = Penyebab::findOrFail($id);
         $penyebab->delete();
 
-        return redirect()->route('admin.penyebab.index')->with('success', 'Penyebab deleted successfully.');
+        return redirect()->route('admin.penyebab.index')->with('success', 'Penyebab berhasil dihapus.');
     }
 }
