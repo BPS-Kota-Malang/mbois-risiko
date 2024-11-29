@@ -10,10 +10,15 @@ class Penyebab extends Model
     use HasFactory;
     protected $table = 'penyebab';
 
-    protected $fillable = ['penyebab', 'status']; // Tambahkan kolom status
+    protected $fillable = ['name', 'status']; // Tambahkan kolom status
 
     protected $attributes = [
         'status' => null,
     ];
+
+    public function manajemenResiko()
+    {
+        return $this->hasMany(ManajemenResiko::class, 'id_penyebab');
+    }
 
 }

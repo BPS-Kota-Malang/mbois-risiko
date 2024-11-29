@@ -53,5 +53,3 @@ class User extends Authenticatable
         return $this->hasOne(Pegawai::class, 'user_id', 'id');
     }
 }
-
-

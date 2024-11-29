@@ -29,13 +29,13 @@ class OpsiPenangananController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'opsi_penanganan'=> 'required|string|max:255',
+            'name'=> 'required|string|max:255',
             'deskripsi' => 'required|string|max:255',
-            'id_jenis_resiko' => 'required|exists:jenis_resiko,id',
+            'id_jenis_resiko' => 'required|exists:jenis_resiko,id', // Perbaiki validasi exists
         ]);
 
         OpsiPenanganan::create([
-            'opsi_penanganan' => $request->opsi_penanganan,
+            'name' => $request->name, // Pastikan menggunakan $request->name
             'deskripsi' => $request->deskripsi,
             'id_jenis_resiko' => $request->id_jenis_resiko,
         ]);
@@ -64,18 +64,19 @@ class OpsiPenangananController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'opsi_penanganan'=> 'required|string|max:255',
+            'name'=> 'required|string|max:255',
             'deskripsi' => 'required|string|max:255',
-            'id_jenis_resiko' => 'required|exists:jenis_resiko,id',
+            'id_jenis_resiko' => 'required|exists:jenis_resiko,id', // Perbaiki validasi exists
         ]);
 
         $opsiPenanganan = OpsiPenanganan::findOrFail($id);
         $opsiPenanganan->update([
-            'opsi_penanganan' => $request->opsi_penanganan,
+            'name' => $request->name, // Pastikan menggunakan $request->name
             'deskripsi' => $request->deskripsi,
             'id_jenis_resiko' => $request->id_jenis_resiko,
         ]);
-        return redirect()->route('admin.risk.context')->with('success', 'Opsi Penanganan berhasil ditambahkan.');
+
+        return redirect()->route('admin.risk.context')->with('success', 'Opsi Penanganan berhasil diperbarui.');
     }
 
     /**

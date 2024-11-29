@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('level_kemungkinan', function (Blueprint $table) {
             $table->id(); // This creates an auto-incrementing primary key
-            $table->string('level_kemungkinan', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
+            $table->string('name', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
             $table->timestamps(); // This creates 'created_at' and 'updated_at' columns
         });
     }

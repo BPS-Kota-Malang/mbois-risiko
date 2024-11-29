@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('level_resiko', function (Blueprint $table) {
             $table->id();
-            $table->string('level_resiko', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
+            $table->string('name', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
             $table->string('besaran_min', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
             $table->string('besaran_max', 255)->collation('utf8mb4_unicode_ci')->nullable(false);
             $table->string('tindakan', 255)->collation('utf8mb4_unicode_ci')->nullable(false);

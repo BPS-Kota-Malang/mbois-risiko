@@ -43,8 +43,13 @@
                 <input type="text" name="golongan" id="golongan" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-1 px-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             </div>
             <div>
-                <label for="tim" class="block text-sm font-medium text-gray-700">Tim</label>
-                <input type="text" name="tim" id="tim" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-1 px-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <label for="team_id" class="block text-sm font-medium text-gray-700">Tim</label>
+                <select name="id_tim" id="team_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-1 px-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <option value="" disabled selected>----Pilih Tim----</option>
+                    @foreach($teams as $team)
+                        <option value="{{ $team->id }}">{{ $team->name }}</option>
+                    @endforeach
+                </select>
             </div>
             <div>
                 <label for="no_hp" class="block text-sm font-medium text-gray-700">No. HP</label>

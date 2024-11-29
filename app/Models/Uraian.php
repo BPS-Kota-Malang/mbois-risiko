@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Uraian extends Model
 {
     use HasFactory;
-    protected $table = 'uraians';
+    protected $table = 'uraian';
 
-    protected $fillable = ['uraian', 'status']; // Tambahkan kolom status
+    protected $fillable = ['name', 'status']; // Tambahkan kolom status
 
     protected $attributes = [
         'status' => null,

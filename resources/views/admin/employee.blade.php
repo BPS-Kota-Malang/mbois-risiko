@@ -53,7 +53,9 @@
                         <td class="px-6 py-4 whitespace-nowrap">{{ $employee->jabatan }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $employee->pangkat }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $employee->golongan }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $employee->tim }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {{ $employee->timProject->name }}
+                        </td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $employee->no_hp }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <a href="{{ route('admin.employee.edit', $employee->user_id) }}" class="text-indigo-600 hover:text-indigo-900 border border-indigo-600 hover:border-indigo-900 rounded px-2 py-1" title="Edit">Edit</a>

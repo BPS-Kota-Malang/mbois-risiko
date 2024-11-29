@@ -1,7 +1,6 @@
-<!-- Modal Dampak -->
 <div class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center hidden" id="dampakModal">
     <div class="modal-overlay absolute w-full h-full bg-blue-900 opacity-50"></div>
-    <div class="modal-container bg-gray-100 w-11/12 md:max-w-md mx-auto rounded-lg shadow-lg z-50 overflow-y-auto">
+    <div class="modal-container bg-gray-100 md:max-w-4xl mx-auto md:h-4/5 rounded-lg shadow-lg z-50 overflow-y-auto " style="width: 1000px">
         <div class="modal-content py-4 text-left px-6">
             <!-- Title -->
             <div class="flex justify-between items-center pb-2">
@@ -14,7 +13,7 @@
             </div>
             <!-- Body -->
             <div class="flex justify-between items-center mb-4">
-                <button id="openAddImpactModal" class="bg-blue-500 text-white px-4 py-2 rounded-full">Tambah Dampak</button>
+                <button id="openAddImpactModal" class="bg-blue-500 text-white px-4 py-2 rounded-md ">Tambah Dampak</button>
                 <div class="relative text-gray-600">
                     <input type="search" id="searchInput" name="search" placeholder="Cari" class="bg-white h-8 px-3 pr-8 rounded-full text-sm focus:outline-none">
                     <button type="submit" class="absolute right-0 top-0 mt-2 mr-3">
@@ -34,105 +33,42 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($dampak as $dampak)
-                        <tr class="bg-gray-100">
-                            <td class="border px-3 py-1">
-                                <input type="checkbox" class="dampak-checkbox" data-dampak="{{ $dampak->dampak }}" title="Pilih Dampak">
-                            </td>
-                            <td class="border px-3 py-1">{{ $dampak->dampak }}</td>
-                            <td class="border px-3 py-1">{{ $dampak->status }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
+                        <!-- Data will be fetched using DataTables -->
                 </table>
             </div>
             <!-- Modal "Tambah Dampak" -->
             <div id="addImpactModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
                 <div class="flex items-center justify-center min-h-screen px-4">
-                    <form action="{{ route('admin.dampak.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="bg-white rounded-lg shadow-xl overflow-hidden max-w-sm w-full">
-                            <div class="px-4 py-3 border-b border-gray-200">
+                    <!-- Added a container with padding for better centering and spacing -->
+                    <div class="w-full max-w-2xl p-6 mx-auto bg-white rounded-lg shadow-xl">
+                        <form action="{{ route('admin.dampak.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="border-b border-gray-200">
                                 <h3 class="text-lg leading-6 font-medium text-gray-900">Tambah Dampak</h3>
                             </div>
-                            <div class="px-4 py-5">
+                            <div class="py-5">
                                 <label for="dampak" class="block text-sm font-medium text-gray-700">Nama Dampak</label>
-                                <input type="text" id="dampak" name="dampak" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
+                                <input type="text" id="dampak" name="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
                             </div>
-                            <div class="px-4 py-3 bg-gray-50 text-right">
-                                <button id="saveBtndampak" type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Simpan</button>
-                                <button id="cancelImpactBtn" class="bg-red-500 text-white px-4 py-2 rounded-md">Batal</button>
+                            <div class="bg-gray-50 text-right">
+                                <div class="flex justify-between pt-2">
+                                    <button id="saveBtndampak" type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md">Simpan</button>
+                                    <button id="cancelImpactBtn" type="button" class="bg-red-500 text-white px-4 py-2 rounded-md">Batal</button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
             <!-- Footer -->
             <div class="flex justify-end pt-2">
+                <button id="saveDampakBtn" class="bg-blue-500 text-white px-4 py-2 rounded-md">Simpan</button>
             </div>
         </div>
     </div>
 </div>
 
-<script>
-    // Tampilkan modal "Pilih Dampak"
-    document.getElementById('openModal2').addEventListener('click', function() {
-        document.getElementById('dampakModal').classList.remove('hidden');
-    });
 
-    // Tutup modal "Pilih Dampak"
-    document.getElementById('closeModal2').addEventListener('click', function() {
-        document.getElementById('dampakModal').classList.add('hidden');
-    });
 
-    // Tampilkan modal "Tambah Dampak"
-    document.getElementById('openAddImpactModal').addEventListener('click', function() {
-        document.getElementById('addImpactModal').classList.remove('hidden');
-    });
 
-    // Tutup modal "Tambah Dampak"
-    document.getElementById('cancelImpactBtn').addEventListener('click', function() {
-        document.getElementById('addImpactModal').classList.add('hidden');
-    });
 
-    // perintah cekbox Dampak
-    document.addEventListener('DOMContentLoaded', function () {
-        const dampakCheckboxes = document.querySelectorAll('.dampak-checkbox');
-        const selectedDampakContainer = document.getElementById('selectedDampak');
-        let selectedDampak = [];
-
-        dampakCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function () {
-                const dampak = this.getAttribute('data-dampak');
-                if (this.checked) {
-                    selectedDampak.push(dampak);
-                } else {
-                    selectedDampak = selectedDampak.filter(item => item !== dampak);
-                }
-                updateSelectedDampak();
-            });
-        });
-
-        function updateSelectedDampak() {
-            selectedDampakContainer.innerHTML = '';
-            if (selectedDampak.length > 0) {
-                const ul = document.createElement('ul');
-                selectedDampak.forEach((dampak, index) => {
-                    const li = document.createElement('li');
-                    li.textContent = dampak;
-                    const destroyButton = document.createElement('button');
-                    destroyButton.textContent = 'Destroy';
-                    destroyButton.classList.add('bg-red-500', 'text-white', 'px-2', 'py-1', 'rounded', 'ml-2');
-                    destroyButton.addEventListener('click', function () {
-                        selectedDampak = selectedDampak.filter(item => item !== dampak);
-                        updateSelectedDampak();
-                    });
-                    li.appendChild(destroyButton);
-                    ul.appendChild(li);
-                });
-                selectedDampakContainer.appendChild(ul);
-            }
-        }
-    });
-
-</script>

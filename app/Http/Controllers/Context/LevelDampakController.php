@@ -29,12 +29,12 @@ class LevelDampakController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'level_dampak' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'deskripsi' => 'required|string|max:255',
         ]);
 
         LevelDampak::create([
-            'level_dampak' => $request->level_dampak,
+            'name' => $request->name,
             'deskripsi' => $request->deskripsi,
         ]);
 
@@ -63,13 +63,13 @@ class LevelDampakController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'level_dampak' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'deskripsi' => 'required|string|max:255',
         ]);
 
         $levelDampak = LevelDampak::findOrFail($id);
         $levelDampak->update([
-            'level_dampak' => $request->level_dampak,
+            'name' => $request->name,
             'deskripsi' => $request->deskripsi,
         ]);
 

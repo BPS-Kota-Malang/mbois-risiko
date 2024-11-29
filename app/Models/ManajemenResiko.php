@@ -21,12 +21,18 @@ class ManajemenResiko extends Model
         'id_area_dampak',
         'id_penyebab',
         'id_dampak',
+        'respon_resiko',
+        'prioritas',
+
     ];
 
     protected $casts = [
         'id_penyebab' => 'array',
         'id_dampak' => 'array',
     ];
+
+
+
 
     public function tim_project()
     {
@@ -37,8 +43,6 @@ class ManajemenResiko extends Model
     {
         return $this->belongsTo(Resiko::class, 'id_resiko');
     }
-
-
     public function prosesBisnis()
     {
         return $this->belongsTo(ProsesBisnis::class, 'id_proses_bisnis');
@@ -63,4 +67,36 @@ class ManajemenResiko extends Model
     {
         return $this->belongsTo(AreaDampak::class, 'id_area_dampak');
     }
+
+    public function matriksAnalisisResiko()
+    {
+        return $this->belongsTo(MatriksAnalisisResiko::class, 'id_matriks_analisis_resiko');
     }
+
+    public function penyebab()
+    {
+        return $this->belongsTo(Penyebab::class, 'id_penyebab');
+    }
+
+    public function dampak()
+    {
+        return $this->belongsTo(Dampak::class, 'id_dampak');
+    }
+
+    public function levelKemungkinan()
+    {
+        return $this->belongsTo(LevelKemungkinan::class, 'id_level_kemungkinan');
+    }
+
+    public function levelDampak()
+    {
+        return $this->belongsTo(LevelDampak::class, 'id_level_dampak');
+    }
+
+    public function uraian()
+    {
+        return $this->belongsTo(Uraian::class, 'id_uraian');
+    }
+
+
+}

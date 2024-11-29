@@ -3,11 +3,13 @@
         <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
             <div
                 class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+                @if (auth()->check() && auth()->user()->hasRole('admin'))
                 <button onclick="toggleModal('tambahAreaDampakModal')"
                     class="px-4 py-2 mb-2 bg-blue-500 rounded-md text-white font-medium tracking-wide hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300">
                     Tambah Area Dampak
                 </button>
-                
+                @endif
+
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
@@ -17,9 +19,11 @@
                             <th class="px-6 py-3 text-center text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Area Dampak
                             </th>
+                            @if (auth()->check() && auth()->user()->hasRole('admin'))
                             <th class="px-6 py-3 text-center text-xs font-medium text-black-500 uppercase tracking-wider">
                                 Actions
                             </th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -29,12 +33,12 @@
                                     {{ $loop->iteration }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
-                                    {{ $area->area_dampak }}
+                                    {{ $area->name }}
                                 </td>
-                                
+                                @if (auth()->check() && auth()->user()->hasRole('admin'))
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center flex items-center justify-center space-x-4">
                                     <a href="javascript:void(0)"
-                                        onclick="openEditAreaDampakModal('{{ route('admin.areadampak.update', $area->id) }}', '{{ $area->area_dampak }}')"
+                                        onclick="openEditAreaDampakModal('{{ route('admin.areadampak.update', $area->id) }}', '{{ $area->name }}')"
                                         class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Edit</a>
                                     <form action="{{ route('admin.areadampak.destroy', $area->id) }}" method="POST"
                                         class="inline"
@@ -44,7 +48,8 @@
                                         <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Delete</button>
                                     </form>
                                 </td>
-                                
+                                @endif
+
                             </tr>
                         @endforeach
                     </tbody>
@@ -63,11 +68,11 @@
                             @csrf
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2" for="area_dampak">Area Dampak</label>
-                                <input type="text" name="area_dampak" id="area_dampak"
-                                    value="{{ old('area_dampak') }}"
+                                <input type="text" name="name" id="area_dampak"
+                                    value="{{ old('name') }}"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('area_dampak')
+                                @error('name')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -93,10 +98,10 @@
                             @method('PUT')
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2" for="area_dampak_edit">Area Dampak</label>
-                                <input type="text" name="area_dampak" id="area_dampak_edit"
+                                <input type="text" name="name" id="area_dampak_edit"
                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     required>
-                                @error('area_dampak')
+                                @error('name')
                                     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                                 @enderror
                             </div>

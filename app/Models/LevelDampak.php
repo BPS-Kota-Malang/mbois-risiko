@@ -12,7 +12,7 @@ class LevelDampak extends Model
     protected $table = 'level_dampak';
 
     protected $fillable = [
-        'level_dampak',
+        'name',
         'deskripsi',
     ];
 
@@ -30,5 +30,10 @@ class LevelDampak extends Model
     public function matriksAnalisisResiko()
     {
         return $this->hasMany(MatriksAnalisisResiko::class, 'id_level_dampak');
+    }
+
+    public function rencanaTindakPenanganan()
+    {
+        return $this->hasMany(RencanaTindakPenanganan::class, 'id_level_dampak');
     }
 }

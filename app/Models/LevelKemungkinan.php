@@ -12,7 +12,7 @@ class LevelKemungkinan extends Model
     protected $table = 'level_kemungkinan';
 
     protected $fillable = [
-        'level_kemungkinan',
+        'name',
     ];
 
     public $timestamps = true;
@@ -30,4 +30,12 @@ class LevelKemungkinan extends Model
     {
         return $this->hasMany(MatriksAnalisisResiko::class, 'id_level_kemungkinan');
     }
+
+    public function rencanaTindakPenanganan()
+    {
+        return $this->hasMany(RencanaTindakPenanganan::class, 'id_level_kemungkinan');
+    }
+
+
+
 }

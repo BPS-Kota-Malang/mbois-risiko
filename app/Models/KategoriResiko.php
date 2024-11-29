@@ -33,4 +33,3 @@ class KategoriResiko extends Model
         return $this->hasMany(SeleraResiko::class, 'id_kategori_resiko');
     }
 }
-
