@@ -53,40 +53,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Data Dummy -->
-                        <tr>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">3</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">Rendah</td>
-                            <td class="px-6 py-4 border-r border-gray-200">Resiko keterlambatan proyek karena kendala logistik</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">20%</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">15%</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">
-                                <button onclick="openEditModal()" class="inline-block p-2 rounded-md border border-blue-500 text-blue-500 hover:bg-blue-100">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M11.293 2.293a1 1 0 011.414 0l8.586 8.586a1 1 0 010 1.414L11 22H3v-8l8.293-8.293zM13 4L4 13v2h2L20 6l-7-2zm-9 13.5V21h3.5L17 10.5l-3-3L4 17.5z" />
-                                    </svg>
-                                </button>
-                            </td>
-                            
-                            
-                            
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">3</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">Rendah</td>
-                            <td class="px-6 py-4 border-r border-gray-200">Resiko keterlambatan proyek karena kendala logistik</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">20%</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">15%</td>
-                            <td class="px-6 py-4 text-center border-r border-gray-200">
-                                <button onclick="openEditModal()" class="inline-block p-2 rounded-md border border-blue-500 text-blue-500 hover:bg-blue-100">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M11.293 2.293a1 1 0 011.414 0l8.586 8.586a1 1 0 010 1.414L11 22H3v-8l8.293-8.293zM13 4L4 13v2h2L20 6l-7-2zm-9 13.5V21h3.5L17 10.5l-3-3L4 17.5z" />
-                                    </svg>
-                                </button>
-                            </td>
-                            
-                        </tr>
-                        <tr>
+                        
                             <td class="px-6 py-4 text-center border-r border-gray-200">3</td>
                             <td class="px-6 py-4 text-center border-r border-gray-200">Rendah</td>
                             <td class="px-6 py-4 border-r border-gray-200">Resiko keterlambatan proyek karena kendala logistik</td>
@@ -157,12 +124,8 @@
                                     <td class="border border-gray-300 px-2 py-1">13</td>
                                     <td class="border border-gray-300 px-2 py-1 text-center">
                                         <div class="flex justify-center gap-4">
-                                            <!-- Tombol Edit yang membuka modal Edit -->
-                                            <button class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600" onclick="openEditHandlingPlanModal({rpt: 'Pengawasan/supervisi pelatihan lebih diintensifkan', targetOutput: 'Inda menjadi lebih fokus dalam penyampaian materi', penanggungJawab: 'Person A', targetWaktu: '2023-12-30'})">
-                                                ✎
-                                            </button>
-                                            <button class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600 delete-button" 
-                                            data-id="1" onclick="deleteHandlingPlan(1)">🗑</button>
+                                            <button class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600">✎</button>
+                                            <button class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600">🗑</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -177,22 +140,17 @@
                                     <td class="border border-gray-300 px-2 py-1">13</td>
                                     <td class="border border-gray-300 px-2 py-1 text-center">
                                         <div class="flex justify-center gap-4">
-                                            <!-- Tombol Edit yang membuka modal Edit -->
-                                            <button class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600" onclick="openEditHandlingPlanModal({rpt: 'Pengawasan/supervisi pelatihan lebih diintensifkan', targetOutput: 'Inda menjadi lebih fokus dalam penyampaian materi', penanggungJawab: 'Person A', targetWaktu: '2023-12-30'})">
-                                                ✎
-                                            </button>
-                                            <button class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600 delete-button" 
-                                            data-id="1" onclick="deleteHandlingPlan(1)">🗑</button>
+                                            <button class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600">✎</button>
+                                            <button class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600">🗑</button>
                                         </div>
                                     </td>
-                                    
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-
+            
 
         <!-- Modal Tambah Perencanaan -->
         <div id="tambahModal" class="fixed inset-0 hidden flex items-center justify-center z-50 bg-transparent bg-opacity-50">
@@ -239,54 +197,6 @@
                             <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">SAVE</button>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Edit -->
-        <div id="editHandlingPlanModal" class="fixed inset-0 hidden flex items-center justify-center z-50 bg-transparent bg-opacity-50">
-             <!-- Overlay -->
-             <div class="fixed inset-0 bg-black opacity-50"></div>
-
-            <div class="relative bg-white rounded-lg shadow-lg w-2/3">
-                <!-- Header -->
-                <div class="flex justify-between items-center bg-gray-100 px-6 py-4 rounded-t-lg border-b border-gray-300">
-                    <h2 class="text-xl font-bold">EDIT PERENCANAAN</h2>
-                    <button class="text-red-500 hover:text-red-700 font-bold text-2xl" onclick="closeEditHandlingPlanModal()">✖</button>
-                </div>
-
-                <!-- Content -->
-                <div class="p-6">
-                    <form id="editForm" class="grid grid-cols-2 gap-6">
-                        <!-- Rencana Tindak Penanganan -->
-                        <div>
-                            <label for="rtpEdit" class="block text-sm font-bold mb-2">Rencana Tindak Penanganan (RTP)</label>
-                            <input id="rtpEdit" type="text" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Rencana Tindak Penanganan">
-                        </div>
-                        <!-- Target Output -->
-                        <div>
-                            <label for="targetOutputEdit" class="block text-sm font-bold mb-2">Target Output</label>
-                            <input id="targetOutputEdit" type="text" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Target Output">
-                        </div>
-                        <!-- Penanggung Jawab -->
-                        <div>
-                            <label for="penanggungJawabEdit" class="block text-sm font-bold mb-2">Penanggung Jawab</label>
-                            <select id="penanggungJawabEdit" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                <option value="" selected>--Penanggung Jawab--</option>
-                                <option value="Person A">Person A</option>
-                                <option value="Person B">Person B</option>
-                            </select>
-                        </div>
-                        <!-- Target Waktu -->
-                        <div>
-                            <label for="targetWaktuEdit" class="block text-sm font-bold mb-2">Target Waktu</label>
-                            <input id="targetWaktuEdit" type="date" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        </div>
-                    </form>
-                    <!-- Tombol -->
-                    <div class="flex justify-left mt-6">
-                        <button class="bg-green-500 text-white px-12 py-2 rounded font-bold hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500" onclick="saveEditHandlingPlan()">SAVE</button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -422,63 +332,7 @@
             }
         }
 
-        function openEditHandlingPlanModal(data) {
-            document.getElementById('rtpEdit').value = data.rpt;
-            document.getElementById('targetOutputEdit').value = data.targetOutput;
-            document.getElementById('penanggungJawabEdit').value = data.penanggungJawab;
-            document.getElementById('targetWaktuEdit').value = data.targetWaktu;
-            document.getElementById('editHandlingPlanModal').classList.remove('hidden');
-        }
 
-        function closeEditHandlingPlanModal() {
-            document.getElementById('editHandlingPlanModal').classList.add('hidden');
-        }
-
-        function saveEditHandlingPlan() {
-            const rtp = document.getElementById('rtpEdit').value;
-            const targetOutput = document.getElementById('targetOutputEdit').value;
-            const penanggungJawab = document.getElementById('penanggungJawabEdit').value;
-            const targetWaktu = document.getElementById('targetWaktuEdit').value;
-
-            console.log('Data yang disimpan:', { rtp, targetOutput, penanggungJawab, targetWaktu });
-            closeEditHandlingPlanModal();
-        }
-
-
-        function deleteHandlingPlan(id) {
-                if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
-                    // Contoh client-side (menghapus baris dari tabel)
-                    const table = document.querySelector('table tbody');
-                    const rowToDelete = document.querySelector(`button[data-id="${id}"]`).closest('tr');
-                    if (rowToDelete) {
-                        table.removeChild(rowToDelete);
-                        console.log(`Data dengan ID ${id} berhasil dihapus.`);
-                    }
-
-                    // Contoh AJAX untuk delete API (server-side)
-                    /*
-                    fetch(`/api/handling-plan/${id}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                            'Content-Type': 'application/json',
-                        },
-                    })
-                    .then((response) => {
-                        if (response.ok) {
-                            rowToDelete.remove();
-                            alert("Data berhasil dihapus.");
-                        } else {
-                            alert("Gagal menghapus data.");
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Error:", error);
-                        alert("Terjadi kesalahan.");
-                    });
-                    */
-                }
-            }
 
 
     </script>

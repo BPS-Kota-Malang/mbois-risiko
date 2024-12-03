@@ -136,7 +136,7 @@
 
             if (!penyebabText.classList.contains('editing')) {
                 penyebabText.classList.add('editing');
-                const currentText = penyebabText.textContent.trim();
+                const currentText = penyebabText.textContent.trim(); // Hapus space kosong di sekitar teks
 
                 penyebabText.innerHTML = `<input type="text" value="${currentText}" class="border border-gray-300 rounded-md p-1">`;
 

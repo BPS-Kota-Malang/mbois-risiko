@@ -56,14 +56,14 @@ class ContextController extends Controller
         // Filter KriteriaDampak
         $kriteriaDampakQuery = KriteriaDampak::with('areaDampak', 'levelDampak'); // spell-checker: disable-line
 
-        if ($request->filled('filter_area_dampak')) {
-            $kriteriaDampakQuery->where('id_area_dampak', $request->input('filter_area_dampak')); // spell-checker: disable-line
+        if ($request->filled('area_dampak')) {
+            $kriteriaDampakQuery->where('id_area_dampak', $request->input('area_dampak')); // spell-checker: disable-line
         }
 
 
-        if ($request->filled('filter_level_dampak')) {
-            $kriteriaDampakQuery->where('id_level_dampak', $request->input('filter_level_dampak')); // spell-checker: disable-line
-            }
+        if ($request->filled('level_dampak')) {
+            $kriteriaDampakQuery->where('id_level_dampak', $request->input('level_dampak')); // spell-checker: disable-line
+        }
 
         $kriteriaDampak = $kriteriaDampakQuery->get();
 

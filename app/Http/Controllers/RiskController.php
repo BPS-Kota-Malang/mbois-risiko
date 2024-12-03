@@ -18,4 +18,5 @@ use Illuminate\Http\Request;
 class RiskController extends Controller
 {
 
+
 }

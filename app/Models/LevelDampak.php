@@ -31,4 +31,9 @@ class LevelDampak extends Model
     {
         return $this->hasMany(MatriksAnalisisResiko::class, 'id_level_dampak');
     }
+
+    public function rencanaTindakPenanganan()
+    {
+        return $this->hasMany(RencanaTindakPenanganan::class, 'id_level_dampak');
+    }
 }

@@ -17,8 +17,11 @@ use App\Models\LevelKemungkinan;
 use App\Models\LevelResiko;
 use App\Models\LevelDampak;
 use App\Models\MatriksAnalisisResiko;
-use Illuminate\Http\Request;
+use App\Models\Pegawai;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
+use App\Models\RencanaTindakPenanganan;
 
 
 class PerencanaanController extends Controller
@@ -26,7 +29,7 @@ class PerencanaanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function perencanaan(Request $request)
+    public function index(Request $request)
     {
         $tim = $request->input('tim');
         $prosesBisnis = $request->input('proses_bisnis');
@@ -46,6 +49,8 @@ class PerencanaanController extends Controller
         $uraian = Uraian::all() ?? collect();
         $matriksAnalisisResiko = MatriksAnalisisResiko::all() ?? collect();
         $query = ManajemenResiko::query();
+        $dataPegawai = Pegawai::all() ?? collect();
+        $rtp = RencanaTindakPenanganan::all() ?? collect();
 
 
         if ($tim) {
@@ -73,7 +78,9 @@ class PerencanaanController extends Controller
             'levelResiko',
             'levelDampak',
             'uraian',
-            'matriksAnalisisResiko'
+            'matriksAnalisisResiko',
+            'dataPegawai',
+            'rtp',
         ));
     }
 
@@ -90,16 +97,25 @@ class PerencanaanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::table('rencana_tindak_penanganan')->insert([
+            'name' => $request->name,
+            'target_output' => $request->target_output,
+            'target_waktu' => $request->target_waktu,
+            'id_data_pegawai' => $request->id_data_pegawai,
+            'id_level_kemungkinan' => $request->id_level_kemungkinan,
+            'id_level_dampak' => $request->id_level_dampak,
+            'id_matriks_analisis_resiko' => $request->id_matriks_analisis_resiko,
+            'id_manajemen_resiko' => $request->id_manajemen_resiko,
+
+        ]);
+
+        return redirect()->route('admin.perencanaan.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -112,9 +128,28 @@ class PerencanaanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'target_output' => 'required|string',
+            'target_waktu' => 'required|date',
+            'id_data_pegawai' => 'required|exists:data_pegawai,id',
+        ]);
+
+        $perencanaan = RencanaTindakPenanganan::findOrFail($id);
+
+        $perencanaan->update([
+            'name' => $request->name,
+            'target_output' => $request->target_output,
+            'target_waktu' => $request->target_waktu,
+            'id_data_pegawai' => $request->id_data_pegawai,
+        ]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Perencanaan updated successfully',
+            'updated_rtp' => $perencanaan,
+        ]);
     }
 
     /**
@@ -123,5 +158,67 @@ class PerencanaanController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getManajemen(int $id)
+    {
+        $manajemenResiko = ManajemenResiko::find($id);
+
+        if (!$manajemenResiko) {
+            return response()->json(['error' => 'Manajemen Resiko not found'], 404);
+        }
+
+        $resiko = $manajemenResiko->resiko->name ?? '';
+        $levelKemungkinan = $manajemenResiko->levelKemungkinan->name ?? '';
+        $levelDampak = $manajemenResiko->levelDampak->name ?? '';
+        $matriksAnalisisResiko = $manajemenResiko->id_matriks_analisis_resiko ?? '';
+
+        $level_kemungkinan = $manajemenResiko->id_level_kemungkinan ?? '';
+        $level_dampak = $manajemenResiko->id_level_dampak ?? '';
+        $idManajemenResiko = $manajemenResiko->id ?? '';
+
+        // simpan pada json
+        $data = [
+            'resiko' => $resiko,
+            'levelKemungkinan' => $levelKemungkinan,
+            'levelDampak' => $levelDampak,
+            'matriksAnalisisResiko' => $matriksAnalisisResiko,
+            'level_kemungkinan' => $level_kemungkinan,
+            'level_dampak' => $level_dampak,
+            'idManajemenResiko' => $idManajemenResiko,
+        ];
+
+        return response()->json($data);
+    }
+
+    public function getManajemenDetail($id)
+    {
+        $rencanaTindakPenanganan = RencanaTindakPenanganan::where('id_manajemen_resiko', $id)
+            ->get();
+
+        //ubah rencaan tindak penanganan menjadi json
+        $rencanaTindakPenanganan = $rencanaTindakPenanganan->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'name' => $item->name,
+                'target_output' => $item->target_output,
+                'target_waktu' => $item->target_waktu,
+                'id_data_pegawai' => $item->dataPegawai->name,
+                'id_level_kemungkinan' => $item->levelKemungkinan->name,
+                'id_level_dampak' => $item->levelDampak->name,
+                'id_matriks_analisis_resiko' => $item->id_matriks_analisis_resiko,
+                'id_manajemen_resiko' => $item->id_manajemen_resiko,
+            ];
+        });
+
+        if (!$rencanaTindakPenanganan) {
+            return response()->json([
+                'error' => 'Rencana Tindak Penanganan not found'
+            ], 404);
+        } else {
+            return response()->json([
+                'data' => $rencanaTindakPenanganan
+            ], 200);
+        }
     }
 }
