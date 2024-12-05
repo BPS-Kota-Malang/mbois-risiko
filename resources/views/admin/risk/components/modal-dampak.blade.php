@@ -41,7 +41,7 @@
                 <div class="flex items-center justify-center min-h-screen px-4">
                     <!-- Added a container with padding for better centering and spacing -->
                     <div class="w-full max-w-2xl p-6 mx-auto bg-white rounded-lg shadow-xl">
-                        <form action="{{ route('admin.dampak.store') }}" method="POST" enctype="multipart/form-data">
+                        <form id="addImpactForm" enctype="multipart/form-data">
                             @csrf
                             <div class="border-b border-gray-200">
                                 <h3 class="text-lg leading-6 font-medium text-gray-900">Tambah Dampak</h3>
@@ -52,7 +52,7 @@
                             </div>
                             <div class="bg-gray-50 text-right">
                                 <div class="flex justify-between pt-2">
-                                    <button id="saveBtndampak" type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md">Simpan</button>
+                                    <button id="saveBtndampak" type="button" class="bg-green-500 text-white px-4 py-2 rounded-md">Simpan</button>
                                     <button id="cancelImpactBtn" type="button" class="bg-red-500 text-white px-4 py-2 rounded-md">Batal</button>
                                 </div>
                             </div>
@@ -60,6 +60,11 @@
                     </div>
                 </div>
             </div>
+
+
+
+
+
             <!-- Footer -->
             <div class="flex justify-end pt-2">
                 <button id="saveDampakBtn" class="bg-blue-500 text-white px-4 py-2 rounded-md">Simpan</button>

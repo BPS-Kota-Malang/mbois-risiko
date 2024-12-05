@@ -147,7 +147,7 @@
                         </button>
                     </div>
                     <div class="p-4">
-                        <form id="tambahRtp" action="{{ route('admin.perencanaan.store') }}" method="POST">
+                        <form id="tambahRtp" action="{{ route('admin.perencanaan.store') }}" method="POST" onsubmit="return validateForm()">
                             @csrf
                             <div class="grid grid-cols-2 gap-4">
                                 <!-- RTP -->
@@ -214,6 +214,8 @@
                     </div>
                 </div>
             </div>
+
+
 
             <!-- Modal Edit -->
             <div id="editHandlingPlanModal"
@@ -339,28 +341,28 @@
                                     data[0].forEach((item, index) => {
                                         const tr = document.createElement('tr');
                                         tr.innerHTML = `
-            <td class="border border-gray-300 px-2 py-1">${index + 1}</td>
-            <td class="border border-gray-300 px-2 py-1">${item.name}</td>
-            <td class="border border-gray-300 px-2 py-1">${item.target_output}</td>
-            <td class="border border-gray-300 px-2 py-1">${item.target_waktu}</td>
-            <td class="border border-gray-300 px-2 py-1">${item.id_data_pegawai}</td>
-            <td class="border border-gray-300 px-2 py-1">${item.id_level_kemungkinan}</td>
-            <td class="border border-gray-300 px-2 py-1">${item.id_level_dampak}</td>
-            <td class="border border-gray-300 px-2 py-1">${item.id_matriks_analisis_resiko}</td>
-            <td class="border border-gray-300 px-2 py-1 text-center">
-                <button 
-                    class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600"
-                    data-rtp='${JSON.stringify(item)}'
-                    onclick="openEditHandlingPlanModal(this)">
-                    ✎
-                </button>
-                <button 
-                    class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
-                    onclick="deleteHandlingPlan(${item.id})">
-                    Hapus
-                </button>
-            </td>
-        `;
+                                            <td class="border border-gray-300 px-2 py-1">${index + 1}</td>
+                                            <td class="border border-gray-300 px-2 py-1">${item.name}</td>
+                                            <td class="border border-gray-300 px-2 py-1">${item.target_output}</td>
+                                            <td class="border border-gray-300 px-2 py-1">${item.target_waktu}</td>
+                                            <td class="border border-gray-300 px-2 py-1">${item.id_data_pegawai}</td>
+                                            <td class="border border-gray-300 px-2 py-1">${item.id_level_kemungkinan}</td>
+                                            <td class="border border-gray-300 px-2 py-1">${item.id_level_dampak}</td>
+                                            <td class="border border-gray-300 px-2 py-1">${item.id_matriks_analisis_resiko}</td>
+                                            <td class="border border-gray-300 px-2 py-1 text-center">
+                                                <button
+                                                    class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600"
+                                                    data-rtp='${JSON.stringify(item)}'
+                                                    onclick="openEditHandlingPlanModal(this)">
+                                                    ✎
+                                                </button>
+                                                <button
+                                                    class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
+                                                    onclick="deleteHandlingPlan(${item.id})">
+                                                    🗑
+                                                </button>
+                                            </td>
+                                        `;
                                         tbody.appendChild(tr);
                                     });
                                 } else {
@@ -378,6 +380,59 @@
 
             });
         });
+
+
+
+        function validateForm() {
+            let isValid = true;
+
+            const rtp = document.getElementById('rtp');
+            const targetOutput = document.getElementById('targetOutput');
+            const penanggungJawab = document.getElementById('penanggungJawab');
+            const targetWaktu = document.getElementById('targetWaktu');
+
+            switch (true) {
+            case !rtp.value:
+                rtp.classList.add('border-red-500');
+                alert('Rencana Tindak Penanganan harus diisi.');
+                isValid = false;
+                break;
+            default:
+                rtp.classList.remove('border-red-500');
+            }
+
+            switch (true) {
+            case !targetOutput.value:
+                targetOutput.classList.add('border-red-500');
+                alert('Target Output harus diisi.');
+                isValid = false;
+                break;
+            default:
+                targetOutput.classList.remove('border-red-500');
+            }
+
+            switch (true) {
+            case !penanggungJawab.value:
+                penanggungJawab.classList.add('border-red-500');
+                alert('Penanggung Jawab harus dipilih.');
+                isValid = false;
+                break;
+            default:
+                penanggungJawab.classList.remove('border-red-500');
+            }
+
+            switch (true) {
+            case !targetWaktu.value:
+                targetWaktu.classList.add('border-red-500');
+                alert('Target Waktu harus diisi.');
+                isValid = false;
+                break;
+            default:
+                targetWaktu.classList.remove('border-red-500');
+            }
+
+            return isValid;
+        }
 
 
         function closeModal() {
@@ -419,8 +474,8 @@
             document.getElementById('targetOutputEdit').value = data.target_output || '';
             document.getElementById('targetWaktuEdit').value = data.target_waktu || '';
 
-            document.getElementById('editForm').action = `/perencanaan/${data.id}`; 
-            
+            document.getElementById('editForm').action = `/perencanaan/${data.id}`;
+
 
             const penanggungJawabSelect = document.getElementById('penanggungJawabEdit');
             if (penanggungJawabSelect) {
@@ -469,5 +524,30 @@
                     alert('Terjadi kesalahan saat memperbarui data!');
                 });
         }
+
+        function deleteHandlingPlan(id) {
+            if (confirm('Are you sure you want to delete this item?')) {
+                fetch(`/handling-plan/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Item deleted successfully.');
+                        location.reload();
+                    } else {
+                        alert('Failed to delete the item.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while deleting the item.');
+                });
+            }
+        }
+
     </script>
 </x-admin-layout>

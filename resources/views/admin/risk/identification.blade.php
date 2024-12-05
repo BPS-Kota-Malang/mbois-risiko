@@ -5,7 +5,7 @@
             <form id="identifikasiResikoForm">
                 <div class="mb-4">
                     <label class="block text-gray-700 mb-2" for="tim-bidang">Tim/Bidang</label>
-                    <select id="tim" name="tim" class="w-full p-2 border rounded-lg">
+                    <select id="tim" name="tim" class="w-full p-2 border rounded-lg select2">
                         <option value="">-- Pilih Tim/Bidang --</option>
                         @foreach ($timProjects as $tim)
                             <option value="{{ $tim->id }}">{{ $tim->name }}</option>
@@ -633,6 +633,8 @@
                 }); // Initialize DataTable
             }
 
+
+
             // Delegasi event listener untuk tombol "Pilih penyebab"
             document.addEventListener('click', function(event) {
                 if (event.target.classList.contains('openCauseModal')) {
@@ -696,6 +698,36 @@
                     addCauseModal.classList.add('hidden');
                 });
             }
+
+            document.getElementById('saveCauseBtn').addEventListener('click', function() {
+                var form = document.getElementById('addCauseForm');
+                var formData = new FormData(form);
+
+                fetch('{{ route('admin.penyebab.store') }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Penyebab berhasil ditambahkan');
+                        document.getElementById('addCauseModal').classList.add('hidden');
+                        // Optionally, refresh the table or perform other actions
+                        form.reset();
+                    } else {
+                        alert('Terjadi kesalahan, silakan coba lagi');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan, silakan coba lagi');
+                });
+            });
+
+
 
             if (savePenyebabBtn) {
                 savePenyebabBtn.addEventListener('click', function() {
@@ -886,6 +918,34 @@
                     addImpactModal.classList.remove('hidden');
                 });
             }
+
+            document.getElementById('saveBtndampak').addEventListener('click', function() {
+                var form = document.getElementById('addImpactForm');
+                var formData = new FormData(form);
+
+                fetch('{{ route('admin.dampak.store') }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Dampak berhasil ditambahkan');
+                        document.getElementById('addImpactModal').classList.add('hidden');
+                        // Optionally, refresh the table or perform other actions
+                        form.reset();
+                    } else {
+                        alert('Terjadi kesalahan, silakan coba lagi');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan, silakan coba lagi');
+                });
+            });
 
             if (cancelImpactBtn) {
                 cancelImpactBtn.addEventListener('click', function() {

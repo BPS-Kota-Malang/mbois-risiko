@@ -77,6 +77,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/perencanaan', PerencanaanController::class, ['as' => 'admin']);
     Route::get('/getmanajemen/{id}', [PerencanaanController::class, 'getManajemen'], ['as' => 'admin']);
     Route::get('/getmanajemenDetail/{id}', [PerencanaanController::class, 'getManajemenDetail']);
+    Route::delete('/handling-plan/{id}', [PerencanaanController::class, 'destroy'])->name('handling-plan.destroy');
 
     //penyebab
     Route::resource('/penyebab', PenyebabController::class, ['as' => 'admin']);

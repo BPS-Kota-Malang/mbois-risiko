@@ -97,6 +97,17 @@ class PerencanaanController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'target_output' => 'required|string',
+            'target_waktu' => 'required|date',
+            'id_data_pegawai' => 'required|exists:data_pegawai,id',
+            'id_level_kemungkinan' => 'required|exists:level_kemungkinan,id',
+            'id_level_dampak' => 'required|exists:level_dampak,id',
+            'id_matriks_analisis_resiko' => 'required|exists:matriks_analisis_resiko,id',
+            'id_manajemen_resiko' => 'required|exists:manajemen_resiko,id',
+        ]);
+
         DB::table('rencana_tindak_penanganan')->insert([
             'name' => $request->name,
             'target_output' => $request->target_output,
@@ -106,11 +117,11 @@ class PerencanaanController extends Controller
             'id_level_dampak' => $request->id_level_dampak,
             'id_matriks_analisis_resiko' => $request->id_matriks_analisis_resiko,
             'id_manajemen_resiko' => $request->id_manajemen_resiko,
-
         ]);
 
-        return redirect()->route('admin.perencanaan.index');
+        return redirect()->route('admin.perencanaan.index')->with('success', 'Rencana Tindak Penanganan created successfully.');
     }
+
 
     /**
      * Display the specified resource.
@@ -157,7 +168,10 @@ class PerencanaanController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $handlingPlan = RencanaTindakPenanganan::findOrFail($id);
+        $handlingPlan->delete();
+
+        return response()->json(['message' => 'Item deleted successfully.']);
     }
 
     public function getManajemen(int $id)

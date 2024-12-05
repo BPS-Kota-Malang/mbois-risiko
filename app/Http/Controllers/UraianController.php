@@ -20,7 +20,7 @@ class UraianController extends Controller
         $query = Uraian::query();
 
         if ($search) {
-            $query->where('uraian', 'like', "%{$search}%")
+            $query->where('name', 'like', "%{$search}%")
                   ->orWhere('status', 'like', "%{$search}%");
         }
 
@@ -68,7 +68,7 @@ class UraianController extends Controller
             'status' => $request->status ?? 'On Progress', // default status if not provided
         ]);
 
-        return redirect()->route('admin.analisis.index')->with('success', 'Uraian created successfully.');
+        return response()->json(['success' => true, 'message' => 'Uraian created successfully.']);
     }
 
 

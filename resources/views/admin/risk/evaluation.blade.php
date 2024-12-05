@@ -32,7 +32,7 @@
         </div>
     </div>
 
-     <div class="container mx-auto mt-10">
+    <div class="container mx-auto mt-10">
         <div class="flex justify-between items-center mb-4 space-x-4">
             <div class="overflow-x-auto bg-white shadow-md rounded-lg">
                 <table class="min-w-full divide-y divide-gray-200" id="riskTable">
@@ -82,6 +82,10 @@
                         </tr>
                     @else
                     @foreach ($manajemenResikos as $ManajemenResiko)
+
+                        @if (is_null($ManajemenResiko->id_jenis_resiko) || is_null($ManajemenResiko->id_sumber_resiko) || is_null($ManajemenResiko->id_kategori_resiko) || is_null($ManajemenResiko->id_level_kemungkinan) || is_null($ManajemenResiko->id_level_dampak) || is_null($ManajemenResiko->id_matriks_analisis_resiko) || is_null($ManajemenResiko->id_uraian) || is_null($ManajemenResiko->efektivitas))
+                            @continue
+                        @endif
                         <form action="{{ route('admin.analisis.update', $ManajemenResiko->id) }}" method="POST">
                             @csrf
                             @method('PUT')
@@ -269,7 +273,7 @@
             {{ $manajemenResikos->links() }}
         </div>
     </div>
-    @include('admin.risk.components.modal-uraian')
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {

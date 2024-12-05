@@ -18,7 +18,7 @@ class DampakController extends Controller
         $query = Dampak::query();
 
         if ($search) {
-            $query->where('dampak', 'like', "%{$search}%")
+            $query->where('name', 'like', "%{$search}%")
                   ->orWhere('status', 'like', "%{$search}%");
         }
 
@@ -61,7 +61,7 @@ class DampakController extends Controller
             'status' => $request->status ?? 'On Progress', // default status if not provided
         ]);
 
-        return redirect()->route('admin.manajemenrisiko.index')->with('success', 'Dampak created successfully.');
+        return response()->json(['success' => true, 'message' => 'Dampak created successfully.']);
     }
 
     /**

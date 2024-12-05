@@ -18,7 +18,7 @@ class PenyebabController extends Controller
         $query = Penyebab::query();
 
         if ($search) {
-            $query->where('penyebab', 'like', "%{$search}%")
+            $query->where('name', 'like', "%{$search}%")
                   ->orWhere('status', 'like', "%{$search}%");
         }
 
@@ -60,7 +60,8 @@ class PenyebabController extends Controller
             'status' => $request->status ?? 'On Progress', // default status if not provided
         ]);
 
-        return redirect()->route('admin.manajemenrisiko.index')->with('success', 'Penyebab created successfully.');
+        //bagaimana cara ini return yang akan di tampilkan ada lah sebuah tabel yang berisi data penyebab
+        return response()->json(['success' => true, 'message' => 'Penyebab created successfully.']);
     }
 
     /**

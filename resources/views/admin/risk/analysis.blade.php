@@ -82,6 +82,7 @@
                         </tr>
                     @else
                     @foreach ($manajemenResikos as $ManajemenResiko)
+
                         <form action="{{ route('admin.analisis.update', $ManajemenResiko->id) }}" method="POST">
                             @csrf
                             @method('PUT')
@@ -575,6 +576,38 @@
                     addUraianModal.classList.remove('hidden');
                 });
             }
+
+            document.getElementById('saveBtn').addEventListener('click', function() {
+                var form = document.getElementById('addUraianForm');
+                var formData = new FormData(form);
+
+                fetch('{{ route('admin.uraian.store') }}', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Handle success
+                        alert('Uraian berhasil ditambahkan');
+                        document.getElementById('addUraianModal').classList.add('hidden');
+                        // Optionally, refresh the table or perform other actions
+                        form.reset(); // Clear the form fields
+                    } else {
+                        // Handle errors
+                        alert('Terjadi kesalahan, silakan coba lagi');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan, silakan coba lagi');
+                });
+            });
+
+
 
             if (cancelUraianBtn) {
                 cancelUraianBtn.addEventListener('click', function() {

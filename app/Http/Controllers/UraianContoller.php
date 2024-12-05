@@ -16,7 +16,7 @@ class UraianContoller extends Controller
 
         // Jika ada pencarian, filter data; jika tidak, ambil semua data
         $uraian = Uraian::when($query, function ($queryBuilder) use ($query) {
-            $queryBuilder->where('uraian', 'like', '%' . $query . '%')
+            $queryBuilder->where('name', 'like', '%' . $query . '%')
                          ->orWhere('status', 'like', '%' . $query . '%');
         })->get();
 

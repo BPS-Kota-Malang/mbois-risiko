@@ -18,7 +18,7 @@ class ResikoController extends Controller
         $query = Resiko::query();
 
         if ($search) {
-            $query->where('resiko', 'like', "%{$search}%")
+            $query->where('name', 'like', "%{$search}%")
                   ->orWhere('status', 'like', "%{$search}%");
         }
 
