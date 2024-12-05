@@ -1,4 +1,8 @@
 <x-admin-layout>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
     <div class="flex justify-center mt-10">
         <div class="bg-white shadow-md rounded-lg p-6 w-full ">
             <h1 class="text-2xl font-bold mb-6" id="cek">Identifikasi Risiko</h1>
@@ -198,7 +202,7 @@
                                                         // Decode the JSON string into a PHP array
                                                         $penyebabIds = json_decode($ManajemenResiko->id_penyebab, true);
                                                     @endphp
-
+                                                
                                                     @if (is_array($penyebabIds) && count($penyebabIds) > 0)
                                                         <ul class="list-disc list-inside text-gray-800 ml-4">
                                                             @foreach ($penyebabIds as $item)
@@ -206,16 +210,13 @@
                                                                     @if ($penyebabItem->id == $item)
                                                                         @php
                                                                             // Membuat variabel yang menyimpan id dampak dalam bentuk json tanpa id yang dipilih
-                                                                            $penyebabHapus = array_diff($penyebabIds, [
-                                                                                $item,
-                                                                            ]);
+                                                                            $penyebabHapus = array_diff($penyebabIds, [$item]);
                                                                         @endphp
                                                                         <li class="flex justify-between items-center">
                                                                             <span>{{ $penyebabItem->name }}</span>
-                                                                            <a href="{{ url('/admin/manajemenresiko/hapuspenyebab/' . $ManajemenResiko->id . '/' . $item) }}"
-                                                                                class="text-red-500 hover:text-red-700 ml-2"
-                                                                                id="hapusPenyebab"
-                                                                                onclick="return confirm('Anda yakin ingin menghapus item ini?');">
+                                                                            <a href="javascript:void(0);" 
+                                                                                class="text-red-500 hover:text-red-700 ml-2 hapus-penyebab" 
+                                                                                data-url="{{ url('/admin/manajemenresiko/hapuspenyebab/' . $ManajemenResiko->id . '/' . $item) }}">
                                                                                 <i class="fas fa-trash-alt"></i>
                                                                             </a>
                                                                         </li>
@@ -228,6 +229,7 @@
                                                         <p class="text-black italic ml-4 text-center">-</p>
                                                     @endif
                                                 </div>
+                                                
                                             </div>
                                         </td>
                                     @else
@@ -284,7 +286,7 @@
                                                         // Decode the JSON string into a PHP array
                                                         $dampakIds = json_decode($ManajemenResiko->id_dampak, true);
                                                     @endphp
-
+                                                
                                                     @if (is_array($dampakIds) && count($dampakIds) > 0)
                                                         <ul class="list-disc list-inside text-gray-800 ml-4">
                                                             @foreach ($dampakIds as $item)
@@ -292,16 +294,13 @@
                                                                     @if ($dampakItem->id == $item)
                                                                         @php
                                                                             // Membuat variabel yang menyimpan id dampak dalam bentuk json tanpa id yang dipilih
-                                                                            $dampakHapus = array_diff($dampakIds, [
-                                                                                $item,
-                                                                            ]);
+                                                                            $dampakHapus = array_diff($dampakIds, [$item]);
                                                                         @endphp
                                                                         <li class="flex justify-between items-center">
                                                                             <span>{{ $dampakItem->name }}</span>
-                                                                            <a href="{{ url('/admin/manajemenresiko/hapusdampak/' . $ManajemenResiko->id . '/' . $item) }}"
-                                                                                class="text-red-500 hover:text-red-700 ml-2"
-                                                                                id="hapusDampak"
-                                                                                onclick="return confirm('Anda yakin ingin menghapus item ini?');">
+                                                                            <a href="javascript:void(0);" 
+                                                                                class="text-red-500 hover:text-red-700 ml-2 hapus-dampak" 
+                                                                                data-url="{{ url('/admin/manajemenresiko/hapusdampak/' . $ManajemenResiko->id . '/' . $item) }}">
                                                                                 <i class="fas fa-trash-alt"></i>
                                                                             </a>
                                                                         </li>
@@ -314,6 +313,7 @@
                                                         <p class="text-black italic ml-4 text-center">-</p>
                                                     @endif
                                                 </div>
+                                                
                                             </div>
                                         </td>
                                     @else
@@ -352,43 +352,41 @@
 
 
                                     @if (Auth::check() && Auth::user()->hasRole('admin'))
-                                            <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
-                                            <a class="bg-blue-500 text-white width-mt-2 px-3 py-2 rounded cursor-pointer btnEdit"
-                                                    data-id="{{ $ManajemenResiko->id }}">Edit</a>
-                                            <button type="submit" class="bg-green-500 text-white px-2 py-1 rounded"
-                                                id="saveidentificationBtn">Save</button>
-                                            </form>
-                                            <form action="{{ route('admin.manajemenrisiko.destroy', $ManajemenResiko->id) }}"
-                                                method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="bg-red-500 text-white width-mt-2 px-3 py-1 rounded cursor-pointer"
-                                                    type="submit" onclick="return confirm('Are you sure?')">Delete</button>
-                                            </form>
-                                        </td>
-                                    @elseif (auth()->user()->hasRole('ketua_tim'))
-                                        @if ((optional(auth()->user()->pegawai)->team_id == $ManajemenResiko->tim_project->id))
-                                            <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
-                                                <a class="bg-blue-500 text-white width-mt-2 px-3 py-2 rounded cursor-pointer btnEdit"
-                                                        data-id="{{ $ManajemenResiko->id }}">Edit</a>
-                                                <button type="submit" class="bg-green-500 text-white px-2 py-1 rounded"
-                                                    id="saveidentificationBtn">Save</button>
-                                                </form>
-                                                <form action="{{ route('admin.manajemenrisiko.destroy', $ManajemenResiko->id) }}"
-                                                    method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="bg-red-500 text-white width-mt-2 px-3 py-1 rounded cursor-pointer"
-                                                        type="submit" onclick="return confirm('Are you sure?')">Delete</button>
-                                                </form>
-                                            </td>
-                                        @else
-                                        <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
-                                            <p class="text-red-500 text-center">Tidak Memiliki Izin Beda TIM</p>
-                                        </td>
-                                        @endif
+    <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+        <a class="bg-blue-500 text-white width-mt-2 px-3 py-2 rounded cursor-pointer btnEdit"
+            data-id="{{ $ManajemenResiko->id }}">Edit</a>
+        <button type="submit" class="bg-green-500 text-white px-2 py-1 rounded"
+            id="saveidentificationBtn">Save</button>
+        <form action="{{ route('admin.manajemenrisiko.destroy', $ManajemenResiko->id) }}"
+            method="POST" style="display:inline;" class="delete-form">
+            @csrf
+            @method('DELETE')
+            <button class="bg-red-500 text-white width-mt-2 px-3 py-1 rounded cursor-pointer btnDelete"
+                type="button" data-id="{{ $ManajemenResiko->id }}">Delete</button>
+        </form>
+    </td>
+@elseif (auth()->user()->hasRole('ketua_tim'))
+    @if ((optional(auth()->user()->pegawai)->team_id == $ManajemenResiko->tim_project->id))
+        <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+            <a class="bg-blue-500 text-white width-mt-2 px-3 py-2 rounded cursor-pointer btnEdit"
+                data-id="{{ $ManajemenResiko->id }}">Edit</a>
+            <button type="submit" class="bg-green-500 text-white px-2 py-1 rounded"
+                id="saveidentificationBtn">Save</button>
+            <form action="{{ route('admin.manajemenrisiko.destroy', $ManajemenResiko->id) }}"
+                method="POST" style="display:inline;" class="delete-form">
+                @csrf
+                @method('DELETE')
+                <button class="bg-red-500 text-white width-mt-2 px-3 py-1 rounded cursor-pointer btnDelete"
+                    type="button" data-id="{{ $ManajemenResiko->id }}">Delete</button>
+            </form>
+        </td>
+    @else
+        <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+            <p class="text-red-500 text-center">Tidak Memiliki Izin Beda TIM</p>
+        </td>
+    @endif
+@endif
 
-                                    @endif
                                 </tr>
                     @endforeach
                     @endif
@@ -698,15 +696,15 @@
             }
 
             if (savePenyebabBtn) {
-                savePenyebabBtn.addEventListener('click', function() {
-                    const selectedPenyebab = [];
-                    document.querySelectorAll('.penyebab-checkbox:checked').forEach(function(checkbox) {
-                        selectedPenyebab.push(checkbox.getAttribute(
-                        'data-penyebab-id')); // Pastikan atribut ini adalah ID penyebab
-                    });
-                    console.log(selectedPenyebab);
-                    if (selectedPenyebab.length > 0) {
-                        fetch('{{ route('admin.manajemenresiko.savepenyebab') }}', {
+                    savePenyebabBtn.addEventListener('click', function () {
+                        const selectedPenyebab = [];
+                        document.querySelectorAll('.penyebab-checkbox:checked').forEach(function (checkbox) {
+                            selectedPenyebab.push(checkbox.getAttribute('data-penyebab-id')); // Pastikan atribut ini adalah ID penyebab
+                        });
+                        console.log(selectedPenyebab);
+
+                        if (selectedPenyebab.length > 0) {
+                            fetch('{{ route('admin.manajemenresiko.savepenyebab') }}', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -720,20 +718,44 @@
                             .then(response => response.json())
                             .then(data => {
                                 if (data.success) {
-                                    console.log(selectedPenyebab)
-                                    alert('Penyebab berhasil disimpan!');
-                                    penyebabModal.classList.add('hidden');
-                                    location.reload();
+                                    console.log(selectedPenyebab);
+                                    Swal.fire({
+                                        title: 'Berhasil!',
+                                        text: 'Penyebab berhasil disimpan!',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then(() => {
+                                        penyebabModal.classList.add('hidden');
+                                        location.reload();
+                                    });
                                 } else {
-                                    alert('Terjadi kesalahan saat menyimpan penyebab.');
+                                    Swal.fire({
+                                        title: 'Gagal!',
+                                        text: 'Terjadi kesalahan saat menyimpan penyebab.',
+                                        icon: 'error',
+                                        confirmButtonText: 'Coba Lagi'
+                                    });
                                 }
                             })
-                            .catch(error => console.error('Error:', error));
-                    } else {
-                        alert('Pilih setidaknya satu penyebab.');
-                    }
-                });
-            }
+                            .catch(error => {
+                                console.error('Error:', error);
+                                Swal.fire({
+                                    title: 'Kesalahan!',
+                                    text: 'Terjadi kesalahan saat menyimpan penyebab.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Peringatan!',
+                                text: 'Pilih setidaknya satu penyebab.',
+                                icon: 'warning',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    });
+                }
 
             //end penyebab
 
@@ -894,42 +916,67 @@
             }
 
             if (saveDampakBtn) {
-                saveDampakBtn.addEventListener('click', function() {
+                saveDampakBtn.addEventListener('click', function () {
                     const selectedDampak = [];
-                    document.querySelectorAll('.dampak-checkbox:checked').forEach(function(checkbox) {
-                        selectedDampak.push(checkbox.getAttribute(
-                        'data-dampak-id')); // Pastikan atribut ini adalah ID penyebab
+                    document.querySelectorAll('.dampak-checkbox:checked').forEach(function (checkbox) {
+                        selectedDampak.push(checkbox.getAttribute('data-dampak-id')); // Pastikan atribut ini adalah ID dampak
                     });
                     console.log(selectedDampak);
+
                     if (selectedDampak.length > 0) {
                         fetch('{{ route('admin.manajemenresiko.savedampak') }}', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                },
-                                body: JSON.stringify({
-                                    dampak: selectedDampak,
-                                    manajemen_resiko_id: selectedManajemenResikoId
-                                })
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({
+                                dampak: selectedDampak,
+                                manajemen_resiko_id: selectedManajemenResikoId
                             })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.success) {
-                                    console.log(selectedDampak)
-                                    alert('Dampak berhasil disimpan!');
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                console.log(selectedDampak);
+                                Swal.fire({
+                                    title: 'Berhasil!',
+                                    text: 'Dampak berhasil disimpan!',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then(() => {
                                     dampakModal.classList.add('hidden');
                                     location.reload();
-                                } else {
-                                    alert('Terjadi kesalahan saat menyimpan dampak.');
-                                }
-                            })
-                            .catch(error => console.error('Error:', error));
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Gagal!',
+                                    text: 'Terjadi kesalahan saat menyimpan dampak.',
+                                    icon: 'error',
+                                    confirmButtonText: 'Coba Lagi'
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            Swal.fire({
+                                title: 'Kesalahan!',
+                                text: 'Terjadi kesalahan saat menyimpan dampak.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        });
                     } else {
-                        alert('Pilih setidaknya satu dampak.');
+                        Swal.fire({
+                            title: 'Peringatan!',
+                            text: 'Pilih setidaknya satu dampak.',
+                            icon: 'warning',
+                            confirmButtonText: 'OK'
+                        });
                     }
                 });
             }
+
 
 
             // end dampak
@@ -1216,6 +1263,93 @@
 
 
         });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+    const deleteLinks = document.querySelectorAll('.hapus-penyebab');
+
+    deleteLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const url = this.getAttribute('data-url');
+
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Anda yakin ingin menghapus item ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            });
+        });
+    });
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const deleteLinks = document.querySelectorAll('.hapus-dampak');
+
+    deleteLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const url = this.getAttribute('data-url');
+
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Anda yakin ingin menghapus item ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            });
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const deleteButtons = document.querySelectorAll('.btnDelete');
+
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const form = this.closest('.delete-form');
+            const manajemenResikoId = this.getAttribute('data-id');
+
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: `Anda yakin ingin menghapus Manajemen Risiko dengan ID ${manajemenResikoId}?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+});
+
+
+
     </script>
 
 

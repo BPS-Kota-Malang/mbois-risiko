@@ -1,4 +1,7 @@
 <x-admin-layout>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <div class="flex justify-center mt-10">
         <div class="bg-white shadow-md rounded-lg p-6 w-full">
             <h1 class="text-2xl font-bold mb-6">Perencanaan</h1>
@@ -147,7 +150,7 @@
                         </button>
                     </div>
                     <div class="p-4">
-                        <form id="tambahRtp" action="{{ route('admin.perencanaan.store') }}" method="POST">
+                        <form id="tambahRtp" action="{{ route('admin.perencanaan.store') }}" method="POST" onsubmit="return validateForm()">
                             @csrf
                             <div class="grid grid-cols-2 gap-4">
                                 <!-- RTP -->
@@ -214,6 +217,8 @@
                     </div>
                 </div>
             </div>
+
+
 
             <!-- Modal Edit -->
             <div id="editHandlingPlanModal"
@@ -339,28 +344,28 @@
                                     data[0].forEach((item, index) => {
                                         const tr = document.createElement('tr');
                                         tr.innerHTML = `
-            <td class="border border-gray-300 px-2 py-1">${index + 1}</td>
-            <td class="border border-gray-300 px-2 py-1">${item.name}</td>
-            <td class="border border-gray-300 px-2 py-1">${item.target_output}</td>
-            <td class="border border-gray-300 px-2 py-1">${item.target_waktu}</td>
-            <td class="border border-gray-300 px-2 py-1">${item.id_data_pegawai}</td>
-            <td class="border border-gray-300 px-2 py-1">${item.id_level_kemungkinan}</td>
-            <td class="border border-gray-300 px-2 py-1">${item.id_level_dampak}</td>
-            <td class="border border-gray-300 px-2 py-1">${item.id_matriks_analisis_resiko}</td>
-            <td class="border border-gray-300 px-2 py-1 text-center">
-                <button 
-                    class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600"
-                    data-rtp='${JSON.stringify(item)}'
-                    onclick="openEditHandlingPlanModal(this)">
-                    ✎
-                </button>
-                <button 
-                    class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
-                    onclick="deleteHandlingPlan(${item.id})">
-                    Hapus
-                </button>
-            </td>
-        `;
+                                            <td class="border border-gray-300 px-2 py-1">${index + 1}</td>
+                                            <td class="border border-gray-300 px-2 py-1">${item.name}</td>
+                                            <td class="border border-gray-300 px-2 py-1">${item.target_output}</td>
+                                            <td class="border border-gray-300 px-2 py-1">${item.target_waktu}</td>
+                                            <td class="border border-gray-300 px-2 py-1">${item.id_data_pegawai}</td>
+                                            <td class="border border-gray-300 px-2 py-1">${item.id_level_kemungkinan}</td>
+                                            <td class="border border-gray-300 px-2 py-1">${item.id_level_dampak}</td>
+                                            <td class="border border-gray-300 px-2 py-1">${item.id_matriks_analisis_resiko}</td>
+                                            <td class="border border-gray-300 px-2 py-1 text-center">
+                                                <button
+                                                    class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600"
+                                                    data-rtp='${JSON.stringify(item)}'
+                                                    onclick="openEditHandlingPlanModal(this)">
+                                                    ✎
+                                                </button>
+                                                <button
+                                                    class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
+                                                    onclick="deleteHandlingPlan(${item.id})">
+                                                    🗑
+                                                </button>
+                                            </td>
+                                        `;
                                         tbody.appendChild(tr);
                                     });
                                 } else {
@@ -378,6 +383,59 @@
 
             });
         });
+
+
+
+        function validateForm() {
+            let isValid = true;
+
+            const rtp = document.getElementById('rtp');
+            const targetOutput = document.getElementById('targetOutput');
+            const penanggungJawab = document.getElementById('penanggungJawab');
+            const targetWaktu = document.getElementById('targetWaktu');
+
+            switch (true) {
+            case !rtp.value:
+                rtp.classList.add('border-red-500');
+                alert('Rencana Tindak Penanganan harus diisi.');
+                isValid = false;
+                break;
+            default:
+                rtp.classList.remove('border-red-500');
+            }
+
+            switch (true) {
+            case !targetOutput.value:
+                targetOutput.classList.add('border-red-500');
+                alert('Target Output harus diisi.');
+                isValid = false;
+                break;
+            default:
+                targetOutput.classList.remove('border-red-500');
+            }
+
+            switch (true) {
+            case !penanggungJawab.value:
+                penanggungJawab.classList.add('border-red-500');
+                alert('Penanggung Jawab harus dipilih.');
+                isValid = false;
+                break;
+            default:
+                penanggungJawab.classList.remove('border-red-500');
+            }
+
+            switch (true) {
+            case !targetWaktu.value:
+                targetWaktu.classList.add('border-red-500');
+                alert('Target Waktu harus diisi.');
+                isValid = false;
+                break;
+            default:
+                targetWaktu.classList.remove('border-red-500');
+            }
+
+            return isValid;
+        }
 
 
         function closeModal() {
@@ -419,8 +477,8 @@
             document.getElementById('targetOutputEdit').value = data.target_output || '';
             document.getElementById('targetWaktuEdit').value = data.target_waktu || '';
 
-            document.getElementById('editForm').action = /perencanaan/${data.id}; 
-            
+            document.getElementById('editForm').action = `/perencanaan/${data.id}`;
+
 
             const penanggungJawabSelect = document.getElementById('penanggungJawabEdit');
             if (penanggungJawabSelect) {
@@ -446,28 +504,97 @@
                 id_data_pegawai: idDataPegawai
             };
             const formAction = document.getElementById('editForm').action;
-            fetch(formAction, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify(formData)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success === true) {
-                        alert('Data berhasil diperbarui!');
-                        window.location.reload();
-                    } else {
-                        console.error('Failed to update:', data.message);
-                        alert('Gagal memperbarui data: ' + (data.message || 'Tidak ada pesan error'));
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Terjadi kesalahan saat memperbarui data!');
-                });
+                fetch(formAction, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify(formData)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success === true) {
+                            Swal.fire({
+                                title: 'Berhasil!',
+                                text: 'Data berhasil diperbarui!',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Gagal!',
+                                text: 'Gagal memperbarui data: ' + (data.message || 'Tidak ada pesan error'),
+                                icon: 'error',
+                                confirmButtonText: 'Coba Lagi'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire({
+                            title: 'Kesalahan!',
+                            text: 'Terjadi kesalahan saat memperbarui data!',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    });
+
         }
+
+                        function deleteHandlingPlan(id) {
+                    Swal.fire({
+                        title: 'Apakah Anda yakin?',
+                        text: 'Item ini akan dihapus secara permanen!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Ya, hapus!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetch(`/handling-plan/${id}`, {
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                }
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    Swal.fire({
+                                        title: 'Berhasil!',
+                                        text: 'Item berhasil dihapus.',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then(() => {
+                                        location.reload();
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Gagal!',
+                                        text: 'Item gagal dihapus.',
+                                        icon: 'error',
+                                        confirmButtonText: 'OK'
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                Swal.fire({
+                                    title: 'Kesalahan!',
+                                    text: 'Terjadi kesalahan saat menghapus item.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            });
+                        }
+                    });
+                }
+
+    
     </script>
 </x-admin-layout>
