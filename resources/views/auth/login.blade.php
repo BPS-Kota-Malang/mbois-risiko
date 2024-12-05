@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->  
-    <link rel="icon" type="image/png" href="images/MBOIS.png"/>
+    <link rel="icon" type="image/png" href="images/MBOIS1.png"/>
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
     <!--===============================================================================================-->
@@ -35,7 +35,8 @@
                 <form class="login100-form validate-form" method="POST" action="{{ route('login') }}">
                     @csrf
                     <span class="login100-form-logo">
-                        <img src="{{ asset('images/MBOIS1.png') }}" alt="Mbois" style="width: 300px; height: 300px;">
+                        <img src="{{ asset('storage/logo.png') }}" alt="Logo" style="width: 200px; height: 200px; object-fit: cover;">
+
                     </span>
 
                     <span class="login100-form-title p-b-34 p-t-27">

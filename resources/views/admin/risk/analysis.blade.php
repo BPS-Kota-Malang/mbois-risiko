@@ -1,4 +1,8 @@
 <x-admin-layout>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
     <div class="flex justify-center mt-10">
         <div class="bg-white shadow-md rounded-lg p-6 w-full">
             <h1 class="text-2xl font-bold mb-6">Analysis Risiko</h1>
@@ -216,35 +220,34 @@
                                                 // Decode the JSON string into a PHP array
                                                 $uraianIds = json_decode($ManajemenResiko->id_uraian, true);
                                             @endphp
-
+                                        
                                             @if (is_array($uraianIds) && count($uraianIds) > 0)
-                                            <ul class="list-disc list-inside text-gray-800 ml-4">
-                                                @foreach ($uraianIds as $item)
-                                                    @foreach ($uraian as $uraianItem)
-                                                        @if ($uraianItem->id == $item)
-                                                            @php
-                                                                // Membuat variabel yang menyimpan id uraian dalam bentuk json tanpa id yang dipilih
-                                                                $uraianHapus = array_diff($uraianIds, [$item]);
-                                                            @endphp
-                                                            <li class="flex justify-between items-center">
-                                                                <span>{{ $uraianItem->name }}</span>
-                                                                <a href="{{ url('/admin/analisis/hapusuraian/' . $ManajemenResiko->id . '/' . $item) }}"
-                                                                    class="text-red-500 hover:text-red-700 ml-2"
-                                                                    id="hapusUraian"
-                                                                    onclick="return confirm('Anda yakin ingin menghapus item ini?');">
-                                                                    <i class="fas fa-trash-alt"></i>
-                                                                </a>
-                                                            </li>
-                                                        @endif
+                                                <ul class="list-disc list-inside text-gray-800 ml-4">
+                                                    @foreach ($uraianIds as $item)
+                                                        @foreach ($uraian as $uraianItem)
+                                                            @if ($uraianItem->id == $item)
+                                                                @php
+                                                                    // Membuat variabel yang menyimpan id uraian dalam bentuk json tanpa id yang dipilih
+                                                                    $uraianHapus = array_diff($uraianIds, [$item]);
+                                                                @endphp
+                                                                <li class="flex justify-between items-center">
+                                                                    <span>{{ $uraianItem->name }}</span>
+                                                                    <a href="javascript:void(0);"
+                                                                        class="text-red-500 hover:text-red-700 ml-2"
+                                                                        onclick="hapusUraian('{{ url('/admin/analisis/hapusuraian/' . $ManajemenResiko->id . '/' . $item) }}');">
+                                                                        <i class="fas fa-trash-alt"></i>
+                                                                    </a>
+                                                                </li>
+                                                            @endif
+                                                        @endforeach
                                                     @endforeach
-                                                @endforeach
-                                            </ul>
-
+                                                </ul>
                                             @else
                                                 <!-- Jika tidak ada uraian yang dipilih -->
                                                 <p class="text-gray-500 italic ml-4 text-center">-</p>
                                             @endif
                                         </div>
+                                        
                                     </div>
                                 </td>
                                 @else
@@ -622,6 +625,7 @@
                         selectedUraian.push(checkbox.getAttribute('data-uraian-id')); // Ensure this attribute is the ID of the uraian
                     });
                     console.log(selectedUraian);
+
                     if (selectedUraian.length > 0) {
                         fetch('{{ route("admin.analisis.saveuraian") }}', {
                             method: 'POST',
@@ -643,23 +647,62 @@
                         .then(data => {
                             if (data.success) {
                                 console.log(selectedUraian);
-                                alert('Uraian berhasil disimpan!');
-                                uraianModal.classList.add('hidden');
-                                location.reload();
+                                Swal.fire({
+                                    title: 'Berhasil!',
+                                    text: 'Uraian berhasil disimpan!',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then(() => {
+                                    uraianModal.classList.add('hidden');
+                                    location.reload();
+                                });
                             } else {
-                                alert('Terjadi kesalahan saat menyimpan uraian.');
+                                Swal.fire({
+                                    title: 'Gagal!',
+                                    text: 'Terjadi kesalahan saat menyimpan uraian.',
+                                    icon: 'error',
+                                    confirmButtonText: 'Coba Lagi'
+                                });
                             }
                         })
                         .catch(error => {
                             console.error('Error:', error);
-                            alert('Terjadi kesalahan saat menyimpan uraian.');
+                            Swal.fire({
+                                title: 'Kesalahan!',
+                                text: 'Terjadi kesalahan saat menyimpan uraian.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
                         });
                     } else {
-                        alert('Pilih setidaknya satu uraian.');
+                        Swal.fire({
+                            title: 'Peringatan!',
+                            text: 'Pilih setidaknya satu uraian.',
+                            icon: 'warning',
+                            confirmButtonText: 'OK'
+                        });
                     }
                 });
             }
+
         });
+
+        function hapusUraian(url) {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Item ini akan dihapus secara permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url;
+            }
+        });
+    }
     </script>
 
 </x-admin-layout>

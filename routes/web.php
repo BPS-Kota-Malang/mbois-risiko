@@ -33,6 +33,7 @@
     use App\Http\Controllers\ManajemenResikoController;
     use App\Http\Controllers\PerencanaanController;
     use App\Http\Controllers\UraianController;
+    use App\Http\Controllers\Admin\LoginCustomizationController;
 
 
 
@@ -128,6 +129,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('users', UserController::class);
         Route::resource('roles', RoleController::class);
         Route::resource('permissions', PermissionController::class);
+        
+
     });;
 
     require __DIR__ . '/auth.php';
@@ -142,6 +145,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/employee/{user_id}', [EmployeeController::class, 'destroy'])->name('admin.employee.destroy');
         Route::post('admin/employee/upload', [EmployeeController::class, 'upload'])->name('admin.employee.upload');
         Route::post('/admin/kriteriakemungkinan', [KriteriaKemungkinanController::class, 'store'])->name('admin.kriteriakemungkinan.store');
-
+        Route::get('/admin/custom-login', [LoginCustomizationController::class, 'index'])->name('admin.custom-login');
+        Route::post('/admin/custom-login', [LoginCustomizationController::class, 'update'])->name('admin.custom-login.update');
     });
     ?>

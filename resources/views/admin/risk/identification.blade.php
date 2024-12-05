@@ -1,11 +1,12 @@
 <x-admin-layout>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <div class="flex justify-center mt-10">
         <div class="bg-white shadow-md rounded-lg p-6 w-full ">
             <h1 class="text-2xl font-bold mb-6" id="cek">Identifikasi Risiko</h1>
             <form id="identifikasiResikoForm">
                 <div class="mb-4">
                     <label class="block text-gray-700 mb-2" for="tim-bidang">Tim/Bidang</label>
-                    <select id="tim" name="tim" class="w-full p-2 border rounded-lg select2">
+                    <select id="tim" name="tim" class="w-full p-2 border rounded-lg">
                         <option value="">-- Pilih Tim/Bidang --</option>
                         @foreach ($timProjects as $tim)
                             <option value="{{ $tim->id }}">{{ $tim->name }}</option>
@@ -212,12 +213,10 @@
                                                                         @endphp
                                                                         <li class="flex justify-between items-center">
                                                                             <span>{{ $penyebabItem->name }}</span>
-                                                                            <a href="{{ url('/admin/manajemenresiko/hapuspenyebab/' . $ManajemenResiko->id . '/' . $item) }}"
-                                                                                class="text-red-500 hover:text-red-700 ml-2"
-                                                                                id="hapusPenyebab"
-                                                                                onclick="return confirm('Anda yakin ingin menghapus item ini?');">
-                                                                                <i class="fas fa-trash-alt"></i>
-                                                                            </a>
+                                                                            <a href="javascript:void(0);"
+                                                                            class="text-red-500 hover:text-red-700 ml-2"
+                                                                            onclick="hapusPenyebab('{{ url('/admin/manajemenresiko/hapuspenyebab/' . $ManajemenResiko->id . '/' . $item) }}');">
+                                                                            <i class="fas fa-trash-alt"></i></a>
                                                                         </li>
                                                                     @endif
                                                                 @endforeach
@@ -298,12 +297,10 @@
                                                                         @endphp
                                                                         <li class="flex justify-between items-center">
                                                                             <span>{{ $dampakItem->name }}</span>
-                                                                            <a href="{{ url('/admin/manajemenresiko/hapusdampak/' . $ManajemenResiko->id . '/' . $item) }}"
-                                                                                class="text-red-500 hover:text-red-700 ml-2"
-                                                                                id="hapusDampak"
-                                                                                onclick="return confirm('Anda yakin ingin menghapus item ini?');">
-                                                                                <i class="fas fa-trash-alt"></i>
-                                                                            </a>
+                                                                            <a href="javascript:void(0);"
+                                                                            class="text-red-500 hover:text-red-700 ml-2"
+                                                                            onclick="hapusDampak('{{ url('/admin/manajemenresiko/hapusdampak/' . $ManajemenResiko->id . '/' . $item) }}');">
+                                                                            <i class="fas fa-trash-alt"></i></a>
                                                                         </li>
                                                                     @endif
                                                                 @endforeach
@@ -633,7 +630,30 @@
                 }); // Initialize DataTable
             }
 
+            initializePenyebabTable();
 
+            $('#penyebab-form').on('submit', function(e) {
+                e.preventDefault();
+                const formData = $(this).serialize();
+
+                $.ajax({
+                    url: "{{ route('admin.penyebab.store') }}",
+                    type: "POST",
+                    data: formData,
+                    success: function(response) {
+                        if (response.success) {
+                            $('#penyebab-table').DataTable().ajax.reload(); // Reload the DataTable
+                            alert('Penyebab created successfully.');
+                        } else {
+                            alert('Error creating Penyebab.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                        alert('Error creating Penyebab.');
+                    }
+                });
+            });
 
             // Delegasi event listener untuk tombol "Pilih penyebab"
             document.addEventListener('click', function(event) {
@@ -699,36 +719,6 @@
                 });
             }
 
-            document.getElementById('saveCauseBtn').addEventListener('click', function() {
-                var form = document.getElementById('addCauseForm');
-                var formData = new FormData(form);
-
-                fetch('{{ route('admin.penyebab.store') }}', {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-                    },
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Penyebab berhasil ditambahkan');
-                        document.getElementById('addCauseModal').classList.add('hidden');
-                        // Optionally, refresh the table or perform other actions
-                        form.reset();
-                    } else {
-                        alert('Terjadi kesalahan, silakan coba lagi');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Terjadi kesalahan, silakan coba lagi');
-                });
-            });
-
-
-
             if (savePenyebabBtn) {
                 savePenyebabBtn.addEventListener('click', function() {
                     const selectedPenyebab = [];
@@ -752,20 +742,44 @@
                             .then(response => response.json())
                             .then(data => {
                                 if (data.success) {
-                                    console.log(selectedPenyebab)
-                                    alert('Penyebab berhasil disimpan!');
-                                    penyebabModal.classList.add('hidden');
-                                    location.reload();
+                                    console.log(selectedPenyebab);
+                                    Swal.fire({
+                                        title: 'Berhasil!',
+                                        text: 'Penyebab berhasil disimpan!',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then(() => {
+                                        penyebabModal.classList.add('hidden');
+                                        location.reload();
+                                    });
                                 } else {
-                                    alert('Terjadi kesalahan saat menyimpan penyebab.');
+                                    Swal.fire({
+                                        title: 'Gagal!',
+                                        text: 'Terjadi kesalahan saat menyimpan penyebab.',
+                                        icon: 'error',
+                                        confirmButtonText: 'Coba Lagi'
+                                    });
                                 }
                             })
-                            .catch(error => console.error('Error:', error));
-                    } else {
-                        alert('Pilih setidaknya satu penyebab.');
-                    }
-                });
-            }
+                            .catch(error => {
+                                console.error('Error:', error);
+                                Swal.fire({
+                                    title: 'Kesalahan!',
+                                    text: 'Terjadi kesalahan saat menyimpan penyebab.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Peringatan!',
+                                text: 'Pilih setidaknya satu penyebab.',
+                                icon: 'warning',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    });
+                }
 
             //end penyebab
 
@@ -919,34 +933,6 @@
                 });
             }
 
-            document.getElementById('saveBtndampak').addEventListener('click', function() {
-                var form = document.getElementById('addImpactForm');
-                var formData = new FormData(form);
-
-                fetch('{{ route('admin.dampak.store') }}', {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-                    },
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Dampak berhasil ditambahkan');
-                        document.getElementById('addImpactModal').classList.add('hidden');
-                        // Optionally, refresh the table or perform other actions
-                        form.reset();
-                    } else {
-                        alert('Terjadi kesalahan, silakan coba lagi');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Terjadi kesalahan, silakan coba lagi');
-                });
-            });
-
             if (cancelImpactBtn) {
                 cancelImpactBtn.addEventListener('click', function() {
                     addImpactModal.classList.add('hidden');
@@ -976,20 +962,44 @@
                             .then(response => response.json())
                             .then(data => {
                                 if (data.success) {
-                                    console.log(selectedDampak)
-                                    alert('Dampak berhasil disimpan!');
-                                    dampakModal.classList.add('hidden');
-                                    location.reload();
+                                    console.log(selectedDampak);
+                                    Swal.fire({
+                                        title: 'Berhasil!',
+                                        text: 'Penyebab berhasil disimpan!',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then(() => {
+                                        dampakModal.classList.add('hidden');
+                                        location.reload();
+                                    });
                                 } else {
-                                    alert('Terjadi kesalahan saat menyimpan dampak.');
+                                    Swal.fire({
+                                        title: 'Gagal!',
+                                        text: 'Terjadi kesalahan saat menyimpan penyebab.',
+                                        icon: 'error',
+                                        confirmButtonText: 'Coba Lagi'
+                                    });
                                 }
                             })
-                            .catch(error => console.error('Error:', error));
-                    } else {
-                        alert('Pilih setidaknya satu dampak.');
-                    }
-                });
-            }
+                            .catch(error => {
+                                console.error('Error:', error);
+                                Swal.fire({
+                                    title: 'Kesalahan!',
+                                    text: 'Terjadi kesalahan saat menyimpan penyebab.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Peringatan!',
+                                text: 'Pilih setidaknya satu penyebab.',
+                                icon: 'warning',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    });
+                }
 
 
             // end dampak
@@ -1276,6 +1286,43 @@
 
 
         });
+
+        function hapusPenyebab(url) {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Item ini akan dihapus secara permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url;
+            }
+        });
+        
+    }
+
+    function hapusDampak(url) {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Item ini akan dihapus secara permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url;
+            }
+        });
+        
+    }
+
     </script>
 
 
