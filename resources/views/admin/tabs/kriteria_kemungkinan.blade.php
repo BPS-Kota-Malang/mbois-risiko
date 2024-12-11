@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- Blade HTML content -->
 <div id="context10" class="tab-content hidden">
@@ -66,10 +67,14 @@
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-center">
                                     <div class="inline-flex space-x-4 justify-center">
                                         <button onclick="openEditKriteriaKemungkinanModal('{{ route('admin.kriteriakemungkinan.update', $kriteria->id) }}', '{{ $kriteria->id_kategori_resiko }}', '{{ $kriteria->id_level_kemungkinan }}', '{{ $kriteria->presentase_kemungkinan }}', '{{ $kriteria->jumlah_frekuensi }}')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Edit</button>
-                                        <form action="{{ route('admin.kriteriakemungkinan.destroy', $kriteria->id) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this kriteria kemungkinan?');">
+                                        <form id="deleteKriteriakemungkinan-{{ $kriteria->id }}"
+                                            action="{{ route('admin.kriteriakemungkinan.destroy', $kriteria->id) }}"
+                                            method="POST" style="display:none;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Delete</button>
+                                        </form>
+                                        <button class="bg-red-500 text-white px-3 py-1 rounded cursor-pointer"
+                                            onclick="confirmDelete(`{{ $kriteria->id }}`)">Delete</button>
                                         </form>
                                     </div>
                                 </td>
@@ -354,5 +359,21 @@
             $('#' + modalId).toggleClass('hidden');
         }
     });
+
+    function confirmDelete(id) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Tindakan ini tidak dapat dibatalkan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus saja!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('deleteKriteriakemungkinan-' + id).submit();
+                }
+            });
+        }
 </script>
 

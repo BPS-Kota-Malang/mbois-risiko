@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div id="context3" class="tab-content hidden">
     <section class="bg-white dark:bg-white">
         <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -41,14 +42,15 @@
                                                 class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                                 Edit
                                             </button>
-                                            <form action="{{ route('admin.timproject.destroy', $timProject->id) }}" method="POST" class="inline"
-                                                onsubmit="return confirm('Are you sure you want to delete this tim project?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-                                                    Delete
-                                                </button>
-                                            </form>
+                                            <form id="deleteTim-{{ $timProject->id }}"
+                                            action="{{ route('admin.timproject.destroy', $timProject->id) }}"
+                                            method="POST" style="display:none;">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                        <button class="bg-red-500 text-white px-3 py-1 rounded cursor-pointer"
+                                            onclick="confirmDelete(`{{ $timProject->id }}`)">Delete</button>
+                                                    </form>
                                         </div>
                                     </td>
                                     @endif
@@ -163,4 +165,20 @@
         document.getElementById('deskripsi_edit').value = deskripsi || '';
         toggleTimProjectModal('timProjectEditModal');
     }
+
+    function confirmDelete(id) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Tindakan ini tidak dapat dibatalkan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus saja!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('deleteTim-' + id).submit();
+                }
+            });
+        }
 </script>

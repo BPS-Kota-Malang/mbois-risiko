@@ -98,7 +98,8 @@
                                     <input type="hidden" name="manajemen_resiko_ids[]"
                                         value="{{ $ManajemenResiko->id }}">
                                     <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
-                                        {{ $loop->iteration + (($manajemenResikos->currentPage() - 1) * $manajemenResikos->perPage()) }}</td>
+                                        {{ $loop->iteration + ($manajemenResikos->currentPage() - 1) * $manajemenResikos->perPage() }}
+                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
                                         {{ $ManajemenResiko->prosesbisnis->name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
@@ -106,7 +107,8 @@
                                     <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
                                         {{ $ManajemenResiko->resiko->name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
-                                        <p style="color: black" class="text-center" id="alertjenis{{ $ManajemenResiko->id }}"
+                                        <p style="color: black" class="text-center"
+                                            id="alertjenis{{ $ManajemenResiko->id }}"
                                             {{ is_null($ManajemenResiko->id_jenis_resiko) ? '' : 'hidden' }}>-</p>
                                         <span id="jenisResikoText{{ $ManajemenResiko->id }}"
                                             {{ is_null($ManajemenResiko->id_jenis_resiko) ? 'hidden' : '' }}>
@@ -123,7 +125,8 @@
                                         </select>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
-                                        <p style="color: black" class="text-center" id="alertsumber{{ $ManajemenResiko->id }}"
+                                        <p style="color: black" class="text-center"
+                                            id="alertsumber{{ $ManajemenResiko->id }}"
                                             {{ is_null($ManajemenResiko->id_sumber_resiko) ? '' : 'hidden' }}>-</p>
                                         <span id="sumberResikoText{{ $ManajemenResiko->id }}"
                                             {{ is_null($ManajemenResiko->id_sumber_resiko) ? 'hidden' : '' }}>
@@ -141,7 +144,8 @@
                                         </select>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
-                                        <p style="color: black" class="text-center" id="alertskategori{{ $ManajemenResiko->id }}"
+                                        <p style="color: black" class="text-center"
+                                            id="alertskategori{{ $ManajemenResiko->id }}"
                                             {{ is_null($ManajemenResiko->id_kategori_resiko) ? '' : 'hidden' }}>-</p>
                                         <span id="kategoriResikoText{{ $ManajemenResiko->id }}"
                                             {{ is_null($ManajemenResiko->id_kategori_resiko) ? 'hidden' : '' }}>
@@ -161,7 +165,8 @@
                                         </select>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
-                                        <p style="color: black" class="text-center" id="alertarea{{ $ManajemenResiko->id }}"
+                                        <p style="color: black" class="text-center"
+                                            id="alertarea{{ $ManajemenResiko->id }}"
                                             {{ is_null($ManajemenResiko->id_area_dampak) ? '' : 'hidden' }}>-
                                         </p>
                                         <span id="areaDampakText{{ $ManajemenResiko->id }}"
@@ -183,7 +188,10 @@
                                     </td>
 
                                     {{-- Penyebab --}}
-                                    @if ((auth()->check() && auth()->user()->hasRole('admin')) || (auth()->user()->hasRole('ketua_tim') && optional(auth()->user()->pegawai)->team_id == $ManajemenResiko->tim_project->id))
+                                    @if (
+                                        (auth()->check() && auth()->user()->hasRole('admin')) ||
+                                            (auth()->user()->hasRole('ketua_tim') &&
+                                                optional(auth()->user()->pegawai)->team_id == $ManajemenResiko->tim_project->id))
                                         <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
                                             <div class="flex flex-col items-center">
                                                 <!-- Tombol Pilih Penyebab dipusatkan -->
@@ -214,9 +222,9 @@
                                                                         <li class="flex justify-between items-center">
                                                                             <span>{{ $penyebabItem->name }}</span>
                                                                             <a href="javascript:void(0);"
-                                                                            class="text-red-500 hover:text-red-700 ml-2"
-                                                                            onclick="hapusPenyebab('{{ url('/admin/manajemenresiko/hapuspenyebab/' . $ManajemenResiko->id . '/' . $item) }}');">
-                                                                            <i class="fas fa-trash-alt"></i></a>
+                                                                                class="text-red-500 hover:text-red-700 ml-2"
+                                                                                onclick="hapusPenyebab('{{ url('/admin/manajemenresiko/hapuspenyebab/' . $ManajemenResiko->id . '/' . $item) }}');">
+                                                                                <i class="fas fa-trash-alt"></i></a>
                                                                         </li>
                                                                     @endif
                                                                 @endforeach
@@ -266,7 +274,10 @@
 
 
                                     {{-- Dampak --}}
-                                    @if ((auth()->check() && auth()->user()->hasRole('admin')) || (auth()->user()->hasRole('ketua_tim') && optional(auth()->user()->pegawai)->team_id == $ManajemenResiko->tim_project->id))
+                                    @if (
+                                        (auth()->check() && auth()->user()->hasRole('admin')) ||
+                                            (auth()->user()->hasRole('ketua_tim') &&
+                                                optional(auth()->user()->pegawai)->team_id == $ManajemenResiko->tim_project->id))
                                         <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
                                             <div class="flex flex-col items-center">
                                                 <!-- Tombol Pilih Dampak dipusatkan -->
@@ -298,9 +309,9 @@
                                                                         <li class="flex justify-between items-center">
                                                                             <span>{{ $dampakItem->name }}</span>
                                                                             <a href="javascript:void(0);"
-                                                                            class="text-red-500 hover:text-red-700 ml-2"
-                                                                            onclick="hapusDampak('{{ url('/admin/manajemenresiko/hapusdampak/' . $ManajemenResiko->id . '/' . $item) }}');">
-                                                                            <i class="fas fa-trash-alt"></i></a>
+                                                                                class="text-red-500 hover:text-red-700 ml-2"
+                                                                                onclick="hapusDampak('{{ url('/admin/manajemenresiko/hapusdampak/' . $ManajemenResiko->id . '/' . $item) }}');">
+                                                                                <i class="fas fa-trash-alt"></i></a>
                                                                         </li>
                                                                     @endif
                                                                 @endforeach
@@ -349,44 +360,45 @@
 
 
                                     @if (Auth::check() && Auth::user()->hasRole('admin'))
-                                            <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                        <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
                                             <a class="bg-blue-500 text-white width-mt-2 px-3 py-2 rounded cursor-pointer btnEdit"
-                                                    data-id="{{ $ManajemenResiko->id }}">Edit</a>
+                                                data-id="{{ $ManajemenResiko->id }}">Edit</a>
                                             <button type="submit" class="bg-green-500 text-white px-2 py-1 rounded"
                                                 id="saveidentificationBtn">Save</button>
-                                            </form>
-                                            <form action="{{ route('admin.manajemenrisiko.destroy', $ManajemenResiko->id) }}"
-                                                method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="bg-red-500 text-white width-mt-2 px-3 py-1 rounded cursor-pointer"
-                                                    type="submit" onclick="return confirm('Are you sure?')">Delete</button>
-                                            </form>
-                                        </td>
-                                    @elseif (auth()->user()->hasRole('ketua_tim'))
-                                        @if ((optional(auth()->user()->pegawai)->team_id == $ManajemenResiko->tim_project->id))
-                                            <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
-                                                <a class="bg-blue-500 text-white width-mt-2 px-3 py-2 rounded cursor-pointer btnEdit"
-                                                        data-id="{{ $ManajemenResiko->id }}">Edit</a>
-                                                <button type="submit" class="bg-green-500 text-white px-2 py-1 rounded"
-                                                    id="saveidentificationBtn">Save</button>
-                                                </form>
-                                                <form action="{{ route('admin.manajemenrisiko.destroy', $ManajemenResiko->id) }}"
-                                                    method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="bg-red-500 text-white width-mt-2 px-3 py-1 rounded cursor-pointer"
-                                                        type="submit" onclick="return confirm('Are you sure?')">Delete</button>
-                                                </form>
-                                            </td>
-                                        @else
-                                        <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
-                                            <p class="text-red-500 text-center">Tidak Memiliki Izin Beda TIM</p>
-                                        </td>
-                                        @endif
-
-                                    @endif
-                                </tr>
+                                    </form>
+                            <form id="deleteForm-{{ $ManajemenResiko->id }}"
+                                action="{{ route('admin.manajemenrisiko.destroy', $ManajemenResiko->id) }}"
+                                method="POST" style="display:none;">
+                                @csrf
+                                @method('DELETE')
+                            </form>
+                            <button class="bg-red-500 text-white px-3 py-1 rounded cursor-pointer"
+                                onclick="confirmDelete(`{{ $ManajemenResiko->id }}`)">Delete</button>
+                            </td>
+                        @elseif (auth()->user()->hasRole('ketua_tim'))
+                            @if (optional(auth()->user()->pegawai)->team_id == $ManajemenResiko->tim_project->id)
+                                <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                    <a class="bg-blue-500 text-white width-mt-2 px-3 py-2 rounded cursor-pointer btnEdit"
+                                        data-id="{{ $ManajemenResiko->id }}">Edit</a>
+                                    <button type="submit" class="bg-green-500 text-white px-2 py-1 rounded"
+                                        id="saveidentificationBtn">Save</button>
+                                    </form>
+                                    <form id="deleteForm-{{ $ManajemenResiko->id }}"
+                                action="{{ route('admin.manajemenrisiko.destroy', $ManajemenResiko->id) }}"
+                                method="POST" style="display:none;">
+                                @csrf
+                                @method('DELETE')
+                            </form>
+                            <button class="bg-red-500 text-white px-3 py-1 rounded cursor-pointer"
+                                onclick="confirmDelete(`{{ $ManajemenResiko->id }}`)">Delete</button>
+                            </td>
+                            @else
+                                <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                    <p class="text-red-500 text-center">Tidak Memiliki Izin Beda TIM</p>
+                                </td>
+                            @endif
+                        @endif
+                        </tr>
                     @endforeach
                     @endif
                 </tbody>
@@ -576,7 +588,7 @@
                                 if (data === 'Accepted') {
                                     color = 'green';
                                     row.status =
-                                    'Accepted'; // Add this line to modify the status value
+                                        'Accepted'; // Add this line to modify the status value
                                 } else if (data === 'On Progress') {
                                     color = 'orange';
                                 } else if (data === 'Rejected') {
@@ -618,7 +630,7 @@
                             var column = this;
                             var input = $(
                                     '<input type="text" placeholder="Search" class="w-full text-sm p-1 border rounded" />'
-                                    )
+                                )
                                 .appendTo($(column.header()).empty())
                                 .on('keyup change clear', function() {
                                     if (column.search() !== this.value) {
@@ -642,7 +654,8 @@
                     data: formData,
                     success: function(response) {
                         if (response.success) {
-                            $('#penyebab-table').DataTable().ajax.reload(); // Reload the DataTable
+                            $('#penyebab-table').DataTable().ajax
+                                .reload(); // Reload the DataTable
                             alert('Penyebab created successfully.');
                         } else {
                             alert('Error creating Penyebab.');
@@ -690,7 +703,7 @@
                     // Initialize or redraw the DataTable (if necessary)
                     if ($.fn.DataTable.isDataTable('#penyebab-table')) {
                         $('#penyebab-table').DataTable().ajax
-                    .reload(); // Reload data if DataTable is already initialized
+                            .reload(); // Reload data if DataTable is already initialized
                     } else {
                         initializePenyebabTable(); // Initialize DataTable if not yet initialized
                     }
@@ -713,18 +726,57 @@
                 });
             }
 
+            document.getElementById('saveCauseBtn').addEventListener('click', function() {
+                var form = document.getElementById('addCauseForm');
+                var formData = new FormData(form);
+
+                fetch('{{ route('admin.penyebab.store') }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                                        title: 'Berhasil!',
+                                        text: 'Penyebab berhasil disimpan!',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then(() => {
+                        addCauseModal.classList.add('hidden');
+                    });
+                    } else {
+                        alert('Terjadi kesalahan, silakan coba lagi');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan, silakan coba lagi');
+                });
+            });
+
             if (cancelCauseBtn) {
                 cancelCauseBtn.addEventListener('click', function() {
                     addCauseModal.classList.add('hidden');
                 });
             }
 
+            document.getElementById("refreshPenyebab").addEventListener("click", function () {
+                // Pastikan DataTables telah diinisialisasi
+                const penyebabTable = $('#penyebab-table').DataTable();
+                // Refresh data tabel
+                penyebabTable.ajax.reload(null, false); // Parameter kedua `false` agar tidak mengatur ulang posisi pagination
+            });
+
             if (savePenyebabBtn) {
                 savePenyebabBtn.addEventListener('click', function() {
                     const selectedPenyebab = [];
                     document.querySelectorAll('.penyebab-checkbox:checked').forEach(function(checkbox) {
                         selectedPenyebab.push(checkbox.getAttribute(
-                        'data-penyebab-id')); // Pastikan atribut ini adalah ID penyebab
+                            'data-penyebab-id')); // Pastikan atribut ini adalah ID penyebab
                     });
                     console.log(selectedPenyebab);
                     if (selectedPenyebab.length > 0) {
@@ -770,16 +822,16 @@
                                     confirmButtonText: 'OK'
                                 });
                             });
-                        } else {
-                            Swal.fire({
-                                title: 'Peringatan!',
-                                text: 'Pilih setidaknya satu penyebab.',
-                                icon: 'warning',
-                                confirmButtonText: 'OK'
-                            });
-                        }
-                    });
-                }
+                    } else {
+                        Swal.fire({
+                            title: 'Peringatan!',
+                            text: 'Pilih setidaknya satu penyebab.',
+                            icon: 'warning',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            }
 
             //end penyebab
 
@@ -825,7 +877,7 @@
                                 if (data === 'Accepted') {
                                     color = 'green';
                                     row.status =
-                                    'Accepted'; // Add this line to modify the status value
+                                        'Accepted'; // Add this line to modify the status value
                                 } else if (data === 'On Progress') {
                                     color = 'orange';
                                 } else if (data === 'Rejected') {
@@ -867,7 +919,7 @@
                             var column = this;
                             var input = $(
                                     '<input type="text" placeholder="Search" class="w-full text-sm p-1 border rounded" />'
-                                    )
+                                )
                                 .appendTo($(column.header()).empty())
                                 .on('keyup change clear', function() {
                                     if (column.search() !== this.value) {
@@ -914,7 +966,7 @@
                     // Initialize or redraw the DataTable (if necessary)
                     if ($.fn.DataTable.isDataTable('#dampak-table')) {
                         $('#dampak-table').DataTable().ajax
-                    .reload(); // Reload data if DataTable is already initialized
+                            .reload(); // Reload data if DataTable is already initialized
                     } else {
                         initializeDampakTable(); // Initialize DataTable if not yet initialized
                     }
@@ -932,6 +984,39 @@
                     addImpactModal.classList.remove('hidden');
                 });
             }
+            document.getElementById('saveBtndampak').addEventListener('click', function() {
+                var form = document.getElementById('addImpactForm');
+                var formData = new FormData(form);
+
+                fetch('{{ route('admin.dampak.store') }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                                        title: 'Berhasil!',
+                                        text: 'Penyebab berhasil disimpan!',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then(() => {
+                        addImpactModal.classList.add('hidden');
+                    });
+                        // Optionally, refresh the table or perform other actions
+                        form.reset();
+                    } else {
+                        alert('Terjadi kesalahan, silakan coba lagi');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan, silakan coba lagi');
+                });
+            });
 
             if (cancelImpactBtn) {
                 cancelImpactBtn.addEventListener('click', function() {
@@ -939,12 +1024,19 @@
                 });
             }
 
+            document.getElementById("refreshDampak").addEventListener("click", function () {
+                // Pastikan DataTables telah diinisialisasi
+                const dampakTable = $('#dampak-table').DataTable();
+                // Refresh data tabel
+                dampakTable.ajax.reload(null, false); // Parameter kedua `false` agar tidak mengatur ulang posisi pagination
+            });
+
             if (saveDampakBtn) {
                 saveDampakBtn.addEventListener('click', function() {
                     const selectedDampak = [];
                     document.querySelectorAll('.dampak-checkbox:checked').forEach(function(checkbox) {
                         selectedDampak.push(checkbox.getAttribute(
-                        'data-dampak-id')); // Pastikan atribut ini adalah ID penyebab
+                            'data-dampak-id')); // Pastikan atribut ini adalah ID penyebab
                     });
                     console.log(selectedDampak);
                     if (selectedDampak.length > 0) {
@@ -990,16 +1082,16 @@
                                     confirmButtonText: 'OK'
                                 });
                             });
-                        } else {
-                            Swal.fire({
-                                title: 'Peringatan!',
-                                text: 'Pilih setidaknya satu penyebab.',
-                                icon: 'warning',
-                                confirmButtonText: 'OK'
-                            });
-                        }
-                    });
-                }
+                    } else {
+                        Swal.fire({
+                            title: 'Peringatan!',
+                            text: 'Pilih setidaknya satu penyebab.',
+                            icon: 'warning',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            }
 
 
             // end dampak
@@ -1007,34 +1099,34 @@
 
 
 
-        // Fungsi untuk mengecek apakah kedua dropdown sudah dipilih dan memeriksa role
-        function checkDropdowns() {
-            console.log('Checking dropdown values:', timDropdown.value, prosesBisnisDropdown.value);
-            console.log('isAdmin:', isAdmin, 'isKetuaTim:', isKetuaTim, 'userTeamId:', userTeamId);
+            // Fungsi untuk mengecek apakah kedua dropdown sudah dipilih dan memeriksa role
+            function checkDropdowns() {
+                console.log('Checking dropdown values:', timDropdown.value, prosesBisnisDropdown.value);
+                console.log('isAdmin:', isAdmin, 'isKetuaTim:', isKetuaTim, 'userTeamId:', userTeamId);
 
-            if (isAdmin) {
-                // Jika Admin, tombol hidup selama kedua dropdown terpilih
-                if (timDropdown.value !== '' && prosesBisnisDropdown.value !== '') {
-                    tambahResikoBtn.disabled = false;
-                    tambahResikoBtn.style.backgroundColor = 'red'; // Ubah warna tombol menjadi merah
+                if (isAdmin) {
+                    // Jika Admin, tombol hidup selama kedua dropdown terpilih
+                    if (timDropdown.value !== '' && prosesBisnisDropdown.value !== '') {
+                        tambahResikoBtn.disabled = false;
+                        tambahResikoBtn.style.backgroundColor = 'red'; // Ubah warna tombol menjadi merah
+                    } else {
+                        tambahResikoBtn.disabled = true;
+                        tambahResikoBtn.style.backgroundColor = 'gray'; // Kembali ke abu-abu
+                    }
+                } else if (isKetuaTim) {
+                    // Jika Ketua Tim, hanya bisa memilih tim sendiri
+                    if (parseInt(timDropdown.value) === parseInt(userTeamId) && prosesBisnisDropdown.value !== '') {
+                        tambahResikoBtn.disabled = false;
+                        tambahResikoBtn.style.backgroundColor = 'red'; // Tombol aktif
+                    } else {
+                        tambahResikoBtn.disabled = true;
+                        tambahResikoBtn.style.backgroundColor = 'gray'; // Tombol nonaktif
+                    }
                 } else {
+                    // Role lain tidak bisa menambah risiko
                     tambahResikoBtn.disabled = true;
-                    tambahResikoBtn.style.backgroundColor = 'gray'; // Kembali ke abu-abu
+                    tambahResikoBtn.style.backgroundColor = 'gray'; // Tombol tetap nonaktif
                 }
-            } else if (isKetuaTim) {
-                // Jika Ketua Tim, hanya bisa memilih tim sendiri
-                if (parseInt(timDropdown.value) === parseInt(userTeamId) && prosesBisnisDropdown.value !== '') {
-                    tambahResikoBtn.disabled = false;
-                    tambahResikoBtn.style.backgroundColor = 'red'; // Tombol aktif
-                } else {
-                    tambahResikoBtn.disabled = true;
-                    tambahResikoBtn.style.backgroundColor = 'gray'; // Tombol nonaktif
-                }
-            } else {
-                // Role lain tidak bisa menambah risiko
-                tambahResikoBtn.disabled = true;
-                tambahResikoBtn.style.backgroundColor = 'gray'; // Tombol tetap nonaktif
-            }
         }
 
         // Menambahkan event listener untuk dropdown
@@ -1287,42 +1379,21 @@
 
         });
 
-        function hapusPenyebab(url) {
-        Swal.fire({
-            title: 'Apakah Anda yakin?',
-            text: 'Item ini akan dihapus secara permanen!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Ya, hapus!',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = url;
-            }
-        });
-        
-    }
-
-    function hapusDampak(url) {
-        Swal.fire({
-            title: 'Apakah Anda yakin?',
-            text: 'Item ini akan dihapus secara permanen!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Ya, hapus!',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = url;
-            }
-        });
-        
-    }
-
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Tindakan ini tidak dapat dibatalkan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus saja!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('deleteForm-' + id).submit();
+                }
+            });
+        }
     </script>
 
 

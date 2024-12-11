@@ -1,4 +1,4 @@
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div id="context13" class="tab-content hidden">
     <section class="bg-white dark:bg-white">
         <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -51,12 +51,14 @@
                                     <a href="javascript:void(0)"
                                         onclick="openEditseleraResikoModal('{{ route('admin.seleraresiko.update', $selera->id) }}', '{{ $selera->id_kategori_resiko }}', '{{ $selera->resiko_minimum_negatif }}', '{{ $selera->resiko_minimum_positif }}')"
                                         class="text-indigo-600 hover:text-indigo-900 ml-4">Edit</a>
-                                    <form action="{{ route('admin.seleraresiko.destroy', $selera->id) }}" method="POST"
-                                        class="inline ml-4"
-                                        onsubmit="return confirm('Are you sure you want to delete this selera resiko?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+                                        <form id="deleteSelera-{{ $item->id }}"
+                                    action="{{ route('admin.seleraresiko.destroy', $selera>id) }}"
+                                    method="POST" style="display:none;">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                                <button class="bg-red-500 text-white px-3 py-1 rounded cursor-pointer"
+                                    onclick="confirmDelete(`{{ $selera->id }}`)">Delete</button>
                                     </form>
                                 </td>
                                 @endif
@@ -208,4 +210,20 @@
             }
         });
     });
+
+    function confirmDelete(id) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Tindakan ini tidak dapat dibatalkan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus saja!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('deleteSelera-' + id).submit();
+                }
+            });
+        }
 </script>

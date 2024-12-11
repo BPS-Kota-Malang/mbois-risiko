@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div id="context12" class="tab-content hidden">
     <section class="bg-white dark:bg-gray-100">
         <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -57,11 +58,14 @@
                                         onclick="openEditLevelResikoModal('{{ route('admin.levelresiko.update', $levelResikoItem->id) }}', '{{ $levelResikoItem->name }}', '{{ $levelResikoItem->besaran_min }}','{{ $levelResikoItem->besaran_max }}', '{{ $levelResikoItem->tindakan }}', '{{ $levelResikoItem->ket_warna }}')">
                                         Edit
                                     </button>
-                                    <form action="{{ route('admin.levelresiko.destroy', $levelResikoItem->id) }}"
-                                        method="POST" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
+                                    <form id="deleteLevelresiko-{{ $levelResikoItem->id }}"
+                                            action="{{ route('admin.levelresiko.destroy', $levelResikoItem->id) }}"
+                                            method="POST" style="display:none;">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                        <button class="bg-red-500 text-white px-3 py-1 rounded cursor-pointer"
+                                            onclick="confirmDelete1(`{{ $levelResikoItem->id }}`)">Delete</button>
                                     </form>
                                 </td>
                             </tr>
@@ -119,12 +123,14 @@
                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                     <button class="text-blue-500 hover:text-blue-700"
                                         onclick="openEditMatriksAnalisisResikoModal('{{ route('admin.matriksanalisisresiko.update', $matriksAnalisisResiko->id) }}', '{{ $matriksAnalisisResiko->id_level_kemungkinan }}', '{{ $matriksAnalisisResiko->id_level_dampak }}', '{{ $matriksAnalisisResiko->besaran_resiko }}', '{{ $matriksAnalisisResiko->hasil_level_resiko }}')">Edit</button>
-                                    <form
-                                        action="{{ route('admin.matriksanalisisresiko.destroy', $matriksAnalisisResiko->id) }}"
-                                        method="POST" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
+                                        <form id="deleteMatriks-{{ $matriksAnalisisResiko->id }}"
+                                            action="{{ route('admin.matriksanalisisresiko.destroy', $matriksAnalisisResiko->id) }}"
+                                            method="POST" style="display:none;">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                        <button class="bg-red-500 text-white px-3 py-1 rounded cursor-pointer"
+                                            onclick="confirmDelete2(`{{ $matriksAnalisisResiko->id }}`)">Delete</button>
                                     </form>
                                 </td>
                             </tr>
@@ -379,4 +385,36 @@
         }
 
         function refreshTable(tableId) {}
+
+        function confirmDelete1(id) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Tindakan ini tidak dapat dibatalkan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus saja!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('deleteLevelresiko-' + id).submit();
+                }
+            });
+        }
+
+        function confirmDelete2(id) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Tindakan ini tidak dapat dibatalkan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus saja!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('deleteMatriks-' + id).submit();
+                }
+            });
+        }
     </script>

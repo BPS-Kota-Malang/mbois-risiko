@@ -14,7 +14,7 @@
             </div>
             <!-- Body -->
             <div class="flex justify-between items-center mb-4">
-                <button id="openAddCauseModal" class="bg-blue-500 text-white px-4 py-2 rounded-md ">Tambah Penyebab</button>
+                <button id="openAddCauseModal" class="bg-green-500 text-white px-4 py-2 rounded-md ">Tambah Penyebab</button>
                 <div class="relative text-gray-600">
                     <input type="search" id="searchInput" name="search" placeholder="Cari" class="bg-white h-8 px-3 pr-8 rounded-full text-sm focus:outline-none">
                     <button type="submit" class="absolute right-0 top-0 mt-2 mr-3">
@@ -23,6 +23,9 @@
                     </svg>
                     </button>
                 </div>
+            </div>
+            <div class="flex justify-between mb-4">
+                <button id="refreshPenyebab" class="bg-blue-500 text-white px-4 py-2 rounded-md">Refresh</button>
             </div>
             <div class="mt-3">
                 <table id="penyebab-table" class="min-w-full bg-white text-sm">

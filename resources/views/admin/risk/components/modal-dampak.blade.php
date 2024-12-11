@@ -13,7 +13,7 @@
             </div>
             <!-- Body -->
             <div class="flex justify-between items-center mb-4">
-                <button id="openAddImpactModal" class="bg-blue-500 text-white px-4 py-2 rounded-md ">Tambah Dampak</button>
+                <button id="openAddImpactModal" class="bg-green-500 text-white px-4 py-2 rounded-md ">Tambah Dampak</button>
                 <div class="relative text-gray-600">
                     <input type="search" id="searchInput" name="search" placeholder="Cari" class="bg-white h-8 px-3 pr-8 rounded-full text-sm focus:outline-none">
                     <button type="submit" class="absolute right-0 top-0 mt-2 mr-3">
@@ -21,7 +21,11 @@
                             <path d="M55.146,51.887L41.588,38.329c3.486-4.146,5.594-9.43,5.594-15.17C47.182,10.366,36.815,0,24.09,0 C11.366,0,1,10.366,1,23.159c0,12.794,10.366,23.159,23.159,23.159c5.74,0,11.023-2.108,15.17-5.594l13.558,13.558 c0.391,0.391,0.902,0.586,1.414,0.586s1.023-0.195,1.414-0.586C55.928,53.933,55.928,52.669,55.146,51.887z M24.159,40.318 c-9.449,0-17.159-7.71-17.159-17.159S14.71,6,24.159,6s17.159,7.71,17.159,17.159S33.608,40.318,24.159,40.318z" />
                         </svg>
                     </button>
+
                 </div>
+            </div>
+            <div class="flex justify-between mb-4">
+                <button id="refreshDampak" class="bg-blue-500 text-white px-4 py-2 rounded-md">Refresh</button>
             </div>
             <div class="mt-3">
                 <table id="dampak-table" class="min-w-full bg-white text-sm">
