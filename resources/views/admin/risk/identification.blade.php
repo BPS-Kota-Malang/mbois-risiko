@@ -4,11 +4,11 @@
 
 
     <div class="flex justify-center mt-10">
-        <div class="bg-white shadow-md rounded-lg p-6 w-full ">
-            <h1 class="text-2xl font-bold mb-6" id="cek">Identifikasi Risiko</h1>
+        <div class="w-full p-6 bg-white rounded-lg shadow-md ">
+            <h1 class="mb-6 text-2xl font-bold" id="cek">Identifikasi Risiko</h1>
             <form id="identifikasiResikoForm">
                 <div class="mb-4">
-                    <label class="block text-gray-700 mb-2" for="tim-bidang">Tim/Bidang</label>
+                    <label class="block mb-2 text-gray-700" for="tim-bidang">Tim/Bidang</label>
                     <select id="tim" name="tim" class="w-full p-2 border rounded-lg">
                         <option value="">-- Pilih Tim/Bidang --</option>
                         @foreach ($timProjects as $tim)
@@ -17,7 +17,17 @@
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-gray-700 mb-2" for="proses-bisnis">Proses Bisnis</label>
+                    <label class="block mb-2 text-gray-700" for="tim-bidang">Sub Team / Bidang</label>
+                    <select id="subteam" name="subteam" class="w-full p-2 border rounded-lg">
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-2 text-gray-700" for="activity">Kegiatan</label>
+                    <select id="activity" name="activity" class="w-full p-2 border rounded-lg">
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-2 text-gray-700" for="proses-bisnis">Proses Bisnis</label>
                     <select id="proses_bisnis" name="proses_bisnis" class="w-full p-2 border rounded-lg">
                         <option value="">-- Pilih Proses Bisnis --</option>
                         @foreach ($ProsesBisnis as $proses)
@@ -25,61 +35,66 @@
                         @endforeach
                     </select>
                 </div>
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Filter</button>
+                <button type="submit" class="px-4 py-2 text-white bg-blue-500 rounded">Filter</button>
             </form>
         </div>
     </div>
     <div class="container mx-auto mt-10">
-        <div class="flex justify-between items-center mb-4 space-x-4">
+        <div class="flex items-center justify-between mb-4 space-x-4">
             <div class="flex space-x-4">
                 <button id="refreshIdentificationBtn"
-                    class="bg-blue-500 text-white px-4 py-2 rounded-full border border-blue-500">Refresh</button>
+                    class="px-4 py-2 text-white bg-blue-500 border border-blue-500 rounded-full">Refresh</button>
                 @if ((auth()->check() && auth()->user()->hasRole('admin')) || auth()->user()->hasRole('ketua_tim'))
                     <button id="tambahresiko"
-                        class="bg-gray-500 text-white px-4 py-2 rounded-full border border-gray-500" disabled>Tambah
+                        class="px-4 py-2 text-white bg-gray-500 border border-gray-500 rounded-full" disabled>Tambah
                         Risiko</button>
                 @endif
             </div>
             <input type="text" id="searchInput" class="p-2 border rounded-lg" placeholder="Cari..." />
         </div>
 
-        <div class="overflow-x-auto bg-white shadow-md rounded-lg">
-            <table class="min-w-full border-collapse border border-gray-300" id="riskTable">
+        <div class="overflow-x-auto bg-white rounded-lg shadow-md">
+            <table class="min-w-full border border-collapse border-gray-300" id="riskTable">
                 <thead class="bg-gray-50">
                     <tr class="bg-gray-100 border border-gray-300">
                         <th
-                            class="px-6 py-3 border border-gray-300 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            class="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase border border-gray-300 text-middle">
                             No</th>
                         <th
-                            class="px-6 py-3 border border-gray-300 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            class="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase border border-gray-300 text-middle">
                             Proses Bisnis</th>
                         <th
-                            class="px-6 py-3 border border-gray-300 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Tim</th>
+                            class="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase border border-gray-300 text-middle">
+                            Tim - Sub Team
+                        </th>
                         <th
-                            class="px-6 py-3 border border-gray-300 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            class="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase border border-gray-300 text-middle">
+                            Kegiatan
+                        </th>
+                        <th
+                            class="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase border border-gray-300 text-middle">
                             Pernyataan Risiko</th>
                         <th
-                            class="px-6 py-3 border border-gray-300 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            class="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase border border-gray-300 text-middle">
                             Jenis</th>
                         <th
-                            class="px-6 py-3 border border-gray-300 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            class="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase border border-gray-300 text-middle">
                             Sumber</th>
                         <th
-                            class="px-6 py-3 border border-gray-300 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            class="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase border border-gray-300 text-middle">
                             Kategori</th>
                         <th
-                            class="px-6 py-3 border border-gray-300 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            class="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase border border-gray-300 text-middle">
                             Area Dampak</th>
                         <th
-                            class="px-6 py-3 border border-gray-300 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            class="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase border border-gray-300 text-middle">
                             Penyebab</th>
                         <th
-                            class="px-6 py-3 border border-gray-300 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            class="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase border border-gray-300 text-middle">
                             Dampak</th>
                         @if ((auth()->check() && auth()->user()->hasRole('admin')) || auth()->user()->hasRole('ketua_tim'))
                             <th
-                                class="px-6 py-3 border border-gray-300 text-middle text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase border border-gray-300 text-middle">
                                 Action</th>
                         @endif
                     </tr>
@@ -89,7 +104,7 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                     @if ($manajemenResikos->isEmpty())
                         <tr>
-                            <td colspan="15" class="text-center py-4">
+                            <td colspan="15" class="py-4 text-center">
                                 Data Tidak Ada
                             </td>
                         </tr>
@@ -100,22 +115,31 @@
                                 <tr class="bg-white border border-gray-300">
                                     <input type="hidden" name="manajemen_resiko_ids[]"
                                         value="{{ $ManajemenResiko->id }}">
-                                    <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                    <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
                                         {{ $loop->iteration + (($manajemenResikos->currentPage() - 1) * $manajemenResikos->perPage()) }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                    <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
                                         {{ $ManajemenResiko->prosesbisnis->name }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
-                                        {{ $ManajemenResiko->tim_project->name }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                        <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
+                                            <div>
+                                                <span class="text-lg font-bold">{{ $ManajemenResiko->activity->subteam->timProject->name }}</span>
+                                            </div>
+                                            <div>
+                                                <span class="text-sm">{{ $ManajemenResiko->activity->subteam->name }}</span>
+                                            </div>
+                                        </td>
+                                    <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
+                                        {{ $ManajemenResiko->activity->name }}
+                                    </td>
+                                    <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
                                         {{ $ManajemenResiko->resiko->name }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                    <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
                                         <p style="color: black" class="text-center" id="alertjenis{{ $ManajemenResiko->id }}"
                                             {{ is_null($ManajemenResiko->id_jenis_resiko) ? '' : 'hidden' }}>-</p>
                                         <span id="jenisResikoText{{ $ManajemenResiko->id }}"
                                             {{ is_null($ManajemenResiko->id_jenis_resiko) ? 'hidden' : '' }}>
                                             {{ $ManajemenResiko->jenisResiko->name ?? '' }}
                                         </span>
-                                        <select name="jenis_resiko[]" class="form-select pr-8 py-2 border"
+                                        <select name="jenis_resiko[]" class="py-2 pr-8 border form-select"
                                             id="jenisResiko{{ $ManajemenResiko->id }}" style="display: none;">
                                             <option value="">-- Pilih Jenis Resiko --</option>
                                             @foreach ($jenisResiko as $jenis)
@@ -125,14 +149,14 @@
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                    <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
                                         <p style="color: black" class="text-center" id="alertsumber{{ $ManajemenResiko->id }}"
                                             {{ is_null($ManajemenResiko->id_sumber_resiko) ? '' : 'hidden' }}>-</p>
                                         <span id="sumberResikoText{{ $ManajemenResiko->id }}"
                                             {{ is_null($ManajemenResiko->id_sumber_resiko) ? 'hidden' : '' }}>
                                             {{ $ManajemenResiko->sumberResiko ? $ManajemenResiko->sumberResiko->name : '' }}
                                         </span>
-                                        <select name="sumber_resiko[]" class="form-select pr-8 py-2 border"
+                                        <select name="sumber_resiko[]" class="py-2 pr-8 border form-select"
                                             id="sumberResiko{{ $ManajemenResiko->id }}" style="display: none;">
                                             <option value="">-- Pilih Sumber Resiko --</option>
                                             @foreach ($sumberResiko as $sumber)
@@ -143,14 +167,14 @@
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                    <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
                                         <p style="color: black" class="text-center" id="alertskategori{{ $ManajemenResiko->id }}"
                                             {{ is_null($ManajemenResiko->id_kategori_resiko) ? '' : 'hidden' }}>-</p>
                                         <span id="kategoriResikoText{{ $ManajemenResiko->id }}"
                                             {{ is_null($ManajemenResiko->id_kategori_resiko) ? 'hidden' : '' }}>
                                             {{ $ManajemenResiko->kategoriResiko ? $ManajemenResiko->kategoriResiko->deskripsi : 'N/A' }}
                                         </span>
-                                        <select name="kategori_resiko[]" class="form-select pr-8 py-2 border"
+                                        <select name="kategori_resiko[]" class="py-2 pr-8 border form-select"
                                             id="kategoriResiko{{ $ManajemenResiko->id }}" style="display: none;">
                                             <option value="">-- Pilih Kategori Resiko --</option>
                                             @if (!empty($kategoriResiko))
@@ -163,7 +187,7 @@
                                             @endif
                                         </select>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                    <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
                                         <p style="color: black" class="text-center" id="alertarea{{ $ManajemenResiko->id }}"
                                             {{ is_null($ManajemenResiko->id_area_dampak) ? '' : 'hidden' }}>-
                                         </p>
@@ -171,7 +195,7 @@
                                             {{ is_null($ManajemenResiko->id_area_dampak) ? 'hidden' : '' }}>
                                             {{ $ManajemenResiko->areaDampak ? $ManajemenResiko->areaDampak->name : 'N/A' }}
                                         </span>
-                                        <select name="area_dampak[]" class="form-select pr-8 py-2 border"
+                                        <select name="area_dampak[]" class="py-2 pr-8 border form-select"
                                             id="areadampak{{ $ManajemenResiko->id }}" style="display: none;">
                                             <option value="">-- Pilih Area Dampak --</option>
                                             @if (isset($areaDampak) && count($areaDampak) > 0)
@@ -186,25 +210,25 @@
                                     </td>
 
                                     {{-- Penyebab --}}
-                                    @if ((auth()->check() && auth()->user()->hasRole('admin')) || (auth()->user()->hasRole('ketua_tim') && optional(auth()->user()->pegawai)->team_id == $ManajemenResiko->tim_project->id))
-                                        <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                    @if ((auth()->check() && auth()->user()->hasRole('admin')) || (auth()->user()->hasRole('ketua_tim') && optional(auth()->user()->pegawai)->team_id == $ManajemenResiko->activity->subteam->team_id))
+                                        <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
                                             <div class="flex flex-col items-center">
                                                 <!-- Tombol Pilih Penyebab dipusatkan -->
-                                                <button class="bg-blue-500 text-white px-4 py-2 rounded openCauseModal"
+                                                <button class="px-4 py-2 text-white bg-blue-500 rounded openCauseModal"
                                                     data-manajemen-resiko-id="{{ $ManajemenResiko->id }}"
                                                     data-penyebab-id="{{ $ManajemenResiko->id_penyebab }}">
                                                     Pilih Penyebab
                                                 </button>
 
                                                 <!-- Daftar Penyebab, ditampilkan rata kiri di bawah tombol -->
-                                                <div id="selectedPenyebab" class="mt-4 text-left w-full">
+                                                <div id="selectedPenyebab" class="w-full mt-4 text-left">
                                                     @php
                                                         // Decode the JSON string into a PHP array
                                                         $penyebabIds = json_decode($ManajemenResiko->id_penyebab, true);
                                                     @endphp
-                                                
+
                                                     @if (is_array($penyebabIds) && count($penyebabIds) > 0)
-                                                        <ul class="list-disc list-inside text-gray-800 ml-4">
+                                                        <ul class="ml-4 text-gray-800 list-disc list-inside">
                                                             @foreach ($penyebabIds as $item)
                                                                 @foreach ($penyebab as $penyebabItem)
                                                                     @if ($penyebabItem->id == $item)
@@ -212,10 +236,10 @@
                                                                             // Membuat variabel yang menyimpan id dampak dalam bentuk json tanpa id yang dipilih
                                                                             $penyebabHapus = array_diff($penyebabIds, [$item]);
                                                                         @endphp
-                                                                        <li class="flex justify-between items-center">
+                                                                        <li class="flex items-center justify-between">
                                                                             <span>{{ $penyebabItem->name }}</span>
-                                                                            <a href="javascript:void(0);" 
-                                                                                class="text-red-500 hover:text-red-700 ml-2 hapus-penyebab" 
+                                                                            <a href="javascript:void(0);"
+                                                                                class="ml-2 text-red-500 hover:text-red-700 hapus-penyebab"
                                                                                 data-url="{{ url('/admin/manajemenresiko/hapuspenyebab/' . $ManajemenResiko->id . '/' . $item) }}">
                                                                                 <i class="fas fa-trash-alt"></i>
                                                                             </a>
@@ -226,14 +250,14 @@
                                                         </ul>
                                                     @else
                                                         <!-- Jika tidak ada penyebab yang dipilih -->
-                                                        <p class="text-black italic ml-4 text-center">-</p>
+                                                        <p class="ml-4 italic text-center text-black">-</p>
                                                     @endif
                                                 </div>
-                                                
+
                                             </div>
                                         </td>
                                     @else
-                                        <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                        <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
                                             <div class="">
                                                 @php
                                                     // Decode the JSON string into a PHP array
@@ -260,7 +284,7 @@
                                                     </ul>
                                                 @else
                                                     <!-- Jika tidak ada penyebab yang dipilih -->
-                                                    <p class="text-black text-center italic ml-4">-
+                                                    <p class="ml-4 italic text-center text-black">-
                                                     </p>
                                                 @endif
                                             </div>
@@ -269,26 +293,26 @@
 
 
                                     {{-- Dampak --}}
-                                    @if ((auth()->check() && auth()->user()->hasRole('admin')) || (auth()->user()->hasRole('ketua_tim') && optional(auth()->user()->pegawai)->team_id == $ManajemenResiko->tim_project->id))
-                                        <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                    @if ((auth()->check() && auth()->user()->hasRole('admin')) || (auth()->user()->hasRole('ketua_tim') && optional(auth()->user()->pegawai)->team_id == $ManajemenResiko->activity->subteam->team_id))
+                                        <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
                                             <div class="flex flex-col items-center">
                                                 <!-- Tombol Pilih Dampak dipusatkan -->
                                                 <button
-                                                    class="bg-blue-500 text-white px-4 py-2 rounded openImpactModal"
+                                                    class="px-4 py-2 text-white bg-blue-500 rounded openImpactModal"
                                                     data-manajemen-resiko-id="{{ $ManajemenResiko->id }}"
                                                     data-dampak-id="{{ $ManajemenResiko->id_dampak }}">
                                                     Pilih Dampak
                                                 </button>
 
                                                 <!-- Daftar Dampak, ditampilkan rata kiri di bawah tombol -->
-                                                <div id="selectedDampak" class="mt-4 text-left w-full">
+                                                <div id="selectedDampak" class="w-full mt-4 text-left">
                                                     @php
                                                         // Decode the JSON string into a PHP array
                                                         $dampakIds = json_decode($ManajemenResiko->id_dampak, true);
                                                     @endphp
-                                                
+
                                                     @if (is_array($dampakIds) && count($dampakIds) > 0)
-                                                        <ul class="list-disc list-inside text-gray-800 ml-4">
+                                                        <ul class="ml-4 text-gray-800 list-disc list-inside">
                                                             @foreach ($dampakIds as $item)
                                                                 @foreach ($dampak as $dampakItem)
                                                                     @if ($dampakItem->id == $item)
@@ -296,10 +320,10 @@
                                                                             // Membuat variabel yang menyimpan id dampak dalam bentuk json tanpa id yang dipilih
                                                                             $dampakHapus = array_diff($dampakIds, [$item]);
                                                                         @endphp
-                                                                        <li class="flex justify-between items-center">
+                                                                        <li class="flex items-center justify-between">
                                                                             <span>{{ $dampakItem->name }}</span>
-                                                                            <a href="javascript:void(0);" 
-                                                                                class="text-red-500 hover:text-red-700 ml-2 hapus-dampak" 
+                                                                            <a href="javascript:void(0);"
+                                                                                class="ml-2 text-red-500 hover:text-red-700 hapus-dampak"
                                                                                 data-url="{{ url('/admin/manajemenresiko/hapusdampak/' . $ManajemenResiko->id . '/' . $item) }}">
                                                                                 <i class="fas fa-trash-alt"></i>
                                                                             </a>
@@ -310,14 +334,14 @@
                                                         </ul>
                                                     @else
                                                         <!-- Jika tidak ada dampak yang dipilih -->
-                                                        <p class="text-black italic ml-4 text-center">-</p>
+                                                        <p class="ml-4 italic text-center text-black">-</p>
                                                     @endif
                                                 </div>
-                                                
+
                                             </div>
                                         </td>
                                     @else
-                                        <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
+                                        <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
                                             <div class="">
                                                 @php
                                                     // Decode the JSON string into a PHP array
@@ -342,7 +366,7 @@
                                                     </ul>
                                                 @else
                                                     <!-- Jika tidak ada dampak yang dipilih -->
-                                                    <p class="text-black text-center italic ml-4">-
+                                                    <p class="ml-4 italic text-center text-black">-
                                                     </p>
                                                 @endif
                                             </div>
@@ -351,41 +375,46 @@
 
 
 
-                                    @if (Auth::check() && Auth::user()->hasRole('admin'))
-    <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
-        <a class="bg-blue-500 text-white width-mt-2 px-3 py-2 rounded cursor-pointer btnEdit"
-            data-id="{{ $ManajemenResiko->id }}">Edit</a>
-        <button type="submit" class="bg-green-500 text-white px-2 py-1 rounded"
-            id="saveidentificationBtn">Save</button>
-        <form action="{{ route('admin.manajemenrisiko.destroy', $ManajemenResiko->id) }}"
-            method="POST" style="display:inline;" class="delete-form">
-            @csrf
-            @method('DELETE')
-            <button class="bg-red-500 text-white width-mt-2 px-3 py-1 rounded cursor-pointer btnDelete"
-                type="button" data-id="{{ $ManajemenResiko->id }}">Delete</button>
-        </form>
-    </td>
-@elseif (auth()->user()->hasRole('ketua_tim'))
-    @if ((optional(auth()->user()->pegawai)->team_id == $ManajemenResiko->tim_project->id))
-        <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
-            <a class="bg-blue-500 text-white width-mt-2 px-3 py-2 rounded cursor-pointer btnEdit"
-                data-id="{{ $ManajemenResiko->id }}">Edit</a>
-            <button type="submit" class="bg-green-500 text-white px-2 py-1 rounded"
-                id="saveidentificationBtn">Save</button>
-            <form action="{{ route('admin.manajemenrisiko.destroy', $ManajemenResiko->id) }}"
-                method="POST" style="display:inline;" class="delete-form">
-                @csrf
-                @method('DELETE')
-                <button class="bg-red-500 text-white width-mt-2 px-3 py-1 rounded cursor-pointer btnDelete"
-                    type="button" data-id="{{ $ManajemenResiko->id }}">Delete</button>
-            </form>
-        </td>
-    @else
-        <td class="px-6 py-4 whitespace-nowrap border border-gray-300">
-            <p class="text-red-500 text-center">Tidak Memiliki Izin Beda TIM</p>
-        </td>
-    @endif
-@endif
+                            @if (Auth::check() && Auth::user()->hasRole('admin'))
+                                <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
+                                    <a class="px-3 py-2 text-white bg-blue-500 rounded cursor-pointer width-mt-2 btnEdit"
+                                        data-id="{{ $ManajemenResiko->id }}">Edit</a>
+                                    <button type="submit" class="px-2 py-1 text-white bg-green-500 rounded"
+                                        id="saveidentificationBtn">
+                                        Save
+                                    </button>
+                                </form>
+
+                                    <form action="{{ route('admin.manajemenrisiko.destroy', $ManajemenResiko->id) }}"
+                                        method="POST" style="display:inline;" class="delete-form">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="px-3 py-1 text-white bg-red-500 rounded cursor-pointer width-mt-2 btnDelete"
+                                            type="button" data-id="{{ $ManajemenResiko->id }}">Delete</button>
+                                    </form>
+                                </td>
+                            @elseif (auth()->user()->hasRole('ketua_tim'))
+                            @if ((optional(auth()->user()->pegawai)->id_tim == $ManajemenResiko->activity->subteam->tim_project_id))
+                                <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
+                                    <a class="px-3 py-2 text-white bg-blue-500 rounded cursor-pointer width-mt-2 btnEdit"
+                                        data-id="{{ $ManajemenResiko->id }}">Edit</a>
+                                    <button type="submit" class="px-2 py-1 text-white bg-green-500 rounded"
+                                        id="saveidentificationBtn">Save</button>
+                                </form>
+                                    <form action="{{ route('admin.manajemenrisiko.destroy', $ManajemenResiko->id) }}"
+                                        method="POST" style="display:inline;" class="delete-form">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="px-3 py-1 text-white bg-red-500 rounded cursor-pointer width-mt-2 btnDelete"
+                                            type="button" data-id="{{ $ManajemenResiko->id }}">Delete</button>
+                                    </form>
+                                </td>
+                            @else
+                                <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
+                                    <p class="text-center text-red-500">Tidak Memiliki Izin Beda TIM</p>
+                                </td>
+                            @endif
+                        @endif
 
                                 </tr>
                     @endforeach
@@ -400,15 +429,15 @@
 
 
     <!-- Modal Resiko Main-->
-    <div class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center hidden" id="resikoModal">
-        <div class="modal-overlay absolute bg-blue-900 opacity-50"></div>
-        <div class="modal-container bg-gray-100 md:max-w-4xl mx-auto md:h-4/5 rounded-lg shadow-lg z-50 overflow-y-auto "
+    <div class="fixed top-0 left-0 flex items-center justify-center hidden w-full h-full modal" id="resikoModal">
+        <div class="absolute bg-blue-900 opacity-50 modal-overlay"></div>
+        <div class="z-50 mx-auto overflow-y-auto bg-gray-100 rounded-lg shadow-lg modal-container md:max-w-4xl md:h-4/5 "
             style="width: 1000px">
-            <div class="modal-content py-4 text-left px-6">
-                <div class="flex justify-between items-center pb-2">
+            <div class="px-6 py-4 text-left modal-content">
+                <div class="flex items-center justify-between pb-2">
                     <p class="text-xl font-bold">Pilih Resiko</p>
-                    <div class="modal-close cursor-pointer z-50" id="closeModal" title="Tutup Modal">
-                        <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="16"
+                    <div class="z-50 cursor-pointer modal-close" id="closeModal" title="Tutup Modal">
+                        <svg class="text-black fill-current" xmlns="http://www.w3.org/2000/svg" width="16"
                             height="16" viewBox="0 0 18 18">
                             <path
                                 d="M14.53 3.47a.75.75 0 00-1.06 0L9 7.94 4.53 3.47a.75.75 0 00-1.06 1.06L7.94 9l-4.47 4.47a.75.75 0 001.06 1.06L9 10.06l4.47 4.47a.75.75 0 001.06-1.06L10.06 9l4.47-4.47a.75.75 0 000-1.06z">
@@ -416,17 +445,17 @@
                         </svg>
                     </div>
                 </div>
-                <div class="flex justify-between items-center mb-4">
+                <div class="flex items-center justify-between mb-4">
                     <input type="search" id="searchInput" placeholder="Masukkan kata kunci pencarian"
-                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" />
+                        class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" />
                 </div>
                 <div class="flex justify-between mb-4">
                     <button id="refreshResikomodalBtn"
-                        class="bg-blue-500 text-white px-4 py-2 rounded-md">Refresh</button>
-                    <button id="addRowBtn" class="bg-green-500 text-white px-4 py-2 rounded-md">Buat Baru</button>
+                        class="px-4 py-2 text-white bg-blue-500 rounded-md">Refresh</button>
+                    <button id="addRowBtn" class="px-4 py-2 text-white bg-green-500 rounded-md">Buat Baru</button>
                 </div>
                 <div class="mt-3">
-                    <table id="resiko-table" class="min-w-full bg-white text-sm">
+                    <table id="resiko-table" class="min-w-full text-sm bg-white">
                         <thead>
                             <tr>
                                 <th><input type="checkbox" id="selectAll" /></th>
@@ -440,8 +469,8 @@
                     </table>
                 </div>
                 <div class="flex justify-end pt-2">
-                    <button id="cancelBtn" class="bg-red-500 text-white px-4 py-2 rounded-md mr-2">Batal</button>
-                    <button id="saveBtn" class="bg-green-500 text-white px-4 py-2 rounded-md">Simpan</button>
+                    <button id="cancelBtn" class="px-4 py-2 mr-2 text-white bg-red-500 rounded-md">Batal</button>
+                    <button id="saveBtn" class="px-4 py-2 text-white bg-green-500 rounded-md">Simpan</button>
                 </div>
             </div>
 
@@ -449,15 +478,15 @@
     </div>
 
     {{-- <!-- Modal Tambah Resiko -> --}}
-    <div id="addResikoModal" class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center hidden">
-        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
-        <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded-lg shadow-lg z-50 overflow-y-auto">
-            <div class="modal-content py-4 text-left px-6">
+    <div id="addResikoModal" class="fixed top-0 left-0 flex items-center justify-center hidden w-full h-full modal">
+        <div class="absolute w-full h-full bg-gray-900 opacity-50 modal-overlay"></div>
+        <div class="z-50 w-11/12 mx-auto overflow-y-auto bg-white rounded-lg shadow-lg modal-container md:max-w-md">
+            <div class="px-6 py-4 text-left modal-content">
                 <!-- Title -->
-                <div class="flex justify-between items-center pb-2">
+                <div class="flex items-center justify-between pb-2">
                     <p class="text-xl font-bold">Tambah Resiko</p>
-                    <div class="modal-close cursor-pointer z-50" id="closeAddModal" title="Tutup Modal">
-                        <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="16"
+                    <div class="z-50 cursor-pointer modal-close" id="closeAddModal" title="Tutup Modal">
+                        <svg class="text-black fill-current" xmlns="http://www.w3.org/2000/svg" width="16"
                             height="16" viewBox="0 0 18 18">
                             <path
                                 d="M14.53 3.47a.75.75 0 00-1.06 0L9 7.94 4.53 3.47a.75.75 0 00-1.06 1.06L7.94 9l-4.47 4.47a.75.75 0 001.06 1.06L9 10.06l4.47 4.47a.75.75 0 001.06-1.06L10.06 9l4.47-4.47a.75.75 0 000-1.06z">
@@ -472,16 +501,16 @@
                             <label for="resikoName" class="block text-sm font-medium text-gray-700">Nama
                                 Resiko</label>
                             <input type="text" id="resikoName" name="resikoName"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 required>
                         </div>
                     </form>
                 </div>
                 <!-- Footer -->
                 <div class="flex justify-end pt-2">
-                    <button class="bg-red-500 text-white px-4 py-2 rounded-md mr-2"
+                    <button class="px-4 py-2 mr-2 text-white bg-red-500 rounded-md"
                         id="cancelAddResiko">Batal</button>
-                    <button class="bg-green-500 text-white px-4 py-2 rounded-md" id="saveResikoBtn">Simpan</button>
+                    <button class="px-4 py-2 text-white bg-green-500 rounded-md" id="saveResikoBtn">Simpan</button>
                 </div>
             </div>
         </div>
@@ -504,11 +533,14 @@
             // Mendapatkan elemen tombol dan dropdown
             const tambahResikoBtn = document.getElementById('tambahresiko');
             const timDropdown = document.getElementById('tim'); // Dropdown Tim
+            const subteamDropdown = document.getElementById('subteam'); // Dropdown Tim
             const prosesBisnisDropdown = document.getElementById('proses_bisnis'); // Dropdown Proses Bisnis
             const resikoModal = document.getElementById('resikoModal');
             const closeModalBtn = document.getElementById('closeModal');
             const simpanResikoBtn = document.getElementById('simpanResiko');
             const tambahResikoModal = document.getElementById('TambahresikoModal');
+
+
 
             const refreshBtn = document.getElementById('refreshIdentificationBtn');
 
@@ -533,6 +565,8 @@
 
             window.selectedPenyebabIds = [];
             window.selectedDampakIds = [];
+
+
 
             //part penyebab
 
@@ -618,7 +652,7 @@
                         this.api().columns().every(function() {
                             var column = this;
                             var input = $(
-                                    '<input type="text" placeholder="Search" class="w-full text-sm p-1 border rounded" />'
+                                    '<input type="text" placeholder="Search" class="w-full p-1 text-sm border rounded" />'
                                     )
                                 .appendTo($(column.header()).empty())
                                 .on('keyup change clear', function() {
@@ -672,6 +706,7 @@
                     }
                 }
             });
+
             if (open) {
                 closeModal3.addEventListener('click', function() {
                     penyebabModal.classList.add('hidden');
@@ -842,7 +877,7 @@
                         this.api().columns().every(function() {
                             var column = this;
                             var input = $(
-                                    '<input type="text" placeholder="Search" class="w-full text-sm p-1 border rounded" />'
+                                    '<input type="text" placeholder="Search" class="w-full p-1 text-sm border rounded" />'
                                     )
                                 .appendTo($(column.header()).empty())
                                 .on('keyup change clear', function() {
@@ -977,51 +1012,108 @@
                 });
             }
 
+            // Fungsi untuk mengecek apakah kedua dropdown sudah dipilih dan memeriksa role
+            function checkDropdowns() {
+                console.log('Checking dropdown values:', timDropdown.value, prosesBisnisDropdown.value);
+                console.log('isAdmin:', isAdmin, 'isKetuaTim:', isKetuaTim, 'userTeamId:', userTeamId);
 
-
-            // end dampak
-
-
-
-
-        // Fungsi untuk mengecek apakah kedua dropdown sudah dipilih dan memeriksa role
-        function checkDropdowns() {
-            console.log('Checking dropdown values:', timDropdown.value, prosesBisnisDropdown.value);
-            console.log('isAdmin:', isAdmin, 'isKetuaTim:', isKetuaTim, 'userTeamId:', userTeamId);
-
-            if (isAdmin) {
-                // Jika Admin, tombol hidup selama kedua dropdown terpilih
-                if (timDropdown.value !== '' && prosesBisnisDropdown.value !== '') {
-                    tambahResikoBtn.disabled = false;
-                    tambahResikoBtn.style.backgroundColor = 'red'; // Ubah warna tombol menjadi merah
+                if (isAdmin) {
+                    // Jika Admin, tombol hidup selama kedua dropdown terpilih
+                    if (timDropdown.value !== '' && prosesBisnisDropdown.value !== '') {
+                        tambahResikoBtn.disabled = false;
+                        tambahResikoBtn.style.backgroundColor = 'red'; // Ubah warna tombol menjadi merah
+                    } else {
+                        tambahResikoBtn.disabled = true;
+                        tambahResikoBtn.style.backgroundColor = 'gray'; // Kembali ke abu-abu
+                    }
+                } else if (isKetuaTim) {
+                    // Jika Ketua Tim, hanya bisa memilih tim sendiri
+                    if (parseInt(timDropdown.value) === parseInt(userTeamId) && prosesBisnisDropdown.value !== '') {
+                        tambahResikoBtn.disabled = false;
+                        tambahResikoBtn.style.backgroundColor = 'red'; // Tombol aktif
+                    } else {
+                        tambahResikoBtn.disabled = true;
+                        tambahResikoBtn.style.backgroundColor = 'gray'; // Tombol nonaktif
+                    }
                 } else {
+                    // Role lain tidak bisa menambah risiko
                     tambahResikoBtn.disabled = true;
-                    tambahResikoBtn.style.backgroundColor = 'gray'; // Kembali ke abu-abu
+                    tambahResikoBtn.style.backgroundColor = 'gray'; // Tombol tetap nonaktif
                 }
-            } else if (isKetuaTim) {
-                // Jika Ketua Tim, hanya bisa memilih tim sendiri
-                if (parseInt(timDropdown.value) === parseInt(userTeamId) && prosesBisnisDropdown.value !== '') {
-                    tambahResikoBtn.disabled = false;
-                    tambahResikoBtn.style.backgroundColor = 'red'; // Tombol aktif
-                } else {
-                    tambahResikoBtn.disabled = true;
-                    tambahResikoBtn.style.backgroundColor = 'gray'; // Tombol nonaktif
-                }
-            } else {
-                // Role lain tidak bisa menambah risiko
-                tambahResikoBtn.disabled = true;
-                tambahResikoBtn.style.backgroundColor = 'gray'; // Tombol tetap nonaktif
             }
-        }
 
-        // Menambahkan event listener untuk dropdown
-        if (timDropdown && prosesBisnisDropdown) {
-            timDropdown.addEventListener('change', checkDropdowns);
-            prosesBisnisDropdown.addEventListener('change', checkDropdowns);
-        }
+             /**
+             * Part Sub Team
+            */
 
-        // Pengecekan awal saat halaman dimuat
-        checkDropdowns();
+            function fetchSubteams() {
+                const timId = document.getElementById('tim').value;
+                const subteamDropdown = document.getElementById('subteam');
+                console.log("Masuk fetch");
+
+                // Clear the current options
+                subteamDropdown.innerHTML = '<option value="">-- Pilih Sub Tim/Bidang --</option>';
+
+                if (timId) {
+                    fetch(`/get-subteams/${timId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            data.forEach(subteam => {
+                                const option = document.createElement('option');
+                                option.value = subteam.id;
+                                option.textContent = subteam.name;
+                                subteamDropdown.appendChild(option);
+                            });
+                        })
+                        .catch(error => console.error('Error fetching subteams:', error));
+                }
+            }
+
+            function fetchActivities() {
+                const subteamDropdown = document.getElementById('subteam').value;
+                const activityDropdown = document.getElementById('activity');
+                console.log("Masuk fetch activity");
+
+                // Clear the current options
+                activityDropdown.innerHTML = '<option value="">-- Pilih Kegiatan --</option>';
+
+                if (subteamDropdown) {
+                    fetch(`/get-activities/${subteamDropdown}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            data.forEach(activity => {
+                                const option = document.createElement('option');
+                                option.value = activity.id;
+                                option.textContent = activity.name;
+                                activityDropdown.appendChild(option);
+                            });
+                        })
+                        .catch(error => console.error('Error fetching subteams:', error));
+                }
+            }
+
+            // Menambahkan event listener untuk dropdown
+            if (timDropdown && prosesBisnisDropdown) {
+                // timDropdown.addEventListener('change', checkDropdowns);
+                timDropdown.addEventListener('change', function () {
+                    checkDropdowns();
+                    fetchSubteams();
+                });
+
+                prosesBisnisDropdown.addEventListener('change', checkDropdowns);
+            }
+
+            if (subteamDropdown) {
+                // timDropdown.addEventListener('change', checkDropdowns);
+                subteamDropdown.addEventListener('change', function () {
+                    checkDropdowns();
+                    fetchActivities();
+                });
+
+                prosesBisnisDropdown.addEventListener('change', checkDropdowns);
+            }
+            // Pengecekan awal saat halaman dimuat
+            checkDropdowns();
 
             /**
              * Risk Modal Script
@@ -1069,7 +1161,7 @@
                     this.api().columns().every(function() {
                         var column = this;
                         var input = $(
-                                '<input type="text" placeholder="Search" class="w-full text-sm p-1 border rounded" />'
+                                '<input type="text" placeholder="Search" class="w-full p-1 text-sm border rounded" />'
                                 )
                             .appendTo($(column.header()).empty())
                             .on('keyup change clear', function() {
@@ -1190,7 +1282,7 @@
                 });
 
                 var formValues = {
-                    tim: $('#tim').val(),
+                    activity: $('#activity').val(),
                     proses_bisnis: $('#proses_bisnis').val()
                 };
                 console.log(selected);
@@ -1266,11 +1358,11 @@
 
 
         document.addEventListener('DOMContentLoaded', function () {
-    const deleteLinks = document.querySelectorAll('.hapus-penyebab');
+        const deleteLinks = document.querySelectorAll('.hapus-penyebab');
 
-    deleteLinks.forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
+        deleteLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
 
             const url = this.getAttribute('data-url');
 

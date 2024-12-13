@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
         $this->call(LevelDampakSeeder::class);
         $this->call(LevelKemungkinanSeeder::class);
         $this->call(MatriksAnalisisResikoSeeder::class);
+        $this->call(SubTeamSeeder::class);
         // $this->call(ManajemenResikoSeeder::class);
     }
 

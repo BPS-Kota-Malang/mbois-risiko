@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\AreaDampak;
 use App\Models\Context;
 use App\Models\JenisResiko;
@@ -16,6 +17,7 @@ use App\Models\OpsiPenanganan;
 use App\Models\PeraturanPerundangUndangan;
 use App\Models\ProsesBisnis;
 use App\Models\SeleraResiko;
+use App\Models\Subteam;
 use App\Models\SumberResiko;
 use App\Models\TimProject;
 use Illuminate\Http\Request;
@@ -28,6 +30,8 @@ class ContextController extends Controller
         $pemangkuKepentingan = Context::all();
         $peraturanPerundangUndangan = PeraturanPerundangUndangan::all();
         $timProjects = TimProject::all();
+        $subteams = Subteam::all();
+        $activities = Activity::all();
         $jenisResiko = JenisResiko::all();
         $sumberResiko = SumberResiko::all();
         $kategoriResiko = KategoriResiko::all();
@@ -71,6 +75,8 @@ class ContextController extends Controller
             'pemangkuKepentingan',
             'peraturanPerundangUndangan',
             'timProjects',
+            'subteams',
+            'activities',
             'jenisResiko',
             'sumberResiko',
             'kategoriResiko',

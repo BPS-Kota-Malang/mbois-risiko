@@ -1,4 +1,7 @@
 <?php
+
+use App\Models\Activity;
+use App\Models\Subteam;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +17,8 @@ class CreateManajemenResikoTable extends Migration
     {
         Schema::create('manajemen_resiko', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_tim_project')->constrained('tim_project')->onDelete('cascade');
+            // $table->foreignId('subteam_id')->constrained('subteam')->onDelete('cascade');
+            $table->foreignIdFor(Activity::class);
             $table->foreignId('id_proses_bisnis')->constrained('proses_bisnis')->onDelete('cascade');
             $table->foreignId('id_resiko')->constrained('resiko')->onDelete('cascade');
             $table->foreignId('id_jenis_resiko')->nullable()->constrained('jenis_resiko')->onDelete('cascade');

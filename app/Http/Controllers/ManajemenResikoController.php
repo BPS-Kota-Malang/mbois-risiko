@@ -13,6 +13,7 @@ use App\Models\TimProject;
 use App\Models\ProsesBisnis;
 use App\Models\Dampak;
 use App\Models\ManajemenResiko;
+use App\Models\Subteam;
 
 class ManajemenResikoController extends Controller
 {
@@ -21,7 +22,7 @@ class ManajemenResikoController extends Controller
      */
     public function index(Request $request)
     {
-        $tim = $request->input('tim');
+        $activity = $request->input('activity');
         $prosesBisnis = $request->input('proses_bisnis');
 
         $resiko = Resiko::all();
@@ -30,6 +31,7 @@ class ManajemenResikoController extends Controller
         $kategoriResiko = KategoriResiko::all();
         $areaDampak = AreaDampak::all();
         $timProjects = TimProject::all();
+        $subteams = Subteam::all();
         $penyebab = Penyebab::all();
         $dampak = Dampak::all();
         $ProsesBisnis = ProsesBisnis::all();
@@ -38,19 +40,19 @@ class ManajemenResikoController extends Controller
 
         $query = ManajemenResiko::query();
 
-        if ($tim) {
-            $query->where('id_tim_project', $tim);  // Adjust 'id_tim' to the correct column name
+        if ($activity) {
+            $query->where('activity_id', $activity);  // Adjust 'id_tim' to the correct column name
         }
 
         if ($prosesBisnis) {
             $query->where('id_proses_bisnis', $prosesBisnis);  // Adjust 'id_proses_bisnis' to the correct column name
         }
 
-        $manajemenResikos = $query->with(['prosesbisnis', 'tim_project', 'resiko'])->paginate(10);
+        $manajemenResikos = $query->with(['prosesbisnis', 'activity', 'resiko'])->paginate(10);
 
         return view('admin.risk.identification', compact(
             'jenisResiko', 'penyebab', 'sumberResiko', 'kategoriResiko',
-            'areaDampak', 'timProjects', 'dampak', 'resiko', 'ProsesBisnis', 'manajemenResikos'
+            'areaDampak', 'timProjects','subteams', 'dampak', 'resiko', 'ProsesBisnis', 'manajemenResikos'
         ));
     }
 
@@ -71,13 +73,13 @@ class ManajemenResikoController extends Controller
         $formValues = $request->input('formValues', []);
 
         // Validate formValues to ensure they exist
-        $tim = $formValues['tim'] ?? null;
+        $activity = $formValues['activity'] ?? null;
         $prosesBisnis = $formValues['proses_bisnis'] ?? null;
 
         // Check if required values are provided
-        if (!$tim || !$prosesBisnis) {
+        if (!$activity || !$prosesBisnis) {
             return response()->json([
-                'errors' => 'Tim and Proses Bisnis are required.'
+                'errors' => 'Kegiatan and Proses Bisnis are required.'
             ], 400);
         }
 
@@ -85,7 +87,7 @@ class ManajemenResikoController extends Controller
         foreach ($selectedIds as $id) {
             ManajemenResiko::create([
                 'id_resiko' => $id,
-                'id_tim_project' => $tim,
+                'activity_id' => $activity,
                 'id_proses_bisnis' => $prosesBisnis,
             ]);
         }

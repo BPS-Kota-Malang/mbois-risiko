@@ -1,18 +1,20 @@
 <x-admin-layout>
-    <div class="bg-white p-4 mb-4 border-2 border-white rounded-lg">
-        <h3 class="text-gray-700 text-2xl font-medium">Penetapan konteks resiko BPS Malang</h3>
+    <div class="p-4 mb-4 bg-white border-2 border-white rounded-lg">
+        <h3 class="text-2xl font-medium text-gray-700">Penetapan konteks resiko BPS Malang</h3>
     </div>
     <div class="mt-4">
     </div>
-    <div class="bg-white p-2 mb-2 border-2 border-white rounded-lg">
+    <div class="p-2 mb-2 bg-white border-2 border-white rounded-lg">
         <div class="overflow-x-auto">
             <ul
-                class="flex flex-nowrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+                class="flex text-sm font-medium text-center text-gray-500 border-b border-gray-200 flex-nowrap dark:border-gray-700 dark:text-gray-400">
                 @php
                     $tabs = [
                         'Pemangku kepentingan',
                         'Peraturan Perundang-undangan',
                         'Tim Project',
+                        'Sub Team',
+                        'Kegiatan',
                         'Jenis Resiko',
                         'Sumber Resiko',
                         'Kategori Resiko',
@@ -47,6 +49,8 @@
         @include('admin.tabs.pemangku_kepentingan')
         @include('admin.tabs.peraturan_perundang_undangan')
         @include('admin.tabs.team_project')
+        @include('admin.tabs.sub_team')
+        @include('admin.tabs.kegiatan')
         @include('admin.tabs.jenis_resiko')
         @include('admin.tabs.sumber_resiko')
         @include('admin.tabs.kategori_resiko')
@@ -72,7 +76,10 @@
                 tabcontent[i].classList.add("hidden");
             }
 
+            console.log(tabcontent);
+
             tablinks = document.getElementsByClassName("tab-link");
+
             for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].classList.remove("text-gray-700", "bg-gray-100", "border-b-2", "border-gray-700", "rounded-md");
                 tablinks[i].classList.add("text-gray-400", "bg-white", "border-b-2", "border-transparent", "rounded-md");

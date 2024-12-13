@@ -1,5 +1,7 @@
 <?php
-    use App\Http\Controllers\DashboardController;
+
+    use App\Http\Controllers\Context\ActivityController;
+use App\Http\Controllers\DashboardController;
     use App\Http\Controllers\ProfileController;
     use App\Http\Controllers\Admin\UserController;
     use App\Http\Controllers\ContextController;
@@ -34,8 +36,9 @@
     use App\Http\Controllers\PerencanaanController;
     use App\Http\Controllers\UraianController;
     use App\Http\Controllers\Admin\LoginCustomizationController;
-
-
+    use App\Http\Controllers\Context\SubteamController;
+    use App\Http\Livewire\ActivityManager;
+use App\Models\Activity;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -60,6 +63,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('/pemangkukepentingan', PemangkuKepentinganController::class, ['as' => 'admin']);
     Route::resource('/peraturan', PeraturanPerundangUndanganController::class, ['as' => 'admin']);
     Route::resource('/timproject', TimProjectController::class, ['as' => 'admin']);
+    Route::resource('/subteam', SubteamController::class, ['as' => 'admin']);
+    Route::resource('/activity', ActivityController::class, ['as' => 'admin']);
+    Route::get('/activities', ActivityManager::class);
     Route::resource('/jenisresiko', JenisResikoController::class, ['as' => 'admin']);
     Route::resource('/sumberresiko', SumberResikoController::class, ['as' => 'admin']);
     Route::resource('/kategoriresiko', KategoriResikoController::class, ['as' => 'admin']);
@@ -78,6 +84,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/perencanaan', PerencanaanController::class, ['as' => 'admin']);
     Route::get('/getmanajemen/{id}', [PerencanaanController::class, 'getManajemen'], ['as' => 'admin']);
     Route::get('/getmanajemenDetail/{id}', [PerencanaanController::class, 'getManajemenDetail']);
+    Route::get('/get-subteams/{tim_id}', [SubteamController::class, 'getSubteams']);
+    Route::get('/get-activities/{subteam_id}', [ActivityController::class, 'getActivities']);
 
     //penyebab
     Route::resource('/penyebab', PenyebabController::class, ['as' => 'admin']);
@@ -128,7 +136,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('users', UserController::class);
         Route::resource('roles', RoleController::class);
         Route::resource('permissions', PermissionController::class);
-        
+
 
     });;
 

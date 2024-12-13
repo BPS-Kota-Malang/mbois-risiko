@@ -22,14 +22,19 @@ class TimProject extends Model
         'updated_at',
     ];
 
-    public function manajemen_resiko()
-    {
-        return $this->hasMany(ManajemenResiko::class, 'id_tim_project');
-    }
+    // public function manajemen_resiko()
+    // {
+    //     return $this->hasMany(ManajemenResiko::class, 'id_tim_project');
+    // }
 
     public function pegawai()
     {
         return $this->hasMany(Pegawai::class, 'id_tim');
+    }
+
+    public function subteam()
+    {
+        return $this->hasMany(Subteam::class);
     }
 
 }

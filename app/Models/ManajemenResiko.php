@@ -12,7 +12,7 @@ class ManajemenResiko extends Model
     protected $table = 'manajemen_resiko';
 
     protected $fillable = [
-        'id_tim_project',
+        'activity_id',
         'id_resiko',
         'id_jenis_resiko',
         'id_proses_bisnis',
@@ -34,9 +34,9 @@ class ManajemenResiko extends Model
 
 
 
-    public function tim_project()
+    public function activity()
     {
-        return $this->belongsTo(TimProject::class, 'id_tim_project');
+        return $this->belongsTo(Activity::class);
     }
 
     public function resiko()
