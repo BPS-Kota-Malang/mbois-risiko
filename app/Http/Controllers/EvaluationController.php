@@ -23,7 +23,9 @@ class EvaluationController extends Controller
 {
     public function index(Request $request)
     {
-        $tim = $request->input('tim');
+        // $tim = $request->input('tim');
+        $activity = $request->input('activity');
+
         $prosesBisnis = $request->input('proses_bisnis');
         $resiko = Resiko::all() ?? collect();
         $jenisResiko = JenisResiko::all() ?? collect();
@@ -42,15 +44,15 @@ class EvaluationController extends Controller
         $matriksAnalisisResiko = MatriksAnalisisResiko::all() ?? collect();
         $query = ManajemenResiko::query();
 
-        if ($tim) {
-            $query->where('id_tim_project', $tim);
+        if ($activity) {
+            $query->where('activity_id', $activity);
         }
 
         if ($prosesBisnis) {
             $query->where('id_proses_bisnis', $prosesBisnis);
         }
 
-        $manajemenResikos = $query->with(['prosesBisnis', 'tim_project', 'resiko', 'matriksAnalisisResiko'])->paginate(10);
+        $manajemenResikos = $query->with(['prosesBisnis', 'activity', 'resiko', 'matriksAnalisisResiko'])->paginate(10);
 
         return view('admin.risk.evaluation', compact(
             'jenisResiko',

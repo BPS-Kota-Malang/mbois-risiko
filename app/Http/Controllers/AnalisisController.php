@@ -27,7 +27,8 @@ class AnalisisController extends Controller
 {
     public function index(Request $request)
     {
-        $tim = $request->input('tim');
+        // $tim = $request->input('tim');
+        $activity = $request->input('activity');
         $prosesBisnis = $request->input('proses_bisnis');
         $resiko = Resiko::all() ?? collect();
         $jenisResiko = JenisResiko::all() ?? collect();
@@ -46,8 +47,8 @@ class AnalisisController extends Controller
         $matriksAnalisisResiko = MatriksAnalisisResiko::all() ?? collect();
         $query = ManajemenResiko::query();
 
-        if ($tim) {
-            $query->where('id_tim_project', $tim);
+        if ($activity) {
+            $query->where('activity_id', $activity);
         }
 
         if ($prosesBisnis) {
@@ -55,7 +56,7 @@ class AnalisisController extends Controller
         }
 
         // Use paginate method on the query builder instance
-        $manajemenResikos = $query->with(['prosesBisnis', 'tim_project', 'resiko', 'matriksAnalisisResiko'])->paginate(10);
+        $manajemenResikos = $query->with(['prosesBisnis', 'activity', 'resiko', 'matriksAnalisisResiko'])->paginate(10);
 
         return view('admin.risk.analysis', compact(
             'jenisResiko',

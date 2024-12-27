@@ -119,14 +119,14 @@
                                         {{ $loop->iteration + (($manajemenResikos->currentPage() - 1) * $manajemenResikos->perPage()) }}</td>
                                     <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
                                         {{ $ManajemenResiko->prosesbisnis->name }}</td>
-                                        <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
-                                            <div>
-                                                <span class="text-lg font-bold">{{ $ManajemenResiko->activity->subteam->timProject->name }}</span>
-                                            </div>
-                                            <div>
-                                                <span class="text-sm">{{ $ManajemenResiko->activity->subteam->name }}</span>
-                                            </div>
-                                        </td>
+                                    <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
+                                        <div>
+                                            <span class="text-lg font-bold">{{ $ManajemenResiko->activity->subteam->timProject->name }}</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-sm">{{ $ManajemenResiko->activity->subteam->name }}</span>
+                                        </div>
+                                    </td>
                                     <td class="px-6 py-4 border border-gray-300 whitespace-nowrap">
                                         {{ $ManajemenResiko->activity->name }}
                                     </td>
@@ -1069,6 +1069,9 @@
                 }
             }
 
+            /**
+             * Part Activity
+            */
             function fetchActivities() {
                 const subteamDropdown = document.getElementById('subteam').value;
                 const activityDropdown = document.getElementById('activity');
