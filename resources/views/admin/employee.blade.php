@@ -15,6 +15,13 @@
                 </form>
             </div>
         </div>
+
+        {{-- create fitur download --}}
+        <a href="{{ asset('data_pegawai_template.xlsx') }}" 
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 ml-2 mr-2 rounded">
+            Download Template
+        </a>
+
         <div class="flex items-center">
             <label for="search" class="mr-2">Search:</label>
             <input type="text" id="search" class="px-2 py-1 border border-gray-300 rounded-md">
