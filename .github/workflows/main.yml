@@ -15,5 +15,8 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ftp.mboisrisiko.web.bps.go.id
+        protocol : ftps
+        port: 21
+        timeout : 60000
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
