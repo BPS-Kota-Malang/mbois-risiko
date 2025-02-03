@@ -17,6 +17,3 @@ jobs:
         server: mboisrisiko.web.bps.go.id
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
-        local-dir: server/
-          server-dir: /public_html/
-          timeout: 190000
