@@ -41,9 +41,14 @@
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Roles</label>
                 @foreach($roles as $role)
                     <div class="flex items-center mb-2">
-                        <input type="checkbox" id="role_{{ $role->id }}" name="roles[]" value="{{ $role->id }}" 
+                        <input 
+                            type="checkbox" 
+                            id="role_{{ $role->id }}" 
+                            name="roles[]" 
+                            value="{{ $role->id }}" 
+                            data-role="{{ strtolower(str_replace(' ', '_', $role->name)) }}" 
                             {{ in_array($role->id, old('roles', [])) ? 'checked' : '' }}
-                            class="mr-2">
+                            class="role-checkbox mr-2">
                         <label for="role_{{ $role->id }}" class="text-sm text-gray-900 dark:text-gray-100">{{ $role->name }}</label>
                     </div>
                 @endforeach
@@ -53,7 +58,7 @@
             </div>
 
             <div class="flex items-center justify-between">
-                <a href="{{ route('admin.users.index') }}" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                <a href="{{ route('admin.users.index') }}" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-white text-xs uppercase tracking-widest shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                     Back to Users List
                 </a>
                 <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-white text-xs uppercase tracking-widest shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -62,4 +67,35 @@
             </div>
         </form>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const checkboxes = document.querySelectorAll('.role-checkbox');
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            const role = checkbox.getAttribute('data-role');
+
+            if (checkbox.checked) {
+                // Jika "ketua_tim" dicentang, otomatis uncheck "anggota_tim"
+                if (role === 'ketua_tim') {
+                    toggleCheckbox('anggota_tim', false);
+                }
+                // Jika "anggota_tim" dicentang, otomatis uncheck "ketua_tim"
+                else if (role === 'anggota_tim') {
+                    toggleCheckbox('ketua_tim', false);
+                }
+            }
+        });
+    });
+
+    function toggleCheckbox(role, isChecked) {
+        checkboxes.forEach(cb => {
+            if (cb.getAttribute('data-role') === role) {
+                cb.checked = isChecked;
+            }
+        });
+    }
+});
+
+    </script>
 </x-admin-layout>
