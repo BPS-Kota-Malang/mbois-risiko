@@ -17,6 +17,8 @@ jobs:
         server: ftp.mboisrisiko.web.bps.go.id
         protocol : ftp
         port: 21
-        timeout : 60000
+        timeout : 190000
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
+        local-dir: server/
+        server-dir: /public_html/
