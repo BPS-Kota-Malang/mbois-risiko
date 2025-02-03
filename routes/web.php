@@ -1,7 +1,7 @@
 <?php
 
     use App\Http\Controllers\Context\ActivityController;
-use App\Http\Controllers\DashboardController;
+    use App\Http\Controllers\DashboardController;
     use App\Http\Controllers\ProfileController;
     use App\Http\Controllers\Admin\UserController;
     use App\Http\Controllers\ContextController;
@@ -154,5 +154,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/admin/kriteriakemungkinan', [KriteriaKemungkinanController::class, 'store'])->name('admin.kriteriakemungkinan.store');
         Route::get('/admin/custom-login', [LoginCustomizationController::class, 'index'])->name('admin.custom-login');
         Route::post('/admin/custom-login', [LoginCustomizationController::class, 'update'])->name('admin.custom-login.update');
+        // create fitur download
+        Route::get('/admin/employee/download-template', [EmployeeController::class, 'downloadTemplate'])->name('admin.employee.download-template');
     });
     ?>

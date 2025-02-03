@@ -157,4 +157,18 @@ class EmployeeController extends Controller
             return redirect()->route('admin.employee')->with('error', 'Error importing employees.');
         }
     }
+
+    public function downloadTemplate()
+    {
+        $filePath = public_path('data_pegawai_template.xlsx'); 
+        $fileName = 'data_pegawai_template.xlsx';
+
+        // Cek apakah file ada
+        if (!file_exists($filePath)) {
+            abort(404, 'File tidak ditemukan.');
+        }
+
+        // Kembalikan file untuk diunduh
+        return response()->download($filePath, $fileName);
+    }
 }
